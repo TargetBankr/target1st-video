@@ -22,7 +22,9 @@ import sys
 from pathlib import Path
 
 W, H, FPS = 1920, 1080, 30
-PAD = 0.45  # silence after every spoken line, seconds
+PAUSE_DEFAULT = 0.15  # silence kept after every spoken line, seconds (meta "pause" overrides)
+TRIM = ("silenceremove=start_periods=1:start_threshold=-50dB,areverse,"
+        "silenceremove=start_periods=1:start_threshold=-50dB,areverse")
 LET_SAY = {"A": "ए", "B": "बी", "C": "सी", "D": "डी"}
 
 SERIF = "'Noto Serif Devanagari','Noto Serif','FreeSerif','Lohit Devanagari',serif"
@@ -185,8 +187,8 @@ async def tts_all(steps, meta, work, fake):
             return
         if fake:
             dur = max(1.5, len(s["say"]) * 0.075)
-            run(["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=24000:cl=mono",
-                 "-t", f"{dur:.2f}", "-acodec", "libmp3lame", str(mp3)])
+            run(["ffmpeg", "-y", "-f", "lavfi", "-i", "sine=frequency=220:sample_rate=24000",
+                 "-af", "volume=0.05", "-t", f"{dur:.2f}", "-acodec", "libmp3lame", str(mp3)])
             return
         import edge_tts
         last = None
@@ -273,6 +275,7 @@ def main():
     render_images(meta, qs, steps, work, theme, layout, fmt)
 
     # exact-length audio per step, then concat
+    pause = float(meta.get("pause", PAUSE_DEFAULT))
     t = 0.0
     chapters = []
     img_lines, wav_lines = [], []
@@ -283,9 +286,11 @@ def main():
             run(["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=mono",
                  "-t", f"{dur:.3f}", str(wav)])
         else:
-            dur = probe(s["mp3"]) + PAD
-            run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af", f"apad=whole_dur={dur:.3f}",
+            run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af", f"{TRIM},apad=pad_dur={pause:.3f}",
                  "-ar", "48000", "-ac", "1", str(wav)])
+            dur = probe(wav)
+            if dur < 0.3:
+                sys.exit(f"Voice clip came out empty for: {s['say'][:60]}")
         if "chapter" in s:
             chapters.append((t, s["chapter"]))
         img_lines += [f"file '{s['img'].resolve()}'", f"duration {dur:.3f}"]
