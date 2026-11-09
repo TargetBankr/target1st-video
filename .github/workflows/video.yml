@@ -9,6 +9,21 @@ on:
       limit:
         description: "Only first N questions (0 = all)"
         default: "0"
+      theme:
+        description: "Colours and font"
+        type: choice
+        default: "auto"
+        options: [auto, classic, night, royal]
+      layout:
+        description: "Options on question slide"
+        type: choice
+        default: "auto"
+        options: [auto, list, grid]
+      format:
+        description: "quiz = options + countdown, revision = answer straight away"
+        type: choice
+        default: "auto"
+        options: [auto, quiz, revision]
 
 permissions:
   contents: write
@@ -35,7 +50,10 @@ jobs:
         env:
           FILE: ${{ inputs.file }}
           LIMIT: ${{ inputs.limit }}
-        run: python build.py "$FILE" --out output --limit "$LIMIT"
+          THEME: ${{ inputs.theme }}
+          LAYOUT: ${{ inputs.layout }}
+          FORMAT: ${{ inputs.format }}
+        run: python build.py "$FILE" --out output --limit "$LIMIT" --theme "$THEME" --layout "$LAYOUT" --format "$FORMAT"
 
       - name: Publish release (direct download)
         env:
