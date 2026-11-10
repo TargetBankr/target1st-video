@@ -29,7 +29,8 @@ GEMINI VOICE
       gemini_batch  questions per Gemini call, default 1. One call reads a whole question (question, options, answer,
                     points, trick) and the audio is cut back into lines at the pauses. Free tier allows only about
                     10 calls a day per model, so this is what makes a 25-question video possible. 2 = even fewer calls.
-      gemini_style  instruction spoken-style prefix, default "Say in a clear, natural, energetic Hindi teacher voice"
+      gemini_style  optional style instruction put in front of the text, default none. Gemini sometimes READS it aloud,
+                    so leave it empty unless you really need it.
       gemini_speed  default 1.3 (Gemini has no speed setting, FFmpeg speeds it up, pitch is kept; "rate" is Edge only)
       gemini_delay  seconds to wait between calls, default 21 (free tier allows 3 calls a minute per model)
     Calls run one at a time with retries. Every finished line is cached in <out>/work/audio, so a run stopped by
@@ -217,8 +218,10 @@ def probe(path):
 
 GEMINI_MODELS = ["gemini-3.1-flash-tts-preview", "gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]
 GEMINI_VOICE = "Kore"
-GEMINI_STYLE = "Say in a clear, natural, energetic Hindi teacher voice"
-GEMINI_PAUSE = "leave a clear pause of about one second between each line"
+# No spoken instruction by default: Gemini TTS sometimes reads an instruction aloud ("Say in a clear Hindi teacher
+# voice...") instead of obeying it. The voice name and the Hindi text are enough. Set meta "gemini_style" only if you
+# accept that risk.
+GEMINI_STYLE = ""
 
 
 def gemini_tts_once(prompt, voice, model, out_wav, api_key):
@@ -374,10 +377,8 @@ async def tts_all(steps, meta, work, fake, provider):
         return work / "audio" / f"{key}.wav"
 
     def g_prompt(lines):
-        if len(lines) == 1:
-            return f"{g_style}: {lines[0]['say']}" if g_style else lines[0]["say"]
-        head = f"{g_style}, {GEMINI_PAUSE}" if g_style else GEMINI_PAUSE[0].upper() + GEMINI_PAUSE[1:]
-        return head + ": " + "\n\n".join(l["say"] for l in lines)
+        text = "\n\n".join(l["say"] for l in lines)  # one paragraph per line: Gemini pauses between paragraphs
+        return f"{g_style}: {text}" if g_style else text
 
     async def gemini_call(prompt, out):
         """One TTS call. Tries the models in order; a per-day 429 moves on to the next model."""
