@@ -12,9 +12,10 @@
     "theme": "classic",
     "layout": "list",
     "format": "quiz",
-    "tts": "gemini",
-    "gemini_voice": "Kore",
-    "gemini_speed": 1.3
+    "tts": "sarvam",
+    "sarvam_model": "bulbul:v4-flash",
+    "sarvam_speaker": "aayan_hi_conversational",
+    "sarvam_pace": 1.2
   },
   "questions": [
     {
