@@ -1,5 +1,10 @@
 name: Build quiz video
 
+# Voice: Edge-TTS (free, unlimited) or Gemini AI voice (more natural, free tier is rate limited).
+# Gemini needs a repository secret named GEMINI_API_KEY (Settings > Secrets and variables > Actions).
+# Choose it with the "tts" input below, or set "tts": "gemini" in the JSON meta (input "auto" = use the JSON).
+# Gemini voice lines are cached between runs, so a build stopped by the daily free limit continues on re-run.
+
 on:
   workflow_dispatch:
     inputs:
@@ -24,6 +29,11 @@ on:
         type: choice
         default: "auto"
         options: [auto, quiz, revision]
+      tts:
+        description: "Voice engine: edge = Edge-TTS, gemini = Gemini AI voice (needs GEMINI_API_KEY secret)"
+        type: choice
+        default: "auto"
+        options: [auto, edge, gemini]
 
 permissions:
   contents: write
@@ -46,6 +56,15 @@ jobs:
           pip install edge-tts playwright
           playwright install --with-deps chromium
 
+      # Gemini voice lines already made (keeps progress if the free daily limit stops a run)
+      - name: Restore voice cache
+        uses: actions/cache/restore@v4
+        with:
+          path: output/work/audio
+          key: voice-cache-${{ github.run_id }}
+          restore-keys: |
+            voice-cache-
+
       - name: Build video
         env:
           FILE: ${{ inputs.file }}
@@ -53,7 +72,16 @@ jobs:
           THEME: ${{ inputs.theme }}
           LAYOUT: ${{ inputs.layout }}
           FORMAT: ${{ inputs.format }}
-        run: python build.py "$FILE" --out output --limit "$LIMIT" --theme "$THEME" --layout "$LAYOUT" --format "$FORMAT"
+          TTS: ${{ inputs.tts }}
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        run: python build.py "$FILE" --out output --limit "$LIMIT" --theme "$THEME" --layout "$LAYOUT" --format "$FORMAT" --tts "$TTS"
+
+      - name: Save voice cache
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: output/work/audio
+          key: voice-cache-${{ github.run_id }}
 
       - name: Publish release (direct download)
         env:
@@ -63,4 +91,3 @@ jobs:
           gh release create "video-$RUN_NO" output/video.mp4 output/description.txt \
             --title "Video $RUN_NO" \
             --notes "Download video.mp4 and upload it to YouTube. description.txt has title and chapters."
-            
