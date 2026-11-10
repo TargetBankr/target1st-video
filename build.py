@@ -22,12 +22,19 @@ GEMINI VOICE
     (GitHub: repository secret GEMINI_API_KEY, already wired in video.yml).
     Optional meta keys:
       gemini_voice  prebuilt voice name, default "Kore" (also Puck, Sulafat, Charon, Fenrir, Zephyr...)
-      gemini_model  default "gemini-3.1-flash-tts-preview" (copy the exact TTS model name from AI Studio if it 404s)
+      gemini_models list of model names, tried in order. When one hits its daily limit the next one is used.
+                    Default ["gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]. Add more by copying the
+                    exact model name from AI Studio ("Get code"). A name that does not exist is skipped, not fatal.
+                    (old single key "gemini_model" still works)
+      gemini_batch  questions per Gemini call, default 1. One call reads a whole question (question, options, answer,
+                    points, trick) and the audio is cut back into lines at the pauses. Free tier allows only about
+                    10 calls a day per model, so this is what makes a 25-question video possible. 2 = even fewer calls.
       gemini_style  instruction spoken-style prefix, default "Say in a clear, natural, energetic Hindi teacher voice"
       gemini_speed  default 1.3 (Gemini has no speed setting, FFmpeg speeds it up, pitch is kept; "rate" is Edge only)
-      gemini_delay  seconds to wait between calls, default 6 (free tier is rate limited)
+      gemini_delay  seconds to wait between calls, default 21 (free tier allows 3 calls a minute per model)
     Calls run one at a time with retries. Every finished line is cached in <out>/work/audio, so a run stopped by
-    the free daily limit can be re-run to continue. If Gemini quality is not better than Edge, just use edge.
+    the free daily limit can be re-run to continue (the cache is shared by all models). If every model has hit its
+    daily limit the build stops cleanly; re-run after the quota resets (about 1:30 pm IST).
 
 SARVAM VOICE (Bulbul, built for Indian languages, Hindi = hi-IN)
     Set meta "tts": "sarvam" (or --tts sarvam) and provide the SARVAM_API_KEY environment variable
@@ -46,6 +53,7 @@ import hashlib
 import html
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -205,14 +213,14 @@ def probe(path):
     return float(out.strip())
 
 
-GEMINI_MODEL = "gemini-3.1-flash-tts-preview"
+GEMINI_MODELS = ["gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]
 GEMINI_VOICE = "Kore"
 GEMINI_STYLE = "Say in a clear, natural, energetic Hindi teacher voice"
+GEMINI_PAUSE = "leave a clear pause of about one second between each line"
 
 
-def gemini_tts_once(text, voice, model, style, out_wav, api_key):
+def gemini_tts_once(prompt, voice, model, out_wav, api_key):
     """One Gemini TTS call -> 24 kHz mono 16-bit WAV at out_wav. Raises on any failure."""
-    prompt = f"{style}: {text}" if style else text
     body = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
@@ -244,6 +252,40 @@ def gemini_tts_once(text, voice, model, style, out_wav, api_key):
     tmp.replace(out_wav)
 
 
+def split_by_silence(full, lines):
+    """Cut one long recording into len(lines) clips at the longest pauses.
+
+    Writes each clip to line["mp3"]. Returns True only if the cut looks right: the right number of pauses
+    was found and every clip's length roughly matches how long its text is. Otherwise returns False and
+    writes nothing, so the caller can regenerate.
+    """
+    n = len(lines)
+    total = probe(full)
+    chars = [len(l["say"]) for l in lines]
+    for noise, dur in (("-38dB", 0.35), ("-38dB", 0.2), ("-32dB", 0.2)):
+        r = subprocess.run(["ffmpeg", "-i", str(full), "-af", f"silencedetect=noise={noise}:d={dur}",
+                            "-f", "null", "-"], capture_output=True, text=True)
+        starts = [float(x) for x in re.findall(r"silence_start: (-?[\d.]+)", r.stderr)]
+        ends = [float(x) for x in re.findall(r"silence_end: ([\d.]+)", r.stderr)]
+        gaps = [(a, b) for a, b in zip(starts, ends) if a > 0.15 and b < total - 0.15]
+        if len(gaps) < n - 1:
+            continue
+        gaps = sorted(sorted(gaps, key=lambda g: g[1] - g[0], reverse=True)[: n - 1])
+        cuts = [0.0] + [(a + b) / 2 for a, b in gaps] + [total]
+        durs = [cuts[k + 1] - cuts[k] for k in range(n)]
+        per_char = sum(durs) / max(1, sum(chars))
+        ok = all(0.4 * per_char <= d / c <= 2.5 * per_char for d, c in zip(durs, chars) if c >= 15)
+        if not ok:
+            continue
+        for k, l in enumerate(lines):
+            tmp = l["mp3"].with_suffix(".part")
+            run(["ffmpeg", "-y", "-i", str(full), "-ss", f"{cuts[k]:.3f}", "-to", f"{cuts[k + 1]:.3f}",
+                 "-c:a", "pcm_s16le", "-f", "wav", str(tmp)])
+            tmp.replace(l["mp3"])
+        return True
+    return False
+
+
 SARVAM_MODEL = "bulbul:v3"
 SARVAM_SPEAKER = "shubh"
 
@@ -272,9 +314,13 @@ async def tts_all(steps, meta, work, fake, provider):
     voice = meta.get("voice", "hi-IN-MadhurNeural")
     rate = meta.get("rate", "+0%")
     g_voice = meta.get("gemini_voice", GEMINI_VOICE)
-    g_model = meta.get("gemini_model", GEMINI_MODEL)
+    g_models = meta.get("gemini_models") or ([meta["gemini_model"]] if meta.get("gemini_model") else GEMINI_MODELS)
+    if isinstance(g_models, str):
+        g_models = [g_models]
     g_style = meta.get("gemini_style", GEMINI_STYLE)
-    g_delay = float(meta.get("gemini_delay", 6))  # seconds between calls, free tier is rate limited
+    g_delay = float(meta.get("gemini_delay", 21))  # free tier: 3 calls per minute per model
+    g_batch = max(1, int(meta.get("gemini_batch", 1)))  # questions per Gemini call
+    g_dead = set()  # models that hit their daily limit (or do not exist) in this run
     g_key = os.environ.get("GEMINI_API_KEY", "")
     if provider == "gemini" and not fake and not g_key:
         sys.exit("GEMINI_API_KEY is not set. Add it as a repository secret and pass it in video.yml (env).")
@@ -311,33 +357,99 @@ async def tts_all(steps, meta, work, fake, provider):
                      "Check the key, credits, and that sarvam_speaker matches sarvam_model (lowercase). "
                      "Finished lines are cached: re-run to continue.")
 
-    async def gemini_one(s, path):
-        async with g_lock:  # one call at a time + spacing
-            last = None
-            for attempt in range(6):
+    def g_path(s):
+        # same cache file whichever model made it, so switching models mid-video keeps finished lines
+        key = hashlib.md5(f"gemini|{g_voice}|{g_style}|{s['say']}".encode()).hexdigest()
+        return work / "audio" / f"{key}.wav"
+
+    def g_prompt(lines):
+        if len(lines) == 1:
+            return f"{g_style}: {lines[0]['say']}" if g_style else lines[0]["say"]
+        head = f"{g_style}, {GEMINI_PAUSE}" if g_style else GEMINI_PAUSE[0].upper() + GEMINI_PAUSE[1:]
+        return head + ": " + "\n\n".join(l["say"] for l in lines)
+
+    async def gemini_call(prompt, out):
+        """One TTS call. Tries the models in order; a per-day 429 moves on to the next model."""
+        while True:
+            live = [m for m in g_models if m not in g_dead]
+            if not live:
+                sys.exit("Every Gemini model has hit its daily limit (or was not found). Finished lines are cached. "
+                         "Re-run after the quota resets (about 1:30 pm IST), or add more models in meta gemini_models.")
+            model = live[0]
+            minute_hits = fails = 0
+            while True:
                 try:
-                    await asyncio.to_thread(gemini_tts_once, s["say"], g_voice, g_model, g_style, path, g_key)
+                    await asyncio.to_thread(gemini_tts_once, prompt, g_voice, model, out, g_key)
                     await asyncio.sleep(g_delay)
                     return
                 except urllib.error.HTTPError as e:
-                    last = f"HTTP {e.code}: {e.read()[:200]!r}"
-                    if e.code in (400, 401, 403, 404):  # bad key / model / request: retrying is pointless
+                    code, body = e.code, e.read().decode("utf-8", "ignore")
+                except Exception as e:  # network trouble, or the reply had no audio
+                    code, body = 0, str(e)
+                if code == 429:
+                    if re.search(r"per\s*day", body, re.I) or minute_hits >= 4:
+                        print(f"  {model}: daily limit reached, switching to the next model", flush=True)
+                        g_dead.add(model)
                         break
-                    wait = 20 * (attempt + 1)  # 429 or 5xx: back off
-                except Exception as e:
-                    last = e
-                    wait = 5 * (attempt + 1)
-                print(f"  Gemini retry {attempt + 1}/6 in {wait}s ({last})")
-                await asyncio.sleep(wait)
-            sys.exit(f"Gemini voice failed for: {s['say'][:60]}\n{last}\n"
-                     "Finished lines are cached: re-run later (free quota resets daily) to continue.")
+                    minute_hits += 1
+                    m = re.search(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"', body)
+                    wait = float(m.group(1)) + 2 if m else 25
+                    print(f"  {model}: per-minute limit, waiting {wait:.0f}s", flush=True)
+                    await asyncio.sleep(wait)
+                    continue
+                if code == 404:
+                    print(f"  {model}: model not found, skipping it (check the name in AI Studio)", flush=True)
+                    g_dead.add(model)
+                    break
+                if code in (400, 401, 403):
+                    sys.exit(f"Gemini rejected the request (HTTP {code}) for {model}: {body[:300]}")
+                fails += 1
+                if fails > 5:
+                    print(f"  {model}: keeps failing ({body[:120]}), switching to the next model", flush=True)
+                    g_dead.add(model)
+                    break
+                print(f"  Gemini retry {fails}/5 in {5 * fails}s ({body[:120]})", flush=True)
+                await asyncio.sleep(5 * fails)
+
+    async def gemini_group(lines):
+        """Make the audio for several lines with as few calls as possible (normally one)."""
+        if len(lines) > 1:
+            full = work / "audio" / f"_group_{lines[0]['mp3'].stem}.wav"
+            for attempt in range(2):
+                await gemini_call(g_prompt(lines), full)
+                if split_by_silence(full, lines):
+                    full.unlink(missing_ok=True)
+                    return
+                print("  Could not cut the audio cleanly into lines, generating again", flush=True)
+            full.unlink(missing_ok=True)
+            print("  Falling back to one call per line for this group", flush=True)
+        for l in lines:
+            await gemini_call(g_prompt([l]), l["mp3"])
+
+    async def gemini_all():
+        groups, order = {}, []
+        for s in steps:
+            if "say" not in s:
+                continue
+            s["mp3"] = g_path(s)
+            mode = s["state"]["mode"]
+            gk = mode if mode in ("intro", "outro") else (s["state"]["i"] - 1) // g_batch
+            if gk not in groups:
+                groups[gk] = []
+                order.append(gk)
+            groups[gk].append(s)
+        todo = [[s for s in groups[gk] if not (s["mp3"].exists() and s["mp3"].stat().st_size > 0)] for gk in order]
+        todo = [t for t in todo if t]
+        print(f"Gemini: {len(todo)} call group(s) to make, models: {', '.join(g_models)}", flush=True)
+        for n, lines in enumerate(todo, 1):
+            print(f"  group {n}/{len(todo)} ({len(lines)} lines)", flush=True)
+            await gemini_group(lines)
 
     async def one(s):
         if "say" not in s:
             return
         if provider == "gemini":
-            key = hashlib.md5(f"gemini|{g_voice}|{g_model}|{g_style}|{s['say']}".encode()).hexdigest()
-            mp3 = work / "audio" / f"{key}.wav"
+            mp3 = g_path(s)
         elif provider == "sarvam":
             key = hashlib.md5(f"sarvam|{s_model}|{s_speaker}|{s_pace}|{s['say']}".encode()).hexdigest()
             mp3 = work / "audio" / f"{key}.wav"
@@ -348,8 +460,7 @@ async def tts_all(steps, meta, work, fake, provider):
         if mp3.exists() and mp3.stat().st_size > 0:
             return
         if provider == "gemini" and not fake:
-            await gemini_one(s, mp3)
-            return
+            return  # made by gemini_all()
         if provider == "sarvam" and not fake:
             await sarvam_one(s, mp3)
             return
@@ -371,6 +482,8 @@ async def tts_all(steps, meta, work, fake, provider):
                 await asyncio.sleep(2 * (attempt + 1))
         sys.exit(f"Voice generation failed for: {s['say'][:60]}\n{last}")
 
+    if provider == "gemini" and not fake:
+        await gemini_all()
     await asyncio.gather(*(one(s) for s in steps))
 
 
