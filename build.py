@@ -9,7 +9,7 @@ Usage:
 
 theme:  classic | night | royal
 layout: list | grid        (how the 4 options look on the question slide)
-format: quiz | revision    (quiz = options + countdown; revision = question then answer, no countdown)
+format: quiz | revision    (both read the options aloud; quiz adds a countdown, revision has none)
 tts:    edge | gemini | sarvam   (edge = Edge-TTS, free, unlimited; gemini = Gemini AI voice, free tier is slow/limited;
                                   sarvam = Sarvam Bulbul Hindi voice, Rs 100 free credits then paid)
 Each of these can also be set in the JSON "meta"; command-line values win ("auto" = use the JSON).
@@ -98,6 +98,7 @@ body{width:1920px;height:1080px;background:var(--bg);font-family:var(--font);fon
 .opts.grid{display:grid;grid-template-columns:1fr 1fr;gap:26px 30px}
 .opts.grid .opt{border:5px solid var(--rule);border-radius:18px;padding:22px 28px;font-size:58px}
 .cd{position:absolute;right:170px;top:470px;width:240px;height:240px;border:16px solid var(--cd);border-radius:50%;font-size:140px;color:var(--cd);text-align:center;line-height:205px;z-index:2;background:var(--bg)}
+.cd.g{top:790px;right:150px;width:200px;height:200px;border-width:14px;font-size:110px;line-height:168px}
 .badge{display:inline-block;margin-top:30px;background:var(--badgebg);color:var(--badgefg);font-size:40px;padding:6px 28px;border-radius:10px}
 .ans{margin-top:22px;background:var(--ans);color:var(--ansfg);font-size:64px;line-height:1.25;padding:18px 32px;border-radius:14px;display:flex;align-items:center;gap:22px}
 .ans svg{flex:none}
@@ -149,7 +150,7 @@ def page_html(meta, qs, st, theme, layout, fmt):
                 f'<div class="opt">{l}) {esc(t)}</div>' for l, t in zip("ABCD", q["options"])
             ) + "</div>"
         if st.get("cd"):
-            body += f'<div class="cd">{st["cd"]}</div>'
+            body += f'<div class="cd{" g" if layout == "grid" else ""}">{st["cd"]}</div>'
     elif mode == "answer":
         q = qs[st["i"] - 1]
         ans = q["answer"].strip().upper()
@@ -182,10 +183,11 @@ def make_steps(data, limit, fmt):
         opts = q["options"]
         ans = q["answer"].strip().upper()
         idx = "ABCD".index(ans)
+        # both formats: question, then options shown and read aloud. Only quiz adds the countdown.
         steps.append({"state": {"mode": "q", "i": i, "opts": False}, "say": q["q"], "chapter": f"Q{i}"})
+        say_opts = " ".join(f"ऑप्शन {LET_SAY[l]}, {t}।" for l, t in zip("ABCD", opts))
+        steps.append({"state": {"mode": "q", "i": i, "opts": True}, "say": say_opts})
         if fmt == "quiz":
-            say_opts = " ".join(f"ऑप्शन {LET_SAY[l]}, {t}।" for l, t in zip("ABCD", opts))
-            steps.append({"state": {"mode": "q", "i": i, "opts": True}, "say": say_opts})
             for n in range(cd, 0, -1):
                 steps.append({"state": {"mode": "q", "i": i, "opts": True, "cd": n}, "silence": 1.0})
         steps.append({"state": {"mode": "answer", "i": i, "pts": 0},
@@ -252,6 +254,12 @@ def gemini_tts_once(prompt, voice, model, out_wav, api_key):
     tmp.replace(out_wav)
 
 
+def rate_ok(chars, seconds):
+    """Normal Gemini Hindi runs at about 8-16 characters a second before speed-up. Far outside that means the
+    clip is cut off, stretched, or has dead air, so it is not used."""
+    return 5.5 <= chars / max(0.05, seconds) <= 22
+
+
 def split_by_silence(full, lines):
     """Cut one long recording into len(lines) clips at the longest pauses.
 
@@ -272,9 +280,12 @@ def split_by_silence(full, lines):
             continue
         gaps = sorted(sorted(gaps, key=lambda g: g[1] - g[0], reverse=True)[: n - 1])
         cuts = [0.0] + [(a + b) / 2 for a, b in gaps] + [total]
-        durs = [cuts[k + 1] - cuts[k] for k in range(n)]
-        per_char = sum(durs) / max(1, sum(chars))
-        ok = all(0.4 * per_char <= d / c <= 2.5 * per_char for d, c in zip(durs, chars) if c >= 15)
+        # speech length of each line = from the end of the pause before it to the start of the pause after it
+        speech = [(gaps[k - 1][1] if k else 0.0, gaps[k][0] if k < n - 1 else total) for k in range(n)]
+        sp = [max(0.05, b - a) for a, b in speech]
+        per_char = sum(sp) / max(1, sum(chars))
+        ok = all(0.4 * per_char <= d / c <= 2.5 * per_char and rate_ok(c, d)
+                 for d, c in zip(sp, chars) if c >= 25)
         if not ok:
             continue
         for k, l in enumerate(lines):
@@ -411,8 +422,21 @@ async def tts_all(steps, meta, work, fake, provider):
                 print(f"  Gemini retry {fails}/5 in {5 * fails}s ({body[:120]})", flush=True)
                 await asyncio.sleep(5 * fails)
 
+    async def gemini_line(l):
+        """One line, one call. If the clip is far too short or too long for its text, try once more."""
+        for attempt in range(2):
+            await gemini_call(g_prompt([l]), l["mp3"])
+            if len(l["say"]) < 25 or rate_ok(len(l["say"]), probe(l["mp3"])):
+                return
+            print(f"  Clip length looks wrong for: {l['say'][:40]}...", flush=True)
+            if attempt == 0:
+                print("  generating that line again", flush=True)
+
     async def gemini_group(lines):
         """Make the audio for several lines with as few calls as possible (normally one)."""
+        if len(lines) == 1:
+            await gemini_line(lines[0])
+            return
         if len(lines) > 1:
             full = work / "audio" / f"_group_{lines[0]['mp3'].stem}.wav"
             for attempt in range(2):
@@ -424,7 +448,7 @@ async def tts_all(steps, meta, work, fake, provider):
             full.unlink(missing_ok=True)
             print("  Falling back to one call per line for this group", flush=True)
         for l in lines:
-            await gemini_call(g_prompt([l]), l["mp3"])
+            await gemini_line(l)
 
     async def gemini_all():
         groups, order = {}, []
@@ -568,6 +592,10 @@ def main():
     # Gemini has no speed setting: speed it up here (pitch is preserved by atempo, valid range 0.5-2.0)
     speed = float(meta.get("gemini_speed", 1.3)) if provider == "gemini" and not a.fake_tts else 1.0
     tempo = f",atempo={speed:.3f}" if speed != 1.0 else ""
+    # Gemini sometimes leaves long dead air inside a line: shorten any pause over 0.45 s (meta gemini_squeeze, 0 = off)
+    sq = float(meta.get("gemini_squeeze", 0.2)) if provider == "gemini" and not a.fake_tts else 0
+    squeeze = (f",silenceremove=stop_periods=-1:stop_duration=0.45:stop_threshold=-45dB:stop_silence={sq:.2f}"
+               if sq > 0 else "")
     render_images(meta, qs, steps, work, theme, layout, fmt)
 
     # exact-length audio per step, then concat
@@ -582,7 +610,7 @@ def main():
             run(["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=mono",
                  "-t", f"{dur:.3f}", str(wav)])
         else:
-            run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af", f"{TRIM}{tempo},apad=pad_dur={pause:.3f}",
+            run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af", f"{TRIM}{squeeze}{tempo},apad=pad_dur={pause:.3f}",
                  "-ar", "48000", "-ac", "1", str(wav)])
             dur = probe(wav)
             if dur < 0.3:
