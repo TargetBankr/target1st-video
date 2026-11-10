@@ -51,12 +51,28 @@ jobs:
         with:
           python-version: "3.12"
 
+      # Slow installs are usually a slow apt mirror or the Chromium download. So: each attempt gets a time limit and
+      # is retried automatically (no manual cancel), and the runner's own Google Chrome is used when present, which
+      # skips the big Chromium download completely (build.py falls back to Playwright's Chromium if Chrome is missing).
       - name: Install tools
+        timeout-minutes: 10
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-noto-core fonts-freefont-ttf
+          for i in 1 2 3; do
+            if timeout 150 bash -c 'sudo apt-get update -qq && sudo apt-get install -y -qq --no-install-recommends ffmpeg fonts-noto-core fonts-freefont-ttf'; then
+              break
+            fi
+            echo "apt attempt $i failed or timed out, retrying"; sleep 5
+          done
+          command -v ffmpeg >/dev/null || { echo "ffmpeg install failed"; exit 1; }
           pip install edge-tts playwright
-          playwright install --with-deps chromium
+          if command -v google-chrome >/dev/null; then
+            echo "Using the runner's Google Chrome"
+          else
+            for i in 1 2 3; do
+              timeout 240 playwright install --with-deps chromium && break
+              echo "playwright attempt $i failed or timed out, retrying"; sleep 5
+            done
+          fi
 
       # Gemini/Sarvam voice lines already made (keeps progress if a limit or error stops a run)
       - name: Restore voice cache
