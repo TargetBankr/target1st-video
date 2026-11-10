@@ -23,7 +23,7 @@ GEMINI VOICE
     Optional meta keys:
       gemini_voice  prebuilt voice name, default "Kore" (also Puck, Sulafat, Charon, Fenrir, Zephyr...)
       gemini_models list of model names, tried in order. When one hits its daily limit the next one is used.
-                    Default ["gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]. Add more by copying the
+                    Default ["gemini-3.1-flash-tts-preview", "gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]. Add more by copying the
                     exact model name from AI Studio ("Get code"). A name that does not exist is skipped, not fatal.
                     (old single key "gemini_model" still works)
       gemini_batch  questions per Gemini call, default 1. One call reads a whole question (question, options, answer,
@@ -213,7 +213,7 @@ def probe(path):
     return float(out.strip())
 
 
-GEMINI_MODELS = ["gemini-3.1-flash-tts-preview", "gemini-2.5-flash-preview-tts"]
+GEMINI_MODELS = ["gemini-3.1-flash-tts-preview", "gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]
 GEMINI_VOICE = "Kore"
 GEMINI_STYLE = "Say in a clear, natural, energetic Hindi teacher voice"
 GEMINI_PAUSE = "leave a clear pause of about one second between each line"
