@@ -20,7 +20,7 @@
       "gemini-3.8-flash-tts",
       "gemini-3.8-flash-lite-tts"
     ],
-    "gemini_batch": 3
+    "gemini_batch": 2
   },
   "questions": [
     {
