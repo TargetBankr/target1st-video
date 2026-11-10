@@ -51,12 +51,25 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install tools
+      # apt packages are cached after the first run, so ffmpeg and fonts install in seconds instead of hitting the
+      # Ubuntu mirror every time (that mirror is what makes this step slow or stuck some days)
+      - name: Install ffmpeg and fonts (cached)
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: ffmpeg fonts-noto-core fonts-freefont-ttf
+          version: 1.0
+
+      - name: Install Python packages
+        run: pip install edge-tts playwright
+
+      # build.py uses the Google Chrome already on the runner; only download Playwright's browser if Chrome is missing
+      - name: Browser check
         run: |
-          sudo apt-get update
-          sudo apt-get install -y ffmpeg fonts-noto-core fonts-freefont-ttf
-          pip install edge-tts playwright
-          playwright install --with-deps chromium
+          if command -v google-chrome >/dev/null 2>&1; then
+            echo "Google Chrome found, no browser download needed"
+          else
+            playwright install --with-deps chromium
+          fi
 
       # Gemini/Sarvam voice lines already made (keeps progress if a limit or error stops a run)
       - name: Restore voice cache
