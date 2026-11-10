@@ -1,9 +1,11 @@
 name: Build quiz video
 
-# Voice: Edge-TTS (free, unlimited) or Gemini AI voice (more natural, free tier is rate limited).
-# Gemini needs a repository secret named GEMINI_API_KEY (Settings > Secrets and variables > Actions).
-# Choose it with the "tts" input below, or set "tts": "gemini" in the JSON meta (input "auto" = use the JSON).
-# Gemini voice lines are cached between runs, so a build stopped by the daily free limit continues on re-run.
+# Voice: Edge-TTS (free, unlimited), Gemini AI voice (natural, free tier is slow/limited) or Sarvam Bulbul
+# (natural Hindi, Rs 100 free credits on signup, then paid).
+# Gemini needs a repository secret named GEMINI_API_KEY, Sarvam needs SARVAM_API_KEY
+# (Settings > Secrets and variables > Actions > Repository secrets).
+# Choose it with the "tts" input below, or set "tts" in the JSON meta (input "auto" = use the JSON).
+# Gemini/Sarvam voice lines are cached between runs, so a stopped build continues on re-run without paying twice.
 
 on:
   workflow_dispatch:
@@ -30,10 +32,10 @@ on:
         default: "auto"
         options: [auto, quiz, revision]
       tts:
-        description: "Voice engine: edge = Edge-TTS, gemini = Gemini AI voice (needs GEMINI_API_KEY secret)"
+        description: "Voice engine: edge = Edge-TTS, gemini = Gemini (GEMINI_API_KEY), sarvam = Sarvam Bulbul (SARVAM_API_KEY)"
         type: choice
         default: "auto"
-        options: [auto, edge, gemini]
+        options: [auto, edge, gemini, sarvam]
 
 permissions:
   contents: write
@@ -56,7 +58,7 @@ jobs:
           pip install edge-tts playwright
           playwright install --with-deps chromium
 
-      # Gemini voice lines already made (keeps progress if the free daily limit stops a run)
+      # Gemini/Sarvam voice lines already made (keeps progress if a limit or error stops a run)
       - name: Restore voice cache
         uses: actions/cache/restore@v4
         with:
@@ -74,7 +76,8 @@ jobs:
           FORMAT: ${{ inputs.format }}
           TTS: ${{ inputs.tts }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        run: python build.py "$FILE" --out output --limit "$LIMIT" --theme "$THEME" --layout "$LAYOUT" --format "$FORMAT" --tts "$TTS"
+          SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
+        run: python -u build.py "$FILE" --out output --limit "$LIMIT" --theme "$THEME" --layout "$LAYOUT" --format "$FORMAT" --tts "$TTS"
 
       - name: Save voice cache
         if: always()
