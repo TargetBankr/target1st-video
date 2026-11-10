@@ -1,24 +1,46 @@
 #!/usr/bin/env python3
 """Target1st quiz video builder.
 
-questions.json -> Edge-TTS voice -> HTML slides (Playwright screenshots) -> one MP4 (FFmpeg).
+questions.json -> voice (Edge-TTS or Gemini AI voice) -> HTML slides (Playwright screenshots) -> one MP4 (FFmpeg).
 
 Usage:
     python build.py questions.json --out output [--limit 2] [--theme night] [--layout grid]
-                                    [--format revision] [--fake-tts]
+                                    [--format revision] [--tts gemini] [--fake-tts]
 
 theme:  classic | night | royal
 layout: list | grid        (how the 4 options look on the question slide)
 format: quiz | revision    (quiz = options + countdown; revision = question then answer, no countdown)
-Each of these can also be set in the JSON "meta"; command-line values win.
+tts:    edge | gemini      (edge = Edge-TTS, free, unlimited; gemini = natural Gemini AI voice)
+Each of these can also be set in the JSON "meta"; command-line values win ("auto" = use the JSON).
+Old names from earlier versions of the PDF tool are converted automatically
+(dark -> night, light -> classic, maroon -> royal, standard -> quiz, short -> revision,
+landscape/portrait -> list).
+
+GEMINI VOICE
+    Set meta "tts": "gemini" (or pass --tts gemini) and provide the GEMINI_API_KEY environment variable
+    (GitHub: repository secret GEMINI_API_KEY, already wired in video.yml).
+    Optional meta keys:
+      gemini_voice  prebuilt voice name, default "Kore" (also Puck, Sulafat, Charon, Fenrir, Zephyr...)
+      gemini_model  default "gemini-3.1-flash-tts-preview" (copy the exact TTS model name from AI Studio if it 404s)
+      gemini_style  instruction spoken-style prefix, default "Say in a clear, natural, energetic Hindi teacher voice"
+      gemini_speed  default 1.3 (Gemini has no speed setting, FFmpeg speeds it up, pitch is kept; "rate" is Edge only)
+      gemini_delay  seconds to wait between calls, default 6 (free tier is rate limited)
+    Calls run one at a time with retries. Every finished line is cached in <out>/work/audio, so a run stopped by
+    the free daily limit can be re-run to continue. If Gemini quality is not better than Edge, just use edge.
 """
 import argparse
 import asyncio
+import base64
 import hashlib
 import html
 import json
+import os
 import subprocess
 import sys
+import time
+import urllib.error
+import urllib.request
+import wave
 from pathlib import Path
 
 W, H, FPS = 1920, 1080, 30
@@ -172,18 +194,93 @@ def probe(path):
     return float(out.strip())
 
 
-async def tts_all(steps, meta, work, fake):
+GEMINI_MODEL = "gemini-3.1-flash-tts-preview"
+GEMINI_VOICE = "Kore"
+GEMINI_STYLE = "Say in a clear, natural, energetic Hindi teacher voice"
+
+
+def gemini_tts_once(text, voice, model, style, out_wav, api_key):
+    """One Gemini TTS call -> 24 kHz mono 16-bit WAV at out_wav. Raises on any failure."""
+    prompt = f"{style}: {text}" if style else text
+    body = {
+        "contents": [{"parts": [{"text": prompt}]}],
+        "generationConfig": {
+            "responseModalities": ["AUDIO"],
+            "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}},
+        },
+    }
+    req = urllib.request.Request(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+        data=json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json", "x-goog-api-key": api_key},
+    )
+    with urllib.request.urlopen(req, timeout=180) as r:
+        j = json.load(r)
+    pcm = None
+    for cand in j.get("candidates", []):
+        for part in cand.get("content", {}).get("parts", []):
+            inline = part.get("inlineData") or part.get("inline_data")
+            if inline and inline.get("data"):
+                pcm = base64.b64decode(inline["data"])
+    if not pcm:
+        raise RuntimeError(f"Gemini returned no audio: {json.dumps(j)[:300]}")
+    tmp = out_wav.with_suffix(".part")
+    with wave.open(str(tmp), "wb") as w:
+        w.setnchannels(1)
+        w.setsampwidth(2)
+        w.setframerate(24000)
+        w.writeframes(pcm)
+    tmp.replace(out_wav)
+
+
+async def tts_all(steps, meta, work, fake, provider):
     sem = asyncio.Semaphore(4)
     voice = meta.get("voice", "hi-IN-MadhurNeural")
     rate = meta.get("rate", "+0%")
+    g_voice = meta.get("gemini_voice", GEMINI_VOICE)
+    g_model = meta.get("gemini_model", GEMINI_MODEL)
+    g_style = meta.get("gemini_style", GEMINI_STYLE)
+    g_delay = float(meta.get("gemini_delay", 6))  # seconds between calls, free tier is rate limited
+    g_key = os.environ.get("GEMINI_API_KEY", "")
+    if provider == "gemini" and not fake and not g_key:
+        sys.exit("GEMINI_API_KEY is not set. Add it as a repository secret and pass it in video.yml (env).")
+    g_lock = asyncio.Lock()
+
+    async def gemini_one(s, path):
+        async with g_lock:  # one call at a time + spacing
+            last = None
+            for attempt in range(6):
+                try:
+                    await asyncio.to_thread(gemini_tts_once, s["say"], g_voice, g_model, g_style, path, g_key)
+                    await asyncio.sleep(g_delay)
+                    return
+                except urllib.error.HTTPError as e:
+                    last = f"HTTP {e.code}: {e.read()[:200]!r}"
+                    if e.code in (400, 401, 403, 404):  # bad key / model / request: retrying is pointless
+                        break
+                    wait = 20 * (attempt + 1)  # 429 or 5xx: back off
+                except Exception as e:
+                    last = e
+                    wait = 5 * (attempt + 1)
+                print(f"  Gemini retry {attempt + 1}/6 in {wait}s ({last})")
+                await asyncio.sleep(wait)
+            sys.exit(f"Gemini voice failed for: {s['say'][:60]}\n{last}\n"
+                     "Finished lines are cached: re-run later (free quota resets daily) to continue.")
 
     async def one(s):
         if "say" not in s:
             return
-        key = hashlib.md5(f"{voice}|{rate}|{s['say']}".encode()).hexdigest()
-        mp3 = work / "audio" / f"{key}.mp3"
+        if provider == "gemini":
+            key = hashlib.md5(f"gemini|{g_voice}|{g_model}|{g_style}|{s['say']}".encode()).hexdigest()
+            mp3 = work / "audio" / f"{key}.wav"
+        else:
+            key = hashlib.md5(f"{voice}|{rate}|{s['say']}".encode()).hexdigest()
+            mp3 = work / "audio" / f"{key}.mp3"
         s["mp3"] = mp3
         if mp3.exists() and mp3.stat().st_size > 0:
+            return
+        if provider == "gemini" and not fake:
+            await gemini_one(s, mp3)
             return
         if fake:
             dur = max(1.5, len(s["say"]) * 0.075)
@@ -229,8 +326,15 @@ def fmt_time(t):
     return f"{t // 60}:{t % 60:02d}"
 
 
+# names used by older versions of the PDF tool's Video JSON export -> real names
+LEGACY = {"dark": "night", "light": "classic", "maroon": "royal",
+          "standard": "quiz", "short": "revision", "landscape": "list", "portrait": "list"}
+
+
 def pick(cli, meta_val, default, allowed):
     v = cli if cli and cli != "auto" else (meta_val or default)
+    v = str(v).strip().lower()
+    v = LEGACY.get(v, v) if v not in allowed else v
     if v not in allowed:
         sys.exit(f"Invalid value '{v}'. Allowed: {', '.join(allowed)}")
     return v
@@ -244,6 +348,7 @@ def main():
     ap.add_argument("--theme", default=None)
     ap.add_argument("--layout", default=None)
     ap.add_argument("--format", default=None)
+    ap.add_argument("--tts", default=None, help="edge | gemini (default: meta 'tts', else edge)")
     ap.add_argument("--fake-tts", action="store_true", help="silent placeholder audio, for layout tests")
     a = ap.parse_args()
 
@@ -252,6 +357,7 @@ def main():
     theme = pick(a.theme, meta.get("theme"), "classic", list(THEMES))
     layout = pick(a.layout, meta.get("layout"), "list", ["list", "grid"])
     fmt = pick(a.format, meta.get("format"), "quiz", ["quiz", "revision"])
+    provider = pick(a.tts, meta.get("tts"), "edge", ["edge", "gemini"])
     qs, steps = make_steps(data, a.limit, fmt)
 
     for i, q in enumerate(qs, 1):
@@ -270,8 +376,11 @@ def main():
     for d in ("audio", "img", "wav"):
         (work / d).mkdir(parents=True, exist_ok=True)
 
-    print(f"{len(qs)} questions, {len(steps)} steps | theme={theme} layout={layout} format={fmt}")
-    asyncio.run(tts_all(steps, meta, work, a.fake_tts))
+    print(f"{len(qs)} questions, {len(steps)} steps | theme={theme} layout={layout} format={fmt} tts={provider}")
+    asyncio.run(tts_all(steps, meta, work, a.fake_tts, provider))
+    # Gemini has no speed setting: speed it up here (pitch is preserved by atempo, valid range 0.5-2.0)
+    speed = float(meta.get("gemini_speed", 1.3)) if provider == "gemini" and not a.fake_tts else 1.0
+    tempo = f",atempo={speed:.3f}" if speed != 1.0 else ""
     render_images(meta, qs, steps, work, theme, layout, fmt)
 
     # exact-length audio per step, then concat
@@ -286,7 +395,7 @@ def main():
             run(["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=mono",
                  "-t", f"{dur:.3f}", str(wav)])
         else:
-            run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af", f"{TRIM},apad=pad_dur={pause:.3f}",
+            run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af", f"{TRIM}{tempo},apad=pad_dur={pause:.3f}",
                  "-ar", "48000", "-ac", "1", str(wav)])
             dur = probe(wav)
             if dur < 0.3:
