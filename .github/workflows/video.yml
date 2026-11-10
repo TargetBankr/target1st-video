@@ -51,27 +51,24 @@ jobs:
         with:
           python-version: "3.12"
 
-      # Slow installs are usually a slow apt mirror or the Chromium download. So: each attempt gets a time limit and
-      # is retried automatically (no manual cancel), and the runner's own Google Chrome is used when present, which
-      # skips the big Chromium download completely (build.py falls back to Playwright's Chromium if Chrome is missing).
+      # apt on GitHub runners sometimes stalls (slow mirror, or a background apt job holding the lock).
+      # Fix: stop the background apt jobs, wait for the lock, and use apt's own per-connection timeouts and
+      # retries. (No external kill: killing apt halfway leaves it running and blocks the next attempt.)
+      # The runner's own Google Chrome is used when present, so no Chromium download is needed.
       - name: Install tools
-        timeout-minutes: 10
+        timeout-minutes: 15
         run: |
-          for i in 1 2 3; do
-            if timeout 150 bash -c 'sudo apt-get update -qq && sudo apt-get install -y -qq --no-install-recommends ffmpeg fonts-noto-core fonts-freefont-ttf'; then
-              break
-            fi
-            echo "apt attempt $i failed or timed out, retrying"; sleep 5
-          done
+          sudo systemctl stop unattended-upgrades apt-daily.service apt-daily-upgrade.service 2>/dev/null || true
+          sudo pkill -f unattended-upgrade 2>/dev/null || true
+          APT="sudo apt-get -o Acquire::Retries=5 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 -o DPkg::Lock::Timeout=180"
+          $APT update -qq || echo "apt update had warnings, continuing"
+          $APT install -y -qq --no-install-recommends ffmpeg fonts-noto-core fonts-freefont-ttf
           command -v ffmpeg >/dev/null || { echo "ffmpeg install failed"; exit 1; }
           pip install edge-tts playwright
           if command -v google-chrome >/dev/null; then
             echo "Using the runner's Google Chrome"
           else
-            for i in 1 2 3; do
-              timeout 240 playwright install --with-deps chromium && break
-              echo "playwright attempt $i failed or timed out, retrying"; sleep 5
-            done
+            playwright install --with-deps chromium
           fi
 
       # Gemini/Sarvam voice lines already made (keeps progress if a limit or error stops a run)
