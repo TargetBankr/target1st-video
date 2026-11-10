@@ -51,25 +51,12 @@ jobs:
         with:
           python-version: "3.12"
 
-      # apt on GitHub runners sometimes stalls (slow mirror, or a background apt job holding the lock).
-      # Fix: stop the background apt jobs, wait for the lock, and use apt's own per-connection timeouts and
-      # retries. (No external kill: killing apt halfway leaves it running and blocks the next attempt.)
-      # The runner's own Google Chrome is used when present, so no Chromium download is needed.
       - name: Install tools
-        timeout-minutes: 15
         run: |
-          sudo systemctl stop unattended-upgrades apt-daily.service apt-daily-upgrade.service 2>/dev/null || true
-          sudo pkill -f unattended-upgrade 2>/dev/null || true
-          APT="sudo apt-get -o Acquire::Retries=5 -o Acquire::http::Timeout=20 -o Acquire::https::Timeout=20 -o DPkg::Lock::Timeout=180"
-          $APT update -qq || echo "apt update had warnings, continuing"
-          $APT install -y -qq --no-install-recommends ffmpeg fonts-noto-core fonts-freefont-ttf
-          command -v ffmpeg >/dev/null || { echo "ffmpeg install failed"; exit 1; }
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg fonts-noto-core fonts-freefont-ttf
           pip install edge-tts playwright
-          if command -v google-chrome >/dev/null; then
-            echo "Using the runner's Google Chrome"
-          else
-            playwright install --with-deps chromium
-          fi
+          playwright install --with-deps chromium
 
       # Gemini/Sarvam voice lines already made (keeps progress if a limit or error stops a run)
       - name: Restore voice cache
