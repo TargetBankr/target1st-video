@@ -10,7 +10,8 @@ Usage:
 theme:  classic | night | royal
 layout: list | grid        (how the 4 options look on the question slide)
 format: quiz | revision    (quiz = options + countdown; revision = question then answer, no countdown)
-tts:    edge | gemini      (edge = Edge-TTS, free, unlimited; gemini = natural Gemini AI voice)
+tts:    edge | gemini | sarvam   (edge = Edge-TTS, free, unlimited; gemini = Gemini AI voice, free tier is slow/limited;
+                                  sarvam = Sarvam Bulbul Hindi voice, Rs 100 free credits then paid)
 Each of these can also be set in the JSON "meta"; command-line values win ("auto" = use the JSON).
 Old names from earlier versions of the PDF tool are converted automatically
 (dark -> night, light -> classic, maroon -> royal, standard -> quiz, short -> revision,
@@ -27,6 +28,16 @@ GEMINI VOICE
       gemini_delay  seconds to wait between calls, default 6 (free tier is rate limited)
     Calls run one at a time with retries. Every finished line is cached in <out>/work/audio, so a run stopped by
     the free daily limit can be re-run to continue. If Gemini quality is not better than Edge, just use edge.
+
+SARVAM VOICE (Bulbul, built for Indian languages, Hindi = hi-IN)
+    Set meta "tts": "sarvam" (or --tts sarvam) and provide the SARVAM_API_KEY environment variable
+    (GitHub: repository secret SARVAM_API_KEY, wired in video.yml). New accounts get Rs 100 free credits.
+    Optional meta keys:
+      sarvam_model    default "bulbul:v3" (also "bulbul:v4-flash", cheaper; its speaker names differ, e.g. "ishita_hi_devotional")
+      sarvam_speaker  default "shubh" (lowercase, must match the model; v3 also has aditya, ritu, priya, neha, rahul, pooja, ...)
+      sarvam_pace     default 1.2, range 0.5-2.0 (Sarvam has its own speed control, "rate" is Edge only)
+      sarvam_delay    seconds between calls, default 1 (limit is 60 requests/minute)
+    Every finished line is cached in <out>/work/audio, so a re-run never pays twice for the same line.
 """
 import argparse
 import asyncio
@@ -233,6 +244,29 @@ def gemini_tts_once(text, voice, model, style, out_wav, api_key):
     tmp.replace(out_wav)
 
 
+SARVAM_MODEL = "bulbul:v3"
+SARVAM_SPEAKER = "shubh"
+
+
+def sarvam_tts_once(text, model, speaker, pace, out_wav, api_key):
+    """One Sarvam Bulbul call -> WAV at out_wav. Raises on any failure."""
+    body = {"text": text, "language_code": "hi-IN", "model": model, "speaker": speaker,
+            "pace": pace, "speech_sample_rate": 24000, "output_audio_codec": "wav"}
+    req = urllib.request.Request(
+        "https://api.sarvam.ai/text-to-speech",
+        data=json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json", "api-subscription-key": api_key},
+    )
+    with urllib.request.urlopen(req, timeout=120) as r:
+        j = json.load(r)
+    audios = j.get("audios") or []
+    if not audios:
+        raise RuntimeError(f"Sarvam returned no audio: {json.dumps(j)[:300]}")
+    tmp = out_wav.with_suffix(".part")
+    tmp.write_bytes(base64.b64decode("".join(audios)))
+    tmp.replace(out_wav)
+
+
 async def tts_all(steps, meta, work, fake, provider):
     sem = asyncio.Semaphore(4)
     voice = meta.get("voice", "hi-IN-MadhurNeural")
@@ -245,6 +279,37 @@ async def tts_all(steps, meta, work, fake, provider):
     if provider == "gemini" and not fake and not g_key:
         sys.exit("GEMINI_API_KEY is not set. Add it as a repository secret and pass it in video.yml (env).")
     g_lock = asyncio.Lock()
+    s_model = meta.get("sarvam_model", SARVAM_MODEL)
+    s_speaker = meta.get("sarvam_speaker", SARVAM_SPEAKER)
+    s_pace = float(meta.get("sarvam_pace", 1.2))
+    s_delay = float(meta.get("sarvam_delay", 1))
+    s_key = os.environ.get("SARVAM_API_KEY", "")
+    if provider == "sarvam" and not fake and not s_key:
+        sys.exit("SARVAM_API_KEY is not set. Add it as a repository secret and pass it in video.yml (env).")
+    s_sem = asyncio.Semaphore(2)
+
+    async def sarvam_one(s, path):
+        async with s_sem:
+            last = None
+            for attempt in range(5):
+                try:
+                    await asyncio.to_thread(sarvam_tts_once, s["say"], s_model, s_speaker, s_pace, path, s_key)
+                    await asyncio.sleep(s_delay)
+                    return
+                except urllib.error.HTTPError as e:
+                    body = e.read()[:300]
+                    last = f"HTTP {e.code}: {body!r}"
+                    if e.code in (400, 401, 403, 404, 422):  # bad key / speaker / model / text: retrying is pointless
+                        break
+                    wait = 10 * (attempt + 1)  # 429 or 5xx
+                except Exception as e:
+                    last = e
+                    wait = 3 * (attempt + 1)
+                print(f"  Sarvam retry {attempt + 1}/5 in {wait}s ({last})", flush=True)
+                await asyncio.sleep(wait)
+            sys.exit(f"Sarvam voice failed for: {s['say'][:60]}\n{last}\n"
+                     "Check the key, credits, and that sarvam_speaker matches sarvam_model (lowercase). "
+                     "Finished lines are cached: re-run to continue.")
 
     async def gemini_one(s, path):
         async with g_lock:  # one call at a time + spacing
@@ -273,6 +338,9 @@ async def tts_all(steps, meta, work, fake, provider):
         if provider == "gemini":
             key = hashlib.md5(f"gemini|{g_voice}|{g_model}|{g_style}|{s['say']}".encode()).hexdigest()
             mp3 = work / "audio" / f"{key}.wav"
+        elif provider == "sarvam":
+            key = hashlib.md5(f"sarvam|{s_model}|{s_speaker}|{s_pace}|{s['say']}".encode()).hexdigest()
+            mp3 = work / "audio" / f"{key}.wav"
         else:
             key = hashlib.md5(f"{voice}|{rate}|{s['say']}".encode()).hexdigest()
             mp3 = work / "audio" / f"{key}.mp3"
@@ -281,6 +349,9 @@ async def tts_all(steps, meta, work, fake, provider):
             return
         if provider == "gemini" and not fake:
             await gemini_one(s, mp3)
+            return
+        if provider == "sarvam" and not fake:
+            await sarvam_one(s, mp3)
             return
         if fake:
             dur = max(1.5, len(s["say"]) * 0.075)
@@ -348,7 +419,7 @@ def main():
     ap.add_argument("--theme", default=None)
     ap.add_argument("--layout", default=None)
     ap.add_argument("--format", default=None)
-    ap.add_argument("--tts", default=None, help="edge | gemini (default: meta 'tts', else edge)")
+    ap.add_argument("--tts", default=None, help="edge | gemini | sarvam (default: meta 'tts', else edge)")
     ap.add_argument("--fake-tts", action="store_true", help="silent placeholder audio, for layout tests")
     a = ap.parse_args()
 
@@ -357,7 +428,7 @@ def main():
     theme = pick(a.theme, meta.get("theme"), "classic", list(THEMES))
     layout = pick(a.layout, meta.get("layout"), "list", ["list", "grid"])
     fmt = pick(a.format, meta.get("format"), "quiz", ["quiz", "revision"])
-    provider = pick(a.tts, meta.get("tts"), "edge", ["edge", "gemini"])
+    provider = pick(a.tts, meta.get("tts"), "edge", ["edge", "gemini", "sarvam"])
     qs, steps = make_steps(data, a.limit, fmt)
 
     for i, q in enumerate(qs, 1):
