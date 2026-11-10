@@ -378,7 +378,10 @@ def render_images(meta, qs, steps, work, theme, layout, fmt):
     from playwright.sync_api import sync_playwright
     cache = {}
     with sync_playwright() as p:
-        browser = p.chromium.launch()
+        try:  # the GitHub runner already has Google Chrome: no big browser download needed
+            browser = p.chromium.launch(channel="chrome")
+        except Exception:
+            browser = p.chromium.launch()  # Playwright's own Chromium
         page = browser.new_page(viewport={"width": W, "height": H})
         for n, s in enumerate(steps):
             key = json.dumps(s["state"], sort_keys=True)
