@@ -195,7 +195,7 @@ def make_steps(data, limit, fmt):
         steps.append({"state": {"mode": "q", "i": i, "opts": False}, "say": q["q"], "chapter": f"Q{i}"})
         say_opts = " ".join((f"{LET_SAY[l]}, {t}।" if lean else f"ऑप्शन {LET_SAY[l]}, {t}।")
                             for l, t in zip("ABCD", opts))
-        steps.append({"state": {"mode": "q", "i": i, "opts": True}, "say": say_opts})
+        steps.append({"state": {"mode": "q", "i": i, "opts": True}, "say": say_opts, "tight": True})
         if fmt == "quiz":
             for n in range(cd, 0, -1):
                 steps.append({"state": {"mode": "q", "i": i, "opts": True, "cd": n}, "silence": 1.0})
@@ -336,6 +336,22 @@ async def tts_all(steps, meta, work, fake, provider):
     sem = asyncio.Semaphore(4)
     voice = meta.get("voice", "hi-IN-MadhurNeural")
     rate = meta.get("rate", "+0%")
+    pitch = meta.get("pitch", "+0Hz")  # Edge only, e.g. "+2Hz" or "-3Hz"
+    # Edge adds a long pause at every "।" and a medium one at every ",". For the options line (tight=True)
+    # that is what makes "ऑप्शन ए ... [gap] ऑप्शन बी ..." feel slow. meta "option_gap": "none" | "short" | "normal"
+    gap_mode = meta.get("option_gap", "short")
+
+    def edge_text(s):
+        t = s["say"]
+        if s.get("tight") and gap_mode != "normal":
+            if gap_mode == "none":
+                t = re.sub(r"[।,]", " ", t)
+            else:  # short: keep a comma between options (small pause), drop the long "।" pause
+                t = t.replace("।", ",")
+                t = re.sub(r"(ऑप्शन\s+\S+),", r"\1", t)  # no pause between "ऑप्शन ए" and its text
+                t = t.rstrip(", ")
+        return re.sub(r"\s+", " ", t).strip()
+
     g_voice = meta.get("gemini_voice", GEMINI_VOICE)
     g_models = meta.get("gemini_models") or ([meta["gemini_model"]] if meta.get("gemini_model") else GEMINI_MODELS)
     if isinstance(g_models, str):
@@ -488,7 +504,7 @@ async def tts_all(steps, meta, work, fake, provider):
             key = hashlib.md5(f"sarvam|{s_model}|{s_speaker}|{s_pace}|{s['say']}".encode()).hexdigest()
             mp3 = work / "audio" / f"{key}.wav"
         else:
-            key = hashlib.md5(f"{voice}|{rate}|{s['say']}".encode()).hexdigest()
+            key = hashlib.md5(f"{voice}|{rate}|{pitch}|{edge_text(s)}".encode()).hexdigest()
             mp3 = work / "audio" / f"{key}.mp3"
         s["mp3"] = mp3
         if mp3.exists() and mp3.stat().st_size > 0:
@@ -508,7 +524,7 @@ async def tts_all(steps, meta, work, fake, provider):
         for attempt in range(4):
             try:
                 async with sem:
-                    await edge_tts.Communicate(s["say"], voice, rate=rate).save(str(mp3))
+                    await edge_tts.Communicate(edge_text(s), voice, rate=rate, pitch=pitch).save(str(mp3))
                 if mp3.exists() and mp3.stat().st_size > 0:
                     return
             except Exception as e:  # network hiccup, retry
