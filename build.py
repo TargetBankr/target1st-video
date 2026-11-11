@@ -45,6 +45,11 @@ SARVAM VOICE (Bulbul, built for Indian languages, Hindi = hi-IN)
       sarvam_speaker  default "shubh" (lowercase, must match the model; v3 also has aditya, ritu, priya, neha, rahul, pooja, ...)
       sarvam_pace     default 1.2, range 0.5-2.0 (Sarvam has its own speed control, "rate" is Edge only)
       sarvam_delay    seconds between calls, default 1 (limit is 60 requests/minute)
+      sarvam_price_per_1000  Rs per 1,000 characters, only used for the cost line in the log (default 2)
+      sarvam_max_credits     stop BEFORE spending if the estimate is higher than this (0 = no limit)
+    Sarvam charges per character, not per call, so batching lines does not save anything. To spend less:
+      lean_speech: true   shorter option/answer lines ("ए, यमुना।" instead of "ऑप्शन ए, यमुना।"), about 9% fewer characters
+      max_points: 2       speak and show only the first 2 points of each question (about 14% fewer with 3 points)
     Every finished line is cached in <out>/work/audio, so a re-run never pays twice for the same line.
 """
 import argparse
@@ -174,6 +179,8 @@ def make_steps(data, limit, fmt):
     meta = data["meta"]
     qs = data["questions"][:limit] if limit else data["questions"]
     cd = int(meta.get("countdown", 5))
+    lean = bool(meta.get("lean_speech", False))   # fewer spoken characters (cheaper voice): shorter option/answer lines
+    max_pts = int(meta.get("max_points", 0))      # 0 = speak and show all points, 2 = only the first two
     intro = meta.get("intro") or ("नमस्कार दोस्तों! आज हम इस पेपर के प्रश्न हल करेंगे। "
                                   "हर प्रश्न के बाद सोचने का समय मिलेगा, फिर सही उत्तर और मुख्य पॉइंट्स बताए जाएंगे।"
                                   if fmt == "quiz" else
@@ -186,14 +193,16 @@ def make_steps(data, limit, fmt):
         idx = "ABCD".index(ans)
         # both formats: question, then options shown and read aloud. Only quiz adds the countdown.
         steps.append({"state": {"mode": "q", "i": i, "opts": False}, "say": q["q"], "chapter": f"Q{i}"})
-        say_opts = " ".join(f"ऑप्शन {LET_SAY[l]}, {t}।" for l, t in zip("ABCD", opts))
+        say_opts = " ".join((f"{LET_SAY[l]}, {t}।" if lean else f"ऑप्शन {LET_SAY[l]}, {t}।")
+                            for l, t in zip("ABCD", opts))
         steps.append({"state": {"mode": "q", "i": i, "opts": True}, "say": say_opts})
         if fmt == "quiz":
             for n in range(cd, 0, -1):
                 steps.append({"state": {"mode": "q", "i": i, "opts": True, "cd": n}, "silence": 1.0})
         steps.append({"state": {"mode": "answer", "i": i, "pts": 0},
-                      "say": f"सही उत्तर है, ऑप्शन {LET_SAY[ans]}, {opts[idx]}।"})
-        for k, p in enumerate(q["points"], 1):
+                      "say": (f"सही उत्तर {LET_SAY[ans]}, {opts[idx]}।" if lean
+                              else f"सही उत्तर है, ऑप्शन {LET_SAY[ans]}, {opts[idx]}।")})
+        for k, p in enumerate(q["points"][:max_pts] if max_pts else q["points"], 1):
             steps.append({"state": {"mode": "answer", "i": i, "pts": k}, "say": norm_point(p)["say"]})
         if q.get("trick"):
             steps.append({"state": {"mode": "trick", "i": i}, "say": "ट्रिक। " + norm_point(q["trick"])["say"]})
@@ -507,6 +516,22 @@ async def tts_all(steps, meta, work, fake, provider):
                 await asyncio.sleep(2 * (attempt + 1))
         sys.exit(f"Voice generation failed for: {s['say'][:60]}\n{last}")
 
+    if provider == "sarvam":
+        todo = {}
+        for s in steps:
+            if "say" in s:
+                key = hashlib.md5(f"sarvam|{s_model}|{s_speaker}|{s_pace}|{s['say']}".encode()).hexdigest()
+                if not (work / "audio" / f"{key}.wav").exists():
+                    todo[s["say"]] = len(s["say"])
+        chars = sum(todo.values())
+        price = float(meta.get("sarvam_price_per_1000", 2))
+        cost = chars / 1000 * price
+        print(f"Sarvam: {chars} new characters to speak = about Rs {cost:.1f} at Rs {price:g} per 1,000 "
+              "(lines already in the cache are free)", flush=True)
+        cap = float(meta.get("sarvam_max_credits", 0))
+        if cap and cost > cap and not fake:
+            sys.exit(f"Stopped before spending anything: about Rs {cost:.1f} is over your sarvam_max_credits {cap:g}. "
+                     "Raise it, or use lean_speech / max_points / fewer questions.")
     if provider == "gemini" and not fake:
         await gemini_all()
     await asyncio.gather(*(one(s) for s in steps))
