@@ -4,15 +4,20 @@
     "subtitle": "",
     "channel": "Target1st",
     "voice": "hi-IN-MadhurNeural",
-    "rate": "+50%",
+    "rate": "+25%",
     "countdown": 0,
-    "intro": "नमस्कार दोस्तों",
-    "outro": "देखने के लिए धन्यवाद",
+    "intro": "o",
+    "outro": "o",
     "outro_show": "देखने के लिए धन्यवाद!",
     "theme": "royal",
     "layout": "grid",
     "format": "revision",
-    "tts": "edge"
+    "tts": "sarvam",
+    "sarvam_model": "bulbul:v4-flash",
+    "sarvam_speaker": "aayan_hi_conversational",
+    "sarvam_pace": 1.1,
+    "lean_speech": true,
+    "max_points": 2
   },
   "questions": [
     {
