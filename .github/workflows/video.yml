@@ -1,13 +1,15 @@
 name: Build quiz video
 
-# Voice: Edge-TTS (free, unlimited), Gemini AI voice (natural, free tier is slow/limited) or Sarvam Bulbul
-# (natural Hindi, Rs 100 free credits on signup, then paid).
-# Gemini needs a repository secret named GEMINI_API_KEY, Sarvam needs SARVAM_API_KEY
-# (Settings > Secrets and variables > Actions > Repository secrets).
-# Choose it with the "tts" input below, or set "tts" in the JSON meta (input "auto" = use the JSON).
-# Gemini/Sarvam voice lines are cached between runs, so a stopped build continues on re-run without paying twice.
+# AUTO: push (or edit) any file named  <name>.done.json  -> the video is built and a release is created.
+#       Example: haryana-clerk.done.json
+# MANUAL: Actions > Build quiz video > Run workflow still works (type the JSON file name).
+# All settings (theme, voice, format...) come from the JSON "meta" when started automatically.
+# Keep file names without spaces. Work-in-progress JSONs (without ".done") never trigger anything.
 
 on:
+  push:
+    paths:
+      - "**.done.json"
   workflow_dispatch:
     inputs:
       file:
@@ -32,7 +34,7 @@ on:
         default: "auto"
         options: [auto, quiz, revision]
       tts:
-        description: "Voice engine: edge = Edge-TTS, gemini = Gemini (GEMINI_API_KEY), sarvam = Sarvam Bulbul (SARVAM_API_KEY)"
+        description: "Voice engine: edge, gemini (GEMINI_API_KEY), sarvam (SARVAM_API_KEY)"
         type: choice
         default: "auto"
         options: [auto, edge, gemini, sarvam]
@@ -46,13 +48,30 @@ jobs:
     timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Find JSON files to build
+        env:
+          EVENT: ${{ github.event_name }}
+          BEFORE: ${{ github.event.before }}
+          SHA: ${{ github.sha }}
+          INPUT_FILE: ${{ inputs.file }}
+        run: |
+          if [ "$EVENT" = "push" ]; then
+            if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
+              BEFORE="$SHA~1"
+            fi
+            git diff --name-only --diff-filter=AM "$BEFORE" "$SHA" -- '*.done.json' > files.txt || true
+          else
+            echo "$INPUT_FILE" > files.txt
+          fi
+          echo "Will build:"; cat files.txt
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      # apt packages are cached after the first run, so ffmpeg and fonts install in seconds instead of hitting the
-      # Ubuntu mirror every time (that mirror is what makes this step slow or stuck some days)
       - name: Install ffmpeg and fonts (cached)
         uses: awalsh128/cache-apt-pkgs-action@v1
         with:
@@ -62,7 +81,6 @@ jobs:
       - name: Install Python packages
         run: pip install edge-tts playwright
 
-      # build.py uses the Google Chrome already on the runner; only download Playwright's browser if Chrome is missing
       - name: Browser check
         run: |
           if command -v google-chrome >/dev/null 2>&1; then
@@ -71,7 +89,6 @@ jobs:
             playwright install --with-deps chromium
           fi
 
-      # Gemini/Sarvam voice lines already made (keeps progress if a limit or error stops a run)
       - name: Restore voice cache
         uses: actions/cache/restore@v4
         with:
@@ -80,9 +97,10 @@ jobs:
           restore-keys: |
             voice-cache-
 
-      - name: Build video
+      - name: Build and publish each video
         env:
-          FILE: ${{ inputs.file }}
+          GH_TOKEN: ${{ github.token }}
+          RUN_NO: ${{ github.run_number }}
           LIMIT: ${{ inputs.limit }}
           THEME: ${{ inputs.theme }}
           LAYOUT: ${{ inputs.layout }}
@@ -90,7 +108,19 @@ jobs:
           TTS: ${{ inputs.tts }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
-        run: python -u build.py "$FILE" --out output --limit "$LIMIT" --theme "$THEME" --layout "$LAYOUT" --format "$FORMAT" --tts "$TTS"
+        run: |
+          while read -r f; do
+            [ -z "$f" ] && continue
+            name=$(basename "$f" .json); name=${name%.done}
+            echo "=== Building $f ==="
+            python -u build.py "$f" --out output --limit "${LIMIT:-0}" --theme "${THEME:-auto}" \
+              --layout "${LAYOUT:-auto}" --format "${FORMAT:-auto}" --tts "${TTS:-auto}"
+            cp output/video.mp4 "output/$name.mp4"
+            cp output/description.txt "output/$name-description.txt"
+            gh release create "video-$RUN_NO-$name" "output/$name.mp4" "output/$name-description.txt" \
+              --title "$name (run $RUN_NO)" \
+              --notes "Download the .mp4 and upload it to YouTube. The description file has title and chapters."
+          done < files.txt
 
       - name: Save voice cache
         if: always()
@@ -98,12 +128,3 @@ jobs:
         with:
           path: output/work/audio
           key: voice-cache-${{ github.run_id }}
-
-      - name: Publish release (direct download)
-        env:
-          GH_TOKEN: ${{ github.token }}
-          RUN_NO: ${{ github.run_number }}
-        run: |
-          gh release create "video-$RUN_NO" output/video.mp4 output/description.txt \
-            --title "Video $RUN_NO" \
-            --notes "Download video.mp4 and upload it to YouTube. description.txt has title and chapters."
