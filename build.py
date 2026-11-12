@@ -26,7 +26,8 @@ GEMINI VOICE
                     Default ["gemini-3.1-flash-tts-preview", "gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]. Add more by copying the
                     exact model name from AI Studio ("Get code"). A name that does not exist is skipped, not fatal.
                     (old single key "gemini_model" still works)
-      gemini_batch  questions per Gemini call, default 1. One call reads a whole question (question, options, answer,
+      gemini_batch  questions per Gemini call, default 1 (raised to 2-3 by itself when the video needs more calls than
+                    the daily limit of your models; meta gemini_auto_batch false = never do that). One call reads a whole question (question, options, answer,
                     points, trick) and the audio is cut back into lines at the pauses. Free tier allows only about
                     10 calls a day per model, so this is what makes a 25-question video possible. 2 = even fewer calls.
       gemini_style  optional style instruction put in front of the text, default none. Gemini sometimes READS it aloud,
@@ -35,7 +36,8 @@ GEMINI VOICE
       gemini_delay  seconds to wait between calls, default 21 (free tier allows 3 calls a minute per model)
     Calls run one at a time with retries. Every finished line is cached in <out>/work/audio, so a run stopped by
     the free daily limit can be re-run to continue (the cache is shared by all models). If every model has hit its
-    daily limit the build stops cleanly; re-run after the quota resets (about 1:30 pm IST).
+    daily limit the build stops cleanly with exit code 75 (video.yml sees this and resumes by itself after the
+    quota resets, about 1:30 pm IST; every other failure exits with code 1).
 
 SARVAM VOICE (Bulbul, built for Indian languages, Hindi = hi-IN)
     Set meta "tts": "sarvam" (or --tts sarvam) and provide the SARVAM_API_KEY environment variable
@@ -51,6 +53,16 @@ SARVAM VOICE (Bulbul, built for Indian languages, Hindi = hi-IN)
       lean_speech: true   shorter option/answer lines ("ए, यमुना।" instead of "ऑप्शन ए, यमुना।"), about 9% fewer characters
       max_points: 2       speak and show only the first 2 points of each question (about 14% fewer with 3 points)
     Every finished line is cached in <out>/work/audio, so a re-run never pays twice for the same line.
+
+FILLER LINES (short spoken lines between questions, e.g. "अगर आप ध्यान दें, तो इसका जवाब आपको आता ही होगा।")
+    meta "filler_lines": ["line 1", "line 2", ...]   12-15 lines work well; empty or missing = no fillers
+    meta "filler_every": [3, 4]                      a filler comes after every 3rd or 4th question, chosen at random
+                                                      (a single number like 3 means exactly every 3rd)
+    meta "filler_seed":  "any text"                  optional; same seed = same placement every build (default: the title)
+    A filler is spoken over the slide that is already on screen (no new slide). Lines are used in random order and
+    none repeats until all have been used. No filler comes after the last question. Every filler is an ordinary
+    voice line, so it is cached in <out>/work/audio like all others: once a line has been voiced it costs nothing
+    (no Sarvam credits, no Gemini call) in any later video that uses the same line and the same voice settings.
 """
 import argparse
 import asyncio
@@ -59,6 +71,7 @@ import hashlib
 import html
 import json
 import os
+import random
 import re
 import subprocess
 import sys
@@ -69,6 +82,7 @@ import wave
 from pathlib import Path
 
 W, H, FPS = 1920, 1080, 30
+QUOTA_EXIT = 75  # exit code meaning "every Gemini model is out of daily quota": video.yml waits and resumes
 PAUSE_DEFAULT = 0.15  # silence kept after every spoken line, seconds (meta "pause" overrides)
 TRIM = ("silenceremove=start_periods=1:start_threshold=-50dB,areverse,"
         "silenceremove=start_periods=1:start_threshold=-50dB,areverse")
@@ -175,9 +189,42 @@ def page_html(meta, qs, st, theme, layout, fmt):
             f'<body><div class="wm">Target1st</div><div class="wrap">{head}{body}</div></body></html>')
 
 
+def plan_fillers(meta, n_questions):
+    """Return {question number: filler line}. A filler is placed after question k, never after the last one.
+
+    Gap between fillers is random inside meta "filler_every" (default [3, 4]). Lines come from a shuffled bag,
+    so none repeats until every line has been used. The random generator is seeded (meta "filler_seed", else the
+    title), so rebuilding the same video gives the same placement.
+    """
+    lines = [str(x).strip() for x in (meta.get("filler_lines") or []) if str(x).strip()]
+    if not lines or n_questions < 2:
+        return {}
+    every = meta.get("filler_every", [3, 4])
+    if isinstance(every, (int, float, str)):
+        every = [every, every]
+    lo = max(1, int(every[0]))
+    hi = max(1, int(every[-1]))
+    if hi < lo:
+        lo, hi = hi, lo
+    rng = random.Random(str(meta.get("filler_seed") or meta.get("title") or "target1st"))
+    bag, last, plan = [], None, {}
+    k = rng.randint(lo, hi)
+    while k < n_questions:
+        if not bag:
+            bag = lines[:]
+            rng.shuffle(bag)
+            if last is not None and len(bag) > 1 and bag[0] == last:
+                bag.append(bag.pop(0))
+        last = bag.pop(0)
+        plan[k] = last
+        k += rng.randint(lo, hi)
+    return plan
+
+
 def make_steps(data, limit, fmt):
     meta = data["meta"]
     qs = data["questions"][:limit] if limit else data["questions"]
+    fillers = plan_fillers(meta, len(qs))
     cd = int(meta.get("countdown", 5))
     lean = bool(meta.get("lean_speech", False))   # fewer spoken characters (cheaper voice): shorter option/answer lines
     max_pts = int(meta.get("max_points", 0))      # 0 = speak and show all points, 2 = only the first two
@@ -206,7 +253,10 @@ def make_steps(data, limit, fmt):
             steps.append({"state": {"mode": "answer", "i": i, "pts": k}, "say": norm_point(p)["say"]})
         if q.get("trick"):
             steps.append({"state": {"mode": "trick", "i": i}, "say": "ट्रिक। " + norm_point(q["trick"])["say"]})
-    outro = meta.get("outro") or ("तो दोस्तों, आज के लिए बस इतना ही। वीडियो पसंद आया हो तो लाइक करें "
+        if i in fillers:
+            # spoken over the slide that is already on screen; the image is reused, so no new slide is rendered
+            steps.append({"state": dict(steps[-1]["state"]), "say": fillers[i], "filler": True})
+    outro =meta.get("outro") or ("तो दोस्तों, आज के लिए बस इतना ही। वीडियो पसंद आया हो तो लाइक करें "
                                   "और Target1st चैनल को सब्सक्राइब ज़रूर करें।")
     steps.append({"state": {"mode": "outro"}, "say": outro, "chapter": "Outro"})
     return qs, steps
@@ -269,11 +319,43 @@ def gemini_tts_once(prompt, voice, model, out_wav, api_key):
 def rate_ok(chars, seconds):
     """Normal Gemini Hindi runs at about 8-16 characters a second before speed-up. Far outside that means the
     clip is cut off, stretched, or has dead air, so it is not used."""
-    return 5.5 <= chars / max(0.05, seconds) <= 22
+    return 4.0 <= chars / max(0.05, seconds) <= 26
+
+
+def _nearest_gaps(gaps, chars, total):
+    """Pick len(chars)-1 pauses, in order, that sit closest to where each line should end if every character took
+    the same time, with a bonus for longer pauses (the gap between paragraphs is longer than a comma pause)."""
+    n = len(chars)
+    tot = sum(chars) or 1
+    exp = [total * sum(chars[:k]) / tot for k in range(1, n)]
+    mids = [(a + b) / 2 for a, b in gaps]
+    cost = lambda k, j: abs(mids[j] - exp[k]) - 6.0 * (gaps[j][1] - gaps[j][0])
+    m = len(gaps)
+    INF = float("inf")
+    best = [[INF] * m for _ in range(n - 1)]
+    back = [[-1] * m for _ in range(n - 1)]
+    for j in range(m):
+        best[0][j] = cost(0, j)
+    for k in range(1, n - 1):
+        run_best, run_j = INF, -1
+        for j in range(m):
+            if j > 0 and best[k - 1][j - 1] < run_best:
+                run_best, run_j = best[k - 1][j - 1], j - 1
+            if run_j >= 0:
+                best[k][j] = run_best + cost(k, j)
+                back[k][j] = run_j
+    j = min(range(m), key=lambda x: best[n - 2][x])
+    if best[n - 2][j] == INF:
+        return None
+    pick = [j]
+    for k in range(n - 2, 0, -1):
+        j = back[k][j]
+        pick.append(j)
+    return [gaps[i] for i in reversed(pick)]
 
 
 def split_by_silence(full, lines):
-    """Cut one long recording into len(lines) clips at the longest pauses.
+    """Cut one long recording into len(lines) clips at the pauses between the paragraphs.
 
     Writes each clip to line["mp3"]. Returns True only if the cut looks right: the right number of pauses
     was found and every clip's length roughly matches how long its text is. Otherwise returns False and
@@ -282,7 +364,18 @@ def split_by_silence(full, lines):
     n = len(lines)
     total = probe(full)
     chars = [len(l["say"]) for l in lines]
-    for noise, dur in (("-38dB", 0.35), ("-38dB", 0.2), ("-32dB", 0.2)):
+
+    def judge(sel, lo, hi):
+        cuts = [0.0] + [(a + b) / 2 for a, b in sel] + [total]
+        # speech length of each line = from the end of the pause before it to the start of the pause after it
+        speech = [(sel[k - 1][1] if k else 0.0, sel[k][0] if k < n - 1 else total) for k in range(n)]
+        sp = [max(0.05, b - a) for a, b in speech]
+        per_char = sum(sp) / max(1, sum(chars))
+        ok = all(lo * per_char <= d / c <= hi * per_char and rate_ok(c, d)
+                 for d, c in zip(sp, chars) if c >= 25)
+        return ok, cuts
+
+    for noise, dur in (("-38dB", 0.35), ("-38dB", 0.2), ("-32dB", 0.2), ("-35dB", 0.12)):
         r = subprocess.run(["ffmpeg", "-i", str(full), "-af", f"silencedetect=noise={noise}:d={dur}",
                             "-f", "null", "-"], capture_output=True, text=True)
         starts = [float(x) for x in re.findall(r"silence_start: (-?[\d.]+)", r.stderr)]
@@ -290,22 +383,21 @@ def split_by_silence(full, lines):
         gaps = [(a, b) for a, b in zip(starts, ends) if a > 0.15 and b < total - 0.15]
         if len(gaps) < n - 1:
             continue
-        gaps = sorted(sorted(gaps, key=lambda g: g[1] - g[0], reverse=True)[: n - 1])
-        cuts = [0.0] + [(a + b) / 2 for a, b in gaps] + [total]
-        # speech length of each line = from the end of the pause before it to the start of the pause after it
-        speech = [(gaps[k - 1][1] if k else 0.0, gaps[k][0] if k < n - 1 else total) for k in range(n)]
-        sp = [max(0.05, b - a) for a, b in speech]
-        per_char = sum(sp) / max(1, sum(chars))
-        ok = all(0.4 * per_char <= d / c <= 2.5 * per_char and rate_ok(c, d)
-                 for d, c in zip(sp, chars) if c >= 25)
-        if not ok:
-            continue
-        for k, l in enumerate(lines):
-            tmp = l["mp3"].with_suffix(".part")
-            run(["ffmpeg", "-y", "-i", str(full), "-ss", f"{cuts[k]:.3f}", "-to", f"{cuts[k + 1]:.3f}",
-                 "-c:a", "pcm_s16le", "-f", "wav", str(tmp)])
-            tmp.replace(l["mp3"])
-        return True
+        tries = [(sorted(sorted(gaps, key=lambda g: g[1] - g[0], reverse=True)[: n - 1]), 0.4, 2.5)]
+        if len(gaps) > n - 1:  # extra pauses inside lines: choose by position, not only by length
+            near = _nearest_gaps(gaps, chars, total)
+            if near:
+                tries.append((near, 0.3, 3.3))
+        for sel, lo, hi in tries:
+            ok, cuts = judge(sel, lo, hi)
+            if not ok:
+                continue
+            for k, l in enumerate(lines):
+                tmp = l["mp3"].with_suffix(".part")
+                run(["ffmpeg", "-y", "-i", str(full), "-ss", f"{cuts[k]:.3f}", "-to", f"{cuts[k + 1]:.3f}",
+                     "-c:a", "pcm_s16le", "-f", "wav", str(tmp)])
+                tmp.replace(l["mp3"])
+            return True
     return False
 
 
@@ -410,8 +502,10 @@ async def tts_all(steps, meta, work, fake, provider):
         while True:
             live = [m for m in g_models if m not in g_dead]
             if not live:
-                sys.exit("Every Gemini model has hit its daily limit (or was not found). Finished lines are cached. "
-                         "Re-run after the quota resets (about 1:30 pm IST), or add more models in meta gemini_models.")
+                print("Every Gemini model has hit its daily limit (or was not found). Finished lines are cached. "
+                      "Re-run after the quota resets (about 1:30 pm IST), or add more models in meta gemini_models.",
+                      flush=True)
+                sys.exit(QUOTA_EXIT)
             model = live[0]
             minute_hits = fails = 0
             while True:
@@ -458,32 +552,49 @@ async def tts_all(steps, meta, work, fake, provider):
             if attempt == 0:
                 print("  generating that line again", flush=True)
 
-    async def gemini_group(lines):
-        """Make the audio for several lines with as few calls as possible (normally one)."""
+    async def gemini_group(lines, deferred):
+        """Make the audio for several lines with as few calls as possible (normally one).
+        A group that cannot be cut cleanly is NOT redone line by line now (that costs many calls and used to eat the
+        daily limit): it is put aside and done at the very end, after every normal group has its audio."""
         if len(lines) == 1:
             await gemini_line(lines[0])
             return
-        if len(lines) > 1:
-            full = work / "audio" / f"_group_{lines[0]['mp3'].stem}.wav"
-            for attempt in range(2):
-                await gemini_call(g_prompt(lines), full)
-                if split_by_silence(full, lines):
-                    full.unlink(missing_ok=True)
-                    return
+        full = work / "audio" / f"_group_{lines[0]['mp3'].stem}.wav"
+        for attempt in range(2):
+            await gemini_call(g_prompt(lines), full)
+            if split_by_silence(full, lines):
+                full.unlink(missing_ok=True)
+                return
+            if attempt == 0:
                 print("  Could not cut the audio cleanly into lines, generating again", flush=True)
-            full.unlink(missing_ok=True)
-            print("  Falling back to one call per line for this group", flush=True)
-        for l in lines:
-            await gemini_line(l)
+        full.unlink(missing_ok=True)
+        print("  Still no clean cut: this group is set aside, to be made line by line at the end", flush=True)
+        deferred.append(lines)
 
     async def gemini_all():
-        groups, order = {}, []
+        nonlocal g_batch
+        groups, order, seen = {}, [], set()
+        # Free tier is about 10 calls a day per model. If the video needs more calls than the models can give in
+        # one day, voice more questions per call (up to 3) instead of stopping half way. meta gemini_auto_batch false = off.
+        nq = max([s["state"]["i"] for s in steps if "say" in s and s.get("state", {}).get("mode") not in ("intro", "outro")
+                  and not s.get("filler") and "i" in s.get("state", {})] or [0])
+        day_calls = max(1, int(meta.get("gemini_calls_per_day", 10))) * len(g_models)
+        if meta.get("gemini_auto_batch", True) and nq and -(-nq // g_batch) + 3 > day_calls and g_batch < 3:
+            g_batch = min(3, -(-nq // max(1, day_calls - 3)))
+            print(f"Gemini: {nq} questions would need more calls than one day allows, so {g_batch} questions are "
+                  f"voiced per call (meta gemini_auto_batch false turns this off)", flush=True)
         for s in steps:
             if "say" not in s:
                 continue
             s["mp3"] = g_path(s)
-            mode = s["state"]["mode"]
-            gk = mode if mode in ("intro", "outro") else (s["state"]["i"] - 1) // g_batch
+            if s.get("filler"):
+                if s["mp3"] in seen:
+                    continue  # same filler line used twice in one video: voice it once
+                seen.add(s["mp3"])
+                gk = ("filler", (len(seen) - 1) // 4)  # four filler lines per call
+            else:
+                mode = s["state"]["mode"]
+                gk = mode if mode in ("intro", "outro") else (s["state"]["i"] - 1) // g_batch
             if gk not in groups:
                 groups[gk] = []
                 order.append(gk)
@@ -491,9 +602,17 @@ async def tts_all(steps, meta, work, fake, provider):
         todo = [[s for s in groups[gk] if not (s["mp3"].exists() and s["mp3"].stat().st_size > 0)] for gk in order]
         todo = [t for t in todo if t]
         print(f"Gemini: {len(todo)} call group(s) to make, models: {', '.join(g_models)}", flush=True)
+        deferred = []
         for n, lines in enumerate(todo, 1):
             print(f"  group {n}/{len(todo)} ({len(lines)} lines)", flush=True)
-            await gemini_group(lines)
+            await gemini_group(lines, deferred)
+        if deferred:
+            left = [l for lines in deferred for l in lines]
+            print(f"Gemini: {len(deferred)} group(s) need {len(left)} single calls (all normal groups are done and cached)",
+                  flush=True)
+            for l in left:
+                if not (l["mp3"].exists() and l["mp3"].stat().st_size > 0):
+                    await gemini_line(l)
 
     async def one(s):
         if "say" not in s:
@@ -550,7 +669,18 @@ async def tts_all(steps, meta, work, fake, provider):
                      "Raise it, or use lean_speech / max_points / fewer questions.")
     if provider == "gemini" and not fake:
         await gemini_all()
-    await asyncio.gather(*(one(s) for s in steps))
+    # a filler line used twice in one video is voiced once (and paid for once)
+    first, dup, todo_steps = {}, [], []
+    for s in steps:
+        if s.get("filler"):
+            if s["say"] in first:
+                dup.append((s, first[s["say"]]))
+                continue
+            first[s["say"]] = s
+        todo_steps.append(s)
+    await asyncio.gather(*(one(s) for s in todo_steps))
+    for s, src in dup:
+        s["mp3"] = src["mp3"]
 
 
 def render_images(meta, qs, steps, work, theme, layout, fmt):
@@ -623,6 +753,14 @@ def main():
             print(f"WARNING Q{i}: trick is over 120 characters, shorten it")
         if len(q["q"]) > 170:
             print(f"WARNING Q{i}: question is very long, slide may overflow")
+
+    n_fill = sum(1 for s in steps if s.get("filler"))
+    if meta.get("filler_lines"):
+        print(f"Fillers: {n_fill} filler line(s) placed between questions "
+              f"(every {meta.get('filler_every', [3, 4])}), from {len(meta['filler_lines'])} lines")
+        for ln in meta["filler_lines"]:
+            if len(str(ln)) > 120:
+                print(f"WARNING: filler line is over 120 characters, shorten it: {str(ln)[:40]}...")
 
     out = Path(a.out)
     work = out / "work"
