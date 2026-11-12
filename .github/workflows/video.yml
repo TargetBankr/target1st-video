@@ -31,6 +31,9 @@ name: Build quiz video
 # MANUAL: Actions > Build quiz video > Run workflow still works (type the JSON file name).
 #       The optional "delay" box takes the same things: 15m, 2h, 1h30m, @1335, after.
 #       ("wake" and "attempt" are used by the workflow itself when it continues a run: leave them empty.)
+# SEVERAL KEYS: in the JSON meta "key_slot": 2 uses the repository secret GEMINI_API_KEY_2 / SARVAM_API_KEY_2
+#       (slot 1 = GEMINI_API_KEY / SARVAM_API_KEY). Slots 2 to 5 are passed below. Add the secrets under
+#       Settings > Secrets and variables > Actions, with exactly those names.
 # All settings (theme, voice, format...) come from the JSON "meta" when started automatically.
 # Keep file names without spaces. Work-in-progress JSONs (without ".done") never trigger anything.
 
@@ -244,6 +247,14 @@ jobs:
           TTS: ${{ inputs.tts }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          SARVAM_API_KEY_2: ${{ secrets.SARVAM_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          SARVAM_API_KEY_3: ${{ secrets.SARVAM_API_KEY_3 }}
+          GEMINI_API_KEY_4: ${{ secrets.GEMINI_API_KEY_4 }}
+          SARVAM_API_KEY_4: ${{ secrets.SARVAM_API_KEY_4 }}
+          GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
+          SARVAM_API_KEY_5: ${{ secrets.SARVAM_API_KEY_5 }}
         run: |
           source ./lib.sh
           START=$(cat start.txt)
