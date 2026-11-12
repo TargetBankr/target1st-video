@@ -1,0 +1,31 @@
+name: Cleanup files
+on:
+  workflow_dispatch:
+    inputs:
+      pattern:
+        description: "Files to delete, e.g. *.done.json or old/*.json"
+        required: true
+      dry_run:
+        description: "true = only list what would be deleted"
+        type: boolean
+        default: true
+permissions:
+  contents: write
+jobs:
+  clean:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Delete matching files
+        env:
+          PATTERN: ${{ inputs.pattern }}
+          DRY: ${{ inputs.dry_run }}
+        run: |
+          git ls-files -- "$PATTERN" | grep -v '^\.github/' > list.txt || true
+          echo "Matching files:"; cat list.txt; wc -l < list.txt
+          if [ "$DRY" = "true" ] || [ ! -s list.txt ]; then echo "Nothing deleted."; exit 0; fi
+          xargs -d '\n' git rm -q < list.txt
+          git config user.name "github-actions"
+          git config user.email "github-actions@users.noreply.github.com"
+          git commit -m "Cleanup: delete $PATTERN"
+          git push
