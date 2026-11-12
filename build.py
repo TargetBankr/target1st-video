@@ -23,6 +23,11 @@ HOW SPECIAL CHARACTERS ARE SPOKEN (the slide keeps the written text; only the vo
     "प. बंगाल" = पश्चिम बंगाल, उ.प्र. = उत्तर प्रदेश, 326 ई.पू. = ईसा पूर्व. Your own list: meta "pronounce": {"RBI": "आर बी आई", "km": "किलोमीटर"}
     (Latin keys match whole words only). One line can also be set by hand with {"show": "...", "say": "..."} in points.
 
+SEVERAL API KEYS (more videos from the daily limits / credits of each key)
+    Set meta "key_slot": 2 to use the second key of the same engine: GEMINI_API_KEY_2 or SARVAM_API_KEY_2
+    (slot 1 or nothing = GEMINI_API_KEY / SARVAM_API_KEY; slots 2 to 5 are wired in video.yml). Keys made in the
+    SAME Google project share one Gemini daily limit; use keys from different projects for more quota.
+
 GEMINI VOICE
     Set meta "tts": "gemini" (or pass --tts gemini) and provide the GEMINI_API_KEY environment variable
     (GitHub: repository secret GEMINI_API_KEY, already wired in video.yml).
@@ -539,17 +544,30 @@ async def tts_all(steps, meta, work, fake, provider):
     g_delay = float(meta.get("gemini_delay", 21))  # free tier: 3 calls per minute per model
     g_batch = max(1, int(meta.get("gemini_batch", 1)))  # questions per Gemini call
     g_dead = set()  # models that hit their daily limit (or do not exist) in this run
-    g_key = os.environ.get("GEMINI_API_KEY", "")
+    # key_slot picks WHICH key of the same engine this video uses: 1 (or empty) = GEMINI_API_KEY / SARVAM_API_KEY,
+    # 2 = GEMINI_API_KEY_2 / SARVAM_API_KEY_2, and so on. The voice engine and settings stay the same, so the voice
+    # cache is shared between keys (lines already voiced are never paid for again).
+    try:
+        slot = int(meta.get("key_slot") or 1)
+    except (TypeError, ValueError):
+        slot = 0
+    if not 1 <= slot <= 5:
+        sys.exit(f"meta key_slot must be a number from 1 to 5, got {meta.get('key_slot')!r}")
+    g_env = "GEMINI_API_KEY" + (f"_{slot}" if slot > 1 else "")
+    s_env = "SARVAM_API_KEY" + (f"_{slot}" if slot > 1 else "")
+    g_key = os.environ.get(g_env, "")
     if provider == "gemini" and not fake and not g_key:
-        sys.exit("GEMINI_API_KEY is not set. Add it as a repository secret and pass it in video.yml (env).")
+        sys.exit(f"{g_env} is not set. Add it as a repository secret (name exactly {g_env}) and pass it in video.yml (env).")
+    if provider in ("gemini", "sarvam") and not fake:
+        print(f"Key: using {g_env if provider == 'gemini' else s_env} (key_slot {slot})", flush=True)
     g_lock = asyncio.Lock()
     s_model = meta.get("sarvam_model", SARVAM_MODEL)
     s_speaker = meta.get("sarvam_speaker", SARVAM_SPEAKER)
     s_pace = float(meta.get("sarvam_pace", 1.2))
     s_delay = float(meta.get("sarvam_delay", 1))
-    s_key = os.environ.get("SARVAM_API_KEY", "")
+    s_key = os.environ.get(s_env, "")
     if provider == "sarvam" and not fake and not s_key:
-        sys.exit("SARVAM_API_KEY is not set. Add it as a repository secret and pass it in video.yml (env).")
+        sys.exit(f"{s_env} is not set. Add it as a repository secret (name exactly {s_env}) and pass it in video.yml (env).")
     s_sem = asyncio.Semaphore(2)
 
     async def sarvam_one(s, path):
