@@ -2,19 +2,50 @@ name: Build quiz video
 
 # AUTO: push (or edit) any file named  <name>.done.json  -> the video is built and a release is created.
 #       Example: haryana-clerk.done.json
+#
+# START LATER (useful for Gemini / Sarvam rate limits): put the time right after "done" in the file name
+#       haryana-clerk.done+15m.json   -> starts 15 minutes after the push
+#       haryana-clerk.done+2h.json    -> starts 2 hours after the push
+#       haryana-clerk.done+1h30m.json -> 1 hour 30 minutes (any number of hours and/or minutes)
+#       haryana-clerk.done@1335.json  -> starts at the next 1:35 pm IST (24-hour HHMM, India time; @0030 = 12:30 am)
+#       Waits longer than about 4h50m are chained: this run sleeps, then starts a fresh run that waits the rest,
+#       so even "@1335" pressed at 2 pm (23 hours away) works. Up to 48 hours.
+#       Several files in one push each wait their own time.
+#
+# START AFTER THE PREVIOUS ONE FINISHES (no time guessing):
+#       haryana-clerk.done+after.json -> waits until every earlier run of this workflow has finished, then starts.
+#       Push 3 files one after another, all named .done+after.json, and they build one by one in push order.
+#       An earlier run that is itself sleeping for a timed start (+2h, @1335) counts as "still going".
+#       It checks every 3 minutes; if the wait goes past 5.5 hours it starts a fresh run that keeps waiting
+#       (that file then goes to the back of the line).
+#
+# MANY VIDEOS AT ONCE: put them all in ONE commit (plain .done.json names). They build one after another in file-name
+#       order (name them 01-, 02-, 03- ... to choose the order). When a run has used 4h10m it stops starting new videos and
+#       ONE fresh run builds the rest. If a video fails, the videos after it in that run are not started (saves your
+#       Sarvam money); the voice lines already made are cached.
+#
+# AUTO-RESUME: if every Gemini model has used its daily limit, the finished voice lines stay cached and the run
+#       queues itself again for the next 1:35 pm IST (env QUOTA_RESET_AT below), at most 3 times per video.
+#       Other failures (bad JSON, bad key, no Sarvam credits...) are NOT resumed: they fail as before.
+#
 # MANUAL: Actions > Build quiz video > Run workflow still works (type the JSON file name).
+#       The optional "delay" box takes the same things: 15m, 2h, 1h30m, @1335, after.
+#       ("wake" and "attempt" are used by the workflow itself when it continues a run: leave them empty.)
 # All settings (theme, voice, format...) come from the JSON "meta" when started automatically.
 # Keep file names without spaces. Work-in-progress JSONs (without ".done") never trigger anything.
 
 on:
   push:
     paths:
-      - "**.done.json"
+      - "**.done*.json"
   workflow_dispatch:
     inputs:
       file:
         description: "JSON file to render"
         default: "questions.json"
+      delay:
+        description: "Wait before building: 15m, 2h, 1h30m, @1335 (India time) or after (when earlier runs finish). Empty = start now"
+        default: ""
       limit:
         description: "Only first N questions (0 = all)"
         default: "0"
@@ -38,9 +69,19 @@ on:
         type: choice
         default: "auto"
         options: [auto, edge, gemini, sarvam]
+      wake:
+        description: "(set by the workflow itself, leave empty) start time as epoch seconds"
+        default: ""
+      attempt:
+        description: "(set by the workflow itself, leave empty) how many quota resumes happened"
+        default: ""
 
 permissions:
   contents: write
+  actions: write
+
+env:
+  QUOTA_RESET_AT: "1335"   # Gemini daily quota resets about 1:30 pm IST; resume a few minutes after
 
 jobs:
   build:
@@ -52,36 +93,128 @@ jobs:
           fetch-depth: 0
 
       - name: Find JSON files to build
+        id: find
         env:
           EVENT: ${{ github.event_name }}
           BEFORE: ${{ github.event.before }}
           SHA: ${{ github.sha }}
           INPUT_FILE: ${{ inputs.file }}
+          INPUT_DELAY: ${{ inputs.delay }}
+          INPUT_WAKE: ${{ inputs.wake }}
+          INPUT_ATTEMPT: ${{ inputs.attempt }}
         run: |
+          # helper functions, also used by the later steps
+          cat > lib.sh <<'EOF'
+          # next HH:MM (India time) after now, as epoch seconds.   usage: next_at 1335
+          next_at() {
+            local hh=${1:0:2} mm=${1:2:2} now t
+            now=$(date +%s)
+            t=$(TZ=Asia/Kolkata date -d "$(TZ=Asia/Kolkata date +%F) ${hh}:${mm}" +%s)
+            if [ "$t" -le "$now" ]; then t=$((t + 86400)); fi
+            echo "$t"
+          }
+          # "" | after | 15m | 2h | 1h30m | @1335  ->  epoch seconds when the build may start (BAD if unreadable)
+          # ("after" starts now; the build step then waits for earlier runs to finish)
+          # usage: spec_to_epoch "<spec>" "<base epoch>"
+          spec_to_epoch() {
+            local s h=0 m=0
+            s=$(printf '%s' "$1" | tr 'A-Z' 'a-z')
+            if [ -z "$s" ] || [ "$s" = "after" ]; then echo "$2"; return; fi
+            if [[ "$s" =~ ^@([01][0-9]|2[0-3])([0-5][0-9])$ ]]; then next_at "${s#@}"; return; fi
+            if ! [[ "$s" =~ ^([0-9]+h)?([0-9]+m)?$ ]]; then echo BAD; return; fi
+            if [[ "$s" =~ ([0-9]+)h ]]; then h=${BASH_REMATCH[1]}; fi
+            if [[ "$s" =~ ([0-9]+)m ]]; then m=${BASH_REMATCH[1]}; fi
+            echo $(( $2 + 10#$h * 3600 + 10#$m * 60 ))
+          }
+          # how many OTHER runs of this workflow with a lower run number are still running or queued.
+          # One API call. If GitHub does not answer, prints "?" (unknown): the caller keeps waiting, it never starts early.
+          earlier_runs_active() {
+            local out
+            out=$(gh run list --workflow "$WORKFLOW_NAME" --limit 100 --json number,status \
+                    --jq "[.[] | select(.number < $RUN_NO and (.status==\"in_progress\" or .status==\"queued\" or .status==\"waiting\" or .status==\"pending\" or .status==\"requested\"))] | length" \
+                    < /dev/null 2>/dev/null) || { echo "?"; return; }
+            case "$out" in ''|*[!0-9]*) echo "?" ;; *) echo "$out" ;; esac
+          }
+          EOF
+          source ./lib.sh
+
+          START=$(date +%s)
+          echo "$START" > start.txt
+          CAP=17400        # a run never sleeps longer than 4h50m itself (GitHub stops a job at 6h)
+          MAXWAIT=172800   # refuse waits over 48h: almost certainly a typo
+
           if [ "$EVENT" = "push" ]; then
             if [ -z "$BEFORE" ] || [ "$BEFORE" = "0000000000000000000000000000000000000000" ]; then
               BEFORE="$SHA~1"
             fi
-            git diff --name-only --diff-filter=AM "$BEFORE" "$SHA" -- '*.done.json' > files.txt || true
+            git diff --name-only --diff-filter=AM "$BEFORE" "$SHA" -- '*.done*.json' > files.txt || true
           else
-            echo "$INPUT_FILE" > files.txt
+            printf '%s\n' "$INPUT_FILE" | tr ',' '\n' | sed 's/^ *//; s/ *$//' > files.txt   # several files may be given, comma separated
           fi
-          echo "Will build:"; cat files.txt
+
+          # plan.txt     = files to build in this run:     wake|file|name|attempt|after   (sorted by wake)
+          # handover.txt = files too far away for this run: wake|file|attempt       (a fresh run is started later)
+          : > plan.txt
+          : > handover.txt
+          : > rest.txt
+          while read -r f; do
+            [ -z "$f" ] && continue
+            base=$(basename "$f" .json)
+            name="$base"
+            spec="$INPUT_DELAY"
+            if [[ "$base" == *.done* ]]; then
+              name=${base%%.done*}
+              suffix=${base#*.done}
+              if [[ "$suffix" == +* ]]; then spec=${suffix#+}
+              elif [[ "$suffix" == @* ]]; then spec=$suffix
+              elif [ -n "$suffix" ]; then
+                echo "::error::Cannot read '$suffix' in $f. Use .done.json, .done+15m.json, .done+2h.json, .done+1h30m.json, .done@1335.json or .done+after.json"; exit 1
+              fi
+            fi
+            if [ -n "$INPUT_WAKE" ]; then
+              wake="$INPUT_WAKE"      # a continued run: the time was already worked out
+            else
+              wake=$(spec_to_epoch "$spec" "$START")
+            fi
+            if ! [[ "$wake" =~ ^[0-9]+$ ]]; then
+              echo "::error::Cannot read the start time '$spec' for $f. Use for example 15m, 2h, 1h30m, @1335 or after"; exit 1
+            fi
+            if [ $(( wake - START )) -gt "$MAXWAIT" ]; then
+              echo "::error::$f would wait more than 48 hours, please check the time in the file name"; exit 1
+            fi
+            attempt=${INPUT_ATTEMPT:-0}
+            after=0
+            if [ "$(printf '%s' "$spec" | tr 'A-Z' 'a-z')" = "after" ]; then after=1; fi
+            if [ $(( wake - START )) -gt "$CAP" ]; then
+              echo "$wake|$f|$attempt" >> handover.txt
+            else
+              echo "$wake|$f|$name|$attempt|$after" >> plan.txt
+            fi
+          done < files.txt
+          sort -n -t'|' -k1,1 plan.txt -o plan.txt
+          echo "Build now or after a wait (start epoch | file | name | resumes so far | wait for earlier runs):"; cat plan.txt
+          echo "Too far for this run, handed to a later run (start epoch | file | resumes so far):"; cat handover.txt
+          # a run that only has far-away files just sleeps and hands over: skip the installs
+          if [ -s plan.txt ]; then echo "build=true" >> "$GITHUB_OUTPUT"; else echo "build=false" >> "$GITHUB_OUTPUT"; fi
 
       - uses: actions/setup-python@v5
+        if: steps.find.outputs.build == 'true'
         with:
           python-version: "3.12"
 
       - name: Install ffmpeg and fonts (cached)
+        if: steps.find.outputs.build == 'true'
         uses: awalsh128/cache-apt-pkgs-action@v1
         with:
           packages: ffmpeg fonts-noto-core fonts-freefont-ttf
           version: 1.0
 
       - name: Install Python packages
+        if: steps.find.outputs.build == 'true'
         run: pip install edge-tts playwright
 
       - name: Browser check
+        if: steps.find.outputs.build == 'true'
         run: |
           if command -v google-chrome >/dev/null 2>&1; then
             echo "Google Chrome found, no browser download needed"
@@ -90,6 +223,7 @@ jobs:
           fi
 
       - name: Restore voice cache
+        if: steps.find.outputs.build == 'true'
         uses: actions/cache/restore@v4
         with:
           path: output/work/audio
@@ -98,9 +232,11 @@ jobs:
             voice-cache-
 
       - name: Build and publish each video
+        if: steps.find.outputs.build == 'true'
         env:
           GH_TOKEN: ${{ github.token }}
           RUN_NO: ${{ github.run_number }}
+          WORKFLOW_NAME: ${{ github.workflow }}
           LIMIT: ${{ inputs.limit }}
           THEME: ${{ inputs.theme }}
           LAYOUT: ${{ inputs.layout }}
@@ -109,22 +245,122 @@ jobs:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
         run: |
-          while read -r f; do
+          source ./lib.sh
+          START=$(cat start.txt)
+          while IFS='|' read -r -u 3 wake f name attempt after; do
             [ -z "$f" ] && continue
-            name=$(basename "$f" .json); name=${name%.done}
+            left=$(( wake - $(date +%s) ))
+            if [ "$left" -gt 0 ]; then
+              echo "=== $f starts at its set time. Waiting $left s (about $(( (left + 59) / 60 )) min) ==="
+              sleep "$left"
+            fi
+            if [ $(( $(date +%s) - START )) -gt 15000 ]; then
+              # this run has used 4h10m of its 6h: do not start another video here, a fresh run takes the rest
+              echo "$f|$attempt" >> rest.txt
+              echo "::notice::$f: this run is nearly out of time, a fresh run will build it (and the files after it)."
+              continue
+            fi
+            if [ "$after" = "1" ]; then
+              # "+after": wait until every earlier run of this workflow has finished
+              passed=0
+              unknown=0
+              while true; do
+                n=$(earlier_runs_active)
+                if [ "$n" = "0" ]; then break; fi
+                if [ "$n" = "?" ]; then
+                  unknown=$(( unknown + 1 ))
+                  if [ "$unknown" -gt 10 ]; then
+                    echo "::error::$f: cannot ask GitHub which runs are still going (10 tries in a row). Nothing was built or paid for."
+                    exit 1
+                  fi
+                  echo "Could not check the earlier runs right now, waiting (try $unknown)"
+                else
+                  unknown=0
+                  echo "$f is waiting for $n earlier run(s) to finish (checking again in 3 min)"
+                fi
+                if [ $(( $(date +%s) - START )) -gt 19800 ]; then passed=1; break; fi   # 5.5 h: let a fresh run keep waiting
+                sleep 180
+              done
+              if [ "$passed" -eq 1 ]; then
+                echo "$(date +%s)|$f|$attempt" >> handover.txt
+                echo "::warning::$f: earlier runs are still going after 5.5 hours. A fresh run will keep waiting."
+                continue
+              fi
+            fi
             echo "=== Building $f ==="
+            rc=0
             python -u build.py "$f" --out output --limit "${LIMIT:-0}" --theme "${THEME:-auto}" \
-              --layout "${LAYOUT:-auto}" --format "${FORMAT:-auto}" --tts "${TTS:-auto}"
+              --layout "${LAYOUT:-auto}" --format "${FORMAT:-auto}" --tts "${TTS:-auto}" || rc=$?
+            if [ "$rc" -eq 75 ]; then
+              # every Gemini model is out of daily quota: keep the cached voice lines and come back after the reset
+              att=$(( attempt + 1 ))
+              if [ "$att" -gt 3 ]; then
+                echo "::error::$f: Gemini quota is still used up after 3 automatic resumes. Giving up; re-run it yourself later."
+                exit 1
+              fi
+              echo "$(next_at "$QUOTA_RESET_AT")|$f|$att" >> handover.txt
+              echo "::warning::$f: Gemini daily quota used up. Will resume at the next ${QUOTA_RESET_AT} IST (resume $att of 3). Finished voice lines are saved."
+              continue
+            elif [ "$rc" -ne 0 ]; then
+              echo "::error::$f failed (exit code $rc)"
+              exit "$rc"
+            fi
             cp output/video.mp4 "output/$name.mp4"
             cp output/description.txt "output/$name-description.txt"
             gh release create "video-$RUN_NO-$name" "output/$name.mp4" "output/$name-description.txt" \
               --title "$name (run $RUN_NO)" \
               --notes "Download the .mp4 and upload it to YouTube. The description file has title and chapters."
-          done < files.txt
+          done 3< plan.txt
 
       - name: Save voice cache
-        if: always()
+        if: always() && steps.find.outputs.build == 'true'
         uses: actions/cache/save@v4
         with:
           path: output/work/audio
           key: voice-cache-${{ github.run_id }}
+
+      - name: Hand over delayed and resumed files to a new run
+        if: always()
+        env:
+          GH_TOKEN: ${{ github.token }}
+          WORKFLOW_NAME: ${{ github.workflow }}
+          REF: ${{ github.ref_name }}
+          LIMIT: ${{ inputs.limit }}
+          THEME: ${{ inputs.theme }}
+          LAYOUT: ${{ inputs.layout }}
+          FORMAT: ${{ inputs.format }}
+          TTS: ${{ inputs.tts }}
+        run: |
+          # Runs after the voice cache is saved, so the new run starts from the finished voice lines.
+          if [ ! -s handover.txt ] && [ ! -s rest.txt ]; then echo "Nothing to hand over."; exit 0; fi
+          START=$(cat start.txt)
+          now=$(date +%s)
+          pass_args=()
+          for pair in limit:LIMIT theme:THEME layout:LAYOUT format:FORMAT tts:TTS; do
+            key=${pair%%:*}; var=${pair##*:}; val=${!var}
+            if [ -n "$val" ]; then pass_args+=(-f "$key=$val"); fi
+          done
+          # files this run had no time for: ONE fresh run builds them one after another, in the same order
+          if [ -s rest.txt ]; then
+            list=$(cut -d'|' -f1 rest.txt | paste -sd, -)
+            att=$(head -1 rest.txt | cut -d'|' -f2)
+            echo "Starting one fresh run for the remaining files: $list"
+            gh workflow run "$WORKFLOW_NAME" --ref "$REF" -f "file=$list" -f "wake=$(date +%s)" -f "attempt=$att" "${pass_args[@]}" < /dev/null
+          fi
+          if [ ! -s handover.txt ]; then exit 0; fi
+          min=$(cut -d'|' -f1 handover.txt | sort -n | head -1)
+          need=$(( min - now - 17000 ))               # time to sleep so that the rest fits into one run
+          budget=$(( 340 * 60 - (now - START) ))      # what is left of this job's own limit
+          if [ "$need" -gt 0 ]; then
+            S=$need
+            if [ "$S" -gt "$budget" ]; then S=$budget; fi
+            if [ "$S" -lt 60 ]; then S=60; fi
+            echo "Next start is far away. Sleeping $S s, then a new run takes over."
+            sleep "$S"
+          fi
+          while IFS='|' read -r -u 3 wake f att; do
+            [ -z "$f" ] && continue
+            args=(-f "file=$f" -f "wake=$wake" -f "attempt=$att" "${pass_args[@]}")
+            echo "Starting a new run for $f (start epoch $wake, resumes so far $att)"
+            gh workflow run "$WORKFLOW_NAME" --ref "$REF" "${args[@]}" < /dev/null
+          done 3< handover.txt
