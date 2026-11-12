@@ -17,6 +17,12 @@ Old names from earlier versions of the PDF tool are converted automatically
 (dark -> night, light -> classic, maroon -> royal, standard -> quiz, short -> revision,
 landscape/portrait -> list).
 
+HOW SPECIAL CHARACTERS ARE SPOKEN (the slide keeps the written text; only the voice changes)
+    Built in: 32°43′N, 32°43 N, 28.6° E -> "32 डिग्री 43 मिनट उत्तर" (75°30′ प• = पश्चिम);
+    °C, °F, %, ₹500, & are read in Hindi. प• / पं. / डॉ. / स्व. before a name = पंडित / डॉक्टर / स्वर्गीय,
+    "प. बंगाल" = पश्चिम बंगाल, उ.प्र. = उत्तर प्रदेश, 326 ई.पू. = ईसा पूर्व. Your own list: meta "pronounce": {"RBI": "आर बी आई", "km": "किलोमीटर"}
+    (Latin keys match whole words only). One line can also be set by hand with {"show": "...", "say": "..."} in points.
+
 GEMINI VOICE
     Set meta "tts": "gemini" (or pass --tts gemini) and provide the GEMINI_API_KEY environment variable
     (GitHub: repository secret GEMINI_API_KEY, already wired in video.yml).
@@ -221,6 +227,83 @@ def plan_fillers(meta, n_questions):
     return plan
 
 
+DIR_WORD = {"N": "उत्तर", "S": "दक्षिण", "E": "पूर्व", "W": "पश्चिम",
+            "उ": "उत्तर", "द": "दक्षिण", "पू": "पूर्व", "प": "पश्चिम"}
+_DIRS = "N|S|E|W|पू|उ|द|प"
+_END = r"(?![A-Za-z\u0900-\u097F])"
+_DIR_MARK = r"[•०॰.]?"
+_NUM = r"(\d+(?:\.\d+)?)"
+# 32°43′12″ N   32° 43' N   32°43 N   28.6139° E   32°43′ उ•   (degrees, optional minutes, optional seconds, optional direction)
+_COORD = re.compile(
+    r"(?P<deg>\d+(?:\.\d+)?)\s*°\s*"
+    r"(?:(?P<min>\d+(?:\.\d+)?)\s*(?:[′'’]|(?=\s*(?:" + _DIRS + r")" + _DIR_MARK + _END + r"))\s*)?"
+    r"(?:(?P<sec>\d+(?:\.\d+)?)\s*(?:″|\"|''|”)\s*)?"
+    r"(?:(?P<d>" + _DIRS + r")" + _DIR_MARK + _END + r")?")
+_DV = r"\u0900-\u097F"
+_MK = r"[•०॰.]"          # the dot / ring / bullet people type after a short form
+_NB = r"(?<![" + _DV + r"A-Za-z])"   # not in the middle of a word
+_TITLES = {"प": "पंडित", "पं": "पंडित", "डॉ": "डॉक्टर", "डा": "डॉक्टर", "स्व": "स्वर्गीय", "प्रो": "प्रोफेसर", "कु": "कुमारी"}
+_STATES = {"उ": "उत्तर", "म": "मध्य", "हि": "हिमाचल", "आं": "आंध्र", "अ": "अरुणाचल"}
+_LATIN = [  # (pattern, spoken); only used when the text is exactly this short form
+    (r"sq\.?\s*km", "वर्ग किलोमीटर"), (r"km", "किलोमीटर"), (r"kg", "किलोग्राम"), (r"cm", "सेंटीमीटर"),
+    (r"mm", "मिलीमीटर"), (r"ml", "मिलीलीटर"), (r"mg", "मिलीग्राम")]
+
+
+def _coord_sub(m):
+    deg, mins, secs, d = m.group("deg"), m.group("min"), m.group("sec"), m.group("d")
+    out = f"{deg} डिग्री"
+    if mins:
+        out += f" {mins} मिनट"
+    if secs:
+        out += f" {secs} सेकंड"
+    if d:
+        out += " " + DIR_WORD[d]
+    return out + " "
+
+
+def spoken(text, pron):
+    """What the voice should read for a line (the slide keeps its own text).
+    1) meta "pronounce": {"RBI": "आर बी आई", ...}  your own list, longest key first, whole words for Latin keys.
+    2) built in:
+       coordinates   32°43′N, 32°43 N, 28.6° E, 75°30′ प•   -> 32 डिग्री 43 मिनट उत्तर ... पश्चिम
+       titles        प• / पं. -> पंडित (but "प. बंगाल" -> पश्चिम बंगाल), डॉ. -> डॉक्टर, स्व. -> स्वर्गीय, प्रो., कु.; Dr, Prof, Pt, Mr, Mrs
+       places/eras   उ.प्र. म.प्र. हि.प्र. आं.प्र. अ.प्र.; 326 ई.पू. -> ईसा पूर्व; 1857 ई. -> ईस्वी; वि.सं. -> विक्रम संवत
+       units/symbols °C °F % ₹500 Rs. 500 & vs etc. i.e. e.g. No. 5, and 45 km / kg / cm / sq km after a number."""
+    t = text
+    for k in sorted(pron or {}, key=len, reverse=True):
+        v = str(pron[k])
+        if re.search(r"[A-Za-z0-9]", k[0]) or re.search(r"[A-Za-z0-9]", k[-1]):
+            t = re.sub(r"(?<![A-Za-z0-9])" + re.escape(k) + r"(?![A-Za-z0-9])", lambda _m, v=v: v, t)
+        else:
+            t = t.replace(k, v)
+    t = re.sub(r"°\s*C\b", " डिग्री सेल्सियस ", t)
+    t = re.sub(r"°\s*F\b", " डिग्री फारेनहाइट ", t)
+    t = _COORD.sub(_coord_sub, t)
+    # eras and places first, so "ई.पू." / "उ.प्र." are not taken apart by the title rule
+    t = re.sub(_NB + r"ई" + _MK + r"?\s*पू" + _MK + r"?(?![" + _DV + r"])", "ईसा पूर्व ", t)
+    t = re.sub(r"(\d)\s*ई" + _MK + r"(?![" + _DV + r"])", r"\1 ईस्वी ", t)
+    t = re.sub(_NB + r"वि" + _MK + r"?\s*सं" + _MK + r"?(?![" + _DV + r"])", "विक्रम संवत ", t)
+    for ab, full in _STATES.items():
+        t = re.sub(_NB + ab + _MK + r"\s*प्र" + _MK + r"?(?![" + _DV + r"])", full + " प्रदेश ", t)
+    t = re.sub(_NB + r"पं?" + _MK + r"\s*(?=बंगाल)", "पश्चिम ", t)
+    for ab, full in _TITLES.items():
+        # "प०" needs a marker; the name must follow (a space and a letter), so "प" in a sentence is not touched
+        t = re.sub(_NB + ab + _MK + r"(?=\s*[" + _DV + r"A-Za-z])", full + " ", t)
+    for ab, full in (("Dr", "डॉक्टर"), ("Prof", "प्रोफेसर"), ("Pt", "पंडित"), ("Mr", "मिस्टर"), ("Mrs", "मिसेज़")):
+        t = re.sub(r"(?<![A-Za-z])" + ab + r"\.?(?=\s+[A-Z])", full, t)
+    t = re.sub(r"(?<![A-Za-z])vs\.?(?![A-Za-z])", "बनाम", t)
+    t = re.sub(r"(?<![A-Za-z])etc\.?(?![A-Za-z])", "इत्यादि", t)
+    t = re.sub(r"(?<![A-Za-z])i\.e\.?", "यानी", t)
+    t = re.sub(r"(?<![A-Za-z])e\.g\.?", "जैसे", t)
+    t = re.sub(r"(?<![A-Za-z])No\.?\s*(?=\d)", "नंबर ", t)
+    t = re.sub(r"(?<![A-Za-z])Rs\.?\s*(\d(?:[\d,]*\d)?(?:\.\d+)?)", r"\1 रुपये", t)
+    t = re.sub(r"₹\s*(\d(?:[\d,]*\d)?(?:\.\d+)?)", r"\1 रुपये", t)
+    for pat, full in _LATIN:
+        t = re.sub(r"(?<=\d)\s*" + pat + r"(?![A-Za-z])", " " + full + " ", t)
+    t = t.replace("%", " प्रतिशत ").replace("&", " और ")
+    return re.sub(r"[ \t]{2,}", " ", t).replace(" ,", ",").replace(" ।", "।").strip()
+
+
 def make_steps(data, limit, fmt):
     meta = data["meta"]
     qs = data["questions"][:limit] if limit else data["questions"]
@@ -259,6 +342,10 @@ def make_steps(data, limit, fmt):
     outro =meta.get("outro") or ("तो दोस्तों, आज के लिए बस इतना ही। वीडियो पसंद आया हो तो लाइक करें "
                                   "और Target1st चैनल को सब्सक्राइब ज़रूर करें।")
     steps.append({"state": {"mode": "outro"}, "say": outro, "chapter": "Outro"})
+    pron = meta.get("pronounce") or {}
+    for st in steps:
+        if "say" in st:
+            st["say"] = spoken(st["say"], pron)
     return qs, steps
 
 
