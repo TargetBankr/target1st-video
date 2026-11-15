@@ -12,14 +12,13 @@
     "theme": "classic",
     "layout": "grid",
     "format": "revision",
-    "tts": "sarvam",
+    "tts": "gemini",
     "pronounce": {
       "RBI": "आर बी आई",
       "SBI": "एस बी आई",
       "UPSC": "यू पी एस सी",
       "GDP": "जी डी पी"
     },
-    "key_slot": 2,
     "filler_lines": [
       "अगर आप ध्यान दें, तो इसका जवाब तो आपको आता ही होगा।",
       "थोड़ा रुकिए, ऐसे प्रश्न परीक्षा में अक्सर पूछे जाते हैं।",
@@ -29,7 +28,7 @@
       "याद रखिए, रिवीज़न ही सफलता की कुंजी है।",
       "कोई प्रश्न छूट गया हो, तो घबराइए मत, वीडियो दोबारा देख सकते हैं।",
       "ये पॉइंट नोट कर लीजिए, परीक्षा में काम आ सकता है।",
-      "चलो, रफ़्तार थोड़ी और बढ़ाते हैं।",
+      "चलिए, रफ़्तार थोड़ी और बढ़ाते हैं।",
       "जो दोस्त तैयारी कर रहे हैं, उन्हें ये वीडियो ज़रूर भेजिए।",
       "अगर आप यहाँ तक पहुँचे हैं, तो आपकी मेहनत ज़रूर रंग लाएगी।",
       "अब ज़रा दिमाग लगाइए, अगला प्रश्न आपका इंतज़ार कर रहा है।",
@@ -43,11 +42,14 @@
       7,
       8
     ],
-    "sarvam_model": "bulbul:v4-flash",
-    "sarvam_speaker": "aayan_hi_conversational",
-    "sarvam_pace": 1.1,
-    "lean_speech": true,
-    "max_points": 2
+    "gemini_voice": "Kore",
+    "gemini_speed": 1.3,
+    "gemini_models": [
+      "gemini-3.1-flash-tts-preview",
+      "gemini-3.8-flash-tts",
+      "gemini-3.8-flash-lite-tts"
+    ],
+    "gemini_batch": 3
   },
   "questions": [
     {
@@ -61,8 +63,8 @@
       "answer": "B",
       "points": [
         "चार्ल्स बैबेज को कंप्यूटर का जनक कहा जाता है",
-        "उन्होंने Difference Engine और Analytical Engine बनाए || उन्होंने डिफरेंस इंजन और एनालिटिकल इंजन बनाए",
-        "Analytical Engine में memory और processing की सोच थी || एनालिटिकल इंजन में मेमोरी और प्रोसेसिंग की सोच थी",
+        "उन्होंने Difference Engine और Analytical Engine बनाए",
+        "Analytical Engine में memory और processing की सोच थी",
         "John von Neumann को stored program concept के लिए जाना जाता है"
       ]
     },
@@ -76,9 +78,9 @@
       ],
       "answer": "C",
       "points": [
-        "पहली पीढ़ी: Vacuum tube (1940-56) || पहली पीढ़ी: वैक्यूम ट्यूब, उन्नीस सौ चालीस से उन्नीस सौ छप्पन",
-        "दूसरी पीढ़ी: Transistor (1956-63) || दूसरी पीढ़ी: ट्रांजिस्टर, उन्नीस सौ छप्पन से तरेसठ",
-        "तीसरी पीढ़ी: IC (1964-71), चौथी: Microprocessor (1971 से) || तीसरी पीढ़ी: आईसी, उन्नीस सौ चौंसठ से इकहत्तर, चौथी पीढ़ी: माइक्रोप्रोसेसर, उन्नीस सौ इकहत्तर से"
+        "पहली पीढ़ी: Vacuum tube (1940-56)",
+        "दूसरी पीढ़ी: Transistor (1956-63)",
+        "तीसरी पीढ़ी: IC (1964-71), चौथी: Microprocessor (1971 से)"
       ],
       "trick": "VTIM = Vacuum, Transistor, IC, Microprocessor"
     },
@@ -92,10 +94,10 @@
       ],
       "answer": "A",
       "points": [
-        "RAM volatile है, बिजली जाने पर data मिट जाता है || RAM volatile है, बिजली जाने पर data मिट जाता है",
-        "ROM non-volatile है, इसमें BIOS/boot data रहता है || ROM non-volatile है, इसमें BIOS और boot data रहता है",
-        "Cache memory सबसे तेज़ और CPU के सबसे पास होती है || Cache memory सबसे तेज़ और CPU के सबसे पास होती है",
-        "RAM को primary या main memory भी कहते हैं || RAM को primary या main memory भी कहते हैं"
+        "RAM volatile है, बिजली जाने पर data मिट जाता है",
+        "ROM non-volatile है, इसमें BIOS/boot data रहता है",
+        "Cache memory सबसे तेज़ और CPU के सबसे पास होती है",
+        "RAM को primary या main memory भी कहते हैं"
       ]
     },
     {
@@ -108,10 +110,10 @@
       ],
       "answer": "D",
       "points": [
-        "MICR का full form Magnetic Ink Character Recognition है || MICR का full form Magnetic Ink Character Recognition है",
+        "MICR का full form Magnetic Ink Character Recognition है",
         "इसका उपयोग बैंक चेक पर नंबर पढ़ने में होता है",
-        "OMR का उपयोग उत्तर-पुस्तिका जाँचने में होता है || OMR का उपयोग उत्तर-पुस्तिका जाँचने में होता है",
-        "OCR छपे हुए text को पहचानता है || OCR छपे हुए text को पहचानता है"
+        "OMR का उपयोग उत्तर-पुस्तिका जाँचने में होता है",
+        "OCR छपे हुए text को पहचानता है"
       ]
     },
     {
@@ -124,10 +126,10 @@
       ],
       "answer": "A",
       "points": [
-        "Decimal 10 = 8 + 2 = 1010 (binary) || डेसिमल दस बराबर आठ प्लस दो बराबर दस दस बाइनरी",
-        "Binary का base 2 होता है (केवल 0 और 1) || बाइनरी का बेस दो होता है, केवल शून्य और एक",
-        "Hexadecimal का base 16 और octal का base 8 होता है || हेक्साडेसिमल का बेस सोलह और ऑक्टल का बेस आठ होता है",
-        "Hexadecimal में A = 10 होता है || हेक्साडेसिमल में ए बराबर दस होता है"
+        "Decimal 10 = 8 + 2 = 1010 (binary)",
+        "Binary का base 2 होता है (केवल 0 और 1)",
+        "Hexadecimal का base 16 और octal का base 8 होता है",
+        "Hexadecimal में A = 10 होता है"
       ]
     },
     {
@@ -140,10 +142,10 @@
       ],
       "answer": "C",
       "points": [
-        "Win+L कंप्यूटर को तुरंत lock कर देता है || Win+L कंप्यूटर को तुरंत lock कर देता है",
-        "Win+D desktop दिखाता है, Win+E File Explorer खोलता है || Win+D desktop दिखाता है, Win+E File Explorer खोलता है",
-        "Win+R से Run box खुलता है || Win+R से Run box खुलता है",
-        "Ctrl+Alt+Del से भी lock का option मिलता है || Ctrl+Alt+Del से भी lock का option मिलता है"
+        "Win+L कंप्यूटर को तुरंत lock कर देता है",
+        "Win+D desktop दिखाता है, Win+E File Explorer खोलता है",
+        "Win+R से Run box खुलता है",
+        "Ctrl+Alt+Del से भी lock का option मिलता है"
       ]
     },
     {
@@ -156,10 +158,10 @@
       ],
       "answer": "D",
       "points": [
-        "IPv4 address 32 bit का होता है (चार octet) || IPv4 address बत्तीस bit का होता है, चार octet",
-        "IPv6 address 128 bit का होता है || IPv6 address एक सौ अट्ठारह bit का होता है",
-        "IPv4 के classes A से E होते हैं || IPv4 के classes A से E होते हैं",
-        "MAC address 48 bit का होता है || MAC address सैंतालीस bit का होता है"
+        "IPv4 address 32 bit का होता है (चार octet)",
+        "IPv6 address 128 bit का होता है",
+        "IPv4 के classes A से E होते हैं",
+        "MAC address 48 bit का होता है"
       ]
     },
     {
@@ -172,7 +174,7 @@
       ],
       "answer": "B",
       "points": [
-        "Star topology में सभी nodes central hub/switch से जुड़ते हैं || Star topology में सभी nodes central hub या switch से जुड़ते हैं",
+        "Star topology में सभी nodes central hub/switch से जुड़ते हैं",
         "एक node खराब होने पर बाकी network चलता रहता है",
         "Bus topology में एक ही मुख्य cable होती है",
         "Mesh में हर device दूसरे से जुड़ा होता है"
@@ -188,9 +190,9 @@
       ],
       "answer": "A",
       "points": [
-        "Router अलग-अलग networks को जोड़ता है और IP से path चुनता है || Router अलग-अलग networks को जोड़ता है और IP से path चुनता है",
+        "Router अलग-अलग networks को जोड़ता है और IP से path चुनता है",
         "Hub सभी ports पर data भेज देता है",
-        "Switch MAC address के आधार पर data भेजता है || Switch MAC address के आधार पर data भेजता है",
+        "Switch MAC address के आधार पर data भेजता है",
         "Repeater कमज़ोर signal को दोबारा मज़बूत करता है"
       ]
     },
@@ -204,10 +206,10 @@
       ],
       "answer": "D",
       "points": [
-        "SMTP (Simple Mail Transfer Protocol) mail भेजने के लिए है || SMTP Simple Mail Transfer Protocol mail भेजने के लिए है",
-        "POP3 और IMAP mail प्राप्त करने के लिए होते हैं || POP3 और IMAP mail प्राप्त करने के लिए होते हैं",
-        "FTP file transfer के लिए है || FTP file transfer के लिए है",
-        "HTTPS secure web browsing के लिए है || HTTPS secure web browsing के लिए है"
+        "SMTP (Simple Mail Transfer Protocol) mail भेजने के लिए है",
+        "POP3 और IMAP mail प्राप्त करने के लिए होते हैं",
+        "FTP file transfer के लिए है",
+        "HTTPS secure web browsing के लिए है"
       ]
     },
     {
@@ -220,10 +222,10 @@
       ],
       "answer": "C",
       "points": [
-        "MAN एक शहर या बड़े क्षेत्र को कवर करता है || MAN एक शहर या बड़े क्षेत्र को कवर करता है",
-        "LAN एक भवन या कैंपस तक सीमित होता है || LAN एक भवन या कैंपस तक सीमित होता है",
-        "WAN बहुत बड़े क्षेत्र का नेटवर्क है, जैसे Internet || WAN बहुत बड़े क्षेत्र का नेटवर्क है, जैसे Internet",
-        "PAN बहुत छोटे दायरे (लगभग 10 मीटर) का नेटवर्क है || PAN बहुत छोटे दायरे, लगभग 10 मीटर का नेटवर्क है"
+        "MAN एक शहर या बड़े क्षेत्र को कवर करता है",
+        "LAN एक भवन या कैंपस तक सीमित होता है",
+        "WAN बहुत बड़े क्षेत्र का नेटवर्क है, जैसे Internet",
+        "PAN बहुत छोटे दायरे (लगभग 10 मीटर) का नेटवर्क है"
       ]
     },
     {
@@ -236,10 +238,10 @@
       ],
       "answer": "B",
       "points": [
-        "Shift+Delete फाइल को Recycle Bin में भेजे बिना स्थायी रूप से हटाता है || Shift+Delete फाइल को Recycle Bin में भेजे बिना स्थायी रूप से हटाता है",
+        "Shift+Delete फाइल को Recycle Bin में भेजे बिना स्थायी रूप से हटाता है",
         "सिर्फ Delete दबाने पर फाइल Recycle Bin में जाती है",
         "Recycle Bin से फाइल Restore की जा सकती है",
-        "F2 से फाइल का नाम बदला जाता है || F2 से फाइल का नाम बदला जाता है"
+        "F2 से फाइल का नाम बदला जाता है"
       ]
     },
     {
@@ -252,10 +254,10 @@
       ],
       "answer": "A",
       "points": [
-        "URL का full form Uniform Resource Locator है || URL का full form Uniform Resource Locator है",
+        "URL का full form Uniform Resource Locator है",
         "यह web page का पूरा पता होता है",
-        "उदाहरण: https://www.example.com || उदाहरण: https://www.example.com",
-        "WWW का आविष्कार Tim Berners-Lee ने किया || WWW का आविष्कार Tim Berners-Lee ने किया"
+        "उदाहरण: https://www.example.com",
+        "WWW का आविष्कार Tim Berners-Lee ने किया"
       ]
     },
     {
@@ -268,10 +270,10 @@
       ],
       "answer": "D",
       "points": [
-        "h1 सबसे बड़ा और h6 सबसे छोटा heading है || h1 सबसे बड़ा और h6 सबसे छोटा heading है",
-        "HTML में heading tags h1 से h6 तक होते हैं || HTML में heading tags h1 से h6 तक होते हैं",
-        "HTML का full form HyperText Markup Language है || HTML का full form HyperText Markup Language है",
-        "HTML file की extension .html या .htm होती है || HTML file की extension .html या .htm होती है"
+        "h1 सबसे बड़ा और h6 सबसे छोटा heading है",
+        "HTML में heading tags h1 से h6 तक होते हैं",
+        "HTML का full form HyperText Markup Language है",
+        "HTML file की extension .html या .htm होती है"
       ]
     },
     {
@@ -284,9 +286,9 @@
       ],
       "answer": "A",
       "points": [
-        "br tag से नई line शुरू होती है, इसका closing tag नहीं होता || br tag से नई line शुरू होती है, इसका closing tag नहीं होता",
-        "hr tag horizontal line बनाता है || hr tag horizontal line बनाता है",
-        "p tag से paragraph बनता है || p tag से paragraph बनता है",
+        "br tag से नई line शुरू होती है, इसका closing tag नहीं होता",
+        "hr tag horizontal line बनाता है",
+        "p tag से paragraph बनता है",
         "ऐसे tags को empty या void tags कहते हैं"
       ]
     },
@@ -300,8 +302,8 @@
       ],
       "answer": "B",
       "points": [
-        "alt attribute image न दिखने पर वैकल्पिक text दिखाता है || alt attribute image न दिखने पर वैकल्पिक text दिखाता है",
-        "src attribute image का path या URL बताता है || src attribute image का path या URL बताता है",
+        "alt attribute image न दिखने पर वैकल्पिक text दिखाता है",
+        "src attribute image का path या URL बताता है",
         "width और height से image का आकार तय होता है",
         "Screen reader भी alt text पढ़ते हैं"
       ]
@@ -316,9 +318,9 @@
       ],
       "answer": "C",
       "points": [
-        "Excel में 1048576 rows और 16384 columns होती हैं || Excel में दस लाख अड़तालीस हज़ार पाँच सौ छिहत्तर rows और सोलह हज़ार तीन सौ चौरासी columns होती हैं",
-        "आखिरी column का नाम XFD है || आखिरी column का नाम XFD है",
-        "पुराने Excel 2003 में 65536 rows थीं || पुराने Excel दो हज़ार तीन में पैंसठ हज़ार पाँच सौ छत्तीस rows थीं",
+        "Excel में 1048576 rows और 16384 columns होती हैं",
+        "आखिरी column का नाम XFD है",
+        "पुराने Excel 2003 में 65536 rows थीं",
         "Rows संख्या से और columns अक्षरों से पहचाने जाते हैं"
       ]
     },
@@ -348,10 +350,10 @@
       ],
       "answer": "B",
       "points": [
-        "Ctrl+T से browser में नया tab खुलता है || Ctrl+T से browser में नया tab खुलता है",
-        "Ctrl+W मौजूदा tab बंद करता है || Ctrl+W मौजूदा tab बंद करता है",
-        "Ctrl+H history और Ctrl+J downloads दिखाता है || Ctrl+H history और Ctrl+J downloads दिखाता है",
-        "Ctrl+D पेज को bookmark करता है || Ctrl+D पेज को bookmark करता है"
+        "Ctrl+T से browser में नया tab खुलता है",
+        "Ctrl+W मौजूदा tab बंद करता है",
+        "Ctrl+H history और Ctrl+J downloads दिखाता है",
+        "Ctrl+D पेज को bookmark करता है"
       ]
     },
     {
@@ -364,9 +366,9 @@
       ],
       "answer": "A",
       "points": [
-        "Ctrl+E text को center align करता है || Ctrl+E text को center align करता है",
-        "Ctrl+L left, Ctrl+R right और Ctrl+J justify करता है || Ctrl+L left, Ctrl+R right और Ctrl+J justify करता है",
-        "Ctrl+B bold, Ctrl+I italic, Ctrl+U underline करता है || Ctrl+B bold, Ctrl+I italic, Ctrl+U underline करता है"
+        "Ctrl+E text को center align करता है",
+        "Ctrl+L left, Ctrl+R right और Ctrl+J justify करता है",
+        "Ctrl+B bold, Ctrl+I italic, Ctrl+U underline करता है"
       ],
       "trick": "E = Equal margins, यानी center"
     },
@@ -396,10 +398,10 @@
       ],
       "answer": "B",
       "points": [
-        "PowerPoint 2007 और बाद की फाइल .pptx होती है || PowerPoint दो हज़ार सात और बाद की फाइल .pptx होती है",
-        "पुराना format .ppt था || पुराना format .ppt था",
-        ".pps या .ppsx सीधे slide show में खुलती है || .pps या .ppsx सीधे slide show में खुलती है",
-        ".potx PowerPoint template की extension है || .potx PowerPoint template की extension है"
+        "PowerPoint 2007 और बाद की फाइल .pptx होती है",
+        "पुराना format .ppt था",
+        ".pps या .ppsx सीधे slide show में खुलती है",
+        ".potx PowerPoint template की extension है"
       ]
     },
     {
@@ -412,9 +414,9 @@
       ],
       "answer": "D",
       "points": [
-        "F5 से slide show शुरू से चालू होता है || F5 से slide show शुरू से चालू होता है",
-        "Shift+F5 मौजूदा slide से slide show शुरू करता है || Shift+F5 मौजूदा slide से slide show शुरू करता है",
-        "Esc से slide show बंद होता है || Esc से slide show बंद होता है",
+        "F5 से slide show शुरू से चालू होता है",
+        "Shift+F5 मौजूदा slide से slide show शुरू करता है",
+        "Esc से slide show बंद होता है",
         "N या P से अगली या पिछली slide पर जाते हैं"
       ]
     },
@@ -444,10 +446,10 @@
       ],
       "answer": "C",
       "points": [
-        "DHTML = HTML + CSS + JavaScript + DOM || DHTML = HTML + CSS + JavaScript + DOM",
-        "DOM का full form Document Object Model है || DOM का full form Document Object Model है",
-        "DHTML से web page dynamic और interactive बनता है || DHTML से web page dynamic और interactive बनता है",
-        "CSS का full form Cascading Style Sheets है || CSS का full form Cascading Style Sheets है"
+        "DHTML = HTML + CSS + JavaScript + DOM",
+        "DOM का full form Document Object Model है",
+        "DHTML से web page dynamic और interactive बनता है",
+        "CSS का full form Cascading Style Sheets है"
       ]
     },
     {
@@ -461,9 +463,9 @@
       "answer": "D",
       "points": [
         "Incognito/Private mode में history और cookies सेव नहीं होते",
-        "Chrome में shortcut Ctrl+Shift+N, Firefox में Ctrl+Shift+P है || Chrome में shortcut Ctrl+Shift+N, Firefox में Ctrl+Shift+P है",
+        "Chrome में shortcut Ctrl+Shift+N, Firefox में Ctrl+Shift+P है",
         "Downloaded फाइलें फिर भी सेव रहती हैं",
-        "ISP और website आपकी गतिविधि देख सकते हैं || ISP और website आपकी गतिविधि देख सकते हैं"
+        "ISP और website आपकी गतिविधि देख सकते हैं"
       ]
     },
     {
@@ -572,9 +574,9 @@
       ],
       "answer": "D",
       "points": [
-        "Present continuous passive: is/am/are + being + V3 || Present continuous passive: is/am/are + being + V3",
+        "Present continuous passive: is/am/are + being + V3",
         "They are painting the wall का passive: The wall is being painted",
-        "Past continuous passive: was/were + being + V3 || Past continuous passive: was/were + being + V3",
+        "Past continuous passive: was/were + being + V3",
         "Passive में object वाक्य का subject बन जाता है"
       ]
     },
@@ -652,9 +654,9 @@
       ],
       "answer": "C",
       "points": [
-        "Verb+ing जो noun का काम करे, वह gerund है || Verb+ing जो noun का काम करे, वह gerund है",
+        "Verb+ing जो noun का काम करे, वह gerund है",
         "यहाँ Swimming वाक्य का subject है",
-        "Participle verb+ing adjective की तरह काम करता है || Participle verb+ing adjective की तरह काम करता है",
+        "Participle verb+ing adjective की तरह काम करता है",
         "Enjoy, avoid, finish के बाद gerund आता है"
       ]
     },
@@ -668,10 +670,10 @@
       ],
       "answer": "B",
       "points": [
-        "12 = 2x2x3 और 18 = 2x3x3, साझा गुणनखंड 2x3 = 6 || बारह बराबर दो गुणा दो गुणा तीन और अठारह बराबर दो गुणा तीन गुणा तीन, साझा गुणनखंड दो गुणा तीन बराबर छह",
+        "12 = 2x2x3 और 18 = 2x3x3, साझा गुणनखंड 2x3 = 6",
         "HCF सबसे बड़ा साझा गुणनखंड होता है",
-        "HCF x LCM = दोनों संख्याओं का गुणनफल || HCF x LCM = दोनों संख्याओं का गुणनफल",
-        "12 और 18 का LCM 36 है || बारह और अठारह का LCM छतीस है"
+        "HCF x LCM = दोनों संख्याओं का गुणनफल",
+        "12 और 18 का LCM 36 है"
       ]
     },
     {
@@ -684,7 +686,7 @@
       ],
       "answer": "A",
       "points": [
-        "4 = 2^2, 6 = 2x3, 8 = 2^3, इसलिए LCM = 2^3 x 3 = 24 || चार बराबर दो की घात दो, छह बराबर दो गुणा तीन, आठ बराबर दो की घात तीन, इसलिए LCM = दो की घात तीन गुणा तीन बराबर चौबीस",
+        "4 = 2^2, 6 = 2x3, 8 = 2^3, इसलिए LCM = 2^3 x 3 = 24",
         "LCM में हर अभाज्य गुणनखंड की सबसे बड़ी घात लेते हैं",
         "LCM सबसे बड़ी दी गई संख्या का गुणज होता है",
         "घंटी और traffic light वाले प्रश्नों में LCM लगता है"
@@ -700,10 +702,10 @@
       ],
       "answer": "C",
       "points": [
-        "25 percent = 1/4, इसलिए 480 का चौथाई 120 है || 25 percent = 1/4, इसलिए चार सौ अस्सी का चौथाई 120 है",
-        "Percentage = (भाग / कुल) x 100 || Percentage = (भाग / कुल) x 100",
-        "12.5 percent = 1/8 और 20 percent = 1/5 || 12.5 percent = 1/8 और 20 percent = 1/5",
-        "33.33 percent = 1/3 याद रखें || 33.33 percent = 1/3 याद रखें"
+        "25 percent = 1/4, इसलिए 480 का चौथाई 120 है",
+        "Percentage = (भाग / कुल) x 100",
+        "12.5 percent = 1/8 और 20 percent = 1/5",
+        "33.33 percent = 1/3 याद रखें"
       ]
     },
     {
@@ -716,9 +718,9 @@
       ],
       "answer": "D",
       "points": [
-        "कुल भाग = 3 + 5 = 8, एक भाग = 160/8 = 20 || कुल भाग = 3 + 5 = 8, एक भाग = 160 भागे 8 = 20",
-        "बड़ी संख्या = 5 x 20 = 100 || बड़ी संख्या = 5 x 20 = 100",
-        "छोटी संख्या = 3 x 20 = 60 || छोटी संख्या = 3 x 20 = 60",
+        "कुल भाग = 3 + 5 = 8, एक भाग = 160/8 = 20",
+        "बड़ी संख्या = 5 x 20 = 100",
+        "छोटी संख्या = 3 x 20 = 60",
         "Ratio में कुल राशि को कुल भागों से भाग देकर एक भाग निकालें"
       ]
     },
@@ -733,9 +735,9 @@
       "answer": "C",
       "points": [
         "Average = कुल योग / संख्याओं की गिनती",
-        "योग = 150, गिनती = 5, औसत = 30 || योग = 150, गिनती = 5, औसत = 30",
+        "योग = 150, गिनती = 5, औसत = 30",
         "AP में औसत बीच की संख्या के बराबर होता है",
-        "पहली n प्राकृतिक संख्याओं का औसत (n+1)/2 होता है || पहली n प्राकृतिक संख्याओं का औसत (n+1)/2 होता है"
+        "पहली n प्राकृतिक संख्याओं का औसत (n+1)/2 होता है"
       ]
     },
     {
@@ -748,10 +750,10 @@
       ],
       "answer": "B",
       "points": [
-        "Profit = 600 - 500 = Rs 100 || Profit = 600 - 500 = Rs 100",
-        "Profit percent = (100/500) x 100 = 20 percent || Profit percent = (100/500) x 100 = 20 percent",
+        "Profit = 600 - 500 = Rs 100",
+        "Profit percent = (100/500) x 100 = 20 percent",
         "Profit और Loss percent हमेशा CP पर निकालते हैं",
-        "SP = CP x (100 + profit percent)/100 || SP = CP x (100 + profit percent)/100"
+        "SP = CP x (100 + profit percent)/100"
       ]
     },
     {
@@ -764,9 +766,9 @@
       ],
       "answer": "A",
       "points": [
-        "SI = (P x R x T)/100 || SI = (P x R x T)/100",
-        "2000 x 5 x 3 / 100 = Rs 300 || 2000 x 5 x 3 / 100 = Rs 300",
-        "कुल राशि (Amount) = Rs 2300 || कुल राशि Amount = Rs 2300",
+        "SI = (P x R x T)/100",
+        "2000 x 5 x 3 / 100 = Rs 300",
+        "कुल राशि (Amount) = Rs 2300",
         "SI में ब्याज हर साल मूलधन पर ही लगता है"
       ]
     },
@@ -780,10 +782,10 @@
       ],
       "answer": "D",
       "points": [
-        "A का एक दिन का काम = 1/10, B का = 1/15 || A का एक दिन का काम = 1/10, B का = 1/15",
-        "साथ में एक दिन का काम = 1/10 + 1/15 = 1/6 || साथ में एक दिन का काम = 1/10 + 1/15 = 1/6",
+        "A का एक दिन का काम = 1/10, B का = 1/15",
+        "साथ में एक दिन का काम = 1/10 + 1/15 = 1/6",
         "इसलिए पूरा काम 6 दिन में होगा",
-        "शॉर्टकट: (10 x 15)/(10 + 15) = 6 || शॉर्टकट: (10 x 15)/(10 + 15) = 6"
+        "शॉर्टकट: (10 x 15)/(10 + 15) = 6"
       ]
     },
     {
@@ -796,9 +798,9 @@
       ],
       "answer": "C",
       "points": [
-        "km/h को m/s में बदलने के लिए 5/18 से गुणा करें || km/h को m/s में बदलने के लिए 5/18 से गुणा करें",
-        "72 x 5/18 = 20 m/s || 72 x 5/18 = 20 m/s",
-        "m/s को km/h में बदलने के लिए 18/5 से गुणा करें || m/s को km/h में बदलने के लिए 18/5 से गुणा करें",
+        "km/h को m/s में बदलने के लिए 5/18 से गुणा करें",
+        "72 x 5/18 = 20 m/s",
+        "m/s को km/h में बदलने के लिए 18/5 से गुणा करें",
         "Speed = Distance / Time"
       ]
     },
@@ -812,9 +814,9 @@
       ],
       "answer": "A",
       "points": [
-        "वृत्त का क्षेत्रफल = pi x r x r || वृत्त का क्षेत्रफल = pi x r x r",
-        "22/7 x 7 x 7 = 154 sq cm || 22/7 x 7 x 7 = 154 sq cm",
-        "परिधि = 2 x pi x r = 44 cm || परिधि = 2 x pi x r = 44 cm",
+        "वृत्त का क्षेत्रफल = pi x r x r",
+        "22/7 x 7 x 7 = 154 sq cm",
+        "परिधि = 2 x pi x r = 44 cm",
         "Pi का मान 22/7 या 3.14 लिया जाता है"
       ]
     },
@@ -828,9 +830,9 @@
       ],
       "answer": "D",
       "points": [
-        "(a+b)^2 = a^2 + 2ab + b^2 || (a+b)^2 = a^2 + 2ab + b^2",
-        "(a-b)^2 = a^2 - 2ab + b^2 || (a-b)^2 = a^2 - 2ab + b^2",
-        "a^2 - b^2 = (a+b)(a-b) || a^2 - b^2 = (a+b)(a-b)",
+        "(a+b)^2 = a^2 + 2ab + b^2",
+        "(a-b)^2 = a^2 - 2ab + b^2",
+        "a^2 - b^2 = (a+b)(a-b)",
         "ये identities factorisation में बहुत काम आती हैं"
       ]
     },
@@ -845,9 +847,9 @@
       "answer": "B",
       "points": [
         "अंतर 4, 6, 8, 10 हैं, अगला अंतर 12 होगा",
-        "30 + 12 = 42 || 30 + 12 = 42",
-        "यह n(n+1) श्रृंखला है: 1x2, 2x3, 3x4... || यह n(n+1) श्रृंखला है: 1x2, 2x3, 3x4...",
-        "अगली संख्या 6x7 = 42 || अगली संख्या 6x7 = 42"
+        "30 + 12 = 42",
+        "यह n(n+1) श्रृंखला है: 1x2, 2x3, 3x4...",
+        "अगली संख्या 6x7 = 42"
       ]
     }
   ]
