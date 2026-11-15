@@ -1,0 +1,854 @@
+{
+  "meta": {
+    "title": "HARTRON DEO MOCK TEST 1",
+    "subtitle": "",
+    "channel": "Target1st",
+    "voice": "hi-IN-MadhurNeural",
+    "rate": "+0%",
+    "countdown": 0,
+    "intro": "हाय",
+    "outro": "बाय",
+    "outro_show": "देखने के लिए धन्यवाद!",
+    "theme": "classic",
+    "layout": "grid",
+    "format": "revision",
+    "tts": "sarvam",
+    "pronounce": {
+      "RBI": "आर बी आई",
+      "SBI": "एस बी आई",
+      "UPSC": "यू पी एस सी",
+      "GDP": "जी डी पी"
+    },
+    "key_slot": 2,
+    "filler_lines": [
+      "अगर आप ध्यान दें, तो इसका जवाब तो आपको आता ही होगा।",
+      "थोड़ा रुकिए, ऐसे प्रश्न परीक्षा में अक्सर पूछे जाते हैं।",
+      "अगर अब तक के प्रश्न आपने सही किए हैं, तो शाबाश!",
+      "ध्यान से सुनिए, अगला प्रश्न थोड़ा ट्रिकी हो सकता है।",
+      "कमेंट में बताइए, अब तक कितने प्रश्न आपके सही रहे?",
+      "याद रखिए, रिवीज़न ही सफलता की कुंजी है।",
+      "कोई प्रश्न छूट गया हो, तो घबराइए मत, वीडियो दोबारा देख सकते हैं।",
+      "ये पॉइंट नोट कर लीजिए, परीक्षा में काम आ सकता है।",
+      "चलो, रफ़्तार थोड़ी और बढ़ाते हैं।",
+      "जो दोस्त तैयारी कर रहे हैं, उन्हें ये वीडियो ज़रूर भेजिए।",
+      "अगर आप यहाँ तक पहुँचे हैं, तो आपकी मेहनत ज़रूर रंग लाएगी।",
+      "अब ज़रा दिमाग लगाइए, अगला प्रश्न आपका इंतज़ार कर रहा है।",
+      "ये तथ्य अक्सर घुमा-फिराकर पूछा जाता है।",
+      "बस थोड़ा सा ध्यान, और ये प्रश्न आपके लिए आसान हो जाएंगे।",
+      "अगर वीडियो आपके काम का लग रहा है, तो लाइक करें और चैनल Target1st को सब्सक्राइब ज़रूर करें।",
+      "नोट्स और पीडीएफ के लिए हमारा टेलीग्राम चैनल Target1st support जॉइन करें, लिंक डिस्क्रिप्शन में है।",
+      "बेल आइकन दबा दीजिए, ताकि अगला वीडियो आपसे छूटे नहीं।"
+    ],
+    "filler_every": [
+      7,
+      8
+    ],
+    "sarvam_model": "bulbul:v4-flash",
+    "sarvam_speaker": "aayan_hi_conversational",
+    "sarvam_pace": 1.1,
+    "lean_speech": true,
+    "max_points": 2
+  },
+  "questions": [
+    {
+      "q": "Who is known as the Father of the Computer?",
+      "options": [
+        "Alan Turing",
+        "Charles Babbage",
+        "John von Neumann",
+        "Blaise Pascal"
+      ],
+      "answer": "B",
+      "points": [
+        "चार्ल्स बैबेज को कंप्यूटर का जनक कहा जाता है",
+        "उन्होंने Difference Engine और Analytical Engine बनाए || उन्होंने डिफरेंस इंजन और एनालिटिकल इंजन बनाए",
+        "Analytical Engine में memory और processing की सोच थी || एनालिटिकल इंजन में मेमोरी और प्रोसेसिंग की सोच थी",
+        "John von Neumann को stored program concept के लिए जाना जाता है"
+      ]
+    },
+    {
+      "q": "Which generation of computers used Integrated Circuits (IC)?",
+      "options": [
+        "First generation",
+        "Second generation",
+        "Third generation",
+        "Fourth generation"
+      ],
+      "answer": "C",
+      "points": [
+        "पहली पीढ़ी: Vacuum tube (1940-56) || पहली पीढ़ी: वैक्यूम ट्यूब, उन्नीस सौ चालीस से उन्नीस सौ छप्पन",
+        "दूसरी पीढ़ी: Transistor (1956-63) || दूसरी पीढ़ी: ट्रांजिस्टर, उन्नीस सौ छप्पन से तरेसठ",
+        "तीसरी पीढ़ी: IC (1964-71), चौथी: Microprocessor (1971 से) || तीसरी पीढ़ी: आईसी, उन्नीस सौ चौंसठ से इकहत्तर, चौथी पीढ़ी: माइक्रोप्रोसेसर, उन्नीस सौ इकहत्तर से"
+      ],
+      "trick": "VTIM = Vacuum, Transistor, IC, Microprocessor"
+    },
+    {
+      "q": "Which of the following is a volatile memory?",
+      "options": [
+        "RAM",
+        "ROM",
+        "Hard disk",
+        "Pen drive"
+      ],
+      "answer": "A",
+      "points": [
+        "RAM volatile है, बिजली जाने पर data मिट जाता है || RAM volatile है, बिजली जाने पर data मिट जाता है",
+        "ROM non-volatile है, इसमें BIOS/boot data रहता है || ROM non-volatile है, इसमें BIOS और boot data रहता है",
+        "Cache memory सबसे तेज़ और CPU के सबसे पास होती है || Cache memory सबसे तेज़ और CPU के सबसे पास होती है",
+        "RAM को primary या main memory भी कहते हैं || RAM को primary या main memory भी कहते हैं"
+      ]
+    },
+    {
+      "q": "MICR technology is mainly used in which sector?",
+      "options": [
+        "Railways",
+        "Postal service",
+        "Education",
+        "Banking"
+      ],
+      "answer": "D",
+      "points": [
+        "MICR का full form Magnetic Ink Character Recognition है || MICR का full form Magnetic Ink Character Recognition है",
+        "इसका उपयोग बैंक चेक पर नंबर पढ़ने में होता है",
+        "OMR का उपयोग उत्तर-पुस्तिका जाँचने में होता है || OMR का उपयोग उत्तर-पुस्तिका जाँचने में होता है",
+        "OCR छपे हुए text को पहचानता है || OCR छपे हुए text को पहचानता है"
+      ]
+    },
+    {
+      "q": "What is the binary equivalent of decimal number 10?",
+      "options": [
+        "1010",
+        "1001",
+        "1100",
+        "1110"
+      ],
+      "answer": "A",
+      "points": [
+        "Decimal 10 = 8 + 2 = 1010 (binary) || डेसिमल दस बराबर आठ प्लस दो बराबर दस दस बाइनरी",
+        "Binary का base 2 होता है (केवल 0 और 1) || बाइनरी का बेस दो होता है, केवल शून्य और एक",
+        "Hexadecimal का base 16 और octal का base 8 होता है || हेक्साडेसिमल का बेस सोलह और ऑक्टल का बेस आठ होता है",
+        "Hexadecimal में A = 10 होता है || हेक्साडेसिमल में ए बराबर दस होता है"
+      ]
+    },
+    {
+      "q": "Which shortcut key locks a Windows computer instantly?",
+      "options": [
+        "Win + D",
+        "Win + E",
+        "Win + L",
+        "Win + R"
+      ],
+      "answer": "C",
+      "points": [
+        "Win+L कंप्यूटर को तुरंत lock कर देता है || Win+L कंप्यूटर को तुरंत lock कर देता है",
+        "Win+D desktop दिखाता है, Win+E File Explorer खोलता है || Win+D desktop दिखाता है, Win+E File Explorer खोलता है",
+        "Win+R से Run box खुलता है || Win+R से Run box खुलता है",
+        "Ctrl+Alt+Del से भी lock का option मिलता है || Ctrl+Alt+Del से भी lock का option मिलता है"
+      ]
+    },
+    {
+      "q": "An IPv4 address is how many bits long?",
+      "options": [
+        "16 bit",
+        "24 bit",
+        "64 bit",
+        "32 bit"
+      ],
+      "answer": "D",
+      "points": [
+        "IPv4 address 32 bit का होता है (चार octet) || IPv4 address बत्तीस bit का होता है, चार octet",
+        "IPv6 address 128 bit का होता है || IPv6 address एक सौ अट्ठारह bit का होता है",
+        "IPv4 के classes A से E होते हैं || IPv4 के classes A से E होते हैं",
+        "MAC address 48 bit का होता है || MAC address सैंतालीस bit का होता है"
+      ]
+    },
+    {
+      "q": "Which network topology uses a central hub or switch?",
+      "options": [
+        "Bus",
+        "Star",
+        "Ring",
+        "Mesh"
+      ],
+      "answer": "B",
+      "points": [
+        "Star topology में सभी nodes central hub/switch से जुड़ते हैं || Star topology में सभी nodes central hub या switch से जुड़ते हैं",
+        "एक node खराब होने पर बाकी network चलता रहता है",
+        "Bus topology में एक ही मुख्य cable होती है",
+        "Mesh में हर device दूसरे से जुड़ा होता है"
+      ]
+    },
+    {
+      "q": "Which device connects different networks and forwards data using IP addresses?",
+      "options": [
+        "Router",
+        "Hub",
+        "Repeater",
+        "NIC"
+      ],
+      "answer": "A",
+      "points": [
+        "Router अलग-अलग networks को जोड़ता है और IP से path चुनता है || Router अलग-अलग networks को जोड़ता है और IP से path चुनता है",
+        "Hub सभी ports पर data भेज देता है",
+        "Switch MAC address के आधार पर data भेजता है || Switch MAC address के आधार पर data भेजता है",
+        "Repeater कमज़ोर signal को दोबारा मज़बूत करता है"
+      ]
+    },
+    {
+      "q": "Which protocol is used for sending emails?",
+      "options": [
+        "POP3",
+        "IMAP",
+        "FTP",
+        "SMTP"
+      ],
+      "answer": "D",
+      "points": [
+        "SMTP (Simple Mail Transfer Protocol) mail भेजने के लिए है || SMTP Simple Mail Transfer Protocol mail भेजने के लिए है",
+        "POP3 और IMAP mail प्राप्त करने के लिए होते हैं || POP3 और IMAP mail प्राप्त करने के लिए होते हैं",
+        "FTP file transfer के लिए है || FTP file transfer के लिए है",
+        "HTTPS secure web browsing के लिए है || HTTPS secure web browsing के लिए है"
+      ]
+    },
+    {
+      "q": "A network that covers an entire city is called a:",
+      "options": [
+        "LAN",
+        "PAN",
+        "MAN",
+        "WAN"
+      ],
+      "answer": "C",
+      "points": [
+        "MAN एक शहर या बड़े क्षेत्र को कवर करता है || MAN एक शहर या बड़े क्षेत्र को कवर करता है",
+        "LAN एक भवन या कैंपस तक सीमित होता है || LAN एक भवन या कैंपस तक सीमित होता है",
+        "WAN बहुत बड़े क्षेत्र का नेटवर्क है, जैसे Internet || WAN बहुत बड़े क्षेत्र का नेटवर्क है, जैसे Internet",
+        "PAN बहुत छोटे दायरे (लगभग 10 मीटर) का नेटवर्क है || PAN बहुत छोटे दायरे, लगभग 10 मीटर का नेटवर्क है"
+      ]
+    },
+    {
+      "q": "Which key combination permanently deletes a file, bypassing the Recycle Bin?",
+      "options": [
+        "Ctrl + Delete",
+        "Shift + Delete",
+        "Alt + Delete",
+        "Ctrl + Shift + Delete"
+      ],
+      "answer": "B",
+      "points": [
+        "Shift+Delete फाइल को Recycle Bin में भेजे बिना स्थायी रूप से हटाता है || Shift+Delete फाइल को Recycle Bin में भेजे बिना स्थायी रूप से हटाता है",
+        "सिर्फ Delete दबाने पर फाइल Recycle Bin में जाती है",
+        "Recycle Bin से फाइल Restore की जा सकती है",
+        "F2 से फाइल का नाम बदला जाता है || F2 से फाइल का नाम बदला जाता है"
+      ]
+    },
+    {
+      "q": "What is the full form of URL?",
+      "options": [
+        "Uniform Resource Locator",
+        "Universal Resource Link",
+        "Uniform Remote Locator",
+        "Unified Resource Locator"
+      ],
+      "answer": "A",
+      "points": [
+        "URL का full form Uniform Resource Locator है || URL का full form Uniform Resource Locator है",
+        "यह web page का पूरा पता होता है",
+        "उदाहरण: https://www.example.com || उदाहरण: https://www.example.com",
+        "WWW का आविष्कार Tim Berners-Lee ने किया || WWW का आविष्कार Tim Berners-Lee ने किया"
+      ]
+    },
+    {
+      "q": "Which HTML tag creates the largest heading?",
+      "options": [
+        "<head>",
+        "<h6>",
+        "<heading>",
+        "<h1>"
+      ],
+      "answer": "D",
+      "points": [
+        "h1 सबसे बड़ा और h6 सबसे छोटा heading है || h1 सबसे बड़ा और h6 सबसे छोटा heading है",
+        "HTML में heading tags h1 से h6 तक होते हैं || HTML में heading tags h1 से h6 तक होते हैं",
+        "HTML का full form HyperText Markup Language है || HTML का full form HyperText Markup Language है",
+        "HTML file की extension .html या .htm होती है || HTML file की extension .html या .htm होती है"
+      ]
+    },
+    {
+      "q": "Which HTML tag inserts a line break?",
+      "options": [
+        "<br>",
+        "<lb>",
+        "<break>",
+        "<p>"
+      ],
+      "answer": "A",
+      "points": [
+        "br tag से नई line शुरू होती है, इसका closing tag नहीं होता || br tag से नई line शुरू होती है, इसका closing tag नहीं होता",
+        "hr tag horizontal line बनाता है || hr tag horizontal line बनाता है",
+        "p tag से paragraph बनता है || p tag से paragraph बनता है",
+        "ऐसे tags को empty या void tags कहते हैं"
+      ]
+    },
+    {
+      "q": "Which attribute of the img tag gives alternate text for an image?",
+      "options": [
+        "title",
+        "alt",
+        "src",
+        "href"
+      ],
+      "answer": "B",
+      "points": [
+        "alt attribute image न दिखने पर वैकल्पिक text दिखाता है || alt attribute image न दिखने पर वैकल्पिक text दिखाता है",
+        "src attribute image का path या URL बताता है || src attribute image का path या URL बताता है",
+        "width और height से image का आकार तय होता है",
+        "Screen reader भी alt text पढ़ते हैं"
+      ]
+    },
+    {
+      "q": "How many rows does a modern MS Excel worksheet have?",
+      "options": [
+        "65536",
+        "1048575",
+        "1048576",
+        "16384"
+      ],
+      "answer": "C",
+      "points": [
+        "Excel में 1048576 rows और 16384 columns होती हैं || Excel में दस लाख अड़तालीस हज़ार पाँच सौ छिहत्तर rows और सोलह हज़ार तीन सौ चौरासी columns होती हैं",
+        "आखिरी column का नाम XFD है || आखिरी column का नाम XFD है",
+        "पुराने Excel 2003 में 65536 rows थीं || पुराने Excel दो हज़ार तीन में पैंसठ हज़ार पाँच सौ छत्तीस rows थीं",
+        "Rows संख्या से और columns अक्षरों से पहचाने जाते हैं"
+      ]
+    },
+    {
+      "q": "Which Excel function counts only the cells that contain numbers?",
+      "options": [
+        "COUNTA",
+        "SUM",
+        "LEN",
+        "COUNT"
+      ],
+      "answer": "D",
+      "points": [
+        "COUNT केवल numeric values वाली cells गिनता है",
+        "COUNTA खाली न होने वाली सभी cells गिनता है",
+        "COUNTIF शर्त के आधार पर गिनती करता है",
+        "SUM जोड़ता है, AVERAGE औसत निकालता है"
+      ]
+    },
+    {
+      "q": "Which shortcut opens a new tab in a web browser?",
+      "options": [
+        "Ctrl + N",
+        "Ctrl + T",
+        "Ctrl + W",
+        "Ctrl + H"
+      ],
+      "answer": "B",
+      "points": [
+        "Ctrl+T से browser में नया tab खुलता है || Ctrl+T से browser में नया tab खुलता है",
+        "Ctrl+W मौजूदा tab बंद करता है || Ctrl+W मौजूदा tab बंद करता है",
+        "Ctrl+H history और Ctrl+J downloads दिखाता है || Ctrl+H history और Ctrl+J downloads दिखाता है",
+        "Ctrl+D पेज को bookmark करता है || Ctrl+D पेज को bookmark करता है"
+      ]
+    },
+    {
+      "q": "Which shortcut centre-aligns text in MS Word?",
+      "options": [
+        "Ctrl + E",
+        "Ctrl + L",
+        "Ctrl + R",
+        "Ctrl + J"
+      ],
+      "answer": "A",
+      "points": [
+        "Ctrl+E text को center align करता है || Ctrl+E text को center align करता है",
+        "Ctrl+L left, Ctrl+R right और Ctrl+J justify करता है || Ctrl+L left, Ctrl+R right और Ctrl+J justify करता है",
+        "Ctrl+B bold, Ctrl+I italic, Ctrl+U underline करता है || Ctrl+B bold, Ctrl+I italic, Ctrl+U underline करता है"
+      ],
+      "trick": "E = Equal margins, यानी center"
+    },
+    {
+      "q": "Which error does Excel show when a number is divided by zero?",
+      "options": [
+        "#NAME?",
+        "#REF!",
+        "#DIV/0!",
+        "#VALUE!"
+      ],
+      "answer": "C",
+      "points": [
+        "किसी संख्या को 0 से भाग देने पर #DIV/0! error आता है",
+        "#NAME? गलत function या नाम लिखने पर आता है",
+        "#REF! गलत cell reference पर और #VALUE! गलत data type पर आता है",
+        "Column छोटा होने पर #### दिखता है"
+      ]
+    },
+    {
+      "q": "What is the file extension of a PowerPoint 2007 or later presentation?",
+      "options": [
+        ".ppt",
+        ".pptx",
+        ".pps",
+        ".pot"
+      ],
+      "answer": "B",
+      "points": [
+        "PowerPoint 2007 और बाद की फाइल .pptx होती है || PowerPoint दो हज़ार सात और बाद की फाइल .pptx होती है",
+        "पुराना format .ppt था || पुराना format .ppt था",
+        ".pps या .ppsx सीधे slide show में खुलती है || .pps या .ppsx सीधे slide show में खुलती है",
+        ".potx PowerPoint template की extension है || .potx PowerPoint template की extension है"
+      ]
+    },
+    {
+      "q": "Which key starts a PowerPoint slide show from the first slide?",
+      "options": [
+        "F1",
+        "F2",
+        "F7",
+        "F5"
+      ],
+      "answer": "D",
+      "points": [
+        "F5 से slide show शुरू से चालू होता है || F5 से slide show शुरू से चालू होता है",
+        "Shift+F5 मौजूदा slide से slide show शुरू करता है || Shift+F5 मौजूदा slide से slide show शुरू करता है",
+        "Esc से slide show बंद होता है || Esc से slide show बंद होता है",
+        "N या P से अगली या पिछली slide पर जाते हैं"
+      ]
+    },
+    {
+      "q": "Which MS Word feature is used to send the same letter to many people?",
+      "options": [
+        "Mail Merge",
+        "Track Changes",
+        "Macro",
+        "Format Painter"
+      ],
+      "answer": "A",
+      "points": [
+        "Mail Merge से एक ही पत्र कई लोगों के नाम-पते के साथ बनता है",
+        "यह Mailings tab में मिलता है",
+        "इसमें main document और data source जुड़ते हैं",
+        "Track Changes संपादन का रिकॉर्ड रखता है"
+      ]
+    },
+    {
+      "q": "DHTML is a combination of HTML, CSS, JavaScript and:",
+      "options": [
+        "XML",
+        "PHP",
+        "DOM",
+        "SQL"
+      ],
+      "answer": "C",
+      "points": [
+        "DHTML = HTML + CSS + JavaScript + DOM || DHTML = HTML + CSS + JavaScript + DOM",
+        "DOM का full form Document Object Model है || DOM का full form Document Object Model है",
+        "DHTML से web page dynamic और interactive बनता है || DHTML से web page dynamic और interactive बनता है",
+        "CSS का full form Cascading Style Sheets है || CSS का full form Cascading Style Sheets है"
+      ]
+    },
+    {
+      "q": "Which browser mode does not save browsing history?",
+      "options": [
+        "Safe mode",
+        "Normal mode",
+        "Offline mode",
+        "Incognito mode"
+      ],
+      "answer": "D",
+      "points": [
+        "Incognito/Private mode में history और cookies सेव नहीं होते",
+        "Chrome में shortcut Ctrl+Shift+N, Firefox में Ctrl+Shift+P है || Chrome में shortcut Ctrl+Shift+N, Firefox में Ctrl+Shift+P है",
+        "Downloaded फाइलें फिर भी सेव रहती हैं",
+        "ISP और website आपकी गतिविधि देख सकते हैं || ISP और website आपकी गतिविधि देख सकते हैं"
+      ]
+    },
+    {
+      "q": "Choose the correct article: He is ___ honest man.",
+      "options": [
+        "a",
+        "the",
+        "an",
+        "no article"
+      ],
+      "answer": "C",
+      "points": [
+        "Silent h वाले शब्द से पहले 'an' आता है",
+        "नियम स्वर की ध्वनि पर चलता है, सिर्फ अक्षर पर नहीं",
+        "honest का 'h' नहीं बोला जाता",
+        "an hour, an heir भी इसी नियम के उदाहरण हैं"
+      ]
+    },
+    {
+      "q": "What is the plural form of the word criterion?",
+      "options": [
+        "criterions",
+        "criterias",
+        "criteriums",
+        "criteria"
+      ],
+      "answer": "D",
+      "points": [
+        "criterion का बहुवचन criteria है",
+        "phenomenon का बहुवचन phenomena है",
+        "datum का बहुवचन data और medium का media है",
+        "ये लैटिन/ग्रीक शब्दों के अनियमित plurals हैं"
+      ]
+    },
+    {
+      "q": "Choose the synonym of the word: ABUNDANT",
+      "options": [
+        "Plentiful",
+        "Scarce",
+        "Rare",
+        "Meagre"
+      ],
+      "answer": "A",
+      "points": [
+        "Abundant का अर्थ है बहुत अधिक या भरपूर",
+        "समानार्थी: ample, copious, plentiful",
+        "विलोम: scarce, meagre, rare",
+        "Abundance इसका noun रूप है"
+      ]
+    },
+    {
+      "q": "Choose the antonym of the word: GENEROUS",
+      "options": [
+        "Kind",
+        "Stingy",
+        "Liberal",
+        "Noble"
+      ],
+      "answer": "B",
+      "points": [
+        "Generous का अर्थ है उदार या दानी",
+        "विलोम: stingy, miserly, mean",
+        "समानार्थी: liberal, benevolent",
+        "Generosity इसका noun रूप है"
+      ]
+    },
+    {
+      "q": "Complete the tag question: She plays well, ___?",
+      "options": [
+        "is she",
+        "does she",
+        "doesn't she",
+        "didn't she"
+      ],
+      "answer": "C",
+      "points": [
+        "Positive वाक्य के बाद negative tag आता है",
+        "Simple present में tag does/doesn't या do/don't बनता है",
+        "She plays well, doesn't she? सही रूप है",
+        "Tag का subject हमेशा pronoun होता है"
+      ]
+    },
+    {
+      "q": "One word for: a person who loves books",
+      "options": [
+        "Bibliophile",
+        "Philanthropist",
+        "Bibliographer",
+        "Misanthrope"
+      ],
+      "answer": "A",
+      "points": [
+        "Bibliophile का अर्थ है किताबों से प्रेम करने वाला",
+        "Philanthropist मानवता से प्रेम करने वाला होता है",
+        "Misanthrope लोगों से घृणा करने वाला होता है",
+        "Bibliographer पुस्तकों की सूची बनाने वाला होता है"
+      ]
+    },
+    {
+      "q": "Change to passive voice: They are painting the wall.",
+      "options": [
+        "The wall is painted by them.",
+        "The wall was being painted by them.",
+        "The wall has been painted by them.",
+        "The wall is being painted by them."
+      ],
+      "answer": "D",
+      "points": [
+        "Present continuous passive: is/am/are + being + V3 || Present continuous passive: is/am/are + being + V3",
+        "They are painting the wall का passive: The wall is being painted",
+        "Past continuous passive: was/were + being + V3 || Past continuous passive: was/were + being + V3",
+        "Passive में object वाक्य का subject बन जाता है"
+      ]
+    },
+    {
+      "q": "Spot the error: Neither of the boys have completed the work.",
+      "options": [
+        "Neither of",
+        "have",
+        "completed",
+        "the work"
+      ],
+      "answer": "B",
+      "points": [
+        "Neither, Either, Each, Everyone के साथ singular verb आती है",
+        "सही वाक्य: Neither of the boys has completed the work",
+        "Neither of के बाद plural noun और singular verb आती है",
+        "Neither...nor में verb दूसरे subject के अनुसार चलती है"
+      ]
+    },
+    {
+      "q": "Fill in the blank: He is fond ___ music.",
+      "options": [
+        "with",
+        "in",
+        "for",
+        "of"
+      ],
+      "answer": "D",
+      "points": [
+        "fond of, proud of, afraid of, jealous of सही prepositions हैं",
+        "Appropriate preposition रटकर याद करना पड़ता है",
+        "good at, weak at, expert at में 'at' आता है",
+        "interested in और married to भी याद रखें"
+      ]
+    },
+    {
+      "q": "Choose the meaning of the idiom: A piece of cake",
+      "options": [
+        "A very easy task",
+        "A sweet dish",
+        "A small portion",
+        "A hard job"
+      ],
+      "answer": "A",
+      "points": [
+        "Piece of cake का अर्थ है बहुत आसान काम",
+        "Once in a blue moon = बहुत कम",
+        "Break the ice = बातचीत शुरू करना",
+        "Idioms का लाक्षणिक अर्थ लिया जाता है, शाब्दिक नहीं"
+      ]
+    },
+    {
+      "q": "Choose the correctly spelt word.",
+      "options": [
+        "Occurence",
+        "Occurrence",
+        "Occurance",
+        "Ocurrence"
+      ],
+      "answer": "B",
+      "points": [
+        "सही spelling Occurrence है (double c और double r)",
+        "Occasion, Committee, Accommodation में भी double letters हैं",
+        "Necessary में एक c और दो s होते हैं",
+        "Separate में 'a' आता है, 'e' नहीं"
+      ]
+    },
+    {
+      "q": "In the sentence Swimming is a good exercise, the word Swimming is a:",
+      "options": [
+        "Present participle",
+        "Adjective",
+        "Gerund",
+        "Infinitive"
+      ],
+      "answer": "C",
+      "points": [
+        "Verb+ing जो noun का काम करे, वह gerund है || Verb+ing जो noun का काम करे, वह gerund है",
+        "यहाँ Swimming वाक्य का subject है",
+        "Participle verb+ing adjective की तरह काम करता है || Participle verb+ing adjective की तरह काम करता है",
+        "Enjoy, avoid, finish के बाद gerund आता है"
+      ]
+    },
+    {
+      "q": "What is the HCF of 12 and 18?",
+      "options": [
+        "3",
+        "6",
+        "9",
+        "36"
+      ],
+      "answer": "B",
+      "points": [
+        "12 = 2x2x3 और 18 = 2x3x3, साझा गुणनखंड 2x3 = 6 || बारह बराबर दो गुणा दो गुणा तीन और अठारह बराबर दो गुणा तीन गुणा तीन, साझा गुणनखंड दो गुणा तीन बराबर छह",
+        "HCF सबसे बड़ा साझा गुणनखंड होता है",
+        "HCF x LCM = दोनों संख्याओं का गुणनफल || HCF x LCM = दोनों संख्याओं का गुणनफल",
+        "12 और 18 का LCM 36 है || बारह और अठारह का LCM छतीस है"
+      ]
+    },
+    {
+      "q": "What is the LCM of 4, 6 and 8?",
+      "options": [
+        "24",
+        "12",
+        "48",
+        "32"
+      ],
+      "answer": "A",
+      "points": [
+        "4 = 2^2, 6 = 2x3, 8 = 2^3, इसलिए LCM = 2^3 x 3 = 24 || चार बराबर दो की घात दो, छह बराबर दो गुणा तीन, आठ बराबर दो की घात तीन, इसलिए LCM = दो की घात तीन गुणा तीन बराबर चौबीस",
+        "LCM में हर अभाज्य गुणनखंड की सबसे बड़ी घात लेते हैं",
+        "LCM सबसे बड़ी दी गई संख्या का गुणज होता है",
+        "घंटी और traffic light वाले प्रश्नों में LCM लगता है"
+      ]
+    },
+    {
+      "q": "What is 25 percent of 480?",
+      "options": [
+        "100",
+        "110",
+        "120",
+        "140"
+      ],
+      "answer": "C",
+      "points": [
+        "25 percent = 1/4, इसलिए 480 का चौथाई 120 है || 25 percent = 1/4, इसलिए चार सौ अस्सी का चौथाई 120 है",
+        "Percentage = (भाग / कुल) x 100 || Percentage = (भाग / कुल) x 100",
+        "12.5 percent = 1/8 और 20 percent = 1/5 || 12.5 percent = 1/8 और 20 percent = 1/5",
+        "33.33 percent = 1/3 याद रखें || 33.33 percent = 1/3 याद रखें"
+      ]
+    },
+    {
+      "q": "Two numbers are in ratio 3:5 and their sum is 160. What is the larger number?",
+      "options": [
+        "60",
+        "80",
+        "90",
+        "100"
+      ],
+      "answer": "D",
+      "points": [
+        "कुल भाग = 3 + 5 = 8, एक भाग = 160/8 = 20 || कुल भाग = 3 + 5 = 8, एक भाग = 160 भागे 8 = 20",
+        "बड़ी संख्या = 5 x 20 = 100 || बड़ी संख्या = 5 x 20 = 100",
+        "छोटी संख्या = 3 x 20 = 60 || छोटी संख्या = 3 x 20 = 60",
+        "Ratio में कुल राशि को कुल भागों से भाग देकर एक भाग निकालें"
+      ]
+    },
+    {
+      "q": "What is the average of 10, 20, 30, 40 and 50?",
+      "options": [
+        "20",
+        "25",
+        "30",
+        "35"
+      ],
+      "answer": "C",
+      "points": [
+        "Average = कुल योग / संख्याओं की गिनती",
+        "योग = 150, गिनती = 5, औसत = 30 || योग = 150, गिनती = 5, औसत = 30",
+        "AP में औसत बीच की संख्या के बराबर होता है",
+        "पहली n प्राकृतिक संख्याओं का औसत (n+1)/2 होता है || पहली n प्राकृतिक संख्याओं का औसत (n+1)/2 होता है"
+      ]
+    },
+    {
+      "q": "If CP = Rs 500 and SP = Rs 600, what is the profit percent?",
+      "options": [
+        "10 percent",
+        "20 percent",
+        "25 percent",
+        "15 percent"
+      ],
+      "answer": "B",
+      "points": [
+        "Profit = 600 - 500 = Rs 100 || Profit = 600 - 500 = Rs 100",
+        "Profit percent = (100/500) x 100 = 20 percent || Profit percent = (100/500) x 100 = 20 percent",
+        "Profit और Loss percent हमेशा CP पर निकालते हैं",
+        "SP = CP x (100 + profit percent)/100 || SP = CP x (100 + profit percent)/100"
+      ]
+    },
+    {
+      "q": "What is the simple interest on Rs 2000 at 5 percent per annum for 3 years?",
+      "options": [
+        "Rs 300",
+        "Rs 250",
+        "Rs 350",
+        "Rs 400"
+      ],
+      "answer": "A",
+      "points": [
+        "SI = (P x R x T)/100 || SI = (P x R x T)/100",
+        "2000 x 5 x 3 / 100 = Rs 300 || 2000 x 5 x 3 / 100 = Rs 300",
+        "कुल राशि (Amount) = Rs 2300 || कुल राशि Amount = Rs 2300",
+        "SI में ब्याज हर साल मूलधन पर ही लगता है"
+      ]
+    },
+    {
+      "q": "A can finish a work in 10 days and B in 15 days. Together they finish it in:",
+      "options": [
+        "5 days",
+        "8 days",
+        "12.5 days",
+        "6 days"
+      ],
+      "answer": "D",
+      "points": [
+        "A का एक दिन का काम = 1/10, B का = 1/15 || A का एक दिन का काम = 1/10, B का = 1/15",
+        "साथ में एक दिन का काम = 1/10 + 1/15 = 1/6 || साथ में एक दिन का काम = 1/10 + 1/15 = 1/6",
+        "इसलिए पूरा काम 6 दिन में होगा",
+        "शॉर्टकट: (10 x 15)/(10 + 15) = 6 || शॉर्टकट: (10 x 15)/(10 + 15) = 6"
+      ]
+    },
+    {
+      "q": "A train runs at 72 km/h. What is its speed in m/s?",
+      "options": [
+        "15 m/s",
+        "18 m/s",
+        "20 m/s",
+        "25 m/s"
+      ],
+      "answer": "C",
+      "points": [
+        "km/h को m/s में बदलने के लिए 5/18 से गुणा करें || km/h को m/s में बदलने के लिए 5/18 से गुणा करें",
+        "72 x 5/18 = 20 m/s || 72 x 5/18 = 20 m/s",
+        "m/s को km/h में बदलने के लिए 18/5 से गुणा करें || m/s को km/h में बदलने के लिए 18/5 से गुणा करें",
+        "Speed = Distance / Time"
+      ]
+    },
+    {
+      "q": "What is the area of a circle of radius 7 cm (take pi = 22/7)?",
+      "options": [
+        "154 sq cm",
+        "44 sq cm",
+        "49 sq cm",
+        "308 sq cm"
+      ],
+      "answer": "A",
+      "points": [
+        "वृत्त का क्षेत्रफल = pi x r x r || वृत्त का क्षेत्रफल = pi x r x r",
+        "22/7 x 7 x 7 = 154 sq cm || 22/7 x 7 x 7 = 154 sq cm",
+        "परिधि = 2 x pi x r = 44 cm || परिधि = 2 x pi x r = 44 cm",
+        "Pi का मान 22/7 या 3.14 लिया जाता है"
+      ]
+    },
+    {
+      "q": "The expansion of (a + b)^2 is:",
+      "options": [
+        "a^2 + b^2",
+        "a^2 - 2ab + b^2",
+        "a^2 + ab + b^2",
+        "a^2 + 2ab + b^2"
+      ],
+      "answer": "D",
+      "points": [
+        "(a+b)^2 = a^2 + 2ab + b^2 || (a+b)^2 = a^2 + 2ab + b^2",
+        "(a-b)^2 = a^2 - 2ab + b^2 || (a-b)^2 = a^2 - 2ab + b^2",
+        "a^2 - b^2 = (a+b)(a-b) || a^2 - b^2 = (a+b)(a-b)",
+        "ये identities factorisation में बहुत काम आती हैं"
+      ]
+    },
+    {
+      "q": "Find the next number: 2, 6, 12, 20, 30, ?",
+      "options": [
+        "40",
+        "42",
+        "44",
+        "48"
+      ],
+      "answer": "B",
+      "points": [
+        "अंतर 4, 6, 8, 10 हैं, अगला अंतर 12 होगा",
+        "30 + 12 = 42 || 30 + 12 = 42",
+        "यह n(n+1) श्रृंखला है: 1x2, 2x3, 3x4... || यह n(n+1) श्रृंखला है: 1x2, 2x3, 3x4...",
+        "अगली संख्या 6x7 = 42 || अगली संख्या 6x7 = 42"
+      ]
+    }
+  ]
+}
