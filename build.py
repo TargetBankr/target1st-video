@@ -50,6 +50,24 @@ GEMINI VOICE
     daily limit the build stops cleanly with exit code 75 (video.yml sees this and resumes by itself after the
     quota resets, about 1:30 pm IST; every other failure exits with code 1).
 
+GEMINI SAFETY (sync + empty clips), all automatic:
+    - Gemini voices several lines in one call and build.py cuts the recording at the pauses. The cut now matches the
+      pauses it finds to the pauses the TEXT predicts (every comma / danda / colon inside a line, and the gap between
+      lines), so a pause inside the options line is no longer mistaken for the gap between two lines. A cut that still
+      looks doubtful is NOT used: that group is split in half and voiced in smaller calls.
+    - Spoken text for Gemini only (screen text and cache keys are unchanged): ".ppt" becomes " ppt" (the dot made Gemini
+      return empty audio), and colons / semicolons / dashes inside a line are removed (they pause as long as a line gap).
+        gemini_say_map     {"old": "new"}  extra words to respell for Gemini
+        gemini_softpause   false = keep colons / dashes
+        gemini_cut_spread  default 2.1: how different the speaking speed of two lines in one cut may be
+    - A clip that comes out empty or the wrong length is made again alone; if it is still bad, ONLY that line is voiced
+      with Edge (meta "voice") and remembered (<hash>.edge.mp3). Delete that file to let Gemini try the line again.
+    - Old saved clips that run far faster / slower than the rest of the video are re-made (meta gemini_audit false = off,
+      gemini_audit_max = most clips re-made per run, default 6).
+    - Picture changes sit on exact frame boundaries, and the end of the log prints SYNC CHECK (voice vs picture length)
+      plus "CHECK AT m:ss" for any line spoken at a very different speed. meta sync_tolerance (default 0.25 s): the build
+      stops instead of publishing a video whose voice and picture lengths differ by more.
+
 SARVAM VOICE (Bulbul, built for Indian languages, Hindi = hi-IN)
     Set meta "tts": "sarvam" (or --tts sarvam) and provide the SARVAM_API_KEY environment variable
     (GitHub: repository secret SARVAM_API_KEY, wired in video.yml). New accounts get Rs 100 free credits.
@@ -367,6 +385,11 @@ def probe(path):
     return float(out.strip())
 
 
+async def edge_save(text, voice, rate, pitch, path):
+    import edge_tts
+    await edge_tts.Communicate(text, voice, rate=rate, pitch=pitch).save(str(path))
+
+
 GEMINI_MODELS = ["gemini-3.1-flash-tts-preview", "gemini-3.8-flash-tts", "gemini-3.8-flash-lite-tts"]
 GEMINI_VOICE = "Kore"
 # No spoken instruction by default: Gemini TTS sometimes reads an instruction aloud ("Say in a clear Hindi teacher
@@ -414,12 +437,52 @@ def rate_ok(chars, seconds):
     return 4.0 <= chars / max(0.05, seconds) <= 26
 
 
-def _nearest_gaps(gaps, chars, total):
-    """Pick len(chars)-1 pauses, in order, that sit closest to where each line should end if every character took
+# ---- Gemini voice safety helpers -------------------------------------------------------------------------------
+# File types written with a leading dot (".ppt") are sometimes returned by Gemini as EMPTY audio. Spoken form: " ppt".
+GEMINI_SAY_FILES = (r"(?<![\w.])\.(pptx?|docx?|xlsx?|pdf|txt|csv|exe|jpe?g|png|mp[34]|html?|sql|zip|ini|dll|bat)\b")
+SPREAD_MAX = 2.1      # a cut is trusted only if no line is spoken more than this many times faster than another
+EMPTY_SECONDS = 0.3   # a clip with less speech than this is "empty"
+
+
+def gemini_say(text, meta):
+    """The text Gemini actually speaks. The on-screen text and the cache key are NOT changed.
+    1. ".ppt" -> " ppt" (the dot makes Gemini return empty audio for some words)
+    2. meta "gemini_say_map": {"old": "new"} for any other word that fails
+    3. colons, semicolons and dashes inside a line are removed (Gemini pauses at them as long as it pauses between
+       two lines, which makes the lines impossible to cut apart). meta "gemini_softpause": false = keep them."""
+    t = re.sub(GEMINI_SAY_FILES, r" \1", text, flags=re.I)
+    for old, new in (meta.get("gemini_say_map") or {}).items():
+        t = t.replace(old, new)
+    if meta.get("gemini_softpause", True):
+        t = re.sub(r"(?<!\d)\s*[:;]\s*(?!\d)", " ", t)
+        t = re.sub(r"\s*[—–]\s*", " ", t)
+    return re.sub(r"\s+", " ", t).strip()
+
+
+def line_weight(text):
+    """Expected speaking time of a line, in 'characters': every comma / danda inside the line adds a pause."""
+    body = text.rstrip(" ,।.?!;:")
+    return len(text) + 4 * len(re.findall(r"[,।;:?!]", body))
+
+
+def speech_seconds(path):
+    """Length of the clip with the silence at both ends removed (the same trim the final build applies)."""
+    tmp = Path(str(path) + ".trimcheck.wav")
+    try:
+        run(["ffmpeg", "-y", "-i", str(path), "-af", TRIM, "-ar", "24000", "-ac", "1", str(tmp)])
+        return probe(tmp)
+    except (SystemExit, ValueError):  # an all-silent clip trims to nothing: no length at all
+        return 0.0
+    finally:
+        tmp.unlink(missing_ok=True)
+
+
+def _nearest_gaps(gaps, weights, total):
+    """Pick len(weights)-1 pauses, in order, that sit closest to where each line should end if every 'character' took
     the same time, with a bonus for longer pauses (the gap between paragraphs is longer than a comma pause)."""
-    n = len(chars)
-    tot = sum(chars) or 1
-    exp = [total * sum(chars[:k]) / tot for k in range(1, n)]
+    n = len(weights)
+    tot = sum(weights) or 1
+    exp = [total * sum(weights[:k]) / tot for k in range(1, n)]
     mids = [(a + b) / 2 for a, b in gaps]
     cost = lambda k, j: abs(mids[j] - exp[k]) - 6.0 * (gaps[j][1] - gaps[j][0])
     m = len(gaps)
@@ -446,28 +509,111 @@ def _nearest_gaps(gaps, chars, total):
     return [gaps[i] for i in reversed(pick)]
 
 
-def split_by_silence(full, lines):
-    """Cut one long recording into len(lines) clips at the pauses between the paragraphs.
+def _events(texts, wts):
+    """The pauses Gemini is expected to make, in order: one at every comma / danda / colon inside a line (optional,
+    Gemini may skip it) and one between every two lines (must exist). Each has its expected position in 'characters'."""
+    ev, base = [], 0
+    for k, t in enumerate(texts):
+        end = len(t.rstrip(" ,\u0964.?!;:"))
+        marks = 0
+        for i, ch in enumerate(t[:end]):
+            if ch in ",\u0964;:?!":
+                ev.append((base + i + 4 * marks, False))
+                marks += 1
+        base += wts[k]
+        if k < len(texts) - 1:
+            ev.append((base, True))
+    return ev, base
 
-    Writes each clip to line["mp3"]. Returns True only if the cut looks right: the right number of pauses
-    was found and every clip's length roughly matches how long its text is. Otherwise returns False and
-    writes nothing, so the caller can regenerate.
+
+def _align_gaps(gaps, texts, wts, total):
+    """Match the pauses found in the recording to the pauses the text predicts (monotone alignment, Viterbi).
+    A pause inside a line may be unmatched (Gemini skipped it); a pause between two lines may not.
+    Returns (boundary gaps, cost per event, worst boundary position error in seconds) or None."""
+    ev, W = _events(texts, wts)
+    M, G = len(ev), len(gaps)
+    nb = [0]
+    for e in ev:
+        nb.append(nb[-1] + (1 if e[1] else 0))
+    if G < nb[-1] or not nb[-1]:
+        return None
+    r = total / max(1, W)
+    tau = [r * e[0] for e in ev]
+    mids = [(a + b) / 2 for a, b in gaps]
+    lens = [b - a for a, b in gaps]
+    C_SKIP, C_EXTRA = 1.0, 0.15
+
+    def here(i, j):
+        sc = 0.5 + 0.08 * tau[i]
+        return ((mids[j] - tau[i]) / sc) ** 2 - (2.0 if ev[i][1] else 1.0) * lens[j]
+
+    best = {}
+    for i in range(M):
+        if nb[i] > 0:
+            break
+        for j in range(G):
+            best[(i, j)] = (C_SKIP * i + C_EXTRA * j + here(i, j), None)
+    for i in range(M):
+        for j in range(G):
+            cur = best.get((i, j))
+            if cur is None:
+                continue
+            for i2 in range(i + 1, M):
+                if nb[i2] - nb[i + 1] > 0:
+                    break
+                for j2 in range(j + 1, G):
+                    c = cur[0] + C_SKIP * (i2 - i - 1) + C_EXTRA * (j2 - j - 1) + here(i2, j2)
+                    old = best.get((i2, j2))
+                    if old is None or c < old[0]:
+                        best[(i2, j2)] = (c, (i, j))
+    end, end_cost = None, float("inf")
+    for (i, j), (c, _) in best.items():
+        if nb[M] - nb[i + 1] > 0:
+            continue
+        c += C_SKIP * (M - 1 - i) + C_EXTRA * (G - 1 - j)
+        if c < end_cost:
+            end, end_cost = (i, j), c
+    if end is None:
+        return None
+    chain, node = [], end
+    while node is not None:
+        chain.append(node)
+        node = best[node][1]
+    chain.reverse()
+    bounds = [(i, j) for i, j in chain if ev[i][1]]
+    if len(bounds) != nb[-1]:
+        return None
+    err = max(abs(mids[j] - tau[i]) for i, j in bounds)
+    return [gaps[j] for _, j in bounds], end_cost / max(1, M), err
+
+
+def split_by_silence(full, lines, spread_max=SPREAD_MAX):
+    """Cut one long recording into len(lines) clips at the pauses between the lines.
+
+    Every way of choosing the pauses is tried (several silence thresholds, longest pauses, best position fit) and the
+    cut where all lines are spoken at the most similar speed wins. It is used only if that spread is <= spread_max.
+    Writes each clip to line["mp3"] and returns True; otherwise returns False and writes nothing, so the caller
+    can regenerate or split the group into smaller calls (fewer lines per call = far less ambiguity).
     """
     n = len(lines)
     total = probe(full)
-    chars = [len(l["say"]) for l in lines]
+    texts = [l.get("vsay") or l["say"] for l in lines]
+    chars = [len(t) for t in texts]
+    wts = [max(1, line_weight(t)) for t in texts]
+    best = None  # (alignment cost, spread, cuts)
 
-    def judge(sel, lo, hi):
-        cuts = [0.0] + [(a + b) / 2 for a, b in sel] + [total]
-        # speech length of each line = from the end of the pause before it to the start of the pause after it
+    def judge(sel):
         speech = [(sel[k - 1][1] if k else 0.0, sel[k][0] if k < n - 1 else total) for k in range(n)]
-        sp = [max(0.05, b - a) for a, b in speech]
-        per_char = sum(sp) / max(1, sum(chars))
-        ok = all(lo * per_char <= d / c <= hi * per_char and rate_ok(c, d)
-                 for d, c in zip(sp, chars) if c >= 25)
-        return ok, cuts
+        sp = [b - a for a, b in speech]
+        if any(d < 0.25 for d in sp):
+            return None
+        if not all(rate_ok(c, d) for d, c in zip(sp, chars) if c >= 25):
+            return None
+        rates = [w / d for w, d in zip(wts, sp) if w >= 12]
+        spread = max(rates) / min(rates) if len(rates) > 1 else 1.0
+        return spread, [0.0] + [(a + b) / 2 for a, b in sel] + [total]
 
-    for noise, dur in (("-38dB", 0.35), ("-38dB", 0.2), ("-32dB", 0.2), ("-35dB", 0.12)):
+    for noise, dur in (("-38dB", 0.35), ("-38dB", 0.2), ("-32dB", 0.2), ("-35dB", 0.12), ("-35dB", 0.08)):
         r = subprocess.run(["ffmpeg", "-i", str(full), "-af", f"silencedetect=noise={noise}:d={dur}",
                             "-f", "null", "-"], capture_output=True, text=True)
         starts = [float(x) for x in re.findall(r"silence_start: (-?[\d.]+)", r.stderr)]
@@ -475,22 +621,28 @@ def split_by_silence(full, lines):
         gaps = [(a, b) for a, b in zip(starts, ends) if a > 0.15 and b < total - 0.15]
         if len(gaps) < n - 1:
             continue
-        tries = [(sorted(sorted(gaps, key=lambda g: g[1] - g[0], reverse=True)[: n - 1]), 0.4, 2.5)]
-        if len(gaps) > n - 1:  # extra pauses inside lines: choose by position, not only by length
-            near = _nearest_gaps(gaps, chars, total)
-            if near:
-                tries.append((near, 0.3, 3.3))
-        for sel, lo, hi in tries:
-            ok, cuts = judge(sel, lo, hi)
-            if not ok:
-                continue
-            for k, l in enumerate(lines):
-                tmp = l["mp3"].with_suffix(".part")
-                run(["ffmpeg", "-y", "-i", str(full), "-ss", f"{cuts[k]:.3f}", "-to", f"{cuts[k + 1]:.3f}",
-                     "-c:a", "pcm_s16le", "-f", "wav", str(tmp)])
-                tmp.replace(l["mp3"])
-            return True
-    return False
+        al = _align_gaps(gaps, texts, wts, total)
+        if al is None:
+            continue
+        sel, cost, err = al
+        j = judge(sel)
+        if j and err <= max(1.0, 0.12 * total) and (best is None or cost < best[0]):
+            best = (cost, j[0], j[1])
+    if best is not None:
+        best = (best[1], best[2])
+    if best is None or best[0] > spread_max:
+        print(f"    cut not trusted (best speed spread {best[0]:.2f} > {spread_max})" if best
+              else "    cut not trusted (no usable pauses found)", flush=True)
+        return False
+    cuts = best[1]
+    for k, l in enumerate(lines):
+        tmp = l["mp3"].with_suffix(".part")
+        run(["ffmpeg", "-y", "-i", str(full), "-ss", f"{cuts[k]:.3f}", "-to", f"{cuts[k + 1]:.3f}",
+             "-c:a", "pcm_s16le", "-f", "wav", str(tmp)])
+        tmp.replace(l["mp3"])
+    print(f"    cut ok: {n} lines, speed spread {best[0]:.2f}, cuts at "
+          + " ".join(f"{c:.1f}" for c in cuts[1:-1]), flush=True)
+    return True
 
 
 SARVAM_MODEL = "bulbul:v3"
@@ -598,8 +750,11 @@ async def tts_all(steps, meta, work, fake, provider):
         key = hashlib.md5(f"gemini|{g_voice}|{g_style}|{s['say']}".encode()).hexdigest()
         return work / "audio" / f"{key}.wav"
 
+    def g_edge_path(s):
+        return g_path(s).with_suffix(".edge.mp3")  # Edge voice used for ONE line Gemini could not voice
+
     def g_prompt(lines):
-        text = "\n\n".join(l["say"] for l in lines)  # one paragraph per line: Gemini pauses between paragraphs
+        text = "\n\n".join(l.get("vsay") or l["say"] for l in lines)  # one paragraph per line: Gemini pauses between paragraphs
         return f"{g_style}: {text}" if g_style else text
 
     async def gemini_call(prompt, out):
@@ -647,34 +802,101 @@ async def tts_all(steps, meta, work, fake, provider):
                 print(f"  Gemini retry {fails}/5 in {5 * fails}s ({body[:120]})", flush=True)
                 await asyncio.sleep(5 * fails)
 
+    def line_good(l):
+        """False if the clip is missing, empty, or its length does not fit its text."""
+        p = l["mp3"]
+        if not p.exists() or p.stat().st_size == 0:
+            return False
+        d = speech_seconds(p)
+        if d < EMPTY_SECONDS:
+            return False
+        t = l.get("vsay") or l["say"]
+        return len(t) < 25 or rate_ok(len(t), d)
+
+    async def edge_fallback(l):
+        """Gemini could not voice this line (empty audio twice): voice this ONE line with Edge instead."""
+        p = g_edge_path(l)
+        print(f"  Gemini gave no usable audio for: {l['say'][:50]} -> Edge voice for this line only", flush=True)
+        last = None
+        for attempt in range(3):
+            try:
+                async with sem:
+                    await edge_save(edge_text(l), voice, rate, pitch, p)
+                if p.exists() and p.stat().st_size > 0 and speech_seconds(p) >= EMPTY_SECONDS:
+                    l["mp3"], l["edge_fb"] = p, True
+                    l["mp3"].with_suffix(".aud").touch()
+                    return
+            except Exception as e:
+                last = e
+            await asyncio.sleep(2 * (attempt + 1))
+        sys.exit(f"Gemini AND Edge both failed for: {l['say'][:60]}\n{last}\n"
+                 "Add the word to meta gemini_say_map (e.g. {\"abc\": \"a b c\"}) or reword the line.")
+
     async def gemini_line(l):
-        """One line, one call. If the clip is far too short or too long for its text, try once more."""
+        """One line, one call. Empty / wrong length -> one more try, then Edge for this line only."""
         for attempt in range(2):
             await gemini_call(g_prompt([l]), l["mp3"])
-            if len(l["say"]) < 25 or rate_ok(len(l["say"]), probe(l["mp3"])):
+            if line_good(l):
+                l["mp3"].with_suffix(".aud").touch()
                 return
-            print(f"  Clip length looks wrong for: {l['say'][:40]}...", flush=True)
-            if attempt == 0:
-                print("  generating that line again", flush=True)
+            print(f"  Clip is empty or the wrong length for: {l['say'][:40]}..."
+                  + (" (generating it again)" if attempt == 0 else ""), flush=True)
+        await edge_fallback(l)
 
-    async def gemini_group(lines, deferred):
+    async def gemini_group(lines):
         """Make the audio for several lines with as few calls as possible (normally one).
-        A group that cannot be cut cleanly is NOT redone line by line now (that costs many calls and used to eat the
-        daily limit): it is put aside and done at the very end, after every normal group has its audio."""
+        If the recording cannot be cut into lines with confidence, the group is split in half and each half is
+        voiced in its own call (2-4 lines per call are almost never ambiguous). Never guesses a cut."""
         if len(lines) == 1:
             await gemini_line(lines[0])
             return
         full = work / "audio" / f"_group_{lines[0]['mp3'].stem}.wav"
-        for attempt in range(2):
-            await gemini_call(g_prompt(lines), full)
-            if split_by_silence(full, lines):
-                full.unlink(missing_ok=True)
-                return
-            if attempt == 0:
-                print("  Could not cut the audio cleanly into lines, generating again", flush=True)
+        await gemini_call(g_prompt(lines), full)
+        ok = split_by_silence(full, lines, float(meta.get("gemini_cut_spread", SPREAD_MAX)))
         full.unlink(missing_ok=True)
-        print("  Still no clean cut: this group is set aside, to be made line by line at the end", flush=True)
-        deferred.append(lines)
+        if ok:
+            return
+        mid = len(lines) // 2
+        print(f"  Cannot cut these {len(lines)} lines safely: voicing {mid} + {len(lines) - mid} lines in separate calls",
+              flush=True)
+        await gemini_group(lines[:mid])
+        await gemini_group(lines[mid:])
+
+    def audit_cache(lines):
+        """Old clips made by an earlier cut can hold a neighbour's words or dead air (the voice runs ahead of the
+        picture). A clip spoken far faster or slower than the rest of the video is deleted so it is made again.
+        meta gemini_audit false = off, gemini_audit_max = most clips re-made per run (default 6)."""
+        if not meta.get("gemini_audit", True):
+            return
+        seen, rows = set(), []
+        for l in lines:
+            p = l["mp3"]
+            if p in seen or l.get("edge_fb") or not p.exists() or p.stat().st_size == 0:
+                continue
+            seen.add(p)
+            d = speech_seconds(p)
+            t = l.get("vsay") or l["say"]
+            rows.append((l, d, max(1, line_weight(t)), p.with_suffix(".aud").exists()))
+        rates = sorted(w / d for l, d, w, aud in rows if d >= EMPTY_SECONDS and w >= 15)
+        if len(rates) < 6:
+            return
+        med = rates[len(rates) // 2]
+        flagged = []
+        for l, d, w, aud in rows:
+            if d < EMPTY_SECONDS:
+                flagged.append((99.0, l))
+            elif not aud and w >= 15:
+                r = (w / d) / med
+                if r > 2.2 or r < 1 / 2.2:
+                    flagged.append((max(r, 1 / r), l))
+        flagged.sort(key=lambda x: -x[0])
+        cap = int(meta.get("gemini_audit_max", 6))
+        if flagged:
+            print(f"Gemini audit: {len(flagged)} saved clip(s) look wrong (speed far from the video's normal); "
+                  f"re-making {min(cap, len(flagged))}", flush=True)
+        for score, l in flagged[:cap]:
+            print(f"    re-make: {l['say'][:50]}", flush=True)
+            l["mp3"].unlink(missing_ok=True)
 
     async def gemini_all():
         nonlocal g_batch
@@ -691,7 +913,11 @@ async def tts_all(steps, meta, work, fake, provider):
         for s in steps:
             if "say" not in s:
                 continue
+            s["vsay"] = gemini_say(s["say"], meta)
             s["mp3"] = g_path(s)
+            if g_edge_path(s).exists() and not (s["mp3"].exists() and s["mp3"].stat().st_size > 0):
+                s["mp3"], s["edge_fb"] = g_edge_path(s), True  # Edge voice was used for this line in an earlier run
+                continue
             if s.get("filler"):
                 if s["mp3"] in seen:
                     continue  # same filler line used twice in one video: voice it once
@@ -704,23 +930,27 @@ async def tts_all(steps, meta, work, fake, provider):
                 groups[gk] = []
                 order.append(gk)
             groups[gk].append(s)
+        audit_cache([s for gk in order for s in groups[gk]])
         todo = [[s for s in groups[gk] if not (s["mp3"].exists() and s["mp3"].stat().st_size > 0)] for gk in order]
         todo = [t for t in todo if t]
         print(f"Gemini: {len(todo)} call group(s) to make, models: {', '.join(g_models)}", flush=True)
-        deferred = []
+        made = []
         for n, lines in enumerate(todo, 1):
             print(f"  group {n}/{len(todo)} ({len(lines)} lines)", flush=True)
-            await gemini_group(lines, deferred)
-        if deferred:
-            left = [l for lines in deferred for l in lines]
-            print(f"Gemini: {len(deferred)} group(s) need {len(left)} single calls (all normal groups are done and cached)",
-                  flush=True)
-            for l in left:
-                if not (l["mp3"].exists() and l["mp3"].stat().st_size > 0):
-                    await gemini_line(l)
+            await gemini_group(lines)
+            made += lines
+        # every clip made in this run must have real speech of a believable length; else once more alone, then Edge
+        for l in made:
+            if l.get("edge_fb"):
+                continue
+            if line_good(l):
+                l["mp3"].with_suffix(".aud").touch()
+            else:
+                print(f"  Checking again, clip is empty or odd: {l['say'][:40]}...", flush=True)
+                await gemini_line(l)
 
     async def one(s):
-        if "say" not in s:
+        if "say" not in s or s.get("edge_fb"):
             return
         if provider == "gemini":
             mp3 = g_path(s)
@@ -786,6 +1016,8 @@ async def tts_all(steps, meta, work, fake, provider):
     await asyncio.gather(*(one(s) for s in todo_steps))
     for s, src in dup:
         s["mp3"] = src["mp3"]
+        if src.get("edge_fb"):
+            s["edge_fb"] = True
 
 
 def render_images(meta, qs, steps, work, theme, layout, fmt):
@@ -826,6 +1058,40 @@ def pick(cli, meta_val, default, allowed):
     if v not in allowed:
         sys.exit(f"Invalid value '{v}'. Allowed: {', '.join(allowed)}")
     return v
+
+
+def sync_report(mp4, planned, timeline, meta):
+    """Prints how long the voice and the picture really are, and lists any clip whose speed is far from the rest
+    (those are the places where the voice can run ahead of the picture). Exits if voice and picture differ."""
+    info = run(["ffprobe", "-v", "error", "-show_entries", "stream=codec_type,duration", "-of", "csv=p=0", str(mp4)])
+    dur = {}
+    for ln in info.split():
+        kind, _, val = ln.partition(",")
+        try:
+            dur[kind] = float(val)
+        except ValueError:
+            pass
+    a, v = dur.get("audio", 0.0), dur.get("video", 0.0)
+    print(f"SYNC CHECK: planned {planned:.2f}s | voice {a:.2f}s | picture {v:.2f}s | difference {abs(a - v) * 1000:.0f} ms",
+          flush=True)
+    rates = sorted(w / max(0.1, d) for _, d, _, w, fb in timeline if w >= 15 and not fb)
+    if len(rates) >= 6:
+        med = rates[len(rates) // 2]
+        odd = [(st, d, tx) for st, d, tx, w, fb in timeline
+               if w >= 15 and not fb and not (1 / 2.2 <= (w / max(0.1, d)) / med <= 2.2)]
+        for st, d, tx in odd[:12]:
+            print(f"  CHECK AT {fmt_time(st)} ({st:.1f}s): this line is spoken much faster/slower than the rest "
+                  f"({d:.1f}s): {tx[:50]}", flush=True)
+        if odd:
+            print(f"  {len(odd)} line(s) to listen to. Delete their clip in work/audio (or leave meta gemini_audit on) "
+                  "and re-run to have them voiced again.", flush=True)
+    fb = [tx for _, _, tx, _, f in timeline if f]
+    if fb:
+        print(f"  {len(fb)} line(s) voiced by Edge because Gemini returned nothing: "
+              + " | ".join(x[:30] for x in fb[:5]), flush=True)
+    if abs(a - v) > float(meta.get("sync_tolerance", 0.25)):
+        sys.exit(f"Voice ({a:.2f}s) and picture ({v:.2f}s) differ by more than "
+                 f"{meta.get('sync_tolerance', 0.25)}s. Not publishing a video that is out of sync.")
 
 
 def main():
@@ -888,6 +1154,8 @@ def main():
     t = 0.0
     chapters = []
     img_lines, wav_lines = [], []
+    f_prev = 0       # frames already shown: picture changes are placed on exact frame boundaries so rounding never adds up
+    timeline = []    # (start, length, text, weight) of every voiced step, for the sync report
     for n, s in enumerate(steps):
         wav = work / "wav" / f"{n:04d}.wav"
         if "silence" in s:
@@ -895,15 +1163,21 @@ def main():
             run(["ffmpeg", "-y", "-f", "lavfi", "-i", "anullsrc=r=48000:cl=mono",
                  "-t", f"{dur:.3f}", str(wav)])
         else:
-            run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af", f"{TRIM}{squeeze}{tempo},apad=pad_dur={pause:.3f}",
+            own = s.get("edge_fb")  # a line voiced by Edge keeps its own speed and is not squeezed
+            run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af",
+                 f"{TRIM}{'' if own else squeeze}{'' if own else tempo},apad=pad_dur={pause:.3f}",
                  "-ar", "48000", "-ac", "1", str(wav)])
             dur = probe(wav)
             if dur < 0.3:
                 sys.exit(f"Voice clip came out empty for: {s['say'][:60]}")
         if "chapter" in s:
             chapters.append((t, s["chapter"]))
-        img_lines += [f"file '{s['img'].resolve()}'", f"duration {dur:.3f}"]
+        f_end = max(f_prev + 1, round((t + dur) * FPS))
+        img_lines += [f"file '{s['img'].resolve()}'", f"duration {(f_end - f_prev) / FPS:.5f}"]
+        f_prev = f_end
         wav_lines.append(f"file '{wav.resolve()}'")
+        if "say" in s and "silence" not in s:
+            timeline.append((t, dur - pause, s["say"], line_weight(s.get("vsay") or s["say"]), bool(s.get("edge_fb"))))
         t += dur
     img_lines.append(f"file '{steps[-1]['img'].resolve()}'")
 
@@ -916,6 +1190,8 @@ def main():
          "-i", str(work / "audio.wav"), "-vf", f"fps={FPS},format=yuv420p",
          "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
          "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", str(mp4)])
+
+    sync_report(mp4, t, timeline, meta)
 
     title = (f'{meta["title"]} {meta.get("subtitle", "")} | {len(qs)} Questions with Answer & '
              f'Explanation | {meta.get("channel", "Target1st")}')
