@@ -57,8 +57,14 @@ GEMINI SAFETY (sync + empty clips), all automatic:
       looks doubtful is NOT used: that group is split in half and voiced in smaller calls.
     - Spoken text for Gemini only (screen text and cache keys are unchanged): ".ppt" becomes " ppt" (the dot made Gemini
       return empty audio), and colons / semicolons / dashes inside a line are removed (they pause as long as a line gap).
-        gemini_say_map     {"old": "new"}  extra words to respell for Gemini
+      Symbols are spoken as words too (English words on an English line, Hindi words if the line has Hindi):
+        <tr> -> "T R tag"   ___ -> "blank"   = + x / - -> equals plus times by minus   5:3 -> "5 to 3"   2-3 -> "2 to 3"
+        F4 -> "F 4"   FF -> "F F"   Alt+F4 -> "Alt plus F 4"   11111111 (only on a line about binary) -> digit by digit
+        km/h, m/s, "..." (becomes a comma), (brackets) (become commas), Blu-ray -> "Blu ray", EB PB OMR MICR HCF ... letters
+        gemini_say_map     {"old": "new"}  extra words to respell for Gemini (applied first, wins over the built-ins)
         gemini_softpause   false = keep colons / dashes
+        gemini_symbols     false = do not rewrite any symbols
+      (spoken() also fixes "54 km/h" and "15 m/s" for every engine; before, km/h was read as "54 किलोमीटर /h".)
         gemini_cut_spread  default 2.1: how different the speaking speed of two lines in one cut may be
     - A clip that comes out empty or the wrong length is made again alone; if it is still bad, ONLY that line is voiced
       with Edge (meta "voice") and remembered (<hash>.edge.mp3). Delete that file to let Gemini try the line again.
@@ -321,6 +327,8 @@ def spoken(text, pron):
     t = re.sub(r"(?<![A-Za-z])No\.?\s*(?=\d)", "नंबर ", t)
     t = re.sub(r"(?<![A-Za-z])Rs\.?\s*(\d(?:[\d,]*\d)?(?:\.\d+)?)", r"\1 रुपये", t)
     t = re.sub(r"₹\s*(\d(?:[\d,]*\d)?(?:\.\d+)?)", r"\1 रुपये", t)
+    t = re.sub(r"(?<=\d)\s*km\s*/\s*h\b", " किलोमीटर प्रति घंटा ", t)   # "54 km/h" (was read as "54 किलोमीटर /h")
+    t = re.sub(r"(?<=\d)\s*m\s*/\s*s\b", " मीटर प्रति सेकंड ", t)
     for pat, full in _LATIN:
         t = re.sub(r"(?<=\d)\s*" + pat + r"(?![A-Za-z])", " " + full + " ", t)
     t = t.replace("%", " प्रतिशत ").replace("&", " और ")
@@ -444,19 +452,80 @@ SPREAD_MAX = 2.1      # a cut is trusted only if no line is spoken more than thi
 EMPTY_SECONDS = 0.3   # a clip with less speech than this is "empty"
 
 
+# Short forms Gemini may read as a word or swallow. Spoken letter by letter. Your own meta "gemini_say_map" wins over this.
+GEMINI_SAY_DEFAULT = {"EB": "E B", "PB": "P B", "ULSI": "U L S I", "VLSI": "V L S I", "OMR": "O M R", "MICR": "M I C R",
+                      "HCF": "H C F", "LCM": "L C M", "NIC": "N I C", "SUMIF": "SUM IF", "COUNTIF": "COUNT IF",
+                      "MS-DOS": "M S DOS", "C-DAC": "C DAC"}
+_DEV = re.compile(r"[ऀ-ॿ]")
+
+
 def gemini_say(text, meta):
     """The text Gemini actually speaks. The on-screen text and the cache key are NOT changed.
-    1. ".ppt" -> " ppt" (the dot makes Gemini return empty audio for some words)
-    2. meta "gemini_say_map": {"old": "new"} for any other word that fails
-    3. colons, semicolons and dashes inside a line are removed (Gemini pauses at them as long as it pauses between
-       two lines, which makes the lines impossible to cut apart). meta "gemini_softpause": false = keep them."""
-    t = re.sub(GEMINI_SAY_FILES, r" \1", text, flags=re.I)
+    Gemini returns EMPTY or wrong audio for things that are not words, so for the voice only:
+      - HTML tags      <tr> -> "T R tag"          - blanks  ___ -> "blank"
+      - maths          = + x / - and 5:3 -> "equals" "plus" "times" "by" "minus" "to"  (Hindi words if the line has Hindi)
+      - keys / hex     F4 -> "F 4", FF -> "F F", Alt+F4 -> "Alt plus F 4"; 8-digit binary is read digit by digit
+      - "km/h" "m/s", "..." (long pause), (brackets) (they become commas), hyphens inside words
+      - short forms    EB PB OMR MICR HCF ... letter by letter (GEMINI_SAY_DEFAULT)
+      - ".ppt" -> " ppt" (the dot made Gemini return empty audio)
+      - colons, semicolons and dashes inside a line are removed (Gemini pauses at them as long as it pauses between
+        two lines, which makes the lines impossible to cut apart). meta "gemini_softpause": false = keep them.
+    meta "gemini_say_map": {"old": "new"} for any other word that fails; it is applied first and wins.
+    meta "gemini_symbols": false = leave all symbols as they are."""
+    t = text
     for old, new in (meta.get("gemini_say_map") or {}).items():
         t = t.replace(old, new)
+    if meta.get("gemini_symbols", True):
+        hi = bool(_DEV.search(t))
+        w = {"eq": "बराबर", "plus": "प्लस", "times": "गुणा", "by": "बटा", "minus": "घटा", "to": "से", "ratio": "अनुपात",
+             "blank": "blank", "or": "या"} if hi else \
+            {"eq": "equals", "plus": "plus", "times": "times", "by": "by", "minus": "minus", "to": "to",
+             "ratio": "to", "blank": "blank", "or": "or"}
+        for k, v in GEMINI_SAY_DEFAULT.items():
+            if k not in (meta.get("gemini_say_map") or {}):
+                t = re.sub(r"(?<![A-Za-z0-9])" + re.escape(k) + r"(?![A-Za-z0-9])", v, t)
+        t = re.sub(r"</\s*(\w+)\s*>", lambda m: f" closing {_tag(m.group(1))} tag ", t)
+        t = re.sub(r"<\s*(\w+)\s*/?>", lambda m: f" {_tag(m.group(1))} tag ", t)
+        t = re.sub(r"_{2,}", f" {w['blank']} ", t)
+        t = re.sub(r"\bkm\s*/\s*h\b", "kilometres per hour", t)
+        t = re.sub(r"\bkmph\b", "kilometres per hour", t)
+        t = re.sub(r"(?<=\d)\s*m\s*/\s*s\b", " metres per second", t)  # 15 m/s
+        t = re.sub(r"\.{3}|…", ", ", t)
+        if re.search(r"(?i)binary|\u092c\u093e\u0907\u0928\u0930\u0940|\bbits?\b|\bbytes?\b", t):  # 8 / 16 digit binary, digit by digit
+            t = re.sub(r"(?<![\w.])([01]{4})([01]{4})(?:([01]{4})([01]{4}))?(?![\w.])",
+                       lambda m: " ".join(" ".join(g) for g in m.groups() if g), t)
+        t = re.sub(r"\b([A-Z])(\d{1,2})\b", r"\1 \2", t)                # F4 F12 V3 -> F 4
+        t = re.sub(r"\b(?=[0-9A-F]*[A-F])(?=[0-9A-F]*[A-F0-9])([0-9A-F]{2})\b",
+                   lambda m: " ".join(m.group(1)), t)                   # hex FF F0 1F EE CD
+        t = re.sub(r"(?<=\d)\s*[xX×]\s*(?=\d)", f" {w['times']} ", t)
+        t = re.sub(r"(?<=[\w)])\s+[xX\u00d7]\s+(?=[\w(])", f" {w['times']} ", t)   # MP x (100..) , a x b
+        t = re.sub(r"(?<=[\w)])\s*/\s*(?=[\d(])|(?<=[\d)])\s*/\s*(?=[\w(])|(?<=[\w)])\s+/\s+(?=[\w(])",
+                   f" {w['by']} ", t)                                   # 150 / 10 , 3/4 , ) / 100 , x / y
+        t = re.sub(r"(?<=[A-Za-z])/(?=[A-Za-z])", f" {w['or']} ", t)     # has/have, hub/switch
+        t = re.sub(r"(?<=\d)-(?=\d)", f" {w['to']} ", t)               # 2-3 years
+        t = re.sub(r"\s-\s", f" {w['minus']} ", t)                      # 500 - 50
+        t = re.sub(r"(?<=[A-Za-zऀ-ॿ])-(?=[A-Za-zऀ-ॿ])", " ", t)  # Blu-ray, black-white
+        t = re.sub(r"(?<![\d:])(\d)\s*:\s*(\d)(?![\d:])", rf"\1 {w['ratio']} \2", t)  # ratio 5:3 (10:30 is a time)
+        t = re.sub(r"\s*=\s*", f" {w['eq']} ", t)
+        t = re.sub(r"\s*\+\s*", f" {w['plus']} ", t)
+        t = re.sub(r"(\d)x\b", r"\1 x", t)                            # 3x -> 3 x
+        t = re.sub(r"\s*\(\s*", ", ", t)                                # (brackets) -> commas
+        t = re.sub(r"\s*\)\s*", ", ", t)
+        t = re.sub(r"(,\s*){2,}", ", ", t)
+        t = re.sub(r"\s+,", ",", t)
+        t = re.sub(r",\s*([.?!।])", r"\1", t)
+        t = re.sub(r"^\s*,\s*", "", t)
+    t = re.sub(GEMINI_SAY_FILES, r" \1", t, flags=re.I)
     if meta.get("gemini_softpause", True):
         t = re.sub(r"(?<!\d)\s*[:;]\s*(?!\d)", " ", t)
         t = re.sub(r"\s*[—–]\s*", " ", t)
     return re.sub(r"\s+", " ", t).strip()
+
+
+def _tag(name):
+    """HTML tag name as it is spoken: short ones letter by letter (tr -> T R), longer ones as the word."""
+    n = name.lower()
+    return " ".join(n.upper()) if len(n) <= 2 or n in ("html", "css") else n
 
 
 def line_weight(text):
