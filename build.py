@@ -105,6 +105,7 @@ FILLER LINES (short spoken lines between questions, e.g. "अगर आप ध�
 import argparse
 import asyncio
 import base64
+import functools
 import hashlib
 import html
 import json
@@ -195,7 +196,31 @@ body{width:1080px;height:1920px;background:var(--bg);font-family:var(--font);fon
 .trick .lbl{display:block;font-size:40px;margin-bottom:12px;opacity:.85}
 .center{margin-top:380px;text-align:center;font-size:74px;line-height:1.5}
 .center small{display:block;font-size:50px;color:var(--q);margin-top:30px}
+.promo-t{font-size:68px;line-height:1.3;text-align:center;margin-top:70px}
+.promo-t small{display:block;font-size:48px;color:var(--q);margin-top:18px}
+.qrs{display:flex;gap:40px;justify-content:center;margin-top:80px}
+.qrc{width:430px;background:#fff;color:#111;border-radius:28px;padding:22px 22px 26px;text-align:center;border:6px solid var(--rule)}
+.qrc img{display:block;width:382px;height:382px}
+.qrc .lab{font-size:42px;line-height:1.25;margin-top:14px}
 """
+
+# Promo slide (reels): two QR codes pop in one after the other and stay. POP[k-1] = size of the QR at animation frame k.
+POP = [0.35, 0.75, 1.0, 1.14, 1.09, 1.04, 1.01, 1.0]
+PROMO_ITEMS = [{"img": "assets/qr-notes.png", "label": "नोट्स + मॉक पेपर"},
+               {"img": "assets/qr-mocks.png", "label": "ऑनलाइन मॉक टेस्ट"}]
+
+
+def promo_items(meta):
+    return (meta.get("promo_items") or PROMO_ITEMS)[:2]
+
+
+@functools.lru_cache(maxsize=8)
+def data_uri(path):
+    f = Path(path)
+    if not f.is_absolute():
+        f = Path(__file__).resolve().parent / f
+    return "data:image/png;base64," + base64.b64encode(f.read_bytes()).decode()
+
 
 CHECK = ('<svg width="70" height="70" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" '
          'stroke="currentColor" stroke-width="3.2" fill="none" stroke-linecap="round" '
@@ -226,7 +251,24 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide"):
         cd = int(meta.get("countdown", 5))
         line = (f"हर प्रश्न के बाद {cd} सेकंड सोचने का समय" if fmt == "quiz" and cd
                 else "हर प्रश्न का उत्तर और मुख्य पॉइंट्स")
-        body = f'<div class="center">कुल {len(qs)} प्रश्न<small>{line}</small></div>'
+        if meta.get("intro_show"):   # a short hook on screen (reels): set by tools/make_reels.py
+            small = meta.get("intro_small") or f"{len(qs)} प्रश्न · जवाब सोचिए!"
+            body = f'<div class="center">{esc(meta["intro_show"])}<small>{esc(small)}</small></div>'
+        else:
+            body = f'<div class="center">कुल {len(qs)} प्रश्न<small>{line}</small></div>'
+    elif mode == "promo":
+        items = promo_items(meta)
+
+        def card(k, prog):
+            if k >= len(items):
+                return ""
+            if prog <= 0:   # not shown yet: keeps its place so nothing jumps when it pops in
+                return f'<div class="qrc" style="visibility:hidden"><img src="{data_uri(items[k]["img"])}"><div class="lab">.</div></div>'
+            return (f'<div class="qrc" style="transform:scale({POP[min(prog, len(POP)) - 1]:.3f});opacity:{min(1.0, prog / 3):.2f}">'
+                    f'<img src="{data_uri(items[k]["img"])}"><div class="lab">{esc(items[k]["label"])}</div></div>')
+        body = (f'<div class="promo-t">{esc(meta.get("promo_title", "हरियाणा ग्रुप D के नोट्स और मॉक टेस्ट"))}'
+                f'<small>{esc(meta.get("promo_sub", "लिंक बायो और हाइलाइट्स में"))}</small></div>'
+                f'<div class="qrs">{card(0, st.get("a", 0))}{card(1, st.get("b", 0))}</div>')
     elif mode == "outro":
         body = (f'<div class="center">{esc(meta.get("outro_show", "देखने के लिए धन्यवाद!"))}'
                 f'<small>{esc(meta.get("channel", "Target1st"))}</small></div>')
@@ -373,7 +415,7 @@ def spoken(text, pron):
     return re.sub(r"[ \t]{2,}", " ", t).replace(" ,", ",").replace(" ।", "।").strip()
 
 
-def make_steps(data, limit, fmt):
+def make_steps(data, limit, fmt, aspect="wide"):
     meta = data["meta"]
     qs = data["questions"][:limit] if limit else data["questions"]
     fillers = plan_fillers(meta, len(qs))
@@ -408,6 +450,22 @@ def make_steps(data, limit, fmt):
         if i in fillers:
             # spoken over the slide that is already on screen; the image is reused, so no new slide is rendered
             steps.append({"state": dict(steps[-1]["state"]), "say": fillers[i], "filler": True})
+    if meta.get("promo"):
+        if aspect != "reel":
+            print("NOTE: meta promo is only for reels (aspect reel), skipped")
+        else:
+            n = len(POP)
+            say1 = meta.get("promo_say1") or "ग्रुप डी की तैयारी के लिए पूरे नोट्स और मॉक टेस्ट चाहिए?"
+            say2 = meta.get("promo_say2") or "दोनों के लिंक हमारे बायो और हाइलाइट्स में हैं। अभी देखिए।"
+            hold = float(meta.get("promo_hold", 2.0))   # extra seconds the QR codes stay after the voice (5-7 s on screen in total)
+            steps.append({"state": {"mode": "promo", "a": 0, "b": 0}, "say": say1, "chapter": "Notes and mocks"})
+            for k in range(1, n + 1):
+                steps.append({"state": {"mode": "promo", "a": k, "b": 0}, "silence": 1.0 / FPS})
+            for k in range(1, n + 1):
+                steps.append({"state": {"mode": "promo", "a": n, "b": k}, "silence": 1.0 / FPS})
+            steps.append({"state": {"mode": "promo", "a": n, "b": n}, "say": say2})
+            if hold > 0:
+                steps.append({"state": {"mode": "promo", "a": n, "b": n}, "silence": hold})
     outro =meta.get("outro") or ("तो दोस्तों, आज के लिए बस इतना ही। वीडियो पसंद आया हो तो लाइक करें "
                                   "और Target1st चैनल को सब्सक्राइब ज़रूर करें।")
     steps.append({"state": {"mode": "outro"}, "say": outro, "chapter": "Outro"})
@@ -1217,6 +1275,7 @@ def reel_caption(meta, qs):
              f"Q. {qtext}"]
     lines += [f"{l}) {t}" for l, t in zip("ABCD", q["options"])]
     lines += ["", ctas[(seed // 7) % len(ctas)], "",
+              "📚 ग्रुप D के नोट्स और मॉक टेस्ट: लिंक बायो और हाइलाइट्स में।" if meta.get("promo") else "",
               f"📌 रोज़ ऐसे प्रश्नों के लिए {meta.get('channel', 'Target1st')} को फॉलो करें।",
               "📲 Telegram: @Target1stsupport"]
     if meta.get("caption_extra"):
@@ -1284,7 +1343,7 @@ def main():
     if aspect not in ASPECTS:
         sys.exit(f"Invalid aspect '{aspect}'. Allowed: wide, reel")
     provider = pick(a.tts, meta.get("tts"), "edge", ["edge", "gemini", "sarvam"])
-    qs, steps = make_steps(data, a.limit, fmt)
+    qs, steps = make_steps(data, a.limit, fmt, aspect)
 
     for i, q in enumerate(qs, 1):
         if len(q["points"]) > 4:
@@ -1310,7 +1369,7 @@ def main():
     for d in ("audio", "img", "wav"):
         (work / d).mkdir(parents=True, exist_ok=True)
 
-    print(f"{len(qs)} questions, {len(steps)} steps | theme={theme} layout={"list (reel)" if aspect == "reel" else layout} format={fmt} aspect={aspect} tts={provider}")
+    print(f"{len(qs)} questions, {len(steps)} steps | theme={theme} layout={'list (reel)' if aspect == 'reel' else layout} format={fmt} aspect={aspect} tts={provider}")
     asyncio.run(tts_all(steps, meta, work, a.fake_tts, provider))
     # Gemini has no speed setting: speed it up here (pitch is preserved by atempo, valid range 0.5-2.0)
     speed = float(meta.get("gemini_speed", 1.3)) if provider == "gemini" and not a.fake_tts else 1.0

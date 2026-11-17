@@ -20,12 +20,22 @@ Options
     --points N      points spoken and shown per question (default 2, 0 = all)
     --countdown N   seconds of thinking time after the options (default 3, 0 = none)
     --format quiz|revision   (default quiz: options, countdown, answer, points)
+    --no-promo      leave out the notes + mock-test QR promo
     --first K --count M      only make reels K..K+M-1 (1-based), handy for a test batch
 """
 import argparse
 import json
 import re
 from pathlib import Path
+
+
+HOOKS = [
+    ("क्या आप इसका सही जवाब दे पाएँगे?", "{n} प्रश्न · जवाब सोचिए!"),
+    ("पेपर में यही पूछा जा सकता है!", "{n} प्रश्न · जवाब सोचिए!"),
+    ("90% लोग इसमें गलती करते हैं!", "{n} प्रश्न · खुद को परखिए!"),
+    ("सिर्फ़ 1 मिनट में अपनी तैयारी जाँचिए!", "{n} प्रश्न · जवाब सोचिए!"),
+    ("परीक्षा से पहले ये प्रश्न ज़रूर देख लें!", "{n} प्रश्न · जवाब सोचिए!"),
+]
 
 
 def main():
@@ -38,6 +48,7 @@ def main():
     ap.add_argument("--countdown", type=int, default=3)
     ap.add_argument("--format", default="quiz", choices=["quiz", "revision"])
     ap.add_argument("--list-file", default="", help="also write the made file paths (one per line) into this file")
+    ap.add_argument("--no-promo", action="store_true", help="no notes/mock-test QR promo before the outro")
     ap.add_argument("--first", type=int, default=1)
     ap.add_argument("--count", type=int, default=0)
     a = ap.parse_args()
@@ -63,6 +74,8 @@ def main():
             continue
         meta = dict(data["meta"])
         title = str(meta.get("title", "")).strip()
+        hook, small = HOOKS[(k - 1) % len(HOOKS)]
+        small = small.format(n=len(chunk))
         meta.update({
             "aspect": "reel",
             "title": (f"{title} · भाग {k}" if title else f"भाग {k}") if len(chunks) > 1 else (title or "Target1st"),
@@ -70,7 +83,10 @@ def main():
             "countdown": a.countdown,
             "max_points": a.points,
             "filler_lines": [],
-            "intro": f"{title}। {len(chunk)} प्रश्न, जवाब सोचिए!" if title else f"{len(chunk)} प्रश्न, जवाब सोचिए!",
+            "intro": f"{hook} {title}। {len(chunk)} प्रश्न, जवाब सोचिए!" if title else f"{hook} {len(chunk)} प्रश्न, जवाब सोचिए!",
+            "intro_show": hook,
+            "intro_small": small,
+            "promo": not a.no_promo,
             "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
             "outro_show": "फॉलो करें",
             "reel_of": f"{k}/{len(chunks)}",
