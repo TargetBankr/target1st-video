@@ -38,8 +38,8 @@ def clean_token(t):
 
 TOKEN = clean_token(RAW_TOKEN)
 # Two kinds of token exist. "IG..." = Instagram Login token -> graph.instagram.com.
-# "EAA..." = Facebook Login token (the Instagram account is linked to a Facebook Page) -> graph.facebook.com.
-FB_LOGIN = TOKEN.startswith("EAA")
+# "EA..." (EAAG, EAAx, EAG...) = Facebook Login token (the Instagram account is linked to a Facebook Page) -> graph.facebook.com.
+FB_LOGIN = bool(TOKEN) and not TOKEN.startswith("IG")
 HOST = (os.environ.get("IG_HOST", "").strip().rstrip("/")
         or ("https://graph.facebook.com" if FB_LOGIN else "https://graph.instagram.com"))
 IG_ID = re.sub(r"\D", "", os.environ.get("IG_USER_ID") or "")
@@ -48,7 +48,7 @@ IG_ID = re.sub(r"\D", "", os.environ.get("IG_USER_ID") or "")
 def token_shape():
     """Safe description of the token (never the token itself) to find paste mistakes."""
     r = RAW_TOKEN
-    return (f"length {len(r)} (after cleaning {len(TOKEN)}), starts with: {TOKEN[:3] if TOKEN[:3] == 'EAA' else TOKEN[:2]}, "
+    return (f"length {len(r)} (after cleaning {len(TOKEN)}), starts with: {TOKEN[:4]}, "
             f"whitespace/newline inside: {bool(re.search(r'\s', r.strip()))}, quotes: {bool(re.search(r'[\"\'`]', r))}, "
             f"non-ASCII characters: {sum(ord(c) > 127 for c in r)}")
 
@@ -156,7 +156,7 @@ def refresh():
         app_id = re.sub(r"\s+", "", os.environ.get("FB_APP_ID") or "")
         secret = re.sub(r"\s+", "", os.environ.get("FB_APP_SECRET") or "")
         if not (app_id and secret):
-            die("this is a Facebook-login token (EAA...). To extend it automatically, add the repository secrets FB_APP_ID and "
+            die("this is a Facebook-login token (EA...). To extend it automatically, add the repository secrets FB_APP_ID and "
                 "FB_APP_SECRET (Meta dashboard > App settings > Basic). Until then check its expiry at "
                 "developers.facebook.com/tools/debug/accesstoken and paste a new token before it ends.")
         url = f"{HOST}/{VERSION + '/' if VERSION else ''}oauth/access_token?" + urllib.parse.urlencode(
