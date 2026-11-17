@@ -24,7 +24,18 @@ HOW SPECIAL CHARACTERS ARE SPOKEN (the slide keeps the written text; only the vo
     Built in: 32°43′N, 32°43 N, 28.6° E -> "32 डिग्री 43 मिनट उत्तर" (75°30′ प• = पश्चिम);
     °C, °F, %, ₹500, & are read in Hindi. प• / पं. / डॉ. / स्व. before a name = पंडित / डॉक्टर / स्वर्गीय,
     "प. बंगाल" = पश्चिम बंगाल, उ.प्र. = उत्तर प्रदेश, 326 ई.पू. = ईसा पूर्व. Your own list: meta "pronounce": {"RBI": "आर बी आई", "km": "किलोमीटर"}
-    (Latin keys match whole words only). One line can also be set by hand with {"show": "...", "say": "..."} in points.
+    (Latin keys match whole words only).
+    ANY line can be set by hand with "on screen || spoken" (question, options, points, trick) or, in points, with
+    {"show": "...", "say": "..."}. The slide shows the first part, the voice reads the second EXACTLY as written
+    (no automatic rewriting, no length limit on the spoken part). The 110 / 120 / 170 character warnings count the
+    on-screen part only.
+
+SPEECH PREP (Gemini voice only, optional)
+    meta "speech_prep": true  or your own message, e.g. "hi this is the video text which will be converted to speech
+    so give texts for those number, symbol or line which may sound odd". A Gemini TEXT model rewrites the odd lines
+    (numbers, symbols, codes, formulas) into spoken words before the voice is made; slides never change, "||" lines are
+    never touched, answers are checked and cached (work/audio/_prep_cache.json), any failure falls back to the
+    built-in rules. meta "speech_prep_models": ["gemini-2.5-flash", ...] to choose models (tried in order).
 
 SEVERAL API KEYS (more videos from the daily limits / credits of each key)
     Set meta "key_slot": 2 to use the second key of the same engine: GEMINI_API_KEY_2 or SARVAM_API_KEY_2
@@ -231,10 +242,41 @@ def esc(t):
     return html.escape(str(t), quote=False)
 
 
+SAY0, SAY1 = "\x01", "\x02"   # wrap text the author set by hand ("show || say"): no automatic rewriting touches it
+
+
+def split_pipes(t):
+    """'on screen || spoken' -> (on screen, spoken). No '||' -> (text, None). The spoken part has NO length limit."""
+    t = str(t)
+    if "||" in t:
+        a, b = t.split("||", 1)
+        return a.strip(), (b.strip() or None)
+    return t, None
+
+
 def norm_point(p):
-    if isinstance(p, str):
-        return {"show": p, "say": p}
-    return {"show": p["show"], "say": p.get("say", p["show"])}
+    """{"show", "say", "hand"}; hand = the spoken text was written by the author (|| or {"say": ...})."""
+    if isinstance(p, dict):
+        show, say = split_pipes(p["show"])
+        if p.get("say"):
+            say = p["say"]
+        return {"show": show, "say": say or show, "hand": bool(say)}
+    show, say = split_pipes(p)
+    return {"show": show, "say": say or show, "hand": bool(say)}
+
+
+def norm_question(q):
+    """Question and options may also use 'show || spoken'. The slide gets the first part, the voice the second."""
+    q = dict(q)
+    q["q"], q["_qsay"] = split_pipes(q["q"])
+    sp = [split_pipes(o) for o in q["options"]]
+    q["options"] = [a for a, _ in sp]
+    q["_osay"] = [b for _, b in sp]
+    return q
+
+
+def _hand(t):
+    return SAY0 + t + SAY1
 
 
 def page_html(meta, qs, st, theme, layout, fmt, aspect="wide"):
@@ -415,9 +457,14 @@ def spoken(text, pron):
     return re.sub(r"[ \t]{2,}", " ", t).replace(" ,", ",").replace(" ।", "।").strip()
 
 
+def _pt_say(p):
+    n = norm_point(p)
+    return _hand(n["say"]) if n["hand"] else n["say"]
+
+
 def make_steps(data, limit, fmt, aspect="wide"):
     meta = data["meta"]
-    qs = data["questions"][:limit] if limit else data["questions"]
+    qs = [norm_question(q) for q in (data["questions"][:limit] if limit else data["questions"])]
     fillers = plan_fillers(meta, len(qs))
     cd = int(meta.get("countdown", 5))
     lean = bool(meta.get("lean_speech", False))   # fewer spoken characters (cheaper voice): shorter option/answer lines
@@ -433,20 +480,22 @@ def make_steps(data, limit, fmt, aspect="wide"):
         ans = q["answer"].strip().upper()
         idx = "ABCD".index(ans)
         # both formats: question, then options shown and read aloud. Only quiz adds the countdown.
-        steps.append({"state": {"mode": "q", "i": i, "opts": False}, "say": q["q"], "chapter": f"Q{i}"})
+        steps.append({"state": {"mode": "q", "i": i, "opts": False},
+                      "say": _hand(q["_qsay"]) if q["_qsay"] else q["q"], "chapter": f"Q{i}"})
+        osay = [_hand(h) if h else t for t, h in zip(opts, q["_osay"])]   # spoken form of each option
         say_opts = " ".join((f"{LET_SAY[l]}, {t}।" if lean else f"ऑप्शन {LET_SAY[l]}, {t}।")
-                            for l, t in zip("ABCD", opts))
+                            for l, t in zip("ABCD", osay))
         steps.append({"state": {"mode": "q", "i": i, "opts": True}, "say": say_opts, "tight": True})
         if fmt == "quiz":
             for n in range(cd, 0, -1):
                 steps.append({"state": {"mode": "q", "i": i, "opts": True, "cd": n}, "silence": 1.0})
         steps.append({"state": {"mode": "answer", "i": i, "pts": 0},
-                      "say": (f"सही उत्तर {LET_SAY[ans]}, {opts[idx]}।" if lean
-                              else f"सही उत्तर है, ऑप्शन {LET_SAY[ans]}, {opts[idx]}।")})
+                      "say": (f"सही उत्तर {LET_SAY[ans]}, {osay[idx]}।" if lean
+                              else f"सही उत्तर है, ऑप्शन {LET_SAY[ans]}, {osay[idx]}।")})
         for k, p in enumerate(q["points"][:max_pts] if max_pts else q["points"], 1):
-            steps.append({"state": {"mode": "answer", "i": i, "pts": k}, "say": norm_point(p)["say"]})
+            steps.append({"state": {"mode": "answer", "i": i, "pts": k}, "say": _pt_say(p)})
         if q.get("trick"):
-            steps.append({"state": {"mode": "trick", "i": i}, "say": "ट्रिक। " + norm_point(q["trick"])["say"]})
+            steps.append({"state": {"mode": "trick", "i": i}, "say": "ट्रिक। " + _pt_say(q["trick"])})
         if i in fillers:
             # spoken over the slide that is already on screen; the image is reused, so no new slide is rendered
             steps.append({"state": dict(steps[-1]["state"]), "say": fillers[i], "filler": True})
@@ -472,7 +521,8 @@ def make_steps(data, limit, fmt, aspect="wide"):
     pron = meta.get("pronounce") or {}
     for st in steps:
         if "say" in st:
-            st["say"] = spoken(st["say"], pron)
+            st["say_m"] = spoken(st["say"], pron)                      # still carries the hand-written markers
+            st["say"] = st["say_m"].replace(SAY0, "").replace(SAY1, "")
     return qs, steps
 
 
@@ -555,7 +605,19 @@ GEMINI_SAY_DEFAULT = {"EB": "E B", "PB": "P B", "ULSI": "U L S I", "VLSI": "V L 
 _DEV = re.compile(r"[ऀ-ॿ]")
 
 
-def gemini_say(text, meta):
+def gemini_say(text, meta, marked=None):
+    """Wrapper: text the author wrote after '||' (marked with SAY0/SAY1) is kept exactly; the rest gets the rules."""
+    if not marked or SAY0 not in marked:
+        return _say_rules(text, meta)
+    hi = bool(_DEV.search(marked))
+    out = []
+    for i, seg in enumerate(re.split(f"[{SAY0}{SAY1}]", marked)):
+        out.append(_say_rules(seg, meta, hi) if i % 2 == 0 else seg)   # odd parts are the hand-written ones
+    t = re.sub(r"\s+", " ", " ".join(out)).strip()
+    return re.sub(r"\s+([,।.?!])", r"\1", t)
+
+
+def _say_rules(text, meta, hi=None):
     """The text Gemini actually speaks. The on-screen text and the cache key are NOT changed.
     Gemini returns EMPTY or wrong audio for things that are not words, so for the voice only:
       - HTML tags      <tr> -> "T R tag"          - blanks  ___ -> "blank"
@@ -572,7 +634,7 @@ def gemini_say(text, meta):
     for old, new in (meta.get("gemini_say_map") or {}).items():
         t = t.replace(old, new)
     if meta.get("gemini_symbols", True):
-        hi = bool(_DEV.search(t))
+        hi = bool(_DEV.search(t)) if hi is None else hi
         w = {"eq": "बराबर", "plus": "प्लस", "times": "गुणा", "by": "बटा", "minus": "घटा", "to": "से", "ratio": "अनुपात",
              "blank": "blank", "or": "या"} if hi else \
             {"eq": "equals", "plus": "plus", "times": "times", "by": "by", "minus": "minus", "to": "to",
@@ -622,6 +684,113 @@ def _tag(name):
     """HTML tag name as it is spoken: short ones letter by letter (tr -> T R), longer ones as the word."""
     n = name.lower()
     return " ".join(n.upper()) if len(n) <= 2 or n in ("html", "css") else n
+
+
+# ---- Gemini TEXT model "speech prep" -------------------------------------------------------------------------------
+# meta "speech_prep": true  or  your own message. A text model reads the video lines and writes the spoken form of
+# the ones that would sound odd (numbers, symbols, codes, formulas). Slides never change. Lines you wrote by hand
+# with "show || spoken" are never touched. Any failure falls back to the built-in rules.
+SPEECH_PREP_MSG = ("hi this is the video text which will be converted to speech so give texts for those number, "
+                   "symbol or line which may sound odd")
+SPEECH_PREP_MODELS = ["gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.5-flash-lite"]
+_ODD = re.compile(r"[0-9=+×÷/<>_%@#&*^~|\\]|\b[A-Z]{2,}\b|\.[A-Za-z]{2,4}\b")
+_PH = re.compile(r"\[\[(\d+)\]\]")
+
+
+def gemini_text_once(prompt, model, api_key):
+    """One Gemini text call that must answer in JSON. Returns the parsed object. Raises on any failure."""
+    body = {"contents": [{"parts": [{"text": prompt}]}],
+            "generationConfig": {"responseMimeType": "application/json", "temperature": 0.2}}
+    req = urllib.request.Request(
+        f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+        data=json.dumps(body).encode("utf-8"),
+        headers={"Content-Type": "application/json", "x-goog-api-key": api_key})
+    with urllib.request.urlopen(req, timeout=120) as r:
+        j = json.load(r)
+    txt = "".join(pt.get("text", "") for c in j.get("candidates", []) for pt in c.get("content", {}).get("parts", []))
+    txt = re.sub(r"^```(?:json)?|```$", "", txt.strip(), flags=re.M).strip()
+    return json.loads(txt)
+
+
+def _prep_ok(src, out, holes):
+    if not isinstance(out, str) or not out.strip():
+        return False
+    if len(out) > 3 * len(src) + 60 or re.search(r"[{}\[\]`*#]", _PH.sub("", out)):
+        return False
+    if _DEV.search(src) and not _DEV.search(out):
+        return False
+    return sorted(_PH.findall(out)) == sorted(str(i) for i in range(len(holes)))
+
+
+def speech_prep(steps, meta, work, api_key, call=None):
+    """Sets s["prep"] (spoken form, hand-written parts restored in SAY0/SAY1 markers) for odd lines."""
+    msg = meta.get("speech_prep")
+    if not msg:
+        return
+    msg = msg if isinstance(msg, str) and len(msg) > 8 else SPEECH_PREP_MSG
+    models = meta.get("speech_prep_models") or SPEECH_PREP_MODELS
+    call = call or gemini_text_once
+    cache_f = work / "audio" / "_prep_cache.json"
+    try:
+        cache = json.loads(cache_f.read_text(encoding="utf-8"))
+    except Exception:
+        cache = {}
+    ck = lambda t: hashlib.md5((msg + "|" + t).encode()).hexdigest()
+    jobs = []                     # (step, source text with [[n]] holes, hand parts)
+    for s in steps:
+        m = s.get("say_m")
+        if not m or s.get("filler") or s.get("state", {}).get("mode") in ("intro", "outro"):
+            continue
+        holes = []
+        def hole(mo):
+            holes.append(mo.group(1))
+            return f"[[{len(holes) - 1}]]"
+        src = re.sub(f"{SAY0}(.*?){SAY1}", hole, m, flags=re.S)
+        if _ODD.search(_PH.sub("", src)):
+            jobs.append((s, src, holes))
+    if not jobs:
+        return
+    todo = [j for j in jobs if ck(j[1]) not in cache]
+    for a in range(0, len(todo), 30):
+        chunk = todo[a:a + 30]
+        prompt = (msg + "\n\nBelow is a JSON object: id -> one line of the video text (Hindi/English quiz, read by a "
+                  "text-to-speech voice). Return a JSON object with the same ids. For each line give the text exactly "
+                  "as it should be SPOKEN: write numbers, symbols, formulas, codes, tags, file names and short forms "
+                  "out in words (in Hindi script on Hindi lines, English words on English lines), spell letter-codes "
+                  "letter by letter, change nothing else, keep the wording, keep every [[n]] marker exactly as it is, "
+                  "no explanations, no markdown. If a line already sounds fine, return it unchanged.\n\n"
+                  + json.dumps({str(i): j[1] for i, j in enumerate(chunk)}, ensure_ascii=False))
+        res, last = None, None
+        for model in models:
+            try:
+                res = call(prompt, model, api_key)
+                print(f"Speech prep: {len(chunk)} line(s) sent to {model}", flush=True)
+                break
+            except Exception as e:
+                last = e
+                print(f"Speech prep: {model} failed ({str(e)[:120]})", flush=True)
+        if not isinstance(res, dict):
+            print(f"Speech prep: no model answered, built-in rules are used for {len(chunk)} line(s) ({last})", flush=True)
+            continue
+        for i, (_, src, holes) in enumerate(chunk):
+            out = res.get(str(i))
+            if _prep_ok(src, out, holes):
+                cache[ck(src)] = out.strip()
+            else:
+                print(f"Speech prep: answer for a line was rejected, rule-based text is used: {src[:50]}", flush=True)
+    try:
+        cache_f.write_text(json.dumps(cache, ensure_ascii=False), encoding="utf-8")
+    except OSError:
+        pass
+    shown = 0
+    for s, src, holes in jobs:
+        out = cache.get(ck(src))
+        if not out:
+            continue
+        s["prep"] = _PH.sub(lambda mo: _hand(holes[int(mo.group(1))]), out)
+        if out != src and shown < 40:
+            print(f"    prep: {src[:60]}  ->  {out[:80]}", flush=True)
+            shown += 1
 
 
 def line_weight(text):
@@ -912,7 +1081,7 @@ async def tts_all(steps, meta, work, fake, provider):
 
     def g_path(s):
         # same cache file whichever model made it, so switching models mid-video keeps finished lines
-        key = hashlib.md5(f"gemini|{g_voice}|{g_style}|{s['say']}".encode()).hexdigest()
+        key = hashlib.md5(f"gemini|{g_voice}|{g_style}|{s.get('prep_key') or s['say']}".encode()).hexdigest()
         return work / "audio" / f"{key}.wav"
 
     def g_edge_path(s):
@@ -1075,10 +1244,19 @@ async def tts_all(steps, meta, work, fake, provider):
             g_batch = min(3, -(-nq // max(1, day_calls - 3)))
             print(f"Gemini: {nq} questions would need more calls than one day allows, so {g_batch} questions are "
                   f"voiced per call (meta gemini_auto_batch false turns this off)", flush=True)
+        if meta.get("speech_prep") and not fake:
+            try:
+                speech_prep(steps, meta, work, g_key)
+            except Exception as e:           # never let the helper stop a video
+                print(f"Speech prep skipped: {e}", flush=True)
         for s in steps:
             if "say" not in s:
                 continue
-            s["vsay"] = gemini_say(s["say"], meta)
+            if s.get("prep"):
+                s["prep_key"] = s["prep"].replace(SAY0, "").replace(SAY1, "")   # new wording -> new voice clip
+                s["vsay"] = gemini_say(s["prep_key"], meta, s["prep"])
+            else:
+                s["vsay"] = gemini_say(s["say"], meta, s.get("say_m"))
             s["mp3"] = g_path(s)
             if g_edge_path(s).exists() and not (s["mp3"].exists() and s["mp3"].stat().st_size > 0):
                 s["mp3"], s["edge_fb"] = g_edge_path(s), True  # Edge voice was used for this line in an earlier run
