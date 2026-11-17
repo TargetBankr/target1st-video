@@ -1,0 +1,72 @@
+name: Post reel to Instagram
+
+# Posts a finished reel (a release made by "Build quiz video" with aspect "reel") to the Target1st Instagram account.
+#
+# Run it yourself: Actions > Post reel to Instagram > Run workflow
+#   tag     = empty (oldest reel not posted yet) or a release tag, e.g. video-12-questionshr25-r01.done
+#   dry_run = true  -> checks the token and the video link and shows the caption, posts NOTHING (default)
+#             false -> really posts
+#
+# Fully automatic: add a repository VARIABLE (Settings > Secrets and variables > Actions > Variables)
+#   AUTO_POST_REELS = true      every reel build posts itself when it finishes
+#   IG_PAUSED       = true      emergency stop: nothing is posted (manual runs too)
+#
+# Needs the repository SECRETS  IG_ACCESS_TOKEN  and  IG_USER_ID.  The repository must be public (Instagram downloads the file).
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to post. Empty = oldest reel not posted yet"
+        required: false
+        default: ""
+      dry_run:
+        description: "true = only check, post nothing. false = really post"
+        required: false
+        default: "true"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: post-reel
+  cancel-in-progress: false
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: ${{ vars.IG_PAUSED != 'true' }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Post the reel
+        env:
+          GH_TOKEN: ${{ github.token }}
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+          TAG: ${{ inputs.tag }}
+          DRY: ${{ inputs.dry_run }}
+        run: |
+          args=()
+          if [ -n "$TAG" ]; then args+=(--tag "$TAG"); fi
+          if [ "$DRY" != "false" ]; then args+=(--dry-run); fi
+          python -u tools/ig_publish.py "${args[@]}"
+
+      - name: Remember what was posted
+        if: ${{ inputs.dry_run == 'false' }}
+        run: |
+          if [ -n "$(git status --porcelain ig/posted.json)" ]; then
+            git config user.name "target1st-bot"
+            git config user.email "bot@users.noreply.github.com"
+            git add ig/posted.json
+            git commit -m "Instagram: mark reel as posted"
+            for i in 1 2 3 4 5; do
+              git pull --rebase -q origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME" && break
+              sleep $((i * 5))
+            done
+          fi

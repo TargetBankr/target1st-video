@@ -245,6 +245,7 @@ jobs:
           LAYOUT: ${{ inputs.layout }}
           FORMAT: ${{ inputs.format }}
           TTS: ${{ inputs.tts }}
+          AUTO_POST_REELS: ${{ vars.AUTO_POST_REELS }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
           GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
@@ -299,6 +300,7 @@ jobs:
               fi
             fi
             echo "=== Building $f ==="
+            rm -f output/caption.txt   # only reel builds (aspect: reel) write a caption; never reuse an old one
             rc=0
             python -u build.py "$f" --out output --limit "${LIMIT:-0}" --theme "${THEME:-auto}" \
               --layout "${LAYOUT:-auto}" --format "${FORMAT:-auto}" --tts "${TTS:-auto}" || rc=$?
@@ -318,9 +320,19 @@ jobs:
             fi
             cp output/video.mp4 "output/$name.mp4"
             cp output/description.txt "output/$name-description.txt"
-            gh release create "video-$RUN_NO-$name" "output/$name.mp4" "output/$name-description.txt" \
+            assets=("output/$name.mp4" "output/$name-description.txt")
+            if [ -f output/caption.txt ]; then
+              cp output/caption.txt "output/$name-caption.txt"
+              assets+=("output/$name-caption.txt")
+            fi
+            gh release create "video-$RUN_NO-$name" "${assets[@]}" \
               --title "$name (run $RUN_NO)" \
-              --notes "Download the .mp4 and upload it to YouTube. The description file has title and chapters."
+              --notes "Download the .mp4 and upload it to YouTube. The description file has title and chapters. A -caption.txt file means this is an Instagram reel (9:16)."
+            if [ -f output/caption.txt ] && [ "$AUTO_POST_REELS" = "true" ]; then
+              echo "AUTO_POST_REELS is on: posting video-$RUN_NO-$name to Instagram"
+              gh workflow run post-reel.yml --ref "$GITHUB_REF_NAME" -f "tag=video-$RUN_NO-$name" -f "dry_run=false" < /dev/null \
+                || echo "::warning::Could not start the Instagram post for $name. Run 'Post reel to Instagram' by hand."
+            fi
           done 3< plan.txt
 
       - name: Save voice cache

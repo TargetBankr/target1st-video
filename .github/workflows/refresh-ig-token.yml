@@ -1,0 +1,43 @@
+name: Refresh Instagram token
+
+# The Instagram token lasts 60 days. This extends it every 2 weeks (it must be older than 24 hours).
+# If the token is dead or about to die, this run FAILS and GitHub emails you: then make a new token
+# (Meta dashboard > Instagram > API setup > Generate token) and paste it into the secret IG_ACCESS_TOKEN.
+#
+# Optional: if the refresh returns a different token string, it is saved into the secret by itself
+# when you add a repository secret GH_PAT (fine-grained token, this repo only, permission "Secrets: Read and write").
+
+on:
+  schedule:
+    - cron: "17 3 1,15 * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Refresh token
+        env:
+          IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
+          IG_USER_ID: ${{ secrets.IG_USER_ID }}
+        run: python -u tools/ig_publish.py --refresh
+      - name: Save a new token string (only if one came back)
+        env:
+          GH_TOKEN: ${{ secrets.GH_PAT }}
+        run: |
+          if [ -f new_token.txt ]; then
+            if [ -n "$GH_TOKEN" ]; then
+              gh secret set IG_ACCESS_TOKEN --repo "$GITHUB_REPOSITORY" < new_token.txt
+              echo "Saved the new token into IG_ACCESS_TOKEN"
+            else
+              echo "::warning::A new token string came back but secret GH_PAT is not set, so it was NOT saved. The old token still works until it expires; add GH_PAT or paste the new token yourself."
+            fi
+          fi
