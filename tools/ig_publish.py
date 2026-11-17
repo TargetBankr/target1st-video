@@ -15,6 +15,7 @@ listed in ig/posted.json, oldest first. After a successful post the release tag 
 import argparse
 import json
 import os
+import re
 import subprocess
 import sys
 import time
@@ -26,8 +27,26 @@ from pathlib import Path
 HOST = "https://graph.instagram.com"
 VERSION = os.environ.get("IG_API_VERSION", "").strip().strip("/")
 POSTED = Path("ig/posted.json")
-TOKEN = (os.environ.get("IG_ACCESS_TOKEN") or "").strip()
-IG_ID = (os.environ.get("IG_USER_ID") or "").strip()
+RAW_TOKEN = os.environ.get("IG_ACCESS_TOKEN") or ""
+
+
+def clean_token(t):
+    """Pasted tokens often carry invisible junk: a newline, spaces, quotes, 'access_token=' or 'Bearer '."""
+    t = re.sub(r"\s+", "", t)  # newlines/spaces anywhere (a phone copy can wrap the token)
+    t = re.sub(r"^(?:access_token=|Bearer|OAuth)", "", t, flags=re.I)
+    return t.strip("\"'`<>.,;")
+
+
+TOKEN = clean_token(RAW_TOKEN)
+IG_ID = re.sub(r"\D", "", os.environ.get("IG_USER_ID") or "")
+
+
+def token_shape():
+    """Safe description of the token (never the token itself) to find paste mistakes."""
+    r = RAW_TOKEN
+    return (f"length {len(r)} (after cleaning {len(TOKEN)}), starts with 'IG': {TOKEN[:2] == 'IG'}, "
+            f"whitespace/newline inside: {bool(re.search(r'\s', r.strip()))}, quotes: {bool(re.search(r'[\"\'`]', r))}, "
+            f"non-ASCII characters: {sum(ord(c) > 127 for c in r)}")
 
 
 def die(msg):
@@ -56,7 +75,8 @@ def api(method, path, params=None):
             body = f"{err.get('message')} (code {err.get('code')}, subcode {err.get('error_subcode')})"
         except Exception:
             pass
-        die(f"Instagram API {method} /{path} failed: HTTP {e.code}: {body.replace(TOKEN, '***') if TOKEN else body}")
+        extra = f"\nToken as GitHub gave it to this run: {token_shape()}" if "code 190" in body else ""
+        die(f"Instagram API {method} /{path} failed: HTTP {e.code}: {body.replace(TOKEN, '***') if TOKEN else body}{extra}")
     except Exception as e:
         die(f"Instagram API {method} /{path} failed: {e}")
 
