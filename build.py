@@ -9,6 +9,9 @@ Usage:
 
 theme:  classic | night | royal
 layout: list | grid        (how the 4 options look on the question slide)
+aspect: wide | reel        (wide = 1920x1080 YouTube; reel = 1080x1920 for Instagram, text kept inside Instagram's safe zone,
+                            options always stacked, a slide that is too tall is shrunk by itself. Set meta "aspect": "reel"
+                            or pass --aspect reel. Nothing else changes: same voice, same cache, same JSON.)
 format: quiz | revision    (both read the options aloud; quiz adds a countdown, revision has none)
 tts:    edge | gemini | sarvam   (edge = Edge-TTS, free, unlimited; gemini = Gemini AI voice, free tier is slow/limited;
                                   sarvam = Sarvam Bulbul Hindi voice, Rs 100 free credits then paid)
@@ -117,6 +120,10 @@ import wave
 from pathlib import Path
 
 W, H, FPS = 1920, 1080, 30
+# canvas per aspect: wide = YouTube 16:9, reel = Instagram / Shorts 9:16
+ASPECTS = {"wide": (1920, 1080), "reel": (1080, 1920)}
+# Reel safe zone (Instagram covers the top 220 px, the bottom 380 px and the right 120 px with its own buttons/caption)
+REEL_TOP, REEL_BOTTOM, REEL_SIDE = 230, 380, 60
 QUOTA_EXIT = 75  # exit code meaning "every Gemini model is out of daily quota": video.yml waits and resumes
 PAUSE_DEFAULT = 0.15  # silence kept after every spoken line, seconds (meta "pause" overrides)
 TRIM = ("silenceremove=start_periods=1:start_threshold=-50dB,areverse,"
@@ -166,6 +173,30 @@ body{width:1920px;height:1080px;background:var(--bg);font-family:var(--font);fon
 .center small{display:block;font-size:50px;color:var(--q);margin-top:30px}
 """
 
+# 9:16 reel version of the same slides: 1080x1920, everything inside the Instagram safe zone
+# (left 60, right 120, top 230, bottom 380). Options are always stacked cards (a 2x2 grid is too narrow here).
+CSS_REEL = """
+*{box-sizing:border-box;margin:0;padding:0}
+body{width:1080px;height:1920px;background:var(--bg);font-family:var(--font);font-weight:700;color:var(--fg);position:relative;overflow:hidden}
+.wm{position:absolute;left:0;right:0;top:780px;text-align:center;font-size:170px;color:var(--wm);transform:rotate(-24deg);z-index:0}
+.wrap{position:absolute;left:60px;width:900px;top:230px;z-index:1}
+.head{border-top:8px solid var(--rule);border-bottom:8px solid var(--rule);text-align:center;font-size:44px;line-height:1.25;padding:12px 0}
+.q{color:var(--q);font-size:68px;line-height:1.32;margin-top:44px}
+.opts{margin-top:36px}
+.opt{font-size:56px;line-height:1.25;padding:16px 26px;margin-bottom:22px;border:5px solid var(--rule);border-radius:18px}
+.cd{display:block;margin:30px auto 0;width:200px;height:200px;border:14px solid var(--cd);border-radius:50%;font-size:120px;color:var(--cd);text-align:center;line-height:172px;background:var(--bg)}
+.badge{display:inline-block;margin-top:36px;background:var(--badgebg);color:var(--badgefg);font-size:40px;padding:6px 28px;border-radius:10px}
+.ans{margin-top:26px;background:var(--ans);color:var(--ansfg);font-size:60px;line-height:1.25;padding:20px 28px;border-radius:14px;display:flex;align-items:center;gap:20px}
+.ans svg{flex:none;width:64px;height:64px}
+.pts{margin-top:32px}
+.pt{font-size:54px;line-height:1.38;padding:12px 0;color:var(--pt)}
+.pt b{color:var(--num);margin-right:12px}
+.trick{margin-top:38px;background:var(--trickbg);color:var(--trickfg);border-radius:18px;padding:34px 38px;font-size:58px;line-height:1.4}
+.trick .lbl{display:block;font-size:40px;margin-bottom:12px;opacity:.85}
+.center{margin-top:380px;text-align:center;font-size:74px;line-height:1.5}
+.center small{display:block;font-size:50px;color:var(--q);margin-top:30px}
+"""
+
 CHECK = ('<svg width="70" height="70" viewBox="0 0 24 24"><path d="M4 12.5l5 5L20 6.5" '
          'stroke="currentColor" stroke-width="3.2" fill="none" stroke-linecap="round" '
          'stroke-linejoin="round"/></svg>')
@@ -181,7 +212,10 @@ def norm_point(p):
     return {"show": p["show"], "say": p.get("say", p["show"])}
 
 
-def page_html(meta, qs, st, theme, layout, fmt):
+def page_html(meta, qs, st, theme, layout, fmt, aspect="wide"):
+    reel = aspect == "reel"
+    if reel:
+        layout = "list"
     th = THEMES[theme]
     vars_css = ":root{" + "".join(f"--{k}:{v};" for k, v in th.items()) + "}"
     sub = f' — {esc(meta["subtitle"])}' if meta.get("subtitle") else ""
@@ -220,6 +254,10 @@ def page_html(meta, qs, st, theme, layout, fmt):
         q = qs[st["i"] - 1]
         body = (f'<div class="badge">प्रश्न {st["i"]}</div>'
                 f'<div class="trick"><span class="lbl">ट्रिक</span>{esc(norm_point(q["trick"])["show"])}</div>')
+    if reel:
+        # "fit" is shrunk (CSS zoom) by render_images only when a slide would run into the bottom safe zone
+        return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS_REEL}</style></head>'
+                f'<body><div class="wm">Target1st</div><div class="wrap"><div id="fit">{head}{body}</div></div></body></html>')
     return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS}</style></head>'
             f'<body><div class="wm">Target1st</div><div class="wrap">{head}{body}</div></body></html>')
 
@@ -1089,25 +1127,45 @@ async def tts_all(steps, meta, work, fake, provider):
             s["edge_fb"] = True
 
 
-def render_images(meta, qs, steps, work, theme, layout, fmt):
+FIT_JS = """(limit) => {
+  const f = document.getElementById('fit');
+  let z = 1;
+  f.style.zoom = z;
+  while (f.getBoundingClientRect().height > limit && z > 0.55) { z -= 0.03; f.style.zoom = z; }
+  return [z, f.getBoundingClientRect().height];
+}"""
+
+
+def render_images(meta, qs, steps, work, theme, layout, fmt, aspect="wide"):
     from playwright.sync_api import sync_playwright
+    w, h = ASPECTS[aspect]
     cache = {}
+    shrunk = []
     with sync_playwright() as p:
         try:  # the GitHub runner already has Google Chrome: no big browser download needed
             browser = p.chromium.launch(channel="chrome")
         except Exception:
             browser = p.chromium.launch()  # Playwright's own Chromium
-        page = browser.new_page(viewport={"width": W, "height": H})
+        page = browser.new_page(viewport={"width": w, "height": h})
         for n, s in enumerate(steps):
             key = json.dumps(s["state"], sort_keys=True)
             if key not in cache:
                 img = work / "img" / f"{len(cache):04d}.png"
-                page.set_content(page_html(meta, qs, s["state"], theme, layout, fmt))
+                page.set_content(page_html(meta, qs, s["state"], theme, layout, fmt, aspect))
                 page.evaluate("document.fonts.ready")
+                if aspect == "reel":
+                    # rare safety net: a very long slide is shrunk until it stays above the bottom safe zone
+                    z, height = page.evaluate(FIT_JS, h - REEL_TOP - REEL_BOTTOM)
+                    if z < 1:
+                        shrunk.append((s["state"].get("i", 0), s["state"]["mode"], z, height))
                 page.screenshot(path=str(img))
                 cache[key] = img
             s["img"] = cache[key]
         browser.close()
+    for i, mode, z, height in shrunk:
+        bad = height > h - REEL_TOP - REEL_BOTTOM
+        print(f"{'WARNING' if bad else 'NOTE'} Q{i} {mode} slide shrunk to {z * 100:.0f}% to fit the reel safe zone"
+              + (" and STILL too tall, shorten the text" if bad else ""))
 
 
 def fmt_time(t):
@@ -1170,6 +1228,7 @@ def main():
     ap.add_argument("--limit", type=int, default=0, help="only first N questions (0 = all)")
     ap.add_argument("--theme", default=None)
     ap.add_argument("--layout", default=None)
+    ap.add_argument("--aspect", default=None, help="wide (1920x1080, YouTube) | reel (1080x1920, Instagram); default: meta 'aspect', else wide")
     ap.add_argument("--format", default=None)
     ap.add_argument("--tts", default=None, help="edge | gemini | sarvam (default: meta 'tts', else edge)")
     ap.add_argument("--fake-tts", action="store_true", help="silent placeholder audio, for layout tests")
@@ -1180,6 +1239,11 @@ def main():
     theme = pick(a.theme, meta.get("theme"), "classic", list(THEMES))
     layout = pick(a.layout, meta.get("layout"), "list", ["list", "grid"])
     fmt = pick(a.format, meta.get("format"), "quiz", ["quiz", "revision"])
+    aspect_names = {"9:16": "reel", "vertical": "reel", "reels": "reel", "16:9": "wide", "landscape": "wide"}
+    aspect = str(a.aspect if a.aspect and a.aspect != "auto" else (meta.get("aspect") or "wide")).strip().lower()
+    aspect = aspect_names.get(aspect, aspect)
+    if aspect not in ASPECTS:
+        sys.exit(f"Invalid aspect '{aspect}'. Allowed: wide, reel")
     provider = pick(a.tts, meta.get("tts"), "edge", ["edge", "gemini", "sarvam"])
     qs, steps = make_steps(data, a.limit, fmt)
 
@@ -1207,7 +1271,7 @@ def main():
     for d in ("audio", "img", "wav"):
         (work / d).mkdir(parents=True, exist_ok=True)
 
-    print(f"{len(qs)} questions, {len(steps)} steps | theme={theme} layout={layout} format={fmt} tts={provider}")
+    print(f"{len(qs)} questions, {len(steps)} steps | theme={theme} layout={"list (reel)" if aspect == "reel" else layout} format={fmt} aspect={aspect} tts={provider}")
     asyncio.run(tts_all(steps, meta, work, a.fake_tts, provider))
     # Gemini has no speed setting: speed it up here (pitch is preserved by atempo, valid range 0.5-2.0)
     speed = float(meta.get("gemini_speed", 1.3)) if provider == "gemini" and not a.fake_tts else 1.0
@@ -1216,7 +1280,7 @@ def main():
     sq = float(meta.get("gemini_squeeze", 0.2)) if provider == "gemini" and not a.fake_tts else 0
     squeeze = (f",silenceremove=stop_periods=-1:stop_duration=0.45:stop_threshold=-45dB:stop_silence={sq:.2f}"
                if sq > 0 else "")
-    render_images(meta, qs, steps, work, theme, layout, fmt)
+    render_images(meta, qs, steps, work, theme, layout, fmt, aspect)
 
     # exact-length audio per step, then concat
     pause = float(meta.get("pause", PAUSE_DEFAULT))
