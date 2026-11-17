@@ -1187,6 +1187,45 @@ def pick(cli, meta_val, default, allowed):
     return v
 
 
+REEL_HOOKS = [
+    "❓ क्या आप इस प्रश्न का सही उत्तर जानते हैं?",
+    "🧠 10 सेकंड में जवाब सोचिए!",
+    "🔥 परीक्षा में बार-बार पूछा जाने वाला प्रश्न!",
+    "✅ कितने प्रश्न आपके सही रहे? कमेंट करें!",
+    "⚡ तेज़ रिवीज़न: ऐसे प्रश्न पक्का आएँगे!",
+]
+REEL_CTAS = [
+    "💬 अपना उत्तर कमेंट में लिखिए। सही उत्तर और पॉइंट्स वीडियो में हैं 👆",
+    "💬 कमेंट में अपना जवाब बताइए, फिर वीडियो में मिलाइए 👆",
+    "💬 पहले जवाब सोचिए, फिर कमेंट कीजिए। उत्तर वीडियो में है 👆",
+]
+REEL_TAGS = ["#HaryanaGroupD", "#HSSCGroupD", "#HaryanaGK", "#HSSC", "#HaryanaExam", "#GKQuiz", "#SarkariNaukri", "#Target1st"]
+
+
+def reel_caption(meta, qs):
+    """Instagram caption for a reel, filled from the questions (no AI, no cost). Hindi, under 2200 characters.
+    Optional meta: caption_hashtags (list), caption_extra (one line added before the hashtags),
+    caption_hooks / caption_ctas (lists, replace the built-in rotating lines).
+    The hook and call-to-action rotate by a hash of the title, so every reel reads a little different."""
+    seed = int(hashlib.md5(str(meta.get("title", "")).encode("utf-8")).hexdigest(), 16)
+    hooks = meta.get("caption_hooks") or REEL_HOOKS
+    ctas = meta.get("caption_ctas") or REEL_CTAS
+    tags = meta.get("caption_hashtags") or REEL_TAGS
+    q = qs[0]
+    qtext = q["q"] if len(q["q"]) <= 170 else q["q"][:167].rstrip() + "..."
+    lines = [hooks[seed % len(hooks)], "", f"{meta['title']} | {len(qs)} प्रश्न", "",
+             f"Q. {qtext}"]
+    lines += [f"{l}) {t}" for l, t in zip("ABCD", q["options"])]
+    lines += ["", ctas[(seed // 7) % len(ctas)], "",
+              f"📌 रोज़ ऐसे प्रश्नों के लिए {meta.get('channel', 'Target1st')} को फॉलो करें।",
+              "📲 Telegram: @Target1stsupport"]
+    if meta.get("caption_extra"):
+        lines += [str(meta["caption_extra"])]
+    lines += ["", " ".join(tags[:12])]
+    text = "\n".join(lines)
+    return text if len(text) <= 2200 else text[:2190].rstrip() + "..."
+
+
 def sync_report(mp4, planned, timeline, meta):
     """Prints how long the voice and the picture really are, and lists any clip whose speed is far from the rest
     (those are the places where the voice can run ahead of the picture). Exits if voice and picture differ."""
@@ -1330,6 +1369,9 @@ def main():
              f'Explanation | {meta.get("channel", "Target1st")}')
     desc = [title, "", "Chapters:"] + [f"{fmt_time(c)} {name}" for c, name in chapters]
     (out / "description.txt").write_text("\n".join(desc), encoding="utf-8")
+    if aspect == "reel":
+        (out / "caption.txt").write_text(reel_caption(meta, qs), encoding="utf-8")
+        print(f"Instagram caption written: {out / 'caption.txt'}")
     print(f"Done: {mp4}  ({fmt_time(t)} long)")
 
 
