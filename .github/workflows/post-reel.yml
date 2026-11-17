@@ -11,6 +11,10 @@ name: Post reel to Instagram
 #   AUTO_POST_REELS = true      every reel build posts itself when it finishes
 #   IG_PAUSED       = true      emergency stop: nothing is posted (manual runs too)
 #
+# Drip posting (recommended with a queue of reels): add the repository VARIABLE
+#   SCHEDULED_POSTING = true    then 3 times a day (about 8:00, 13:00 and 19:30 India time) the oldest reel not posted yet goes out.
+#                               Nothing to post = nothing happens. Change the times in the "cron" lines below (they are UTC).
+#
 # Needs the repository SECRETS  IG_ACCESS_TOKEN  and  IG_USER_ID.  The repository must be public (Instagram downloads the file).
 
 on:
@@ -25,6 +29,11 @@ on:
         required: false
         default: "true"
 
+  schedule:
+    - cron: "30 2 * * *"
+    - cron: "30 7 * * *"
+    - cron: "0 14 * * *"
+
 permissions:
   contents: write
 
@@ -36,7 +45,7 @@ jobs:
   post:
     runs-on: ubuntu-latest
     timeout-minutes: 30
-    if: ${{ vars.IG_PAUSED != 'true' }}
+    if: ${{ vars.IG_PAUSED != 'true' && (github.event_name != 'schedule' || vars.SCHEDULED_POSTING == 'true') }}
     steps:
       - uses: actions/checkout@v4
 
@@ -50,15 +59,17 @@ jobs:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           TAG: ${{ inputs.tag }}
-          DRY: ${{ inputs.dry_run }}
+          DRY: ${{ github.event_name == 'schedule' && 'false' || inputs.dry_run }}
+          EVENT: ${{ github.event_name }}
         run: |
           args=()
           if [ -n "$TAG" ]; then args+=(--tag "$TAG"); fi
           if [ "$DRY" != "false" ]; then args+=(--dry-run); fi
+          if [ "$EVENT" = "schedule" ]; then args+=(--if-empty-ok); fi
           python -u tools/ig_publish.py "${args[@]}"
 
       - name: Remember what was posted
-        if: ${{ inputs.dry_run == 'false' }}
+        if: ${{ github.event_name == 'schedule' || inputs.dry_run == 'false' }}
         run: |
           if [ -n "$(git status --porcelain ig/posted.json)" ]; then
             git config user.name "target1st-bot"

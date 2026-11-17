@@ -184,6 +184,7 @@ def main():
     ap.add_argument("--tag", default="")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--refresh", action="store_true")
+    ap.add_argument("--if-empty-ok", action="store_true", help="nothing to post is not an error (scheduled runs)")
     a = ap.parse_args()
     if not TOKEN:
         die("secret IG_ACCESS_TOKEN is empty. Add it in GitHub: Settings > Secrets and variables > Actions.")
@@ -191,7 +192,13 @@ def main():
         return refresh()
     uid = whoami()
 
-    tag, vid, cap = pick_release(a.tag.strip())
+    try:
+        tag, vid, cap = pick_release(a.tag.strip())
+    except SystemExit as e:
+        if a.if_empty_ok and not a.tag.strip():
+            print("Nothing to post right now.")
+            return
+        raise
     print(f"Release: {tag}\nVideo: {vid}")
     Path("reel").mkdir(exist_ok=True)
     sh("gh", "release", "download", tag, "--pattern", cap, "--dir", "reel", "--clobber")

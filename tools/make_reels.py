@@ -14,7 +14,7 @@ Push the files you want built (they are named <name>-r01.done.json ...). Several
 another in file-name order, so r01, r02, r03 ... come out in order.
 
 Options
-    --size N        questions per reel (default 3). Rough length: about 30-40 s per question at your usual voice speed.
+    --size N        questions per reel (default 3, 0 = the whole set in ONE reel). Rough length: about 30-40 s per question.
     --out DIR       output folder (default reels)
     --suffix TEXT   ending of the file name before .json (default ".done"; use ".done+after" to also wait for earlier runs)
     --points N      points spoken and shown per question (default 2, 0 = all)
@@ -37,18 +37,19 @@ def main():
     ap.add_argument("--points", type=int, default=2)
     ap.add_argument("--countdown", type=int, default=3)
     ap.add_argument("--format", default="quiz", choices=["quiz", "revision"])
+    ap.add_argument("--list-file", default="", help="also write the made file paths (one per line) into this file")
     ap.add_argument("--first", type=int, default=1)
     ap.add_argument("--count", type=int, default=0)
     a = ap.parse_args()
-    if a.size < 1:
-        ap.error("--size must be 1 or more")
+    if a.size < 0:
+        ap.error("--size must be 0 (everything in one reel) or more")
 
     src = Path(a.json_file)
     data = json.loads(src.read_text(encoding="utf-8"))
     qs = data["questions"]
     base = re.sub(r"\.done.*\.json$|\.json$", "", src.name)
 
-    chunks = [qs[i:i + a.size] for i in range(0, len(qs), a.size)]
+    chunks = [qs[i:i + a.size] for i in range(0, len(qs), a.size)] if a.size else [list(qs)]
     if len(chunks) > 1 and len(chunks[-1]) == 1:
         chunks[-2] += chunks.pop()
 
@@ -64,7 +65,7 @@ def main():
         title = str(meta.get("title", "")).strip()
         meta.update({
             "aspect": "reel",
-            "title": f"{title} · भाग {k}" if title else f"भाग {k}",
+            "title": (f"{title} · भाग {k}" if title else f"भाग {k}") if len(chunks) > 1 else (title or "Target1st"),
             "format": a.format,
             "countdown": a.countdown,
             "max_points": a.points,
@@ -78,7 +79,9 @@ def main():
         path.write_text(json.dumps({"meta": meta, "questions": chunk}, ensure_ascii=False, indent=1), encoding="utf-8")
         made.append((path, len(chunk)))
 
-    print(f"{len(qs)} questions -> {len(chunks)} reels of about {a.size}; wrote {len(made)} file(s) to {out}/")
+    print(f"{len(qs)} questions -> {len(chunks)} reel(s)" + (f" of about {a.size}" if a.size else "") + f"; wrote {len(made)} file(s) to {out}/")
+    if a.list_file:
+        Path(a.list_file).write_text("".join(f"{p}\n" for p, _ in made), encoding="utf-8")
     for p, n in made:
         print(f"  {p.name}  ({n} questions)")
 

@@ -1,0 +1,110 @@
+name: Make reels from a JSON
+
+# Turns a question JSON that is ALREADY in this repo (an old one, no need to edit or upload it again) into reel JSON files
+# (9:16 for Instagram) and starts the video build for them. The original file is not touched.
+#
+# Run it: Actions > Make reels from a JSON > Run workflow
+#   file      = the JSON file name in the repo, e.g. questionshr25.done.json
+#   size      = questions per reel (10 = a reel of 10 questions; 0 = the whole set in ONE reel)
+#   points    = how many explanation points per question are shown and spoken (0 = all)
+#   countdown = seconds of thinking time after the options
+#   format    = quiz (options + countdown) or revision
+#   first, count = only make some reels: first = number of the first reel (1 = from the start),
+#                  count = how many (0 = all). Handy for a small test: first 1, count 1.
+#   build     = true: start the video build for the new files right away. false: only create the files.
+#
+# New files are saved in the folder  reels/  as  <name>-r01.done.json, <name>-r02.done.json ...
+# The build then makes one video per file, one after another. Voice lines that already exist are reused from the cache.
+# To post: see "Post reel to Instagram" (AUTO_POST_REELS or SCHEDULED_POSTING variable).
+
+on:
+  workflow_dispatch:
+    inputs:
+      file:
+        description: "JSON file in the repo to turn into reels, e.g. questionshr25.done.json"
+        required: true
+      size:
+        description: "Questions per reel (0 = whole set in one reel)"
+        required: false
+        default: "10"
+      points:
+        description: "Explanation points per question (0 = all)"
+        required: false
+        default: "2"
+      countdown:
+        description: "Thinking seconds after the options"
+        required: false
+        default: "3"
+      format:
+        description: "quiz or revision"
+        type: choice
+        default: "quiz"
+        options: [quiz, revision]
+      first:
+        description: "Number of the first reel to make (1 = from the start)"
+        required: false
+        default: "1"
+      count:
+        description: "How many reels to make (0 = all)"
+        required: false
+        default: "0"
+      build:
+        description: "true = start the video build for them now"
+        type: choice
+        default: "true"
+        options: ["true", "false"]
+
+permissions:
+  contents: write
+  actions: write
+
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Make the reel files
+        env:
+          FILE: ${{ inputs.file }}
+          SIZE: ${{ inputs.size }}
+          POINTS: ${{ inputs.points }}
+          COUNTDOWN: ${{ inputs.countdown }}
+          FORMAT: ${{ inputs.format }}
+          FIRST: ${{ inputs.first }}
+          COUNT: ${{ inputs.count }}
+        run: |
+          FILE=$(printf '%s' "$FILE" | sed 's/^ *//; s/ *$//')
+          if [ ! -f "$FILE" ]; then
+            echo "::error::File '$FILE' is not in the repo. Check the name (capital letters, .done.json, folder)."; exit 1
+          fi
+          python tools/make_reels.py "$FILE" --out reels --size "${SIZE:-10}" --points "${POINTS:-2}" \
+            --countdown "${COUNTDOWN:-3}" --format "$FORMAT" --first "${FIRST:-1}" --count "${COUNT:-0}" --list-file made.txt
+          if [ ! -s made.txt ]; then echo "::error::No reel file was made (check first / count)."; exit 1; fi
+
+      - name: Save the new files
+        run: |
+          git config user.name "target1st-bot"
+          git config user.email "bot@users.noreply.github.com"
+          git add reels
+          if git diff --cached --quiet; then echo "Nothing changed (same files as before)."; exit 0; fi
+          git commit -m "Reels made from ${{ inputs.file }}"
+          for i in 1 2 3 4 5; do
+            git pull --rebase -q origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME" && break
+            sleep $((i * 5))
+          done
+
+      - name: Start the video build
+        if: ${{ inputs.build == 'true' }}
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          list=$(sort made.txt | paste -sd, -)
+          echo "Starting 'Build quiz video' for: $list"
+          # a push made by this workflow does not start other workflows by itself, so start the build directly
+          gh workflow run "Build quiz video" --ref "$GITHUB_REF_NAME" -f "file=$list" < /dev/null
