@@ -29,12 +29,12 @@ import re
 from pathlib import Path
 
 
-HOOKS = [
-    ("क्या आप इसका सही जवाब दे पाएँगे?", "{n} प्रश्न · जवाब सोचिए!"),
-    ("पेपर में यही पूछा जा सकता है!", "{n} प्रश्न · जवाब सोचिए!"),
-    ("90% लोग इसमें गलती करते हैं!", "{n} प्रश्न · खुद को परखिए!"),
-    ("सिर्फ़ 1 मिनट में अपनी तैयारी जाँचिए!", "{n} प्रश्न · जवाब सोचिए!"),
-    ("परीक्षा से पहले ये प्रश्न ज़रूर देख लें!", "{n} प्रश्न · जवाब सोचिए!"),
+HOOKS = [   # honest curiosity hooks only: no invented "90% fail" claims. {n} = number of questions in the reel
+    ("{n} में से कितने सही कर पाएँगे?", "जवाब सोचिए, फिर स्कोर कमेंट कीजिए"),
+    ("पहले जवाब सोचिए, फिर मिलाइए!", "{n} प्रश्न · आख़िर तक देखिए"),
+    ("अपना स्कोर बताइए: {n} में से कितने?", "{n} प्रश्न · कमेंट में लिखिए"),
+    ("परीक्षा जैसे {n} प्रश्न, तैयार हैं?", "जवाब सोचिए · स्कोर बताइए"),
+    ("सिर्फ़ 1 मिनट, {n} प्रश्न!", "अपनी तैयारी जाँचिए"),
 ]
 
 
@@ -75,7 +75,7 @@ def main():
         meta = dict(data["meta"])
         title = str(meta.get("title", "")).strip()
         hook, small = HOOKS[(k - 1) % len(HOOKS)]
-        small = small.format(n=len(chunk))
+        hook, small = hook.format(n=len(chunk)), small.format(n=len(chunk))
         meta.update({
             "aspect": "reel",
             "title": (f"{title} · भाग {k}" if title else f"भाग {k}") if len(chunks) > 1 else (title or "Target1st"),
@@ -83,7 +83,7 @@ def main():
             "countdown": a.countdown,
             "max_points": a.points,
             "filler_lines": [],
-            "intro": f"{hook} {title}। {len(chunk)} प्रश्न, जवाब सोचिए!" if title else f"{hook} {len(chunk)} प्रश्न, जवाब सोचिए!",
+            "intro": f"{hook} आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
             "intro_show": hook,
             "intro_small": small,
             "promo": not a.no_promo,

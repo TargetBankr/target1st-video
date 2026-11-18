@@ -217,6 +217,43 @@ body{width:1080px;height:1920px;background:var(--bg);font-family:var(--font);fon
 .qrc .lab{font-size:42px;line-height:1.25;margin-top:14px}
 """
 
+# Extra look for reels built with the retention effects (fx.py): word-by-word highlight, active option, countdown ring,
+# question counter, hook card. Only added when page_html(..., fx=True); nothing here touches the plain slides.
+CSS_REEL_FX = """
+.kw.live .w{opacity:.42}
+.kw.live .w.d{opacity:1}
+.kw .w.on{opacity:1;background:var(--hl);color:var(--hlt,var(--bg));border-radius:10px;padding:0 8px;margin:0 -8px;-webkit-box-decoration-break:clone;box-decoration-break:clone}
+.opt.act{background:var(--q);border-color:var(--q);color:var(--bg)}
+.ans{transform-origin:50% 50%}
+.qn{display:inline-block;background:var(--badgebg);color:var(--badgefg);font-size:36px;line-height:1.2;padding:6px 26px;border-radius:999px;margin-bottom:16px}
+.ringbox{position:relative;width:220px;height:220px;margin:26px auto 0}
+.ringbox svg{position:absolute;left:0;top:0}
+.ringbox span{position:absolute;left:0;top:0;width:220px;text-align:center;line-height:220px;font-size:108px;color:var(--cd)}
+.hookc{margin-top:230px;text-align:center}
+.hk-badge{display:inline-block;background:var(--badgebg);color:var(--badgefg);font-size:44px;line-height:1.2;padding:8px 36px;border-radius:999px}
+.hk-t{font-size:112px;line-height:1.22;color:var(--q);margin-top:54px}
+.hk-s{font-size:54px;line-height:1.3;margin-top:50px;color:var(--fg)}
+"""
+RING_R = 92
+
+
+def ring_html(show, num=""):
+    """Countdown ring (SVG arc that fx.py shrinks frame by frame). show=False keeps its space but hides it."""
+    c = 2 * 3.141592653589793 * RING_R
+    vis = "" if show else ' style="visibility:hidden"'
+    return (f'<div class="ringbox"{vis}><svg width="220" height="220" viewBox="0 0 220 220">'
+            f'<circle cx="110" cy="110" r="{RING_R}" fill="none" style="stroke:var(--cd);opacity:.22" stroke-width="18"/>'
+            f'<circle id="rc" cx="110" cy="110" r="{RING_R}" fill="none" style="stroke:var(--cd)" stroke-width="18" '
+            f'stroke-linecap="round" stroke-dasharray="{c:.2f}" stroke-dashoffset="0" transform="rotate(-90 110 110)"/>'
+            f'</svg><span id="rn">{num}</span></div>')
+
+
+def kw(text, g):
+    """Words of a text as <span class="w"> so fx.py can light them up one by one while they are spoken."""
+    return " ".join(f'<span class="w" data-g="{g}" data-i="{i}">{html.escape(w, quote=False)}</span>'
+                    for i, w in enumerate(str(text).split()))
+
+
 # Promo slide (reels): two QR codes pop in one after the other and stay. POP[k-1] = size of the QR at animation frame k.
 POP = [0.35, 0.75, 1.0, 1.14, 1.09, 1.04, 1.01, 1.0]
 PROMO_ITEMS = [{"img": "assets/qr-notes.png", "label": "नोट्स + मॉक पेपर"},
@@ -281,8 +318,9 @@ def _hand(t):
     return SAY0 + t + SAY1
 
 
-def page_html(meta, qs, st, theme, layout, fmt, aspect="wide"):
+def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
     reel = aspect == "reel"
+    fx = fx and reel
     if reel:
         layout = "list"
     th = THEMES[theme]
@@ -297,7 +335,11 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide"):
                 else "हर प्रश्न का उत्तर और मुख्य पॉइंट्स")
         if meta.get("intro_show"):   # a short hook on screen (reels): set by tools/make_reels.py
             small = meta.get("intro_small") or f"{len(qs)} प्रश्न · जवाब सोचिए!"
-            body = f'<div class="center">{esc(meta["intro_show"])}<small>{esc(small)}</small></div>'
+            if fx:
+                body = (f'<div class="hookc"><div class="hk-badge">{esc(meta.get("channel", "Target1st"))}</div>'
+                        f'<div class="hk-t">{esc(meta["intro_show"])}</div><div class="hk-s">{esc(small)}</div></div>')
+            else:
+                body = f'<div class="center">{esc(meta["intro_show"])}<small>{esc(small)}</small></div>'
         else:
             body = f'<div class="center">कुल {len(qs)} प्रश्न<small>{line}</small></div>'
     elif mode == "promo":
@@ -318,13 +360,19 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide"):
                 f'<small>{esc(meta.get("channel", "Target1st"))}</small></div>')
     elif mode == "q":
         q = qs[st["i"] - 1]
-        body = f'<div class="q">{st["i"]}. {esc(q["q"])}</div>'
+        if fx:
+            body = (f'<div class="q kw" style="--hl:var(--q)"><div class="qn">प्रश्न {st["i"]} / {len(qs)}</div>'
+                    f'<br>{st["i"]}. {kw(q["q"], "q")}</div>')
+        else:
+            body = f'<div class="q">{st["i"]}. {esc(q["q"])}</div>'
         if st.get("opts"):
             cls = "opts grid" if layout == "grid" else "opts"
             body += f'<div class="{cls}">' + "".join(
-                f'<div class="opt">{l}) {esc(t)}</div>' for l, t in zip("ABCD", q["options"])
+                f'<div class="opt" data-o="{k}">{l}) {esc(t)}</div>' for k, (l, t) in enumerate(zip("ABCD", q["options"]))
             ) + "</div>"
-        if st.get("cd"):
+        if fx and st.get("rb"):
+            body += ring_html(st["rb"] == "show", st.get("cd", ""))
+        elif st.get("cd"):
             body += f'<div class="cd{" g" if layout == "grid" else ""}">{st["cd"]}</div>'
     elif mode == "answer":
         q = qs[st["i"] - 1]
@@ -334,15 +382,24 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide"):
                 f'<div class="ans">{CHECK}<span>सही उत्तर: {ans}) {esc(q["options"][idx])}</span></div>'
                 '<div class="pts">')
         for k, p in enumerate(q["points"][: st["pts"]], 1):
-            body += f'<div class="pt"><b>{k}.</b>{esc(norm_point(p)["show"])}</div>'
+            txt = norm_point(p)["show"]
+            if fx and k == st["pts"]:   # the point being spoken now lights up word by word
+                body += f'<div class="pt kw" style="--hl:var(--num)"><b>{k}.</b>{kw(txt, f"p{k}")}</div>'
+            else:
+                body += f'<div class="pt"><b>{k}.</b>{esc(txt)}</div>'
         body += "</div>"
     elif mode == "trick":
         q = qs[st["i"] - 1]
-        body = (f'<div class="badge">प्रश्न {st["i"]}</div>'
-                f'<div class="trick"><span class="lbl">ट्रिक</span>{esc(norm_point(q["trick"])["show"])}</div>')
+        ttxt = norm_point(q["trick"])["show"]
+        if fx:
+            body = (f'<div class="badge">प्रश्न {st["i"]}</div>'
+                    f'<div class="trick kw" style="--hl:var(--trickfg);--hlt:var(--trickbg)"><span class="lbl">ट्रिक</span>{kw(ttxt, "t")}</div>')
+        else:
+            body = (f'<div class="badge">प्रश्न {st["i"]}</div>'
+                    f'<div class="trick"><span class="lbl">ट्रिक</span>{esc(ttxt)}</div>')
     if reel:
         # "fit" is shrunk (CSS zoom) by render_images only when a slide would run into the bottom safe zone
-        return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS_REEL}</style></head>'
+        return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS_REEL}{CSS_REEL_FX if fx else ""}</style></head>'
                 f'<body><div class="wm">Target1st</div><div class="wrap"><div id="fit">{head}{body}</div></div></body></html>')
     return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS}</style></head>'
             f'<body><div class="wm">Target1st</div><div class="wrap">{head}{body}</div></body></html>')
@@ -1525,6 +1582,7 @@ def main():
     ap.add_argument("--format", default=None)
     ap.add_argument("--tts", default=None, help="edge | gemini | sarvam (default: meta 'tts', else edge)")
     ap.add_argument("--fake-tts", action="store_true", help="silent placeholder audio, for layout tests")
+    ap.add_argument("--no-fx", action="store_true", help="reels: plain slides, no zoom / highlight / sound effects (same as meta fx false)")
     a = ap.parse_args()
 
     data = json.loads(Path(a.json_file).read_text(encoding="utf-8"))
@@ -1573,14 +1631,11 @@ def main():
     sq = float(meta.get("gemini_squeeze", 0.2)) if provider == "gemini" and not a.fake_tts else 0
     squeeze = (f",silenceremove=stop_periods=-1:stop_duration=0.45:stop_threshold=-45dB:stop_silence={sq:.2f}"
                if sq > 0 else "")
-    render_images(meta, qs, steps, work, theme, layout, fmt, aspect)
-
     # exact-length audio per step, then concat
     pause = float(meta.get("pause", PAUSE_DEFAULT))
     t = 0.0
     chapters = []
-    img_lines, wav_lines = [], []
-    f_prev = 0       # frames already shown: picture changes are placed on exact frame boundaries so rounding never adds up
+    wav_lines = []
     timeline = []    # (start, length, text, weight) of every voiced step, for the sync report
     for n, s in enumerate(steps):
         wav = work / "wav" / f"{n:04d}.wav"
@@ -1598,24 +1653,39 @@ def main():
                 sys.exit(f"Voice clip came out empty for: {s['say'][:60]}")
         if "chapter" in s:
             chapters.append((t, s["chapter"]))
-        f_end = max(f_prev + 1, round((t + dur) * FPS))
-        img_lines += [f"file '{s['img'].resolve()}'", f"duration {(f_end - f_prev) / FPS:.5f}"]
-        f_prev = f_end
+        s["t"], s["dur"], s["pause"] = t, dur, pause
         wav_lines.append(f"file '{wav.resolve()}'")
         if "say" in s and "silence" not in s:
             timeline.append((t, dur - pause, s["say"], line_weight(s.get("vsay") or s["say"]), bool(s.get("edge_fb"))))
         t += dur
-    img_lines.append(f"file '{steps[-1]['img'].resolve()}'")
-
-    (work / "images.txt").write_text("\n".join(img_lines))
     (work / "audio.txt").write_text("\n".join(wav_lines))
     run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(work / "audio.txt"),
          "-c", "copy", str(work / "audio.wav")])
     mp4 = out / "video.mp4"
-    run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(work / "images.txt"),
-         "-i", str(work / "audio.wav"), "-vf", f"fps={FPS},format=yuv420p",
-         "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
-         "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", str(mp4)])
+    made = False
+    # Reels get the retention effects (fx.py: hook card, camera zoom, word highlight, countdown ring, progress bar,
+    # sound, loop). If anything goes wrong there the plain reel below is built instead, so the voice is never wasted.
+    if aspect == "reel" and meta.get("fx", True) and not a.no_fx:
+        try:
+            import fx
+            print("Reel effects: on", flush=True)
+            fx.build_reel(sys.modules[__name__], meta, qs, steps, work, theme, fmt, mp4, work / "audio.wav", t)
+            made = True
+        except (Exception, SystemExit) as e:
+            print(f"WARNING: reel effects failed, building the plain reel instead.\n{e}", flush=True)
+    if not made:
+        render_images(meta, qs, steps, work, theme, layout, fmt, aspect)
+        img_lines, f_prev = [], 0   # picture changes sit on exact frame boundaries so rounding never adds up
+        for s in steps:
+            f_end = max(f_prev + 1, round((s["t"] + s["dur"]) * FPS))
+            img_lines += [f"file '{s['img'].resolve()}'", f"duration {(f_end - f_prev) / FPS:.5f}"]
+            f_prev = f_end
+        img_lines.append(f"file '{steps[-1]['img'].resolve()}'")
+        (work / "images.txt").write_text("\n".join(img_lines))
+        run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", str(work / "images.txt"),
+             "-i", str(work / "audio.wav"), "-vf", f"fps={FPS},format=yuv420p",
+             "-c:v", "libx264", "-preset", "veryfast", "-crf", "23",
+             "-c:a", "aac", "-b:a", "160k", "-shortest", "-movflags", "+faststart", str(mp4)])
 
     sync_report(mp4, t, timeline, meta)
 
