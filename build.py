@@ -30,12 +30,14 @@ HOW SPECIAL CHARACTERS ARE SPOKEN (the slide keeps the written text; only the vo
     (no automatic rewriting, no length limit on the spoken part). The 110 / 120 / 170 character warnings count the
     on-screen part only.
 
-SPEECH PREP (Gemini voice only, optional)
+SPEECH PREP (Gemini, Sarvam and Edge voices, optional)
     meta "speech_prep": true  or your own message, e.g. "hi this is the video text which will be converted to speech
     so give texts for those number, symbol or line which may sound odd". A Gemini TEXT model rewrites the odd lines
     (numbers, symbols, codes, formulas) into spoken words before the voice is made; slides never change, "||" lines are
     never touched, answers are checked and cached (work/audio/_prep_cache.json), any failure falls back to the
     built-in rules. meta "speech_prep_models": ["gemini-2.5-flash", ...] to choose models (tried in order).
+    With Sarvam or Edge voice the fixer still uses a GEMINI key (GEMINI_API_KEY; meta "speech_prep_key_slot": 2 for
+    GEMINI_API_KEY_2) and the fixed wording is what Sarvam / Edge speak.
 
 SEVERAL API KEYS (more videos from the daily limits / credits of each key)
     Set meta "key_slot": 2 to use the second key of the same engine: GEMINI_API_KEY_2 or SARVAM_API_KEY_2
@@ -1055,6 +1057,21 @@ async def tts_all(steps, meta, work, fake, provider):
     if provider == "sarvam" and not fake and not s_key:
         sys.exit(f"{s_env} is not set. Add it as a repository secret (name exactly {s_env}) and pass it in video.yml (env).")
     s_sem = asyncio.Semaphore(2)
+
+    if provider in ("sarvam", "edge") and meta.get("speech_prep") and not fake:
+        # the AI fixer is a Gemini TEXT model, so it needs a Gemini key even when the voice is Sarvam / Edge
+        ps = int(meta.get("speech_prep_key_slot", 1) or 1)
+        pk = os.environ.get("GEMINI_API_KEY" + (f"_{ps}" if ps > 1 else ""), "")
+        if not pk:
+            print("Speech prep skipped: no GEMINI_API_KEY in this run (add the secret, or set meta speech_prep_key_slot)", flush=True)
+        else:
+            try:
+                speech_prep(steps, meta, work, pk)
+                for st in steps:
+                    if st.get("prep"):
+                        st["say"] = st["prep"].replace(SAY0, "").replace(SAY1, "")   # new wording -> new voice clip
+            except Exception as e:
+                print(f"Speech prep skipped: {e}", flush=True)
 
     async def sarvam_one(s, path):
         async with s_sem:
