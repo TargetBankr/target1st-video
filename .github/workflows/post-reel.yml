@@ -15,6 +15,10 @@ name: Post reel to Instagram
 #   SCHEDULED_POSTING = true    then 3 times a day (about 8:00, 13:00 and 19:30 India time) the oldest reel not posted yet goes out.
 #                               Nothing to post = nothing happens. Change the times in the "cron" lines below (they are UTC).
 #
+# Stories (made with "Make reels from a JSON" > stories = true): the same SCHEDULED_POSTING switch also posts them, 1.5 hours after
+#   each reel slot (about 9:30, 14:30 and 21:00 India time; the "cron" lines marked story below). They are video only: Instagram's API
+#   cannot add link stickers, so the QR codes are part of the video. A tag containing "-story" is always posted as a story.
+#
 # Needs the repository SECRETS  IG_ACCESS_TOKEN  and  IG_USER_ID.  The repository must be public (Instagram downloads the file).
 
 on:
@@ -28,11 +32,19 @@ on:
         description: "true = only check, post nothing. false = really post"
         required: false
         default: "true"
+      kind:
+        description: "With an empty tag: post the oldest reel or the oldest story not posted yet"
+        type: choice
+        default: "reel"
+        options: [reel, story]
 
   schedule:
     - cron: "30 2 * * *"
     - cron: "30 7 * * *"
     - cron: "0 14 * * *"
+    - cron: "0 4 * * *"      # story, 9:30 India time
+    - cron: "0 9 * * *"      # story, 14:30 India time
+    - cron: "30 15 * * *"    # story, 21:00 India time
 
 permissions:
   contents: write
@@ -59,11 +71,13 @@ jobs:
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           TAG: ${{ inputs.tag }}
+          KIND: ${{ github.event_name == 'schedule' && ((github.event.schedule == '0 4 * * *' || github.event.schedule == '0 9 * * *' || github.event.schedule == '30 15 * * *') && 'story' || 'reel') || inputs.kind }}
           DRY: ${{ github.event_name == 'schedule' && 'false' || inputs.dry_run }}
           EVENT: ${{ github.event_name }}
         run: |
           args=()
           if [ -n "$TAG" ]; then args+=(--tag "$TAG"); fi
+          args+=(--kind "${KIND:-reel}")
           if [ "$DRY" != "false" ]; then args+=(--dry-run); fi
           if [ "$EVENT" = "schedule" ]; then args+=(--if-empty-ok); fi
           python -u tools/ig_publish.py "${args[@]}"

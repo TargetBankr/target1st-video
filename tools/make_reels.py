@@ -21,6 +21,8 @@ Options
     --countdown N   seconds of thinking time after the options (default 3, 0 = none)
     --format quiz|revision   (default quiz: options, countdown, answer, points)
     --no-promo      leave out the notes + mock-test QR promo
+    --stories       ALSO make one Instagram STORY per reel: hook intro + the first question of that reel + the QR promo, no outro
+                    (file <name>-r01-story.done.json; "-story" in the name is how the poster knows it is a story, 60 s at most)
     --first K --count M      only make reels K..K+M-1 (1-based), handy for a test batch
 """
 import argparse
@@ -38,6 +40,14 @@ HOOKS = [   # honest curiosity hooks only: no invented "90% fail" claims. {n} = 
 ]
 
 
+STORY_HOOKS = [   # one question only, so no "{n} में से"
+    ("इस प्रश्न का जवाब आता है?", "जवाब सोचिए, फिर मिलाइए"),
+    ("पहले जवाब सोचिए!", "परीक्षा जैसा प्रश्न"),
+    ("10 सेकंड में बताइए!", "जवाब सोचिए · फिर मिलाइए"),
+    ("क्या आपको सही जवाब पता है?", "अपनी तैयारी जाँचिए"),
+]
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("json_file")
@@ -49,6 +59,7 @@ def main():
     ap.add_argument("--format", default="quiz", choices=["quiz", "revision"])
     ap.add_argument("--list-file", default="", help="also write the made file paths (one per line) into this file")
     ap.add_argument("--no-promo", action="store_true", help="no notes/mock-test QR promo before the outro")
+    ap.add_argument("--stories", action="store_true", help="also write one story JSON per reel (hook + first question + QR promo)")
     ap.add_argument("--first", type=int, default=1)
     ap.add_argument("--count", type=int, default=0)
     a = ap.parse_args()
@@ -94,6 +105,23 @@ def main():
         path = out / f"{base}-r{k:02d}{a.suffix}.json"
         path.write_text(json.dumps({"meta": meta, "questions": chunk}, ensure_ascii=False, indent=1), encoding="utf-8")
         made.append((path, len(chunk)))
+        if a.stories:
+            shook, ssmall = STORY_HOOKS[(k - 1) % len(STORY_HOOKS)]
+            smeta = dict(meta)
+            smeta.update({
+                "story": True,                 # build.py: no outro; ig_publish posts it as a story
+                "intro": f"{shook} आख़िर तक देखिए।",
+                "intro_show": shook,
+                "intro_small": ssmall,
+                "max_points": min(a.points, 2) if a.points else 2,
+                "promo": True,                 # the QR codes are the point of the story
+                "reel_of": f"{k}/{len(chunks)}",
+            })
+            smeta.pop("outro", None)
+            smeta.pop("outro_show", None)
+            spath = out / f"{base}-r{k:02d}-story{a.suffix}.json"
+            spath.write_text(json.dumps({"meta": smeta, "questions": chunk[:1]}, ensure_ascii=False, indent=1), encoding="utf-8")
+            made.append((spath, 1))
 
     print(f"{len(qs)} questions -> {len(chunks)} reel(s)" + (f" of about {a.size}" if a.size else "") + f"; wrote {len(made)} file(s) to {out}/")
     if a.list_file:

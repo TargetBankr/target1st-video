@@ -11,6 +11,8 @@ name: Make reels from a JSON
 #   format    = quiz (options + countdown) or revision
 #   first, count = only make some reels: first = number of the first reel (1 = from the start),
 #                  count = how many (0 = all). Handy for a small test: first 1, count 1.
+#   stories   = true: also make one Instagram STORY per reel (hook + the first question of that reel + the QR promo, no outro).
+#               They are named <name>-r01-story.done.json and are posted as stories by "Post reel to Instagram".
 #   build     = true: start the video build for the new files right away. false: only create the files.
 #
 # New files are saved in the folder  reels/  as  <name>-r01.done.json, <name>-r02.done.json ...
@@ -48,6 +50,11 @@ on:
         description: "How many reels to make (0 = all)"
         required: false
         default: "0"
+      stories:
+        description: "true = also make one story per reel (hook + 1 question + QR promo)"
+        type: choice
+        default: "true"
+        options: ["true", "false"]
       build:
         description: "true = start the video build for them now"
         type: choice
@@ -78,13 +85,15 @@ jobs:
           FORMAT: ${{ inputs.format }}
           FIRST: ${{ inputs.first }}
           COUNT: ${{ inputs.count }}
+          STORIES: ${{ inputs.stories }}
         run: |
           FILE=$(printf '%s' "$FILE" | sed 's/^ *//; s/ *$//')
           if [ ! -f "$FILE" ]; then
             echo "::error::File '$FILE' is not in the repo. Check the name (capital letters, .done.json, folder)."; exit 1
           fi
           python tools/make_reels.py "$FILE" --out reels --size "${SIZE:-10}" --points "${POINTS:-2}" \
-            --countdown "${COUNTDOWN:-3}" --format "$FORMAT" --first "${FIRST:-1}" --count "${COUNT:-0}" --list-file made.txt
+            --countdown "${COUNTDOWN:-3}" --format "$FORMAT" --first "${FIRST:-1}" --count "${COUNT:-0}" --list-file made.txt \
+            $([ "$STORIES" = "true" ] && echo --stories)
           if [ ! -s made.txt ]; then echo "::error::No reel file was made (check first / count)."; exit 1; fi
 
       - name: Save the new files

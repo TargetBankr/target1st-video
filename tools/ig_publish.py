@@ -9,6 +9,12 @@ Never prints the token.
     python tools/ig_publish.py --tag video-12-xxx      # post this release
     python tools/ig_publish.py --refresh               # extend the token (used by refresh-ig-token.yml)
 
+Stories: a release whose tag contains "-story" (made by tools/make_reels.py --stories) is posted as an Instagram STORY
+(video only: the API cannot add link stickers, the QR codes are in the video). Reels and stories never pick each other's releases.
+
+    python tools/ig_publish.py --kind story            # post the oldest story that was not posted yet
+    python tools/ig_publish.py                         # (--kind reel is the default) oldest reel
+
 Which release is next: releases that have a "<name>-caption.txt" asset (only aspect=reel builds make one) and are not
 listed in ig/posted.json, oldest first. After a successful post the release tag is added to ig/posted.json.
 """
@@ -96,8 +102,12 @@ def load_posted():
         return []
 
 
-def pick_release(tag):
-    """Return (tag, video_asset, caption_asset)."""
+def is_story(tag):
+    return "-story" in tag
+
+
+def pick_release(tag, kind="reel"):
+    """Return (tag, video_asset, caption_asset). kind = reel | story decides which releases are considered (unless a tag is given)."""
     if tag:
         tags = [tag]
     else:
@@ -106,6 +116,8 @@ def pick_release(tag):
     posted = set(load_posted())
     for t in tags:
         if t in posted and not tag:
+            continue
+        if not tag and is_story(t) != (kind == "story"):
             continue
         try:
             assets = [a["name"] for a in json.loads(sh("gh", "release", "view", t, "--json", "assets"))["assets"]]
@@ -119,7 +131,7 @@ def pick_release(tag):
             return t, vid, cap
         if tag:
             die(f"release {t} has no reel caption (-caption.txt) - it was not built with aspect=reel")
-    die("no unposted reel found (a reel build must have finished first)")
+    die(f"no unposted {kind} found (a {kind} build must have finished first)")
 
 
 def check_video_url(url):
@@ -183,6 +195,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--tag", default="")
     ap.add_argument("--dry-run", action="store_true")
+    ap.add_argument("--kind", default="reel", choices=["reel", "story"], help="which releases to pick when no --tag is given")
     ap.add_argument("--refresh", action="store_true")
     ap.add_argument("--if-empty-ok", action="store_true", help="nothing to post is not an error (scheduled runs)")
     a = ap.parse_args()
@@ -193,7 +206,7 @@ def main():
     uid = whoami()
 
     try:
-        tag, vid, cap = pick_release(a.tag.strip())
+        tag, vid, cap = pick_release(a.tag.strip(), a.kind)
     except SystemExit as e:
         if a.if_empty_ok and not a.tag.strip():
             print("Nothing to post right now.")
@@ -206,7 +219,10 @@ def main():
     repo = os.environ.get("GITHUB_REPOSITORY", "")
     url = f"https://github.com/{repo}/releases/download/{urllib.parse.quote(tag)}/{urllib.parse.quote(vid)}"
     check_video_url(url)
-    print("---- caption ----\n" + caption + "\n-----------------")
+    if is_story(tag):
+        print("This is a STORY: posted as video only (no caption, no link sticker; the QR codes are in the video).")
+    else:
+        print("---- caption ----\n" + caption + "\n-----------------")
     if a.dry_run:
         try:
             lim = api("GET", f"{uid}/content_publishing_limit", {"fields": "quota_usage,config"})
@@ -216,7 +232,11 @@ def main():
         print("DRY RUN OK: nothing was posted.")
         return
 
-    c = api("POST", f"{uid}/media", {"media_type": "REELS", "video_url": url, "caption": caption, "share_to_feed": "true"})
+    story = is_story(tag)
+    if story:
+        c = api("POST", f"{uid}/media", {"media_type": "STORIES", "video_url": url})
+    else:
+        c = api("POST", f"{uid}/media", {"media_type": "REELS", "video_url": url, "caption": caption, "share_to_feed": "true"})
     cid = c.get("id")
     if not cid:
         die(f"no container id came back: {c}")
@@ -241,7 +261,7 @@ def main():
         link = api("GET", media_id, {"fields": "permalink"}).get("permalink", "")
     except SystemExit:
         pass
-    print(f"PUBLISHED reel {media_id} {link}")
+    print(f"PUBLISHED {'story' if story else 'reel'} {media_id} {link}")
     POSTED.parent.mkdir(exist_ok=True)
     posted = load_posted()
     posted.append(tag)
@@ -249,7 +269,7 @@ def main():
     out = os.environ.get("GITHUB_STEP_SUMMARY")
     if out:
         with open(out, "a", encoding="utf-8") as f:
-            f.write(f"Posted **{tag}** to Instagram: {link}\n")
+            f.write(f"Posted **{tag}** to Instagram ({'story' if story else 'reel'}): {link}\n")
 
 
 if __name__ == "__main__":

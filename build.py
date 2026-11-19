@@ -654,9 +654,12 @@ def make_steps(data, limit, fmt, aspect="wide", long_fx=False):
             steps.append({"state": {"mode": "promo", "a": n, "b": n}, "say": say2})
             if hold > 0:
                 steps.append({"state": {"mode": "promo", "a": n, "b": n}, "silence": hold})
-    outro =meta.get("outro") or ("तो दोस्तों, आज के लिए बस इतना ही। वीडियो पसंद आया हो तो लाइक करें "
-                                  "और Target1st चैनल को सब्सक्राइब ज़रूर करें।")
-    steps.append({"state": {"mode": "outro"}, "say": outro, "chapter": "Outro"})
+    if meta.get("story"):
+        pass   # Instagram story: hook, one question, QR promo - no outro (a story is 60 s at most)
+    else:
+        outro =meta.get("outro") or ("तो दोस्तों, आज के लिए बस इतना ही। वीडियो पसंद आया हो तो लाइक करें "
+                                      "और Target1st चैनल को सब्सक्राइब ज़रूर करें।")
+        steps.append({"state": {"mode": "outro"}, "say": outro, "chapter": "Outro"})
     pron = meta.get("pronounce") or {}
     for st in steps:
         if "say" in st:
@@ -1780,6 +1783,8 @@ def main():
     if aspect == "reel":
         (out / "caption.txt").write_text(reel_caption(meta, qs), encoding="utf-8")
         print(f"Instagram caption written: {out / 'caption.txt'}")
+    if meta.get("story") and t > 60:
+        print(f"::warning::This story is {fmt_time(t)} long; Instagram accepts stories of 60 s at most. Use a shorter question or fewer points.")
     print(f"Done: {mp4}  ({fmt_time(t)} long)")
 
 
