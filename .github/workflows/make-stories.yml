@@ -1,0 +1,67 @@
+name: Make stories from built reels
+
+# ONE CLICK: turns the reels that are already built (GitHub releases) into Instagram stories. Nothing is rebuilt or re-voiced.
+#
+# Run it: Actions > Make stories from built reels > Run workflow  (leave everything as it is)
+#   limit          = 0 for all reels, or a number to do only that many (oldest first). Try 2 first.
+#   include_posted = false: only reels that are not posted yet. true: also reels that are already on Instagram.
+#   dry_run        = true: cut them and report the length, create nothing.
+#
+# Each story = hook intro + ONE question + the QR promo (notes + mocks), under 60 seconds. If the first question is too long,
+# the next question that fits is used. It is saved as a new release "<reel tag>-story" and is posted as a story by
+# "Post reel to Instagram" (SCHEDULED_POSTING: about 9:30, 14:30 and 21:00 India time, oldest first).
+# Reels that were built without the QR promo part are skipped (the log says which).
+
+on:
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: "How many reels to turn into stories (0 = all, oldest first)"
+        required: false
+        default: "0"
+      include_posted:
+        description: "true = also reels that are already posted"
+        type: choice
+        default: "false"
+        options: ["false", "true"]
+      dry_run:
+        description: "true = only check and report, create nothing"
+        type: choice
+        default: "false"
+        options: ["false", "true"]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: make-stories
+  cancel-in-progress: false
+
+jobs:
+  stories:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install ffmpeg (cached)
+        uses: awalsh128/cache-apt-pkgs-action@v1
+        with:
+          packages: ffmpeg
+          version: 1.0
+
+      - name: Make the stories
+        env:
+          GH_TOKEN: ${{ github.token }}
+          LIMIT: ${{ inputs.limit }}
+          INCLUDE_POSTED: ${{ inputs.include_posted }}
+          DRY: ${{ inputs.dry_run }}
+        run: |
+          args=(--limit "${LIMIT:-0}")
+          if [ "$INCLUDE_POSTED" = "true" ]; then args+=(--include-posted); fi
+          if [ "$DRY" = "true" ]; then args+=(--dry-run); fi
+          python -u tools/make_stories.py "${args[@]}"
