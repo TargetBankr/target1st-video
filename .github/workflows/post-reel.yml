@@ -12,12 +12,14 @@ name: Post reel to Instagram
 #   IG_PAUSED       = true      emergency stop: nothing is posted (manual runs too)
 #
 # Drip posting (recommended with a queue of reels): add the repository VARIABLE
-#   SCHEDULED_POSTING = true    then 3 times a day (about 8:00, 13:00 and 19:30 India time) the oldest reel not posted yet goes out.
-#                               Nothing to post = nothing happens. Change the times in the "cron" lines below (they are UTC).
+#   SCHEDULED_POSTING = true    then 3 reels a day (slots 8:00, 13:00, 19:30 India time) and 3 stories a day (9:30, 14:30, 21:00).
+#                               GitHub's own schedule is best effort (runs come 2-3 hours late or not at all), so this workflow is
+#                               started EVERY HOUR and tools/due_kinds.py decides: a slot is due when its time has passed and nothing
+#                               of that kind was posted since. A late or lost tick is simply made up by the next hour's tick.
+#                               Change the slot times in tools/due_kinds.py (SLOTS). Nothing to post = nothing happens.
 #
-# Stories (made with "Make reels from a JSON" > stories = true): the same SCHEDULED_POSTING switch also posts them, 1.5 hours after
-#   each reel slot (about 9:30, 14:30 and 21:00 India time; the "cron" lines marked story below). They are video only: Instagram's API
-#   cannot add link stickers, so the QR codes are part of the video. A tag containing "-story" is always posted as a story.
+# Stories (made with "Make stories from built reels"): video only, Instagram's API cannot add link stickers, so the QR codes are
+#   part of the video. A tag containing "-story" is always posted as a story.
 #
 # Needs the repository SECRETS  IG_ACCESS_TOKEN  and  IG_USER_ID.  The repository must be public (Instagram downloads the file).
 
@@ -39,12 +41,7 @@ on:
         options: [reel, story]
 
   schedule:
-    - cron: "30 2 * * *"
-    - cron: "30 7 * * *"
-    - cron: "0 14 * * *"
-    - cron: "0 4 * * *"      # story, 9:30 India time
-    - cron: "0 9 * * *"      # story, 14:30 India time
-    - cron: "30 15 * * *"    # story, 21:00 India time
+    - cron: "7 * * * *"      # every hour at :07; tools/due_kinds.py decides what is due
 
 permissions:
   contents: write
@@ -60,36 +57,53 @@ jobs:
     if: ${{ vars.IG_PAUSED != 'true' && (github.event_name != 'schedule' || vars.SCHEDULED_POSTING == 'true') }}
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 300      # due_kinds.py reads the git history of ig/posted.json
 
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
 
-      - name: Post the reel
+      - name: Post what is due
         env:
           GH_TOKEN: ${{ github.token }}
           IG_ACCESS_TOKEN: ${{ secrets.IG_ACCESS_TOKEN }}
           IG_USER_ID: ${{ secrets.IG_USER_ID }}
           TAG: ${{ inputs.tag }}
-          KIND: ${{ github.event_name == 'schedule' && ((github.event.schedule == '0 4 * * *' || github.event.schedule == '0 9 * * *' || github.event.schedule == '30 15 * * *') && 'story' || 'reel') || inputs.kind }}
+          INPUT_KIND: ${{ inputs.kind }}
           DRY: ${{ github.event_name == 'schedule' && 'false' || inputs.dry_run }}
           EVENT: ${{ github.event_name }}
         run: |
-          args=()
-          if [ -n "$TAG" ]; then args+=(--tag "$TAG"); fi
-          args+=(--kind "${KIND:-reel}")
-          if [ "$DRY" != "false" ]; then args+=(--dry-run); fi
-          if [ "$EVENT" = "schedule" ]; then args+=(--if-empty-ok); fi
-          python -u tools/ig_publish.py "${args[@]}"
+          if [ "$EVENT" = "schedule" ]; then
+            kinds=$(python tools/due_kinds.py)
+            if [ -z "$kinds" ]; then echo "Nothing is due right now."; exit 0; fi
+          else
+            kinds="${INPUT_KIND:-reel}"
+          fi
+          rc=0
+          for kind in $kinds; do
+            echo "=== $kind ==="
+            args=(--kind "$kind")
+            if [ -n "$TAG" ]; then args+=(--tag "$TAG"); fi
+            if [ "$DRY" != "false" ]; then args+=(--dry-run); fi
+            if [ "$EVENT" = "schedule" ]; then args+=(--if-empty-ok); fi
+            python -u tools/ig_publish.py "${args[@]}" || { echo "::error::posting a $kind failed (see above)"; rc=1; }
+          done
+          exit $rc
 
       - name: Remember what was posted
-        if: ${{ github.event_name == 'schedule' || inputs.dry_run == 'false' }}
+        if: ${{ always() && (github.event_name == 'schedule' || inputs.dry_run == 'false') }}
         run: |
           if [ -n "$(git status --porcelain ig/posted.json)" ]; then
             git config user.name "target1st-bot"
             git config user.email "bot@users.noreply.github.com"
             git add ig/posted.json
-            git commit -m "Instagram: mark reel as posted"
+            # the commit message says which kinds were posted: tools/due_kinds.py reads it ("mark reel as posted" / "mark story as posted")
+            added=$(git diff --cached -U0 ig/posted.json | grep '^+ ' || true)
+            msg="Instagram: marked as posted"
+            if echo "$added" | grep -q -- '-story'; then msg="$msg"$'\n\n'"mark story as posted"; fi
+            if echo "$added" | grep -v -- '-story' | grep -q '[a-z0-9]'; then msg="$msg"$'\n\n'"mark reel as posted"; fi
+            git commit -m "$msg"
             for i in 1 2 3 4 5; do
               git pull --rebase -q origin "$GITHUB_REF_NAME" && git push -q origin "HEAD:$GITHUB_REF_NAME" && break
               sleep $((i * 5))
