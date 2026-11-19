@@ -236,12 +236,26 @@ CSS_REEL_FX = """
 """
 RING_R = 92
 
+# checkpoint recap slide (every few questions in a long video): last answers on one page, wide look
+CSS_CHECK = """
+.rc{margin-top:22px}
+.rr{font-size:50px;line-height:1.3;padding:5px 0;color:var(--pt)}
+.rr b{display:inline-block;min-width:74px;color:var(--num)}
+"""
+# calm effects for YouTube (aspect wide): counter, ring bottom-right, small answer pop, trick highlight. No zoom.
+CSS_LONG_FX = """
+.qn{font-size:38px;line-height:1.2;padding:6px 26px;margin:26px 0 0 0}
+.ringbox.lg{position:fixed;right:150px;bottom:40px;width:170px;height:170px;margin:0;z-index:2}
+.ringbox.lg svg{width:170px;height:170px}
+.ringbox.lg span{width:170px;line-height:170px;font-size:84px}
+"""
 
-def ring_html(show, num=""):
+
+def ring_html(show, num="", cls=""):
     """Countdown ring (SVG arc that fx.py shrinks frame by frame). show=False keeps its space but hides it."""
     c = 2 * 3.141592653589793 * RING_R
     vis = "" if show else ' style="visibility:hidden"'
-    return (f'<div class="ringbox"{vis}><svg width="220" height="220" viewBox="0 0 220 220">'
+    return (f'<div class="ringbox {cls}"{vis}><svg width="220" height="220" viewBox="0 0 220 220">'
             f'<circle cx="110" cy="110" r="{RING_R}" fill="none" style="stroke:var(--cd);opacity:.22" stroke-width="18"/>'
             f'<circle id="rc" cx="110" cy="110" r="{RING_R}" fill="none" style="stroke:var(--cd)" stroke-width="18" '
             f'stroke-linecap="round" stroke-dasharray="{c:.2f}" stroke-dashoffset="0" transform="rotate(-90 110 110)"/>'
@@ -320,7 +334,8 @@ def _hand(t):
 
 def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
     reel = aspect == "reel"
-    fx = fx and reel
+    fxm = ("reel" if reel else "long") if fx else None   # long = YouTube effects: calm, no per-question zoom or highlight
+    fx = fxm is not None
     if reel:
         layout = "list"
     th = THEMES[theme]
@@ -358,11 +373,33 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
     elif mode == "outro":
         body = (f'<div class="center">{esc(meta.get("outro_show", "देखने के लिए धन्यवाद!"))}'
                 f'<small>{esc(meta.get("channel", "Target1st"))}</small></div>')
+    elif mode == "hook":
+        if st.get("stage", 0) == 0:
+            body = (f'<div class="center" style="margin-top:170px"><span class="badge" style="margin:0 0 34px 0">'
+                    f'{esc(meta.get("channel", "Target1st"))}</span>'
+                    f'<div style="font-size:150px;line-height:1.2;color:var(--q)">{len(qs)} प्रश्न</div>'
+                    f'<small>पेन तैयार रखिए · अपना स्कोर नोट कीजिए</small></div>')
+        else:   # a preview of one question that really comes later in the video
+            q = qs[st["i"] - 1]
+            body = (f'<div class="badge">झलक · प्रश्न {st["i"]}</div>'
+                    f'<div class="q" style="margin-top:34px">{st["i"]}. {esc(q["q"])}</div>')
+    elif mode == "check":
+        rows = ""
+        for k in range(st["a"], st["i"] + 1):
+            qq = qs[k - 1]
+            ai = "ABCD".index(qq["answer"].strip().upper())
+            rows += f'<div class="rr"><b>{k}</b>{"ABCD"[ai]}) {esc(qq["options"][ai])}</div>'
+        body = (f'<div class="badge">चेकपॉइंट · {st["i"]} / {len(qs)}</div>'
+                f'<div class="q" style="margin-top:26px">अपना स्कोर कमेंट में लिखिए</div>'
+                f'<div class="rc">{rows}</div>')
     elif mode == "q":
         q = qs[st["i"] - 1]
-        if fx:
+        if fxm == "reel":
             body = (f'<div class="q kw" style="--hl:var(--q)"><div class="qn">प्रश्न {st["i"]} / {len(qs)}</div>'
                     f'<br>{st["i"]}. {kw(q["q"], "q")}</div>')
+        elif fxm == "long":
+            body = (f'<div class="qn">प्रश्न {st["i"]} / {len(qs)}</div>'
+                    f'<div class="q" style="margin-top:14px">{st["i"]}. {esc(q["q"])}</div>')
         else:
             body = f'<div class="q">{st["i"]}. {esc(q["q"])}</div>'
         if st.get("opts"):
@@ -371,7 +408,7 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
                 f'<div class="opt" data-o="{k}">{l}) {esc(t)}</div>' for k, (l, t) in enumerate(zip("ABCD", q["options"]))
             ) + "</div>"
         if fx and st.get("rb"):
-            body += ring_html(st["rb"] == "show", st.get("cd", ""))
+            body += ring_html(st["rb"] == "show", st.get("cd", ""), "lg" if fxm == "long" else "")
         elif st.get("cd"):
             body += f'<div class="cd{" g" if layout == "grid" else ""}">{st["cd"]}</div>'
     elif mode == "answer":
@@ -383,7 +420,7 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
                 '<div class="pts">')
         for k, p in enumerate(q["points"][: st["pts"]], 1):
             txt = norm_point(p)["show"]
-            if fx and k == st["pts"]:   # the point being spoken now lights up word by word
+            if fxm == "reel" and k == st["pts"]:   # the point being spoken now lights up word by word
                 body += f'<div class="pt kw" style="--hl:var(--num)"><b>{k}.</b>{kw(txt, f"p{k}")}</div>'
             else:
                 body += f'<div class="pt"><b>{k}.</b>{esc(txt)}</div>'
@@ -401,7 +438,7 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
         # "fit" is shrunk (CSS zoom) by render_images only when a slide would run into the bottom safe zone
         return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS_REEL}{CSS_REEL_FX if fx else ""}</style></head>'
                 f'<body><div class="wm">Target1st</div><div class="wrap"><div id="fit">{head}{body}</div></div></body></html>')
-    return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS}</style></head>'
+    return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS}{CSS_CHECK}{CSS_REEL_FX + CSS_LONG_FX if fx else ""}</style></head>'
             f'<body><div class="wm">Target1st</div><div class="wrap">{head}{body}</div></body></html>')
 
 
@@ -521,7 +558,28 @@ def _pt_say(p):
     return _hand(n["say"]) if n["hand"] else n["say"]
 
 
-def make_steps(data, limit, fmt, aspect="wide"):
+CHECK_LINES = [
+    "रुकिए! अब तक के प्रश्न गिनिए, कितने सही हुए? अपना स्कोर कमेंट में लिखिए।",
+    "चेकपॉइंट! ऊपर के जवाब एक बार देख लीजिए, और अपना स्कोर कमेंट कीजिए।",
+    "थोड़ा रुकिए, अपने सही उत्तर गिनिए और स्कोर कमेंट में बताइए।",
+]
+CHECK_CTA = "अगर वीडियो काम का लगे, तो Target1st चैनल को सब्सक्राइब कर लीजिए।"
+
+
+def pick_preview(qs):
+    """The question shown as a preview in the first seconds: one that really comes later in the video (never question 1),
+    preferably one with a trick and a short text, around 60% of the way through. Returns a 1-based number or 0."""
+    n = len(qs)
+    if n < 4:
+        return 0
+    want = 0.6 * n
+    cand = [i for i in range(3, n + 1) if qs[i - 1].get("trick") and len(qs[i - 1]["q"]) <= 140]
+    if not cand:
+        cand = [i for i in range(3, n + 1) if len(qs[i - 1]["q"]) <= 140] or list(range(3, n + 1))
+    return min(cand, key=lambda i: abs(i - want))
+
+
+def make_steps(data, limit, fmt, aspect="wide", long_fx=False):
     meta = data["meta"]
     qs = [norm_question(q) for q in (data["questions"][:limit] if limit else data["questions"])]
     fillers = plan_fillers(meta, len(qs))
@@ -533,7 +591,25 @@ def make_steps(data, limit, fmt, aspect="wide"):
                                   if fmt == "quiz" else
                                   "नमस्कार दोस्तों! आज हम इन प्रश्नों का तेज़ रिविज़न करेंगे। "
                                   "हर प्रश्न का सही उत्तर और उससे जुड़े मुख्य पॉइंट्स देखिए।")
-    steps = [{"state": {"mode": "intro"}, "say": intro, "chapter": "Intro"}]
+    steps = []
+    check_every = int(meta.get("checkpoint_every", 5)) if long_fx else 0
+    check_secs = min(10.0, float(meta.get("checkpoint_secs", 9.0)))
+    cta_at = 0       # the first checkpoint past 40% also asks for a subscribe, once
+    if long_fx:
+        pv = pick_preview(qs)
+        hook_say = (f"नमस्कार दोस्तों! इस वीडियो में {len(qs)} प्रश्न हैं। पेन तैयार रखिए"
+                    + (f", और पहले एक झलक देखिए। यह प्रश्न नंबर {pv} पर आएगा।" if pv else "।"))
+        steps.append({"state": {"mode": "hook", "stage": 0}, "say": hook_say, "chapter": "Intro"})
+        if pv:
+            steps.append({"state": {"mode": "hook", "stage": 1, "i": pv},
+                          "say": _hand(qs[pv - 1]["_qsay"]) if qs[pv - 1]["_qsay"] else qs[pv - 1]["q"]})
+        if meta.get("intro"):   # an own intro text, spoken after the hook
+            steps.append({"state": {"mode": "intro"}, "say": intro})
+        if check_every:
+            marks = [i for i in range(check_every, len(qs), check_every) if len(qs) - i >= 3]
+            cta_at = next((i for i in marks if i >= 0.4 * len(qs)), 0)
+    else:
+        steps.append({"state": {"mode": "intro"}, "say": intro, "chapter": "Intro"})
     for i, q in enumerate(qs, 1):
         opts = q["options"]
         ans = q["answer"].strip().upper()
@@ -555,6 +631,10 @@ def make_steps(data, limit, fmt, aspect="wide"):
             steps.append({"state": {"mode": "answer", "i": i, "pts": k}, "say": _pt_say(p)})
         if q.get("trick"):
             steps.append({"state": {"mode": "trick", "i": i}, "say": "ट्रिक। " + _pt_say(q["trick"])})
+        if long_fx and check_every and i % check_every == 0 and i < len(qs) and len(qs) - i >= 3:
+            say = CHECK_LINES[(i // check_every - 1) % len(CHECK_LINES)] + (" " + CHECK_CTA if i == cta_at else "")
+            steps.append({"state": {"mode": "check", "i": i, "a": i - check_every + 1}, "say": say, "min_dur": check_secs})
+            continue   # no filler line on top of a checkpoint
         if i in fillers:
             # spoken over the slide that is already on screen; the image is reused, so no new slide is rendered
             steps.append({"state": dict(steps[-1]["state"]), "say": fillers[i], "filler": True})
@@ -1596,7 +1676,8 @@ def main():
     if aspect not in ASPECTS:
         sys.exit(f"Invalid aspect '{aspect}'. Allowed: wide, reel")
     provider = pick(a.tts, meta.get("tts"), "edge", ["edge", "gemini", "sarvam"])
-    qs, steps = make_steps(data, a.limit, fmt, aspect)
+    long_fx = aspect == "wide" and bool(meta.get("long_fx", True)) and not a.no_fx
+    qs, steps = make_steps(data, a.limit, fmt, aspect, long_fx)
 
     for i, q in enumerate(qs, 1):
         if len(q["points"]) > 4:
@@ -1646,7 +1727,8 @@ def main():
         else:
             own = s.get("edge_fb")  # a line voiced by Edge keeps its own speed and is not squeezed
             run(["ffmpeg", "-y", "-i", str(s["mp3"]), "-af",
-                 f"{TRIM}{'' if own else squeeze}{'' if own else tempo},apad=pad_dur={pause:.3f}",
+                 f"{TRIM}{'' if own else squeeze}{'' if own else tempo},apad=pad_dur={pause:.3f}"
+                 + (f",apad=whole_dur={s['min_dur']:.3f}" if s.get("min_dur") else ""),
                  "-ar", "48000", "-ac", "1", str(wav)])
             dur = probe(wav)
             if dur < 0.3:
@@ -1655,7 +1737,7 @@ def main():
             chapters.append((t, s["chapter"]))
         s["t"], s["dur"], s["pause"] = t, dur, pause
         wav_lines.append(f"file '{wav.resolve()}'")
-        if "say" in s and "silence" not in s:
+        if "say" in s and "silence" not in s and not s.get("min_dur"):
             timeline.append((t, dur - pause, s["say"], line_weight(s.get("vsay") or s["say"]), bool(s.get("edge_fb"))))
         t += dur
     (work / "audio.txt").write_text("\n".join(wav_lines))
@@ -1665,11 +1747,13 @@ def main():
     made = False
     # Reels get the retention effects (fx.py: hook card, camera zoom, word highlight, countdown ring, progress bar,
     # sound, loop). If anything goes wrong there the plain reel below is built instead, so the voice is never wasted.
-    if aspect == "reel" and meta.get("fx", True) and not a.no_fx:
+    if ((aspect == "reel" and meta.get("fx", True)) or long_fx) and not a.no_fx:
         try:
             import fx
-            print("Reel effects: on", flush=True)
-            fx.build_reel(sys.modules[__name__], meta, qs, steps, work, theme, fmt, mp4, work / "audio.wav", t)
+            kind = "reel" if aspect == "reel" else "long"
+            print(f"{'Reel' if kind == 'reel' else 'Video'} effects: on", flush=True)
+            fx.build_reel(sys.modules[__name__], meta, qs, steps, work, theme, fmt, mp4, work / "audio.wav", t,
+                          kind, layout)
             made = True
         except (Exception, SystemExit) as e:
             print(f"WARNING: reel effects failed, building the plain reel instead.\n{e}", flush=True)

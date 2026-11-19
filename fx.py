@@ -24,6 +24,11 @@ Switches in the JSON "meta" (all optional):
 Own background music: put .mp3 / .m4a / .wav / .ogg files in  assets/music/  (free: YouTube Audio Library, Pixabay Music).
 One file is picked per reel (by the title) and looped under the voice. With no file there the built-in soft pad is used.
 
+Long videos (aspect wide / YouTube) use the same file in a calmer mode (kind "long"): no camera zoom, no word highlight on
+questions or points, ring bottom-right (quiz: thinking seconds, revision: while options are read), "प्रश्न 3 / 25"
+counter, thin progress bar on top, a ding on the answer and a pop on the trick (the trick line is the only highlighted
+text), a very quiet music bed (default 0.05), and the hook / checkpoint slides made by build.py. meta: long_fx false = off.
+
 If anything in here fails, build.py prints a WARNING and builds the plain reel instead, so a build never gets lost.
 """
 import array
@@ -98,9 +103,11 @@ def words_events(text, group, span):
     return ev, final
 
 
-def plan(bld, meta, qs, steps, fmt):
+def plan(bld, meta, qs, steps, fmt, kind="reel"):
     """For every step: the slide state to draw and the list of (seconds since the step started, fx state) changes."""
     cd_total = max(1, int(meta.get("countdown", 5)))
+    reel = kind == "reel"
+    grid = GRID if reel else 0.2
     plans = []
     last_final = {}
     for s in steps:
@@ -112,12 +119,13 @@ def plan(bld, meta, qs, steps, fmt):
         if s.get("filler"):
             ev, final = [(0.0, last_final)], last_final
         elif mode == "q" and not st.get("opts"):
-            ev, final = words_events(qs[st["i"] - 1]["q"], "q", sp)
+            if reel:
+                ev, final = words_events(qs[st["i"] - 1]["q"], "q", sp)
         elif mode == "q" and st.get("cd"):
             n = int(st["cd"])
             st["rb"] = "show"
-            ev = [(round(m * GRID, 3), {"ring": max(0.0, (n - m * GRID) / cd_total), "num": n})
-                  for m in range(int(round(dur / GRID)))]
+            ev = [(round(m * grid, 3), {"ring": max(0.0, (n - m * grid) / cd_total), "num": n})
+                  for m in range(int(round(dur / grid)))]
             final = ev[-1][1]
         elif mode == "q":     # options are being read
             q = qs[st["i"] - 1]
@@ -138,10 +146,10 @@ def plan(bld, meta, qs, steps, fmt):
                 return -1
             times = {0.0, sp} | {max(0.0, x - LEAD) for x in starts}
             if ring:
-                times |= {round(m * GRID, 3) for m in range(int(dur / GRID) + 1) if m * GRID < dur}
+                times |= {round(m * grid, 3) for m in range(int(dur / grid) + 1) if m * grid < dur}
             ev = []
             for rel in sorted(times):
-                f = {"o": act(rel)}
+                f = {"o": act(rel)} if reel else {}
                 if ring:
                     f["ring"] = max(0.0, 1 - rel / dur)
                     f["num"] = max(1, math.ceil(dur - rel - 1e-6))
@@ -150,7 +158,7 @@ def plan(bld, meta, qs, steps, fmt):
         elif mode == "answer" and st["pts"] == 0:
             ev = [(round(k * 0.05, 3), {"pop": v}) for k, v in enumerate(POPS)]
             final = {"pop": 1.0}
-        elif mode == "answer":
+        elif mode == "answer" and reel:
             k = st["pts"]
             txt = bld.norm_point(qs[st["i"] - 1]["points"][k - 1])["show"]
             ev, final = words_events(txt, f"p{k}", sp)
@@ -164,10 +172,11 @@ def plan(bld, meta, qs, steps, fmt):
 
 # ---------------------------------------------------------------- pictures
 
-def render_frames(bld, meta, qs, steps, plans, work, theme, fmt):
+def render_frames(bld, meta, qs, steps, plans, work, theme, fmt, kind="reel", layout="list"):
     """Draw every picture once. A step with several changes is drawn once and then only its highlight is switched."""
     from playwright.sync_api import sync_playwright
-    w, h = bld.ASPECTS["reel"]
+    reel = kind == "reel"
+    w, h = bld.ASPECTS["reel" if reel else "wide"]
     imgdir = work / "fximg"
     imgdir.mkdir(parents=True, exist_ok=True)
     cache = {}
@@ -176,7 +185,7 @@ def render_frames(bld, meta, qs, steps, plans, work, theme, fmt):
             browser = p.chromium.launch(channel="chrome")
         except Exception:
             browser = p.chromium.launch()
-        page = browser.new_page(viewport={"width": w, "height": h}, device_scale_factor=SCALE)
+        page = browser.new_page(viewport={"width": w, "height": h}, device_scale_factor=SCALE if reel else 1)
         for s, pl in zip(steps, plans):
             st = pl["state"]
             # which fx states this step really shows (one per change, last one wins when two share a frame)
@@ -189,9 +198,10 @@ def render_frames(bld, meta, qs, steps, plans, work, theme, fmt):
             starts = sorted(frames)
             keys = [json.dumps([st, frames[k]], sort_keys=True) for k in starts]
             if any(k not in cache for k in keys):
-                page.set_content(bld.page_html(meta, qs, st, theme, "list", fmt, "reel", fx=True))
+                page.set_content(bld.page_html(meta, qs, st, theme, "list" if reel else layout, fmt,
+                                               "reel" if reel else "wide", fx=True))
                 page.evaluate("document.fonts.ready")
-                z, height = page.evaluate(bld.FIT_JS, h - bld.REEL_TOP - bld.REEL_BOTTOM)
+                z, height = page.evaluate(bld.FIT_JS, h - bld.REEL_TOP - bld.REEL_BOTTOM) if reel else (1, 0)
                 if z < 1:
                     bad = height > h - bld.REEL_TOP - bld.REEL_BOTTOM
                     print(f"{'WARNING' if bad else 'NOTE'} Q{st.get('i', 0)} {st['mode']} slide shrunk to {z * 100:.0f}% "
@@ -207,7 +217,7 @@ def render_frames(bld, meta, qs, steps, plans, work, theme, fmt):
             ends = starts[1:] + [s["f1"]]
             s["items"] = [(cache[key], e - b) for key, b, e in zip(keys, starts, ends)]
         browser.close()
-    print(f"Reel effects: {len(cache)} pictures drawn", flush=True)
+    print(f"Effects: {len(cache)} pictures drawn", flush=True)
 
 
 # ---------------------------------------------------------------- video (scenes: zoom per question)
@@ -239,6 +249,27 @@ def zoom_expr(n, zm, zoom_in, punches, amp=0.045, pf=9):
     for a in punches:
         z += f"+{amp:.4f}*gte(on,{a})*max(0,1-(on-{a})/{pf})"
     return z
+
+
+def build_video_long(bld, meta, steps, work, theme, out_mp4, voice_mix, total_frames):
+    """YouTube: one pass, no camera movement. Pictures + progress bar on top + the mixed sound."""
+    fxd = work / "fx"
+    fxd.mkdir(parents=True, exist_ok=True)
+    items = [it for s in steps for it in s["items"]]
+    write_concat(fxd / "all.txt", items)
+    total = total_frames / FPS
+    th = bld.THEMES[theme]
+    fill = "0x" + th["q"].lstrip("#")
+    track = "white@0.28" if theme == "night" else "black@0.2"
+    if meta.get("progress_bar", True):
+        fc = (f"color=c={track}:s=1920x10:r={FPS},format=rgba[tr];color=c={fill}:s=1920x10:r={FPS},format=rgba[fl];"
+              f"[tr][fl]overlay=x='-1920+1920*t/{total:.3f}':y=0:eval=frame:shortest=1[hud];"
+              f"[0:v]fps={FPS},format=yuv420p[b];[b][hud]overlay=0:0:shortest=1,format=yuv420p[v]")
+    else:
+        fc = f"[0:v]fps={FPS},format=yuv420p[v]"
+    run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", fxd / "all.txt", "-i", voice_mix, "-filter_complex", fc,
+         "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-pix_fmt", "yuv420p",
+         "-r", FPS, "-c:a", "aac", "-b:a", "160k", "-t", f"{total:.3f}", "-movflags", "+faststart", out_mp4])
 
 
 def build_video(bld, meta, steps, work, theme, out_mp4, voice_mix, total_frames):
@@ -330,13 +361,23 @@ def make_sfx(work):
     return out
 
 
-def sfx_events(meta, steps):
+def sfx_events(meta, steps, kind="reel"):
     ev = []
     for s in steps:
         st, t = s["state"], s["t"]
         if s.get("filler"):
             continue
         m = st["mode"]
+        if kind == "long":   # calm: a soft whoosh on the hook, a pop on checkpoint and trick, a ding on every answer
+            if m == "hook" and st.get("stage") == 0:
+                ev.append((t, "whoosh", 0.35))
+            elif m == "check":
+                ev.append((t, "pop", 0.35))
+            elif m == "answer" and st["pts"] == 0:
+                ev.append((t, "ding", 0.35))
+            elif m == "trick":
+                ev.append((t, "pop", 0.28))
+            continue
         if m == "intro":
             ev.append((0.0, "whoosh", 0.55))
         elif m == "q" and not st.get("opts"):
@@ -354,13 +395,13 @@ def sfx_events(meta, steps):
     return ev
 
 
-def mix_sfx(meta, steps, work, total):
+def mix_sfx(meta, steps, work, total, kind="reel"):
     n = int(total * SR) + SR
     track = array.array("h", bytes(2 * n))
     if meta.get("sfx", True):
         snd = make_sfx(work)
         vol = float(meta.get("sfx_volume", 1.0))
-        for t, name, v in sfx_events(meta, steps):
+        for t, name, v in sfx_events(meta, steps, kind):
             off = int(t * SR)
             a = snd[name]
             g = v * vol
@@ -395,11 +436,11 @@ def music_input(meta, work, total):
     return ["-i", f]
 
 
-def mix_audio(meta, steps, work, voice_wav, total):
-    sfx = mix_sfx(meta, steps, work, total)
+def mix_audio(meta, steps, work, voice_wav, total, kind="reel"):
+    sfx = mix_sfx(meta, steps, work, total, kind)
     mus = music_input(meta, work, total)
     out = work / "mix.wav"
-    mv = float(meta.get("music_volume", 0.08))
+    mv = float(meta.get("music_volume", 0.08 if kind == "reel" else 0.05))
     cmd = ["ffmpeg", "-y", "-i", voice_wav, "-i", sfx] + (mus or [])
     if mus:
         fc = (f"[0:a]aresample={SR}[v];[1:a]aresample={SR}[s];"
@@ -415,7 +456,7 @@ def mix_audio(meta, steps, work, voice_wav, total):
 
 # ---------------------------------------------------------------- entry point
 
-def build_reel(bld, meta, qs, steps, work, theme, fmt, out_mp4, voice_wav, total):
+def build_reel(bld, meta, qs, steps, work, theme, fmt, out_mp4, voice_wav, total, kind="reel", layout="list"):
     """steps need s["t"], s["dur"], s["pause"] (set by build.py). Writes out_mp4 with the voice mixed with sound effects."""
     f_prev = 0
     for s in steps:
@@ -423,7 +464,10 @@ def build_reel(bld, meta, qs, steps, work, theme, fmt, out_mp4, voice_wav, total
         s["f0"], s["f1"] = f_prev, f_end
         f_prev = f_end
     total_frames = f_prev
-    plans = plan(bld, meta, qs, steps, fmt)
-    render_frames(bld, meta, qs, steps, plans, work, theme, fmt)
-    mix = mix_audio(meta, steps, work, voice_wav, total)
-    build_video(bld, meta, steps, work, theme, out_mp4, mix, total_frames)
+    plans = plan(bld, meta, qs, steps, fmt, kind)
+    render_frames(bld, meta, qs, steps, plans, work, theme, fmt, kind, layout)
+    mix = mix_audio(meta, steps, work, voice_wav, total, kind)
+    if kind == "long":
+        build_video_long(bld, meta, steps, work, theme, out_mp4, mix, total_frames)
+    else:
+        build_video(bld, meta, steps, work, theme, out_mp4, mix, total_frames)
