@@ -13,7 +13,7 @@
     "layout": "list",
     "format": "quiz",
     "tts": "gemini",
-    "key_slot": 2,
+    "key_slot": 1,
     "gemini_models": [
       "gemini-3.1-flash-tts-preview",
       "gemini-3.8-flash-tts",
