@@ -1,0 +1,831 @@
+{
+  "meta": {
+    "title": "HARTRON DEO MOCK TEST 1 (50 Questions)",
+    "subtitle": "Windows, Networking, Computer Fundamentals, Internet, HTML and MS Office",
+    "channel": "Target1st",
+    "voice": "hi-IN-MadhurNeural",
+    "rate": "+0%",
+    "countdown": 5,
+    "intro": "Welcome to Target1st. This is HARTRON DEO mock test one. Let's begin.",
+    "outro": "That was mock test one. Subscribe to Target1st for more.",
+    "outro_show": "Thanks for watching!",
+    "theme": "classic",
+    "layout": "list",
+    "format": "quiz",
+    "tts": "gemini",
+    "key_slot": 2,
+    "gemini_models": [
+      "gemini-3.1-flash-tts-preview",
+      "gemini-3.8-flash-tts",
+      "gemini-3.8-flash-lite-tts"
+    ],
+    "gemini_batch": 2,
+    "speech_prep": true,
+    "speech_prep_key_slot": 2,
+    "long_fx": true,
+    "checkpoint_every": 10,
+    "checkpoint_secs": 9
+  },
+  "questions": [
+    {
+      "q": "Which part of the computer is called its 'brain'?",
+      "options": [
+        "CPU",
+        "Monitor",
+        "Keyboard",
+        "Mouse"
+      ],
+      "answer": "A",
+      "points": [
+        "CPU stands for Central Processing Unit",
+        "It contains the ALU, control unit and registers",
+        "It executes instructions and controls all other parts"
+      ],
+      "trick": "ALU calculates, CU controls, registers remember."
+    },
+    {
+      "q": "Which of the following is a volatile memory?",
+      "options": [
+        "ROM",
+        "Hard disk",
+        "Pen drive",
+        "RAM"
+      ],
+      "answer": "D",
+      "points": [
+        "RAM loses its data when the power goes off",
+        "ROM and hard disk are non-volatile",
+        "RAM is the main working memory of a computer"
+      ],
+      "trick": "RAM = Remembers Always Momentarily only."
+    },
+    {
+      "q": "Which shortcut key is used to paste copied content in Windows?",
+      "options": [
+        "Ctrl+C",
+        "Ctrl+X",
+        "Ctrl+V",
+        "Ctrl+Z"
+      ],
+      "answer": "C",
+      "points": [
+        "Ctrl+V pastes the content from the clipboard",
+        "Ctrl+C copies and Ctrl+X cuts",
+        "Ctrl+Z undoes the last action"
+      ],
+      "trick": "V looks like an arrow dropping content down."
+    },
+    {
+      "q": "What is the full form of HTML?",
+      "options": [
+        "HyperText Machine Language",
+        "High Text Markup Language",
+        "HyperTool Markup Language",
+        "HyperText Markup Language"
+      ],
+      "answer": "D",
+      "points": [
+        "HTML is the standard language for creating web pages",
+        "It uses tags written inside angle brackets",
+        "It was created by Tim Berners-Lee"
+      ],
+      "trick": "H-T-M-L = HyperText Markup Language, not a programming language."
+    },
+    {
+      "q": "What is the full form of LAN?",
+      "options": [
+        "Large Area Network",
+        "Logical Area Network",
+        "Local Area Network",
+        "Linked Area Network"
+      ],
+      "answer": "C",
+      "points": [
+        "A LAN connects computers in a small area like an office",
+        "MAN covers a city and WAN covers a country or world",
+        "Ethernet is the most common LAN technology"
+      ],
+      "trick": "LAN < MAN < WAN in size."
+    },
+    {
+      "q": "How many bits make one byte?",
+      "options": [
+        "8",
+        "4",
+        "16",
+        "10"
+      ],
+      "answer": "A",
+      "points": [
+        "1 byte = 8 bits",
+        "4 bits make one nibble",
+        "1 KB = 1024 bytes"
+      ],
+      "trick": "Byte = Bit x 8, a nibble is half of it."
+    },
+    {
+      "q": "What is the default file extension of a Microsoft Word 2016 document?",
+      "options": [
+        ".doc",
+        ".txt",
+        ".dotx",
+        ".docx"
+      ],
+      "answer": "D",
+      "points": [
+        "The .docx format started with Word 2007",
+        "Word 97 to 2003 used the .doc extension",
+        "A .dotx file is a Word template"
+      ],
+      "trick": "the extra x means XML based."
+    },
+    {
+      "q": "In Windows, where do deleted files go first by default?",
+      "options": [
+        "Recycle Bin",
+        "Control Panel",
+        "My Computer",
+        "Clipboard"
+      ],
+      "answer": "A",
+      "points": [
+        "Deleted files stay in the Recycle Bin until it is emptied",
+        "Shift+Delete removes a file permanently",
+        "Files can be restored from the Recycle Bin"
+      ],
+      "trick": "Delete = Recycle, Shift+Delete = Gone."
+    },
+    {
+      "q": "Which HTML tag creates the largest heading?",
+      "options": [
+        "<h1>",
+        "<h6>",
+        "<head>",
+        "<heading>"
+      ],
+      "answer": "A",
+      "points": [
+        "<h1> is the largest and <h6> is the smallest heading",
+        "<head> holds page information, not a heading",
+        "Headings run from <h1> to <h6>"
+      ],
+      "trick": "h1 = number one = biggest."
+    },
+    {
+      "q": "Which function is used to add numbers in MS Excel?",
+      "options": [
+        "ADD",
+        "SUM",
+        "TOTAL",
+        "PLUS"
+      ],
+      "answer": "B",
+      "points": [
+        "SUM adds all numbers in a range",
+        "Example: =SUM(A1:A5)",
+        "Every Excel formula starts with the = sign"
+      ],
+      "trick": "SUM = Sum Up Many."
+    },
+    {
+      "q": "Which device is used to connect two different networks?",
+      "options": [
+        "Hub",
+        "Switch",
+        "Router",
+        "Repeater"
+      ],
+      "answer": "C",
+      "points": [
+        "A router forwards packets between networks using IP addresses",
+        "A switch connects devices inside one LAN",
+        "A hub simply broadcasts data to all ports"
+      ],
+      "trick": "Router = Route between networks."
+    },
+    {
+      "q": "Which of the following is an output device?",
+      "options": [
+        "Scanner",
+        "Joystick",
+        "Printer",
+        "Microphone"
+      ],
+      "answer": "C",
+      "points": [
+        "A printer gives a hard copy of the output",
+        "Scanner, joystick and microphone are input devices",
+        "Monitor and speaker are also output devices"
+      ],
+      "trick": "Printer Prints out, so it is output."
+    },
+    {
+      "q": "Which of the following is an operating system?",
+      "options": [
+        "Google Chrome",
+        "MS Excel",
+        "Linux",
+        "Photoshop"
+      ],
+      "answer": "C",
+      "points": [
+        "Linux is an open source operating system",
+        "Chrome is a browser and Excel is application software",
+        "An OS manages hardware and software resources"
+      ],
+      "trick": "OS = boss of the machine, apps are its workers."
+    },
+    {
+      "q": "Which shortcut key locks a Windows computer?",
+      "options": [
+        "Windows+L",
+        "Windows+D",
+        "Windows+M",
+        "Windows+T"
+      ],
+      "answer": "A",
+      "points": [
+        "Windows+L locks the screen instantly",
+        "Windows+D shows the desktop",
+        "Windows+M minimizes all open windows"
+      ],
+      "trick": "L for Lock."
+    },
+    {
+      "q": "What is the full form of URL?",
+      "options": [
+        "Uniform Resource Locator",
+        "Universal Resource Link",
+        "Uniform Reference Locator",
+        "Unified Resource Location"
+      ],
+      "answer": "A",
+      "points": [
+        "A URL is the address of a web page",
+        "Example: https://www.example.com",
+        "It has a protocol, domain name and path"
+      ],
+      "trick": "U-R-L = Uniform Resource Locator, the web address."
+    },
+    {
+      "q": "Which shortcut key switches between open windows in Windows?",
+      "options": [
+        "Ctrl+Tab",
+        "Shift+Tab",
+        "Alt+Tab",
+        "Alt+Esc"
+      ],
+      "answer": "C",
+      "points": [
+        "Alt+Tab shows a list of open windows to switch between",
+        "Ctrl+Tab switches tabs inside a program",
+        "Windows+Tab opens Task View"
+      ],
+      "trick": "Tab through the Alt windows."
+    },
+    {
+      "q": "Which protocol is used to send e-mail from a client to a mail server?",
+      "options": [
+        "POP3",
+        "FTP",
+        "HTTP",
+        "SMTP"
+      ],
+      "answer": "D",
+      "points": [
+        "SMTP sends mail, POP3 and IMAP receive it",
+        "FTP transfers files",
+        "HTTP is used for web pages"
+      ],
+      "trick": "SMTP = Send Mail To People."
+    },
+    {
+      "q": "Which of the following is the largest unit of storage?",
+      "options": [
+        "Terabyte",
+        "Gigabyte",
+        "Megabyte",
+        "Kilobyte"
+      ],
+      "answer": "A",
+      "points": [
+        "1 TB = 1024 GB",
+        "1 GB = 1024 MB and 1 MB = 1024 KB",
+        "Order: KB, MB, GB, TB, PB"
+      ],
+      "trick": "KMGTP, Kids Make Good Tea Pots."
+    },
+    {
+      "q": "Which of the following is a fully absolute cell reference in Excel?",
+      "options": [
+        "A1",
+        "$A$1",
+        "A$1",
+        "$A1"
+      ],
+      "answer": "B",
+      "points": [
+        "$A$1 locks both the column and the row",
+        "A$1 locks only the row and $A1 only the column",
+        "Press F4 to switch between reference types"
+      ],
+      "trick": "the $ sign is a lock, two locks mean absolute."
+    },
+    {
+      "q": "Which HTML tag inserts a single line break?",
+      "options": [
+        "<lb>",
+        "<break>",
+        "<hr>",
+        "<br>"
+      ],
+      "answer": "D",
+      "points": [
+        "<br> breaks the line and needs no closing tag",
+        "<hr> draws a horizontal line",
+        "<p> starts a new paragraph"
+      ],
+      "trick": "br = Break Row."
+    },
+    {
+      "q": "Which of the following is a private IP address?",
+      "options": [
+        "8.8.8.8",
+        "1.1.1.1",
+        "142.250.183.14",
+        "192.168.1.1"
+      ],
+      "answer": "D",
+      "points": [
+        "Private ranges are 10.x.x.x, 172.16 to 172.31 and 192.168.x.x",
+        "8.8.8.8 is a public Google DNS address",
+        "Private addresses are not routed on the internet"
+      ],
+      "trick": "192.168 is the home router number."
+    },
+    {
+      "q": "Which shortcut key opens the Run dialog box in Windows?",
+      "options": [
+        "Windows+E",
+        "Windows+S",
+        "Windows+R",
+        "Windows+I"
+      ],
+      "answer": "C",
+      "points": [
+        "Windows+R opens Run, where commands like cmd can be typed",
+        "Windows+E opens File Explorer",
+        "Windows+I opens Settings"
+      ],
+      "trick": "R for Run."
+    },
+    {
+      "q": "Integrated circuits (ICs) were used in which generation of computers?",
+      "options": [
+        "First generation",
+        "Third generation",
+        "Second generation",
+        "Fourth generation"
+      ],
+      "answer": "B",
+      "points": [
+        "First: vacuum tubes, second: transistors",
+        "Third: integrated circuits, fourth: microprocessors",
+        "Fifth: artificial intelligence"
+      ],
+      "trick": "V, T, I, M, A, vacuum, transistor, IC, microprocessor, AI."
+    },
+    {
+      "q": "What is the default file extension of a PowerPoint 2016 presentation?",
+      "options": [
+        ".ppsx",
+        ".potx",
+        ".pptm",
+        ".pptx"
+      ],
+      "answer": "D",
+      "points": [
+        "Older versions from 97 to 2003 used .ppt",
+        "A .ppsx file opens directly as a slide show",
+        "A .potx file is a PowerPoint template"
+      ],
+      "trick": "pptx = PowerPoint XML, same x as docx."
+    },
+    {
+      "q": "Which attribute of the <img> tag gives alternate text for an image?",
+      "options": [
+        "src",
+        "title",
+        "href",
+        "alt"
+      ],
+      "answer": "D",
+      "points": [
+        "The alt text shows when the image cannot load",
+        "src holds the image file path",
+        "href is used with the <a> tag"
+      ],
+      "trick": "alt = alternative."
+    },
+    {
+      "q": "Which network topology uses a central hub or switch?",
+      "options": [
+        "Bus",
+        "Ring",
+        "Star",
+        "Mesh"
+      ],
+      "answer": "C",
+      "points": [
+        "In a star topology every device connects to a central device",
+        "If one cable fails, only that device is affected",
+        "Bus uses a single backbone cable"
+      ],
+      "trick": "star has a centre, like the sun."
+    },
+    {
+      "q": "Which Windows tool is used to create and manage disk partitions?",
+      "options": [
+        "Device Manager",
+        "Disk Management",
+        "Task Scheduler",
+        "Event Viewer"
+      ],
+      "answer": "B",
+      "points": [
+        "Disk Management can create, format and resize partitions",
+        "Device Manager handles hardware drivers",
+        "Event Viewer shows system logs"
+      ],
+      "trick": "Disk work = Disk Management."
+    },
+    {
+      "q": "Which protocol is used for secure web browsing?",
+      "options": [
+        "HTTP",
+        "HTTPS",
+        "FTP",
+        "SMTP"
+      ],
+      "answer": "B",
+      "points": [
+        "HTTPS encrypts data using SSL/TLS",
+        "HTTPS uses port 443 and HTTP uses port 80",
+        "The padlock in the browser shows HTTPS"
+      ],
+      "trick": "S = Secure."
+    },
+    {
+      "q": "Which shortcut key centers the selected text in MS Word?",
+      "options": [
+        "Ctrl+E",
+        "Ctrl+L",
+        "Ctrl+R",
+        "Ctrl+J"
+      ],
+      "answer": "A",
+      "points": [
+        "Ctrl+E centers, Ctrl+L left aligns, Ctrl+R right aligns",
+        "Ctrl+J justifies the text",
+        "These shortcuts work in Word and PowerPoint"
+      ],
+      "trick": "E for cEnter."
+    },
+    {
+      "q": "Which of the following is NOT an input device?",
+      "options": [
+        "Scanner",
+        "Plotter",
+        "Webcam",
+        "Touchpad"
+      ],
+      "answer": "B",
+      "points": [
+        "A plotter is an output device used for large drawings",
+        "Scanner, webcam and touchpad send data into the computer",
+        "Plotters are used by architects and engineers"
+      ],
+      "trick": "Plotter Plots out, it is output."
+    },
+    {
+      "q": "Which layer of the OSI model is responsible for routing of packets?",
+      "options": [
+        "Network layer",
+        "Transport layer",
+        "Data Link layer",
+        "Session layer"
+      ],
+      "answer": "A",
+      "points": [
+        "The Network layer is layer 3 and uses IP addresses",
+        "The Data Link layer uses MAC addresses",
+        "The Transport layer provides end to end delivery"
+      ],
+      "trick": "Network layer = Navigate with IP."
+    },
+    {
+      "q": "Which HTML tag is used to create a hyperlink?",
+      "options": [
+        "<link>",
+        "<href>",
+        "<url>",
+        "<a>"
+      ],
+      "answer": "D",
+      "points": [
+        "The <a> anchor tag creates a link",
+        "The href attribute holds the destination address",
+        "Example: <a href=\"page.html\">Click</a>"
+      ],
+      "trick": "a = anchor, href = where to go."
+    },
+    {
+      "q": "Which Excel function returns the largest value in a range?",
+      "options": [
+        "MAX",
+        "HIGH",
+        "TOP",
+        "BIG"
+      ],
+      "answer": "A",
+      "points": [
+        "MAX returns the highest number in the range",
+        "MIN returns the lowest number",
+        "Example: =MAX(B2:B10)"
+      ],
+      "trick": "MAX = maximum."
+    },
+    {
+      "q": "Which file system is the default for modern Windows installations?",
+      "options": [
+        "FAT32",
+        "ext4",
+        "NTFS",
+        "HFS+"
+      ],
+      "answer": "C",
+      "points": [
+        "NTFS supports large files, security and compression",
+        "FAT32 cannot store a single file above 4 GB",
+        "ext4 is used in Linux"
+      ],
+      "trick": "NT = New Technology."
+    },
+    {
+      "q": "What is the binary equivalent of the decimal number 10?",
+      "options": [
+        "1001",
+        "1100",
+        "1110",
+        "1010"
+      ],
+      "answer": "D",
+      "points": [
+        "10 = 8 + 2, so bits 8 and 2 are on",
+        "Place values run 8, 4, 2, 1",
+        "9 is 1001 and 12 is 1100"
+      ],
+      "trick": "write 8 4 2 1 and switch on 8 and 2."
+    },
+    {
+      "q": "What is the default port number of the FTP control connection?",
+      "options": [
+        "22",
+        "21",
+        "23",
+        "25"
+      ],
+      "answer": "B",
+      "points": [
+        "FTP uses port 21 for commands",
+        "22 is SSH, 23 is Telnet and 25 is SMTP",
+        "FTP transfers files between computers"
+      ],
+      "trick": "FTP = 21, like the 21 gun salute for files."
+    },
+    {
+      "q": "What does CSS stand for?",
+      "options": [
+        "Creative Style Sheets",
+        "Computer Style Sheets",
+        "Cascading Style Sheets",
+        "Colorful Style Sheets"
+      ],
+      "answer": "C",
+      "points": [
+        "CSS controls the look and layout of web pages",
+        "It separates design from the HTML content",
+        "CSS can be inline, internal or external"
+      ],
+      "trick": "Cascading means styles flow from top to bottom."
+    },
+    {
+      "q": "Which Excel function looks up a value in the first column of a table and returns a value from another column?",
+      "options": [
+        "HLOOKUP",
+        "VLOOKUP",
+        "COUNTIF",
+        "ROUND"
+      ],
+      "answer": "B",
+      "points": [
+        "VLOOKUP searches vertically down the first column",
+        "HLOOKUP searches across the first row",
+        "Example: =VLOOKUP(A2,A1:C10,3,FALSE)"
+      ],
+      "trick": "V = Vertical."
+    },
+    {
+      "q": "Which command in Command Prompt shows the IP configuration of a Windows computer?",
+      "options": [
+        "ipconfig",
+        "ifconfig",
+        "ping",
+        "tracert"
+      ],
+      "answer": "A",
+      "points": [
+        "ipconfig shows IP address, subnet mask and gateway",
+        "ifconfig is the Linux equivalent",
+        "ping tests whether another host is reachable"
+      ],
+      "trick": "Windows = ipconfig, Linux = ifconfig."
+    },
+    {
+      "q": "Which protocol converts domain names into IP addresses?",
+      "options": [
+        "DHCP",
+        "DNS",
+        "ARP",
+        "SNMP"
+      ],
+      "answer": "B",
+      "points": [
+        "DNS works like the phonebook of the internet",
+        "DHCP assigns IP addresses automatically",
+        "ARP finds the MAC address for an IP"
+      ],
+      "trick": "DNS = Domain Name to Number."
+    },
+    {
+      "q": "Which HTML tag defines a table row?",
+      "options": [
+        "<td>",
+        "<tr>",
+        "<th>",
+        "<table>"
+      ],
+      "answer": "B",
+      "points": [
+        "<tr> is table row and <td> is table data",
+        "<th> is a table heading cell",
+        "<table> is the outer container"
+      ],
+      "trick": "tr = Table Row."
+    },
+    {
+      "q": "Which key starts a PowerPoint slide show from the first slide?",
+      "options": [
+        "F3",
+        "F7",
+        "F9",
+        "F5"
+      ],
+      "answer": "D",
+      "points": [
+        "F5 starts the show from the beginning",
+        "Shift+F5 starts it from the current slide",
+        "F7 runs the spelling check"
+      ],
+      "trick": "F5 = Five stars, start the show."
+    },
+    {
+      "q": "Which small, very fast memory is located inside the CPU?",
+      "options": [
+        "RAM",
+        "ROM",
+        "Register",
+        "Hard disk"
+      ],
+      "answer": "C",
+      "points": [
+        "Registers hold data the CPU is working on right now",
+        "They are the smallest and fastest memory",
+        "RAM is outside the CPU chip"
+      ],
+      "trick": "Register sits Right inside the CPU."
+    },
+    {
+      "q": "Which attribute of the <a> tag opens a link in a new browser tab?",
+      "options": [
+        "rel=\"new\"",
+        "href=\"_blank\"",
+        "target=\"_blank\"",
+        "name=\"_new\""
+      ],
+      "answer": "C",
+      "points": [
+        "target=\"_blank\" opens the link in a new tab or window",
+        "The default target is _self, the same tab",
+        "href holds the link address"
+      ],
+      "trick": "blank = a blank new tab."
+    },
+    {
+      "q": "What is the default subnet mask of a Class C network?",
+      "options": [
+        "255.255.255.0",
+        "255.0.0.0",
+        "255.255.0.0",
+        "255.255.255.255"
+      ],
+      "answer": "A",
+      "points": [
+        "Class A uses 255.0.0.0 and Class B uses 255.255.0.0",
+        "Class C first octet ranges from 192 to 223",
+        "Class C allows 254 hosts per network"
+      ],
+      "trick": "A one 255, B two 255s, C three 255s."
+    },
+    {
+      "q": "What does the error #DIV/0! mean in MS Excel?",
+      "options": [
+        "Invalid cell reference",
+        "Unrecognized function name",
+        "Wrong type of value",
+        "Division by zero"
+      ],
+      "answer": "D",
+      "points": [
+        "A number was divided by zero or an empty cell",
+        "#REF! means an invalid cell reference",
+        "#NAME? means Excel does not know the name"
+      ],
+      "trick": "DIV/0 literally says divide by zero."
+    },
+    {
+      "q": "Which shortcut key lets you snip a selected area of the screen in Windows 10 and 11?",
+      "options": [
+        "Ctrl+Shift+S",
+        "Windows+Shift+S",
+        "Alt+Shift+S",
+        "Windows+Ctrl+S"
+      ],
+      "answer": "B",
+      "points": [
+        "Windows+Shift+S opens the snipping toolbar",
+        "PrtScn captures the whole screen",
+        "Alt+PrtScn captures only the active window"
+      ],
+      "trick": "Shift the Snip, S for Snip."
+    },
+    {
+      "q": "Which HTML5 element is used to define a navigation menu?",
+      "options": [
+        "<navigate>",
+        "<nav>",
+        "<links>",
+        "<sidebar>"
+      ],
+      "answer": "B",
+      "points": [
+        "<nav> holds the main navigation links of a page",
+        "<header> holds introductory content",
+        "<footer> holds the bottom part of a page"
+      ],
+      "trick": "nav = navigation."
+    },
+    {
+      "q": "Which transport layer protocol is connectionless?",
+      "options": [
+        "TCP",
+        "UDP",
+        "HTTP",
+        "SMTP"
+      ],
+      "answer": "B",
+      "points": [
+        "UDP sends data without setting up a connection",
+        "It is faster but does not guarantee delivery",
+        "TCP is connection oriented and reliable"
+      ],
+      "trick": "UDP = Unreliable but Quick."
+    },
+    {
+      "q": "What is the ASCII value of the capital letter A?",
+      "options": [
+        "65",
+        "97",
+        "48",
+        "90"
+      ],
+      "answer": "A",
+      "points": [
+        "Capital A is 65 and small a is 97",
+        "Digit 0 is 48",
+        "Capital Z is 90"
+      ],
+      "trick": "A = 65, a = 97, difference is 32."
+    }
+  ]
+}
