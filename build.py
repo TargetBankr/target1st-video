@@ -40,6 +40,11 @@ SPEECH PREP (Gemini, Sarvam and Edge voices, optional)
     GEMINI_API_KEY_2) and the fixed wording is what Sarvam / Edge speak.
 
 SEVERAL API KEYS (more videos from the daily limits / credits of each key)
+    AUTO KEY SWITCH (Gemini voice, on by default): when every model of the current key has hit its daily limit, the build
+    moves on by itself to the next key, in order key_slot, +1, +2 ... 5, then the lower slots (only keys whose secret
+    exists in video.yml / GitHub). Lines already voiced stay cached. Exit code 75 only when ALL keys are used up.
+    meta "key_auto_switch": false = stay on one key. Keys from the SAME Google project share one daily limit, so
+    switching between them gains nothing: use keys from different projects.
     Set meta "key_slot": 2 to use the second key of the same engine: GEMINI_API_KEY_2 or SARVAM_API_KEY_2
     (slot 1 or nothing = GEMINI_API_KEY / SARVAM_API_KEY; slots 2 to 5 are wired in video.yml). Keys made in the
     SAME Google project share one Gemini daily limit; use keys from different projects for more quota.
@@ -63,7 +68,7 @@ GEMINI VOICE
       gemini_delay  seconds to wait between calls, default 21 (free tier allows 3 calls a minute per model)
     Calls run one at a time with retries. Every finished line is cached in <out>/work/audio, so a run stopped by
     the free daily limit can be re-run to continue (the cache is shared by all models). If every model has hit its
-    daily limit the build stops cleanly with exit code 75 (video.yml sees this and resumes by itself after the
+    daily limit on EVERY key (see AUTO KEY SWITCH) the build stops cleanly with exit code 75 (video.yml sees this and resumes by itself after the
     quota resets, about 1:30 pm IST; every other failure exits with code 1).
 
 GEMINI SAFETY (sync + empty clips), all automatic:
@@ -1189,6 +1194,29 @@ async def tts_all(steps, meta, work, fake, provider):
     if provider in ("gemini", "sarvam") and not fake:
         print(f"Key: using {g_env if provider == 'gemini' else s_env} (key_slot {slot})", flush=True)
     g_lock = asyncio.Lock()
+    # AUTO KEY SWITCH (Gemini voice): when every model of the current key is out of daily quota, the next key is used
+    # (key_slot first, then upwards 2-3-4-5, then the lower slots). Only keys whose secret is set are used.
+    # meta "key_auto_switch": false = never switch (stop with exit code 75 instead).
+    k_order = [slot] + list(range(slot + 1, 6)) + list(range(1, slot))
+    kst = {"slot": slot, "key": g_key, "tried": [slot]}
+    k_auto = bool(meta.get("key_auto_switch", True)) and provider == "gemini" and not fake
+
+    def switch_key(failed_slot):
+        """Make the next unused key active. True if there is one (or another call already switched)."""
+        if kst["slot"] != failed_slot:
+            return True
+        for n in k_order:
+            if n in kst["tried"]:
+                continue
+            v = os.environ.get("GEMINI_API_KEY" + (f"_{n}" if n > 1 else ""), "")
+            if v:
+                kst["tried"].append(n)
+                kst["slot"], kst["key"] = n, v
+                g_dead.clear()
+                print(f"  Key slot {failed_slot} is out of daily quota -> switching to key slot {n} "
+                      f"(GEMINI_API_KEY{'_' + str(n) if n > 1 else ''})", flush=True)
+                return True
+        return False
     s_model = meta.get("sarvam_model", SARVAM_MODEL)
     s_speaker = meta.get("sarvam_speaker", SARVAM_SPEAKER)
     s_pace = float(meta.get("sarvam_pace", 1.2))
@@ -1251,17 +1279,21 @@ async def tts_all(steps, meta, work, fake, provider):
     async def gemini_call(prompt, out):
         """One TTS call. Tries the models in order; a per-day 429 moves on to the next model."""
         while True:
+            cur = kst["slot"]
             live = [m for m in g_models if m not in g_dead]
             if not live:
-                print("Every Gemini model has hit its daily limit (or was not found). Finished lines are cached. "
-                      "Re-run after the quota resets (about 1:30 pm IST), or add more models in meta gemini_models.",
-                      flush=True)
+                if k_auto and switch_key(cur):
+                    continue
+                print("Every Gemini model has hit its daily limit (or was not found)"
+                      + (f" on every key tried (slots {', '.join(map(str, kst['tried']))})" if len(kst["tried"]) > 1 else "")
+                      + ". Finished lines are cached. Re-run after the quota resets (about 1:30 pm IST), "
+                      "or add more models in meta gemini_models / more keys.", flush=True)
                 sys.exit(QUOTA_EXIT)
             model = live[0]
             minute_hits = fails = 0
             while True:
                 try:
-                    await asyncio.to_thread(gemini_tts_once, prompt, g_voice, model, out, g_key)
+                    await asyncio.to_thread(gemini_tts_once, prompt, g_voice, model, out, kst["key"])
                     await asyncio.sleep(g_delay)
                     return
                 except urllib.error.HTTPError as e:
@@ -1271,7 +1303,8 @@ async def tts_all(steps, meta, work, fake, provider):
                 if code == 429:
                     if re.search(r"per\s*day", body, re.I) or minute_hits >= 4:
                         print(f"  {model}: daily limit reached, switching to the next model", flush=True)
-                        g_dead.add(model)
+                        if kst["slot"] == cur:
+                            g_dead.add(model)
                         break
                     minute_hits += 1
                     m = re.search(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"', body)
@@ -1281,14 +1314,16 @@ async def tts_all(steps, meta, work, fake, provider):
                     continue
                 if code == 404:
                     print(f"  {model}: model not found, skipping it (check the name in AI Studio)", flush=True)
-                    g_dead.add(model)
+                    if kst["slot"] == cur:
+                        g_dead.add(model)
                     break
                 if code in (400, 401, 403):
                     sys.exit(f"Gemini rejected the request (HTTP {code}) for {model}: {body[:300]}")
                 fails += 1
                 if fails > 5:
                     print(f"  {model}: keeps failing ({body[:120]}), switching to the next model", flush=True)
-                    g_dead.add(model)
+                    if kst["slot"] == cur:
+                        g_dead.add(model)
                     break
                 print(f"  Gemini retry {fails}/5 in {5 * fails}s ({body[:120]})", flush=True)
                 await asyncio.sleep(5 * fails)
