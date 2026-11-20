@@ -1425,7 +1425,12 @@ async def tts_all(steps, meta, work, fake, provider):
                 gk = ("filler", (len(seen) - 1) // 4)  # four filler lines per call
             else:
                 mode = s["state"]["mode"]
-                gk = mode if mode in ("intro", "outro") else (s["state"]["i"] - 1) // g_batch
+                if mode in ("intro", "hook"):
+                    gk = "intro"      # hook, preview line and own intro share one call (hook steps have no question number)
+                elif mode == "outro":
+                    gk = "outro"
+                else:
+                    gk = (s["state"]["i"] - 1) // g_batch
             if gk not in groups:
                 groups[gk] = []
                 order.append(gk)
