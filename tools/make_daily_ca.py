@@ -52,12 +52,11 @@ MAX_HEADLINES = 90
 
 MODELS = ["gemini-3.5-flash", "gemini-2.5-flash", "gemini-2.5-flash-lite"]   # tried in order, same list build.py uses for speech prep
 
-# Same look and voice settings as your other videos. tts "edge" is free; change to "sarvam" (and key_slot) for the paid voice.
+# Same look as your other videos. Voice: Gemini (speed 1.15, set by gemini_speed; "rate" is Edge only). Voice name defaults to Kore (meta "gemini_voice").
 META = {
     "subtitle": "SSC, HSSC, हरियाणा पुलिस और सभी परीक्षाओं के लिए",
     "channel": "Target1st",
-    "voice": "hi-IN-MadhurNeural",
-    "rate": "+20%",
+    "gemini_speed": 1.15,
     "countdown": 0,
     "intro": "o",
     "outro": "o",
@@ -65,7 +64,7 @@ META = {
     "theme": "royal",
     "layout": "grid",
     "format": "revision",
-    "tts": "edge",
+    "tts": "gemini",
     "pronounce": {"RBI": "आर बी आई", "SBI": "एस बी आई", "UPSC": "यू पी एस सी", "GDP": "जी डी पी",
                   "ISRO": "इसरो", "NITI": "नीति", "PIB": "पी आई बी"},
     "max_points": 2,

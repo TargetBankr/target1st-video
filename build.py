@@ -520,8 +520,12 @@ def spoken(text, pron):
        coordinates   32°43′N, 32°43 N, 28.6° E, 75°30′ प•   -> 32 डिग्री 43 मिनट उत्तर ... पश्चिम
        titles        प• / पं. -> पंडित (but "प. बंगाल" -> पश्चिम बंगाल), डॉ. -> डॉक्टर, स्व. -> स्वर्गीय, प्रो., कु.; Dr, Prof, Pt, Mr, Mrs
        places/eras   उ.प्र. म.प्र. हि.प्र. आं.प्र. अ.प्र.; 326 ई.पू. -> ईसा पूर्व; 1857 ई. -> ईस्वी; वि.सं. -> विक्रम संवत
+       brackets      words inside ( ) are skipped by the voice (the slide keeps them); "||" hand-written speech is untouched
        units/symbols °C °F % ₹500 Rs. 500 & vs etc. i.e. e.g. No. 5, and 45 km / kg / cm / sq km after a number."""
-    t = text
+    # words in (brackets) are not read: "AI (कृत्रिम बुद्धिमत्ता)" is spoken once, the slide still shows both.
+    # Text written by hand after "||" (SAY0..SAY1) is never touched.
+    t = re.sub(SAY0 + r"[^" + SAY1 + r"]*" + SAY1 + r"|[ \t]*[(\uFF08][^()\uFF08\uFF09]*[)\uFF09]",
+               lambda m: m.group(0) if m.group(0)[:1] == SAY0 else "", text)
     for k in sorted(pron or {}, key=len, reverse=True):
         v = str(pron[k])
         if re.search(r"[A-Za-z0-9]", k[0]) or re.search(r"[A-Za-z0-9]", k[-1]):
