@@ -1,0 +1,45 @@
+Q1  (B)  हाल ही में किस देश ने ग्लोबल ओशियन अलायंस में शामिल होकर हिंद महासागर की निगरानी दोगुनी करने का संकल्प लिया है?
+     from: [The Hindu National] India joins global ocean alliance, pledges to double Indian Ocean monitoring
+
+Q2  (A)  सड़क की क्षति की निगरानी और ठेकेदारों की शिकायतों के निपटारे के लिए एनएचएआई (NHAI) ने किस तकनीक का उपयोग किया है?
+     from: [The Hindu National] NHAI’s AI tool to monitor road damage, follow-up complaints with contractors
+
+Q3  (C)  भारत के पहले एआई (AI) और क्वांटम यूनिवर्सिटी परिसर का उद्घाटन आंध्र प्रदेश के किस शहर में किया गया है?
+     from: [The Hindu National] India’s first AI, Quantum University campus inaugurated in Guntur of Andhra Pradesh
+
+Q4  (D)  रिलायंस ने एशिया का सबसे बड़ा पेय (बेवरेज) संयंत्र आंध्र प्रदेश के किस स्थान पर चालू किया है?
+     from: [The Hindu National] Reliance commissions Asia’s largest beverage plant at Orvakal in Andhra
+
+Q5  (A)  भारत के 46वें अंटार्कटिक मिशन के लिए किस संस्थान के वैज्ञानिक का चयन किया गया है?
+     from: [The Hindu National] NEERI scientist selected for India’s 46th Antarctic Mission
+
+Q6  (B)  तेलंगाना को किस फ्रांसीसी एयरोस्पेस कंपनी से ₹4,000 करोड़ के निवेश की उम्मीद है?
+     from: [The Hindu National] Telangana expects ₹4,000-crore investment from French aerospace major Safran, Deputy CM visits its facility near Paris
+
+Q7  (C)  वार्नर म्यूजिक ग्रुप किस भारतीय शहर को वैश्विक प्रौद्योगिकी हब के रूप में विकसित करेगा?
+     from: [The Hindu National] Warner Music Group to develop Bengaluru as global technology hub
+
+Q8  (D)  स्टार्टअप सहयोग के माध्यम से भारत किस देश के साथ अपने आर्थिक संबंधों को गहरा करना चाहता है?
+     from: [The Hindu Business] India, Finland seek to deepen economic ties through startup cooperation: Envoy Mikko Kivikoski
+
+Q9  (A)  महत्वपूर्ण तकनीकों पर बढ़ते निर्यात प्रतिबंधों के बीच किस शहर के स्टार्टअप ने परमाणु घड़ी (एटॉमिक क्लॉक) का प्रोटोटाइप विकसित किया है?
+     from: [The Hindu Business] Pune startup develops atomic clock prototype amid growing export curbs on critical technologies
+
+Q10  (C)  बीमा नियामक आईआरडीएआई (IRDAI) ने स्टार हेल्थ पर कितने रुपये का जुर्माना लगाया है?
+     from: [The Hindu Business] IRDAI imposes ₹2 cr penalty on Star Health
+
+Q11  (B)  हरियाणा सरकार राज्य के बुजुर्गों को किस स्थान की मुफ्त तीर्थ यात्रा कराएगी?
+     from: [Haryana news] हरियाणा के बुजुर्गों को सरकार कराएगी वाराणसी की मुफ्त तीर्थ यात्रा, दिसंबर-जनवरी में चलेगी विशेष ट्रेन
+
+Q12  (D)  हरियाणा में जिलावार फसल खरीद व्यवस्था के तहत किसानों को किस पोर्टल पर रजिस्ट्रेशन करना अनिवार्य होगा?
+     from: [Haryana news] हरियाणा में बनेंगी जिलावार फसल खरीद योजनाएं और SOP, किसानों को फसल बेचने के लिए करना होगा एग्रीस्टैक पोर्टल पर रजिस्ट्रेशन
+
+Q13  (A)  हरियाणा के 7 जिलों में माइक्रो इरिगेशन (सूक्ष्म सिंचाई) के लिए कितने करोड़ रुपये की परियोजनाएं मंजूर की गई हैं?
+     from: [Haryana news] हरियाणा के 7 जिलों में 11,040 हेक्टेयर जमीन पर माइक्रो इरिगेशन की तैयारी, 402 करोड़ की परियोजनाएं मंजूर
+
+Q14  (B)  हरियाणा सूचना आयोग के फैसले के अनुसार कौन से संस्थान आरटीआई (RTI) से छूट का दावा नहीं कर सकते?
+     from: [Haryana (English)] Private universities cannot claim exemption from RTI: Haryana Information Commission
+
+Q15  (C)  हरियाणा सरकार द्वारा शुरू किए गए नए पोर्टल के माध्यम से अब बिल्डिंग प्लान को कौन स्वयं प्रमाणित (self-certify) कर सकता है?
+     from: [Haryana (English)] Architects can now self-certify building plans, Haryana govt launches portal; keeps town planners as fina
+
