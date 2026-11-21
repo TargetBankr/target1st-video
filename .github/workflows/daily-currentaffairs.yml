@@ -1,0 +1,98 @@
+name: Daily current affairs
+
+# Every night: news feeds -> Gemini writes the questions -> daily/currentaffairs-<date>.done.json is committed
+# -> the video build (video.yml) is started -> in the morning the .mp4 is in Releases, ready for YouTube.
+#
+# Why the workflow starts video.yml itself: a commit pushed with GITHUB_TOKEN does NOT trigger other workflows.
+# GitHub's "schedule" can run 2-3 hours late, so it is set for 11:00 pm IST to be ready by morning.
+# Your morning check: open daily/currentaffairs-<date>.sources.txt (which news item each question came from).
+#
+# Pause it: Settings > Secrets and variables > Actions > Variables > DAILY_CA_PAUSED = true
+# Test by hand: Actions > Daily current affairs > Run workflow (count 5, build = false makes only the file).
+
+on:
+  schedule:
+    - cron: "30 17 * * *"      # 17:30 UTC = 23:00 IST
+  workflow_dispatch:
+    inputs:
+      count:
+        description: "Questions to make"
+        default: "15"
+      key_slot:
+        description: "Which Gemini key: 1 = GEMINI_API_KEY, 2 = GEMINI_API_KEY_2 ... (use a slot your big builds do not use)"
+        default: "1"
+      force:
+        description: "true = make it again even if today's file exists"
+        type: choice
+        default: "false"
+        options: ["false", "true"]
+      build:
+        description: "true = start the video build after the file is saved"
+        type: choice
+        default: "true"
+        options: ["true", "false"]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: daily-currentaffairs
+  cancel-in-progress: false
+
+jobs:
+  make:
+    if: ${{ vars.DAILY_CA_PAUSED != 'true' }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Make today's questions
+        id: make
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          GEMINI_API_KEY_4: ${{ secrets.GEMINI_API_KEY_4 }}
+          GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
+          COUNT: ${{ inputs.count || vars.DAILY_CA_COUNT || '15' }}
+          SLOT: ${{ inputs.key_slot || vars.DAILY_CA_KEY_SLOT || '1' }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          day=$(TZ=Asia/Kolkata date +%F)
+          args=(--count "$COUNT" --key-slot "$SLOT" --date "$day")
+          if [ "$FORCE" = "true" ]; then args+=(--force); fi
+          python -u tools/make_daily_ca.py "${args[@]}"
+          if [ -f "daily/currentaffairs-$day.done.json" ]; then
+            echo "file=daily/currentaffairs-$day.done.json" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Save the files
+        id: save
+        if: steps.make.outputs.file != ''
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add daily/
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit (file already saved earlier)."
+            echo "new=false" >> "$GITHUB_OUTPUT"
+          else
+            git commit -m "Daily current affairs: ${{ steps.make.outputs.file }}"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+            echo "new=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Start the video build
+        if: steps.save.outputs.new == 'true' && (github.event_name == 'schedule' || inputs.build == 'true')
+        env:
+          GH_TOKEN: ${{ github.token }}
+          FILE: ${{ steps.make.outputs.file }}
+        run: |
+          gh workflow run video.yml --ref "$GITHUB_REF_NAME" -f "file=$FILE" < /dev/null
