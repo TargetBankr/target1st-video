@@ -703,13 +703,32 @@ GEMINI_VOICE = "Kore"
 GEMINI_STYLE = ""
 
 
-def gemini_tts_once(prompt, voice, model, out_wav, api_key):
+def gemini_lang_code(text, meta):
+    """Accent anchor. Every Gemini call is independent: with bare text it guesses the accent from THAT call's
+    text only, so an all-English question call drifts to a foreign accent while Hindi-heavy calls sound Indian.
+    Fix: send an explicit languageCode with every call (not spoken, so it can never be read aloud).
+    meta gemini_lang: "auto" (default) = hi-IN when the call has Devanagari, else en-IN; or a fixed code such as
+    "en-IN" / "hi-IN"; "off" = send none (old behaviour)."""
+    mode = str(meta.get("gemini_lang", "auto"))
+    if mode.lower() == "off":
+        return ""
+    if mode.lower() != "auto":
+        return mode
+    dev = len(_DEV.findall(text))
+    lat = len(re.findall(r"[A-Za-z]", text))
+    return "hi-IN" if dev >= lat * 0.3 else "en-IN"   # a few English words inside Hindi stay hi-IN
+
+
+def gemini_tts_once(prompt, voice, model, out_wav, api_key, lang=""):
     """One Gemini TTS call -> 24 kHz mono 16-bit WAV at out_wav. Raises on any failure."""
+    speech = {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}}
+    if lang:
+        speech["languageCode"] = lang
     body = {
         "contents": [{"parts": [{"text": prompt}]}],
         "generationConfig": {
             "responseModalities": ["AUDIO"],
-            "speechConfig": {"voiceConfig": {"prebuiltVoiceConfig": {"voiceName": voice}}},
+            "speechConfig": speech,
         },
     }
     req = urllib.request.Request(
@@ -1270,7 +1289,10 @@ async def tts_all(steps, meta, work, fake, provider):
 
     def g_path(s):
         # same cache file whichever model made it, so switching models mid-video keeps finished lines
-        key = hashlib.md5(f"gemini|{g_voice}|{g_style}|{s.get('prep_key') or s['say']}".encode()).hexdigest()
+        # language mode is part of the key only when set, so old caches stay valid with "off"; the default "auto"
+        # re-voices clips once so the whole video gets the same accent treatment
+        lk = "" if str(meta.get("gemini_lang", "auto")).lower() == "off" else "|lang" + str(meta.get("gemini_lang", "auto"))
+        key = hashlib.md5(f"gemini|{g_voice}|{g_style}{lk}|{s.get('prep_key') or s['say']}".encode()).hexdigest()
         return work / "audio" / f"{key}.wav"
 
     def g_edge_path(s):
@@ -1279,6 +1301,8 @@ async def tts_all(steps, meta, work, fake, provider):
     def g_prompt(lines):
         text = "\n\n".join(l.get("vsay") or l["say"] for l in lines)  # one paragraph per line: Gemini pauses between paragraphs
         return f"{g_style}: {text}" if g_style else text
+
+    lang_off = {"v": False}
 
     async def gemini_call(prompt, out):
         """One TTS call. Tries the models in order; a per-day 429 moves on to the next model."""
@@ -1297,11 +1321,17 @@ async def tts_all(steps, meta, work, fake, provider):
             minute_hits = fails = 0
             while True:
                 try:
-                    await asyncio.to_thread(gemini_tts_once, prompt, g_voice, model, out, kst["key"])
+                    lang = "" if lang_off["v"] else gemini_lang_code(prompt, meta)
+                    await asyncio.to_thread(gemini_tts_once, prompt, g_voice, model, out, kst["key"], lang)
                     await asyncio.sleep(g_delay)
                     return
                 except urllib.error.HTTPError as e:
                     code, body = e.code, e.read().decode("utf-8", "ignore")
+                    if code == 400 and lang and re.search(r"language", body, re.I):
+                        # this model does not accept languageCode: carry on without it for the rest of the run
+                        print(f"  {model}: languageCode not accepted, continuing without it ({body[:100]})", flush=True)
+                        lang_off["v"] = True
+                        continue
                 except Exception as e:  # network trouble, or the reply had no audio
                     code, body = 0, str(e)
                 if code == 429:
