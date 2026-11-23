@@ -1,0 +1,815 @@
+{
+  "meta": {
+    "title": "HARTRON DEO MOCK TEST 2",
+    "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+    "channel": "Target1st",
+    "voice": "hi-IN-MadhurNeural",
+    "rate": "+0%",
+    "countdown": 1,
+    "intro": "o",
+    "outro": "o",
+    "outro_show": "देखने के लिए धन्यवाद!",
+    "theme": "royal",
+    "layout": "grid",
+    "format": "revision",
+    "tts": "gemini",
+    "checkpoint_every": 10,
+    "checkpoint_secs": 5,
+    "pronounce": {
+      "RBI": "आर बी आई",
+      "SBI": "एस बी आई",
+      "UPSC": "यू पी एस सी",
+      "GDP": "जी डी पी",
+      "CAG": "कैग",
+      "SSC": "एस एस सी",
+      "GS": "जी एस",
+      "CGL": "सी जी एल",
+      "CHSL": "सी एच एस एल",
+      "MTS": "एम टी एस",
+      "GD": "जी डी"
+    },
+    "filler_lines": [
+      "इस टॉपिक के पूरे नोट्स चाहिए? नोट्स का लिंक डिस्क्रिप्शन में है, नोट्स ज़रूर ले लीजिए।",
+      "प्रैक्टिस के लिए मॉक टेस्ट चाहिए? मॉक्स का लिंक डिस्क्रिप्शन में है, मॉक्स ज़रूर ले लीजिए।",
+      "नोट्स और मॉक्स, दोनों के लिंक डिस्क्रिप्शन में मौजूद हैं, उन्हें लेना मत भूलिए।",
+      "रिवीज़न के लिए नोट्स लीजिए, और परीक्षा जैसी प्रैक्टिस के लिए मॉक्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "जो प्रश्न अभी छूट गए, उनके नोट्स डिस्क्रिप्शन में दिए लिंक से ले लीजिए।",
+      "हर हफ्ते मॉक टेस्ट हल करने से स्कोर बढ़ता है, मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "अगर अब तक के प्रश्न सही रहे, तो मॉक्स लेकर अपना स्तर और परखिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स लेना न भूलें, लिंक डिस्क्रिप्शन में है, और अपने दोस्तों को भी बताइए।",
+      "कंप्यूटर के प्रश्नों पर पकड़ मज़बूत करनी है? तो नोट्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "वीडियो पसंद आ रहा है तो लाइक कीजिए, और नोट्स व मॉक्स के लिए डिस्क्रिप्शन का लिंक खोलिए।",
+      "मॉक टेस्ट हल करने की आदत डालिए, मॉक्स का लिंक डिस्क्रिप्शन में है, अभी ले लीजिए।",
+      "चैनल Target1st को सब्सक्राइब कीजिए, नोट्स और मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "ये पॉइंट नोट कर लीजिए, और पूरे नोट्स के लिए डिस्क्रिप्शन में दिया लिंक देखिए।",
+      "सिर्फ़ वीडियो देखना काफ़ी नहीं, मॉक्स भी हल कीजिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स ले लो, मॉक्स ले लो, दोनों के लिंक डिस्क्रिप्शन में हैं, और तैयारी में जुट जाओ।"
+    ],
+    "filler_every": [
+      7,
+      8
+    ],
+    "speech_prep": true,
+    "speech_prep_key_slot": 2,
+    "gemini_voice": "Kore",
+    "gemini_speed": 1.15,
+    "gemini_models": [
+      "gemini-3.1-flash-tts-preview",
+      "gemini-3.8-flash-tts",
+      "gemini-3.8-flash-lite-tts"
+    ],
+    "gemini_batch": 2
+  },
+  "questions": [
+    {
+      "q": "Which of the following is a pointing device?",
+      "options": [
+        "Keyboard",
+        "Mouse",
+        "Scanner",
+        "Microphone"
+      ],
+      "answer": "B",
+      "points": [
+        "A pointing device controls the cursor on screen",
+        "Mouse, trackball, touchpad and joystick are pointing devices",
+        "Keyboard is mainly a text input device"
+      ]
+    },
+    {
+      "q": "Which key combination switches between open windows in Windows?",
+      "options": [
+        "Ctrl + Tab",
+        "Shift + Tab",
+        "Alt + Tab",
+        "Win + Tab only"
+      ],
+      "answer": "C",
+      "points": [
+        "Alt + Tab switches between open applications",
+        "Win + Tab opens Task View",
+        "Ctrl + Tab switches tabs inside a program"
+      ]
+    },
+    {
+      "q": "Which unit is the largest?",
+      "options": [
+        "Gigabyte (GB)",
+        "Terabyte (TB)",
+        "Megabyte (MB)",
+        "Kilobyte (KB)"
+      ],
+      "answer": "B",
+      "points": [
+        "Order: KB < MB < GB < TB < PB",
+        "Each step is 1024 times the previous one",
+        "1 TB = 1024 GB"
+      ]
+    },
+    {
+      "q": "Which of the following is system software?",
+      "options": [
+        "Operating system",
+        "MS Word",
+        "Tally",
+        "Photoshop"
+      ],
+      "answer": "A",
+      "points": [
+        "System software runs and controls the hardware",
+        "OS, device drivers and utilities are system software",
+        "MS Word, Tally and Photoshop are application software"
+      ]
+    },
+    {
+      "q": "Which key is used to rename a selected file in Windows?",
+      "options": [
+        "F1",
+        "F2",
+        "F5",
+        "F10"
+      ],
+      "answer": "B",
+      "points": [
+        "F2 renames the selected file or folder",
+        "F1 opens Help and F5 refreshes",
+        "F10 activates the menu bar"
+      ]
+    },
+    {
+      "q": "Which type of printer uses a laser beam and toner?",
+      "options": [
+        "Dot matrix printer",
+        "Laser printer",
+        "Inkjet printer",
+        "Thermal printer"
+      ],
+      "answer": "B",
+      "points": [
+        "Laser printers use toner and a laser beam",
+        "They give high speed and quality prints",
+        "Inkjet printers spray liquid ink"
+      ]
+    },
+    {
+      "q": "BIOS stands for?",
+      "options": [
+        "Basic Input Output System",
+        "Basic Internal Output System",
+        "Binary Input Output System",
+        "Base Input Output Software"
+      ],
+      "answer": "A",
+      "points": [
+        "BIOS starts the computer and runs POST",
+        "It is stored in ROM or flash memory",
+        "It loads the operating system into RAM"
+      ]
+    },
+    {
+      "q": "Which memory is permanent and read-only?",
+      "options": [
+        "RAM",
+        "Cache",
+        "Virtual memory",
+        "ROM"
+      ],
+      "answer": "D",
+      "points": [
+        "ROM retains data without power",
+        "It stores boot instructions such as BIOS",
+        "PROM, EPROM and EEPROM are types of ROM"
+      ]
+    },
+    {
+      "q": "Which Windows tool is used to remove installed programs?",
+      "options": [
+        "Programs and Features (Control Panel)",
+        "Disk Cleanup only",
+        "Task Scheduler",
+        "Device Manager"
+      ],
+      "answer": "A",
+      "points": [
+        "Uninstall programs from Control Panel or Settings > Apps",
+        "Disk Cleanup removes temporary files",
+        "Device Manager manages hardware drivers"
+      ]
+    },
+    {
+      "q": "Which device connects computers in a LAN and sends data only to the intended device?",
+      "options": [
+        "Hub",
+        "Switch",
+        "Repeater",
+        "Modem"
+      ],
+      "answer": "B",
+      "points": [
+        "A switch learns MAC addresses",
+        "It forwards data only to the destination port",
+        "A hub broadcasts data to all ports"
+      ]
+    },
+    {
+      "q": "Which of these is a valid MAC address length?",
+      "options": [
+        "32 bits",
+        "64 bits",
+        "128 bits",
+        "48 bits"
+      ],
+      "answer": "D",
+      "points": [
+        "MAC address is 48 bits (6 bytes)",
+        "It is written in hexadecimal",
+        "It is burned into the network card"
+      ]
+    },
+    {
+      "q": "Which command tests connectivity between two computers?",
+      "options": [
+        "ipconfig",
+        "ping",
+        "dir",
+        "cls"
+      ],
+      "answer": "B",
+      "points": [
+        "ping sends ICMP echo requests",
+        "It shows reply time and packet loss",
+        "tracert shows each hop on the route"
+      ]
+    },
+    {
+      "q": "Which topology has a single backbone cable?",
+      "options": [
+        "Bus",
+        "Star",
+        "Ring",
+        "Tree"
+      ],
+      "answer": "A",
+      "points": [
+        "All devices share one common cable in a bus",
+        "Cable failure can stop the whole network",
+        "Terminators are used at both ends"
+      ]
+    },
+    {
+      "q": "How many bits are in an IPv6 address?",
+      "options": [
+        "128",
+        "32",
+        "64",
+        "256"
+      ],
+      "answer": "A",
+      "points": [
+        "IPv6 uses 128 bits",
+        "It is written in hexadecimal separated by colons",
+        "IPv6 solves the shortage of IPv4 addresses"
+      ]
+    },
+    {
+      "q": "Which protocol translates domain names to IP addresses?",
+      "options": [
+        "DHCP",
+        "HTTP",
+        "TCP",
+        "DNS"
+      ],
+      "answer": "D",
+      "points": [
+        "DNS means Domain Name System",
+        "It works like a phone book of the Internet",
+        "Example: google.com to an IP address"
+      ]
+    },
+    {
+      "q": "Which of the following is a Class A IP address?",
+      "options": [
+        "172.16.0.1",
+        "192.168.1.1",
+        "10.0.0.1",
+        "224.0.0.1"
+      ],
+      "answer": "C",
+      "points": [
+        "Class A starts from 1 to 126",
+        "10.x.x.x is a private Class A range",
+        "192.168.x.x is a private Class C range"
+      ]
+    },
+    {
+      "q": "Which cable uses light to transmit data?",
+      "options": [
+        "Coaxial",
+        "Twisted pair",
+        "Optical fibre",
+        "Ethernet patch"
+      ],
+      "answer": "C",
+      "points": [
+        "Optical fibre sends data as light pulses",
+        "It has very high speed and low signal loss",
+        "It is immune to electromagnetic interference"
+      ]
+    },
+    {
+      "q": "The default subnet mask of a Class C network is?",
+      "options": [
+        "255.255.255.0",
+        "255.0.0.0",
+        "255.255.0.0",
+        "255.255.255.255"
+      ],
+      "answer": "A",
+      "points": [
+        "Class C mask is 255.255.255.0",
+        "Class A is 255.0.0.0 and Class B is 255.255.0.0",
+        "It allows 254 host addresses"
+      ]
+    },
+    {
+      "q": "Which Windows feature creates a restore point to undo system changes?",
+      "options": [
+        "Defragmenter",
+        "System Restore",
+        "Windows Update",
+        "Task Scheduler"
+      ],
+      "answer": "B",
+      "points": [
+        "System Restore returns the system to an earlier state",
+        "It does not delete personal files",
+        "It is useful after a faulty install"
+      ]
+    },
+    {
+      "q": "Which key opens the Start menu?",
+      "options": [
+        "Esc",
+        "Tab",
+        "Caps Lock",
+        "Windows key"
+      ],
+      "answer": "D",
+      "points": [
+        "The Windows key opens the Start menu",
+        "Ctrl + Esc also opens it",
+        "Win + X opens the power-user menu"
+      ]
+    },
+    {
+      "q": "Which shortcut opens File Explorer?",
+      "options": [
+        "Win + R",
+        "Win + I",
+        "Win + S",
+        "Win + E"
+      ],
+      "answer": "D",
+      "points": [
+        "Win + E opens File Explorer",
+        "Win + I opens Settings",
+        "Win + S opens Search"
+      ]
+    },
+    {
+      "q": "What is a cookie in a web browser?",
+      "options": [
+        "A small file storing site data on your computer",
+        "A virus",
+        "A search engine",
+        "An email attachment"
+      ],
+      "answer": "A",
+      "points": [
+        "Websites store small text files called cookies",
+        "They remember login and preferences",
+        "Clearing cache and cookies is done from browser settings"
+      ]
+    },
+    {
+      "q": "Which software is used to view web pages?",
+      "options": [
+        "Compiler",
+        "Assembler",
+        "Web browser",
+        "Interpreter only"
+      ],
+      "answer": "C",
+      "points": [
+        "A browser requests and displays web pages",
+        "Chrome, Firefox and Edge are examples",
+        "Internet Explorer was an older browser"
+      ]
+    },
+    {
+      "q": "Which of the following is a search engine?",
+      "options": [
+        "Opera",
+        "Google",
+        "Outlook",
+        "Skype"
+      ],
+      "answer": "B",
+      "points": [
+        "A search engine finds web pages for a keyword",
+        "Bing and DuckDuckGo are also search engines",
+        "Opera is a browser, Outlook is a mail client"
+      ]
+    },
+    {
+      "q": "In email, what does BCC mean?",
+      "options": [
+        "Big Carbon Copy",
+        "Basic Carbon Copy",
+        "Blind Carbon Copy",
+        "Back Carbon Copy"
+      ],
+      "answer": "C",
+      "points": [
+        "BCC hides recipients from each other",
+        "CC shows all recipients to everyone",
+        "The To field holds the main recipient"
+      ]
+    },
+    {
+      "q": "Which protocol is used to transfer files between computers on the Internet?",
+      "options": [
+        "SMTP",
+        "FTP",
+        "POP3",
+        "DNS"
+      ],
+      "answer": "B",
+      "points": [
+        "FTP means File Transfer Protocol",
+        "It commonly uses port 21",
+        "SFTP is its secure version"
+      ]
+    },
+    {
+      "q": "Which port number is used by HTTP?",
+      "options": [
+        "21",
+        "25",
+        "80",
+        "443"
+      ],
+      "answer": "C",
+      "points": [
+        "HTTP uses port 80",
+        "HTTPS uses port 443",
+        "FTP uses 21 and SMTP uses 25"
+      ]
+    },
+    {
+      "q": "Which HTML tag is used to display an image?",
+      "options": [
+        "<image>",
+        "<pic>",
+        "<src>",
+        "<img>"
+      ],
+      "answer": "D",
+      "points": [
+        "<img> is an empty tag",
+        "The src attribute gives the file path",
+        "alt gives alternate text"
+      ]
+    },
+    {
+      "q": "Which HTML tag makes text bold?",
+      "options": [
+        "<i>",
+        "<u>",
+        "<b>",
+        "<em>"
+      ],
+      "answer": "C",
+      "points": [
+        "<b> makes text bold",
+        "<i> makes text italic and <u> underlines it",
+        "<strong> also shows bold importance"
+      ]
+    },
+    {
+      "q": "Which HTML attribute sets the destination of a link?",
+      "options": [
+        "src",
+        "alt",
+        "href",
+        "id"
+      ],
+      "answer": "C",
+      "points": [
+        "href means hypertext reference",
+        "It is used inside the <a> tag",
+        "src is used in <img>"
+      ]
+    },
+    {
+      "q": "Which tag contains the visible content of an HTML page?",
+      "options": [
+        "<head>",
+        "<body>",
+        "<title>",
+        "<meta>"
+      ],
+      "answer": "B",
+      "points": [
+        "<body> holds everything shown on the page",
+        "<head> holds information like title and meta",
+        "<title> text shows on the browser tab"
+      ]
+    },
+    {
+      "q": "Which HTML tag creates a numbered list?",
+      "options": [
+        "<ul>",
+        "<li>",
+        "<ol>",
+        "<dl>"
+      ],
+      "answer": "C",
+      "points": [
+        "<ol> means ordered list",
+        "Each item is placed in <li>",
+        "<ul> makes bullets"
+      ]
+    },
+    {
+      "q": "Which tag is used to create a form input box?",
+      "options": [
+        "<textarea> only",
+        "<label>",
+        "<input>",
+        "<select> only"
+      ],
+      "answer": "C",
+      "points": [
+        "<input> creates text boxes, buttons and checkboxes",
+        "Its type attribute decides the kind of input",
+        "<textarea> gives a multi-line box"
+      ]
+    },
+    {
+      "q": "Which CSS property changes the background colour?",
+      "options": [
+        "bgcolor-style",
+        "color-back",
+        "back-color",
+        "background-color"
+      ],
+      "answer": "D",
+      "points": [
+        "Example: body { background-color: yellow; }",
+        "color changes text colour",
+        "CSS means Cascading Style Sheets"
+      ]
+    },
+    {
+      "q": "Which JavaScript method shows a pop-up message box?",
+      "options": [
+        "alert()",
+        "print()",
+        "msg()",
+        "popup()"
+      ],
+      "answer": "A",
+      "points": [
+        "alert() shows a message with an OK button",
+        "confirm() asks OK or Cancel",
+        "prompt() asks the user to type input"
+      ]
+    },
+    {
+      "q": "Which attribute makes a table cell span multiple columns?",
+      "options": [
+        "rowspan",
+        "cellspan",
+        "merge",
+        "colspan"
+      ],
+      "answer": "D",
+      "points": [
+        "colspan merges cells across columns",
+        "rowspan merges cells across rows",
+        "Both are used in <td> or <th>"
+      ]
+    },
+    {
+      "q": "Which MS Word shortcut makes selected text bold?",
+      "options": [
+        "Ctrl + B",
+        "Ctrl + I",
+        "Ctrl + U",
+        "Ctrl + E"
+      ],
+      "answer": "A",
+      "points": [
+        "Ctrl + B bold, Ctrl + I italic, Ctrl + U underline",
+        "Ctrl + E centres the text",
+        "Ctrl + L left aligns and Ctrl + R right aligns"
+      ]
+    },
+    {
+      "q": "What is the default file extension of an MS Word 2016 document?",
+      "options": [
+        ".doc",
+        ".dotx",
+        ".txt",
+        ".docx"
+      ],
+      "answer": "D",
+      "points": [
+        ".docx is the default since Word 2007",
+        ".doc is the older format",
+        ".dotx is the template format"
+      ]
+    },
+    {
+      "q": "Which MS Word feature automatically finds spelling mistakes?",
+      "options": [
+        "Mail Merge",
+        "Track Changes",
+        "Spelling & Grammar (Review tab)",
+        "Header and Footer"
+      ],
+      "answer": "C",
+      "points": [
+        "Press F7 to run spelling and grammar check",
+        "Red wavy line marks spelling errors",
+        "Blue or green line marks grammar issues"
+      ]
+    },
+    {
+      "q": "Which Excel function finds the largest number in a range?",
+      "options": [
+        "MAX",
+        "BIG",
+        "HIGH",
+        "TOP"
+      ],
+      "answer": "A",
+      "points": [
+        "MAX returns the largest value",
+        "MIN returns the smallest value",
+        "Example: =MAX(B2:B20)"
+      ]
+    },
+    {
+      "q": "What is the intersection of a row and a column in Excel called?",
+      "options": [
+        "Cell",
+        "Range",
+        "Sheet",
+        "Workbook"
+      ],
+      "answer": "A",
+      "points": [
+        "A cell is the basic unit of a worksheet",
+        "Its address is like B3",
+        "A range is a group of cells like A1:C5"
+      ]
+    },
+    {
+      "q": "Which Excel function returns the average of numbers?",
+      "options": [
+        "MEAN",
+        "AVG",
+        "AVERAGE",
+        "MEDIAN"
+      ],
+      "answer": "C",
+      "points": [
+        "AVERAGE adds numbers and divides by the count",
+        "Example: =AVERAGE(A1:A5)",
+        "MEDIAN gives the middle value"
+      ]
+    },
+    {
+      "q": "Which Excel function returns the current date?",
+      "options": [
+        "NOW only",
+        "TODAY",
+        "DATE only",
+        "TIME"
+      ],
+      "answer": "B",
+      "points": [
+        "=TODAY() returns the current date",
+        "=NOW() returns date and time",
+        "The value updates every day"
+      ]
+    },
+    {
+      "q": "Which PowerPoint view is best for rearranging slides?",
+      "options": [
+        "Slide Sorter view",
+        "Normal view",
+        "Reading view",
+        "Notes page"
+      ],
+      "answer": "A",
+      "points": [
+        "Slide Sorter shows all slides as thumbnails",
+        "Drag and drop to change the order",
+        "Notes Page shows speaker notes"
+      ]
+    },
+    {
+      "q": "Which shortcut inserts a new slide in PowerPoint?",
+      "options": [
+        "Ctrl + N",
+        "Ctrl + S",
+        "Ctrl + K",
+        "Ctrl + M"
+      ],
+      "answer": "D",
+      "points": [
+        "Ctrl + M adds a new slide",
+        "Ctrl + N creates a new presentation",
+        "Ctrl + K inserts a hyperlink"
+      ]
+    },
+    {
+      "q": "Default file extension of a PowerPoint presentation is?",
+      "options": [
+        ".ppt",
+        ".pps",
+        ".potx",
+        ".pptx"
+      ],
+      "answer": "D",
+      "points": [
+        ".pptx is the default since PowerPoint 2007",
+        ".ppt is the older format",
+        ".pps opens directly in slide show mode"
+      ]
+    },
+    {
+      "q": "Which Excel feature shows data in a chart-ready summary by grouping and totals?",
+      "options": [
+        "Goal Seek",
+        "PivotTable",
+        "Freeze Panes",
+        "Data Validation"
+      ],
+      "answer": "B",
+      "points": [
+        "PivotTable summarises large data quickly",
+        "Insert tab > PivotTable creates one",
+        "Freeze Panes keeps rows or columns visible"
+      ]
+    },
+    {
+      "q": "What is a computer virus?",
+      "options": [
+        "A harmful program that spreads and damages data",
+        "A hardware part",
+        "An email address",
+        "A type of browser"
+      ],
+      "answer": "A",
+      "points": [
+        "Viruses attach to files and replicate",
+        "Antivirus software detects and removes them",
+        "Keep the software updated for protection"
+      ]
+    },
+    {
+      "q": "Which of the following is an example of a firewall function?",
+      "options": [
+        "Printing documents",
+        "Compressing files",
+        "Editing images",
+        "Blocking unauthorised network access"
+      ],
+      "answer": "D",
+      "points": [
+        "A firewall filters incoming and outgoing traffic",
+        "It can be hardware or software",
+        "It protects a network from intruders"
+      ]
+    },
+    {
+      "q": "Which Windows utility arranges scattered file fragments on a hard disk to improve speed?",
+      "options": [
+        "Disk Cleanup",
+        "Device Manager",
+        "Task Manager",
+        "Disk Defragmenter"
+      ],
+      "answer": "D",
+      "points": [
+        "Defragmentation joins fragmented file pieces together",
+        "It improves read speed on a hard disk",
+        "SSDs do not need defragmentation, Windows only trims them"
+      ]
+    }
+  ]
+}
