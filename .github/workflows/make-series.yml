@@ -1,0 +1,91 @@
+name: Make series videos (HSSC Group D + SSC)
+
+# Makes the 50-question JSONs from series/plan.json with Gemini, saves them in series/ready/, and (if build = true)
+# queues the video builds one after another (video.yml, delay "after"), in upload order: gd01, ssc01, gd02, ssc02 ...
+#
+# From your phone: Actions > Make series videos > Run workflow > days "1-6" > Run.
+#   days   "1-6" or "3,5,8" : day N means gdNN (HSSC Group D) + sscNN (SSC), so 6 days = 12 videos
+#   build  true  = JSONs are made and the videos start building in the queue
+#          false = only the JSONs (no Gemini voice quota used); build later with Actions > Build quiz video > file series/ready/gd01.json
+#   force  true  = make a set again even if its file already exists
+#
+# For every set you get in series/ready/:   <id>.json (video)   <id>.title.txt (title + description)   <id>.check.txt (spot-check list)
+# Finished videos appear in Releases like the other builds. Nothing here auto-publishes to YouTube.
+# Keys: uses GEMINI_API_KEY and GEMINI_API_KEY_2 ... _5 (whichever exist). Voice for each video uses its meta key_slot (rotates 1-4).
+
+on:
+  workflow_dispatch:
+    inputs:
+      days:
+        description: "Days to make, e.g. 1-6 or 3,5,8 (day N = gdNN + sscNN)"
+        default: "1-3"
+      build:
+        description: "true = also queue the video builds"
+        type: choice
+        default: "true"
+        options: ["true", "false"]
+      force:
+        description: "true = remake sets whose file already exists"
+        type: choice
+        default: "false"
+        options: ["false", "true"]
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: make-series
+  cancel-in-progress: false
+
+jobs:
+  make:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Make the JSON files
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
+          GEMINI_API_KEY_3: ${{ secrets.GEMINI_API_KEY_3 }}
+          GEMINI_API_KEY_4: ${{ secrets.GEMINI_API_KEY_4 }}
+          GEMINI_API_KEY_5: ${{ secrets.GEMINI_API_KEY_5 }}
+          DAYS: ${{ inputs.days }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          args=(--days "$DAYS" --made-list "$RUNNER_TEMP/made.txt")
+          if [ "$FORCE" = "true" ]; then args+=(--force); fi
+          python -u tools/make_series.py "${args[@]}"
+
+      - name: Save the files
+        id: save
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add series/ready/
+          if git diff --cached --quiet; then
+            echo "Nothing new to commit."
+          else
+            git commit -m "Series: ${{ inputs.days }}"
+            git pull --rebase origin "$GITHUB_REF_NAME"
+            git push origin "HEAD:$GITHUB_REF_NAME"
+          fi
+
+      - name: Queue the video builds
+        if: inputs.build == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ ! -s "$RUNNER_TEMP/made.txt" ]; then echo "No new sets were made, nothing to queue."; exit 0; fi
+          while read -r f; do
+            [ -z "$f" ] && continue
+            echo "Queue: $f"
+            gh workflow run video.yml --ref "$GITHUB_REF_NAME" -f "file=$f" -f "delay=after" < /dev/null
+            sleep 5
+          done < "$RUNNER_TEMP/made.txt"
