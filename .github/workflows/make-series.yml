@@ -9,6 +9,8 @@ name: Make series videos (HSSC Group D + SSC)
 #          false = only the JSONs (no Gemini voice quota used); build later with Actions > Build quiz video > file series/ready/gd01.json
 #   force  true  = make a set again even if its file already exists
 #
+# Every question is fact-checked with Google Search before it counts (wrong/unconfirmed ones are dropped and replaced), so a set takes
+# about 10-15 minutes: make about 5 days (10 sets) per run.
 # For every set you get in series/ready/:   <id>.json (video)   <id>.title.txt (title + description)   <id>.check.txt (spot-check list)
 # To build only some days later, use Actions > Queue series builds (days 3-4). Finished videos appear in Releases like the other builds. Nothing here auto-publishes to YouTube.
 # Keys: uses GEMINI_API_KEY and GEMINI_API_KEY_2 ... _5 (whichever exist). Voice for each video uses its meta key_slot (rotates 1-4).
@@ -41,7 +43,7 @@ concurrency:
 jobs:
   make:
     runs-on: ubuntu-latest
-    timeout-minutes: 180
+    timeout-minutes: 350
     steps:
       - uses: actions/checkout@v4
 

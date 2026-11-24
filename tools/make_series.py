@@ -6,7 +6,7 @@
 Day N = gdNN (HSSC Group D) + sscNN (SSC).  Files written per set (none of them is a ".done" file, so nothing builds by itself):
     series/ready/<id>.json        the video JSON (same format as sscmock01-gemini.done.json)
     series/ready/<id>.title.txt   YouTube title + description (no tags)
-    series/ready/<id>.check.txt   questions Gemini marked "medium" confidence, for your 2-minute spot check
+    series/ready/<id>.check.txt   every question with the source its answer was checked against, for your 2-minute scan
 
     python tools/make_series.py --days 1-3                 # gd01..gd03 + ssc01..ssc03
     python tools/make_series.py --ids gd05,ssc05 --force   # redo these sets
@@ -73,25 +73,32 @@ def get_keys():
     return keys
 
 
-def ask_gemini(prompt, keys, first_slot):
-    """Try every key (starting at first_slot) with every model. Returns the parsed dict."""
+def ask_gemini(prompt, keys, first_slot, grounded=False):
+    """Try every key (starting at first_slot) with every model. Returns the parsed dict.
+    grounded=True lets the model search Google (used by the checking pass; the API does not allow JSON mode together with search,
+    so the JSON is cut out of the text instead)."""
     order = sorted(keys, key=lambda k: (k[0] - first_slot) % 6)
     last = "no key"
     for rnd in range(2):
         for slot, key in order:
             for model in MODELS:
-                body = json.dumps({
-                    "contents": [{"role": "user", "parts": [{"text": prompt}]}],
-                    "generationConfig": {"temperature": 0.5, "responseMimeType": "application/json", "maxOutputTokens": 32768},
-                }).encode("utf-8")
+                cfg = {"temperature": 0.1 if grounded else 0.5, "maxOutputTokens": 32768}
+                if not grounded:
+                    cfg["responseMimeType"] = "application/json"
+                payload = {"contents": [{"role": "user", "parts": [{"text": prompt}]}], "generationConfig": cfg}
+                if grounded:
+                    payload["tools"] = [{"google_search": {}}]
+                body = json.dumps(payload).encode("utf-8")
                 req = urllib.request.Request(
                     f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                     data=body, headers={"Content-Type": "application/json", "x-goog-api-key": key})
                 try:
                     with urllib.request.urlopen(req, timeout=300) as r:
                         resp = json.loads(r.read().decode("utf-8"))
-                    text = resp["candidates"][0]["content"]["parts"][0]["text"]
+                    text = "".join(p.get("text", "") for p in resp["candidates"][0]["content"]["parts"])
                     text = re.sub(r"^```(?:json)?|```$", "", text.strip(), flags=re.M).strip()
+                    if grounded:
+                        text = text[text.index("{"):text.rindex("}") + 1]
                     return json.loads(text)
                 except urllib.error.HTTPError as e:
                     last = f"key {slot} {model}: HTTP {e.code}"
@@ -102,6 +109,54 @@ def ask_gemini(prompt, keys, first_slot):
             log("  every key/model failed, waiting 60 s and trying once more")
             time.sleep(60)
     raise RuntimeError(f"no Gemini key/model answered ({last})")
+
+
+# ----------------------------------------------------------------------------------------------- checking pass
+
+VERIFY_PROMPT = """तुम एक सख्त तथ्य-जाँचकर्ता हो। नीचे परीक्षा के बहुविकल्पीय प्रश्न हैं, हर एक के साथ बताया गया सही उत्तर है।
+Google Search से भरोसेमंद स्रोत (सरकारी साइट, NCERT, मानक पुस्तकें, विश्वसनीय समाचार, विश्वकोश) देखकर हर प्रश्न जाँचो।
+
+हर प्रश्न के लिए "verdict" इनमें से एक दो:
+- "ok": तुम्हें किसी भरोसेमंद स्रोत में पुष्टि मिली कि बताया गया उत्तर सही है और बाकी तीन विकल्प गलत हैं।
+- "wrong": बताया गया उत्तर गलत है (अगर सही विकल्प दिखे तो "correct" में उसका अक्षर लिखो)।
+- "ambiguous": एक से ज़्यादा विकल्प सही हो सकते हैं, या प्रश्न अधूरा/उलझा हुआ है।
+- "unsure": पुष्टि नहीं मिली, या स्रोत आपस में अलग-अलग बताते हैं।
+- "dup": इसी सूची के किसी और प्रश्न जैसा ही तथ्य पूछ रहा है ("dup_of" में उस प्रश्न का नंबर)।
+सिर्फ़ पक्की पुष्टि पर "ok" दो। अंदाज़े से "ok" मत दो।
+
+सिर्फ़ यह JSON लौटाओ:
+{{"results": [{{"n": 1, "verdict": "ok", "src": "स्रोत का छोटा नाम", "correct": "A", "dup_of": null}}]}}
+
+प्रश्न:
+{items}
+"""
+
+
+def verify_batch(batch, keys, first_slot, fake=False):
+    """batch: list of question dicts. Returns the dicts that were confirmed (with q['_src'] set); the rest are dropped."""
+    if fake:
+        rng = random.Random(batch[0]["q"])
+        kept = [q for q in batch if rng.random() > 0.2]
+        for q in kept:
+            q["_src"] = "नमूना"
+        return kept, len(batch) - len(kept)
+    items = "\n".join(
+        f"{i}. {q['q']}  A) {q['options'][0]}  B) {q['options'][1]}  C) {q['options'][2]}  D) {q['options'][3]}  -> बताया गया उत्तर: {q['answer']}"
+        for i, q in enumerate(batch, 1))
+    data = ask_gemini(VERIFY_PROMPT.format(items=items), keys, first_slot, grounded=True)
+    verdicts = {}
+    for r in data.get("results", []):
+        try:
+            verdicts[int(r["n"])] = r
+        except Exception:
+            continue
+    kept = []
+    for i, q in enumerate(batch, 1):
+        r = verdicts.get(i)
+        if r and str(r.get("verdict", "")).lower() == "ok":
+            q["_src"] = str(r.get("src") or "")[:60]
+            kept.append(q)
+    return kept, len(batch) - len(kept)
 
 
 # ----------------------------------------------------------------------------------------------- checks
@@ -223,8 +278,9 @@ def make_set(plan, row, keys, args, base_meta):
     bank = load_bank(skip_id=row["id"])
     have = []
     first_slot = ((day - 1) % 4) + 1 if row["exam"] == "gd" else ((day + 1) % 4) + 1
-    for rnd in range(1, 9):
-        n = min(25, want - len(have) + 7)
+    dropped_total = 0
+    for rnd in range(1, 13):
+        n = min(25, int((want - len(have)) * 1.5) + 6)
         prompt = build_prompt(plan, row, n, have)
         if args.dry_run:
             print(prompt)
@@ -232,22 +288,38 @@ def make_set(plan, row, keys, args, base_meta):
         log(f"  round {rnd}: asking for {n} (have {len(have)}/{want})")
         data = fake_questions(n, f"{row['id']}-{rnd}") if args.fake else ask_gemini(prompt, keys, first_slot)
         good, problems = clean(data)
-        dropped_dup = 0
+        fresh, dropped_dup = [], 0
         for q in good:
-            if len(have) >= want:
+            if len(have) + len(fresh) >= want + 10:
                 break
-            if is_duplicate(q, bank) or is_duplicate(q, [(toks(h["q"]), norm_title(h["options"]["ABCD".index(h["answer"])])) for h in have]):
+            if is_duplicate(q, bank) or is_duplicate(q, [(toks(h["q"]), norm_title(h["options"]["ABCD".index(h["answer"])])) for h in have + fresh]):
                 dropped_dup += 1
                 continue
-            have.append(q)
+            fresh.append(q)
         for p in problems[:6]:
             log("   dropped:", p)
-        log(f"  +{len(good)} valid, {dropped_dup} duplicates dropped, total {len(have)}")
+        log(f"  +{len(good)} valid, {dropped_dup} duplicates dropped, {len(fresh)} go to the fact check")
+        for i in range(0, len(fresh), 12):
+            if len(have) >= want:
+                break
+            chunk = fresh[i:i + 12]
+            if args.no_verify:
+                for q in chunk:
+                    q["_src"] = ""
+                kept, bad = chunk, 0
+            else:
+                kept, bad = verify_batch(chunk, keys, first_slot, fake=args.fake)
+                if not args.fake:
+                    time.sleep(6)
+            have.extend(kept[:want - len(have)])
+            dropped_total += bad
+            log(f"   fact check: {len(kept)} confirmed, {bad} dropped (total {len(have)}/{want})")
         if len(have) >= want:
             break
         if not args.fake:
             time.sleep(8)
-    if len(have) < int(want * 0.9):
+    log(f"  fact check dropped {dropped_total} question(s) for this set")
+    if len(have) < int(want * 0.9):  # 45 of 50
         log(f"::error::{row['id']}: only {len(have)} usable questions out of {want}. Nothing was written for this set.")
         return None
     have = balance_answers(have[:want], random.Random(row["id"]))
@@ -279,12 +351,13 @@ def make_set(plan, row, keys, args, base_meta):
         f.write(f"{ex['subtitle']} की तैयारी के लिए {len(have)} महत्वपूर्ण प्रश्न | विषय: {row['topic']}\n\n")
         f.write("इस वीडियो में:\n" + "\n".join("• " + s for s in row["subtopics"]) + "\n\n")
         f.write("हर प्रश्न का उत्तर, 3 जरूरी तथ्य और याद रखने की ट्रिक। वीडियो को सेव करें और रिवीज़न के लिए दोबारा देखें।\n")
-    med = [(i, q) for i, q in enumerate(have, 1) if q["_conf"] == "medium"]
     with open(os.path.join(args.out_dir, f"{row['id']}.check.txt"), "w", encoding="utf-8") as f:
-        f.write(f"{row['id']} {title}\nGemini ने इन {len(med)} प्रश्नों पर थोड़ा संदेह जताया। 2 मिनट में जाँच लो:\n\n")
-        for i, q in med:
-            f.write(f"Q{i}  {q['q']}\n     उत्तर ({q['answer']}): {q['options']['ABCD'.index(q['answer'])]}\n\n")
-    log(f"  wrote {path}  ({len(questions)} questions, {len(med)} to spot-check)")
+        f.write(f"{row['id']} {title}\n{len(have)} प्रश्न {'बिना जाँच के' if args.no_verify else 'Google Search से जाँचे गए'}; {dropped_total} प्रश्न जाँच में हटाए गए।\n"
+                "नीचे हर प्रश्न, उत्तर और जाँच का स्रोत है। 2 मिनट में नज़र मार लो।\n\n")
+        for i, q in enumerate(have, 1):
+            f.write(f"Q{i}  {q['q']}\n     उत्तर ({q['answer']}): {q['options']['ABCD'.index(q['answer'])]}   [{q.get('_src', '')}]\n\n")
+    med = []
+    log(f"  wrote {path}  ({len(questions)} questions, fact-checked)")
     return path
 
 
@@ -314,6 +387,7 @@ def main():
     ap.add_argument("--force", action="store_true", help="redo sets whose file already exists")
     ap.add_argument("--dry-run", action="store_true")
     ap.add_argument("--fake", action="store_true")
+    ap.add_argument("--no-verify", action="store_true", help="skip the Google-Search fact check (not recommended)")
     ap.add_argument("--made-list", default="", help="write the paths made (in upload order) to this file")
     args = ap.parse_args()
 
@@ -342,7 +416,11 @@ def main():
         if os.path.exists(path) and not args.force and not args.dry_run:
             log(f"== {sid}: {path} already exists, skipped (use --force to redo)")
             continue
-        p = make_set(plan, rows[sid], keys, args, base_meta)
+        try:
+            p = make_set(plan, rows[sid], keys, args, base_meta)
+        except Exception as e:   # e.g. the fact check could not run: never write unchecked questions, go on with the next set
+            log(f"::error::{sid} failed: {type(e).__name__}: {e}")
+            p = None
         if args.dry_run:
             return 0
         (made if p else failed).append(p or sid)
