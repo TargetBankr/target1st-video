@@ -299,10 +299,11 @@ def make_set(plan, row, keys, args, base_meta):
         for p in problems[:6]:
             log("   dropped:", p)
         log(f"  +{len(good)} valid, {dropped_dup} duplicates dropped, {len(fresh)} go to the fact check")
-        for i in range(0, len(fresh), 12):
+        step = max(1, -(-len(fresh) // max(1, -(-len(fresh) // 13))))   # even chunks of at most 13: 25 -> 13 + 12, never a lone question
+        for i in range(0, len(fresh), step):
             if len(have) >= want:
                 break
-            chunk = fresh[i:i + 12]
+            chunk = fresh[i:i + step]
             if args.no_verify:
                 for q in chunk:
                     q["_src"] = ""
