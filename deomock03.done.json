@@ -1,0 +1,815 @@
+{
+  "meta": {
+    "title": "HARTRON DEO MOCK TEST 3",
+    "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+    "channel": "Target1st",
+    "voice": "hi-IN-MadhurNeural",
+    "rate": "+0%",
+    "countdown": 1,
+    "intro": "o",
+    "outro": "o",
+    "outro_show": "देखने के लिए धन्यवाद!",
+    "theme": "royal",
+    "layout": "grid",
+    "format": "revision",
+    "tts": "gemini",
+    "checkpoint_every": 10,
+    "checkpoint_secs": 5,
+    "pronounce": {
+      "RBI": "आर बी आई",
+      "SBI": "एस बी आई",
+      "UPSC": "यू पी एस सी",
+      "GDP": "जी डी पी",
+      "CAG": "कैग",
+      "SSC": "एस एस सी",
+      "GS": "जी एस",
+      "CGL": "सी जी एल",
+      "CHSL": "सी एच एस एल",
+      "MTS": "एम टी एस",
+      "GD": "जी डी"
+    },
+    "filler_lines": [
+      "इस टॉपिक के पूरे नोट्स चाहिए? नोट्स का लिंक डिस्क्रिप्शन में है, नोट्स ज़रूर ले लीजिए।",
+      "प्रैक्टिस के लिए मॉक टेस्ट चाहिए? मॉक्स का लिंक डिस्क्रिप्शन में है, मॉक्स ज़रूर ले लीजिए।",
+      "नोट्स और मॉक्स, दोनों के लिंक डिस्क्रिप्शन में मौजूद हैं, उन्हें लेना मत भूलिए।",
+      "रिवीज़न के लिए नोट्स लीजिए, और परीक्षा जैसी प्रैक्टिस के लिए मॉक्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "जो प्रश्न अभी छूट गए, उनके नोट्स डिस्क्रिप्शन में दिए लिंक से ले लीजिए।",
+      "हर हफ्ते मॉक टेस्ट हल करने से स्कोर बढ़ता है, मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "अगर अब तक के प्रश्न सही रहे, तो मॉक्स लेकर अपना स्तर और परखिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स लेना न भूलें, लिंक डिस्क्रिप्शन में है, और अपने दोस्तों को भी बताइए।",
+      "कंप्यूटर के प्रश्नों पर पकड़ मज़बूत करनी है? तो नोट्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "वीडियो पसंद आ रहा है तो लाइक कीजिए, और नोट्स व मॉक्स के लिए डिस्क्रिप्शन का लिंक खोलिए।",
+      "मॉक टेस्ट हल करने की आदत डालिए, मॉक्स का लिंक डिस्क्रिप्शन में है, अभी ले लीजिए।",
+      "चैनल Target1st को सब्सक्राइब कीजिए, नोट्स और मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "ये पॉइंट नोट कर लीजिए, और पूरे नोट्स के लिए डिस्क्रिप्शन में दिया लिंक देखिए।",
+      "सिर्फ़ वीडियो देखना काफ़ी नहीं, मॉक्स भी हल कीजिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स ले लो, मॉक्स ले लो, दोनों के लिंक डिस्क्रिप्शन में हैं, और तैयारी में जुट जाओ।"
+    ],
+    "filler_every": [
+      7,
+      8
+    ],
+    "speech_prep": true,
+    "speech_prep_key_slot": 2,
+    "gemini_voice": "Kore",
+    "gemini_speed": 1.15,
+    "gemini_models": [
+      "gemini-3.1-flash-tts-preview",
+      "gemini-3.8-flash-tts",
+      "gemini-3.8-flash-lite-tts"
+    ],
+    "gemini_batch": 2
+  },
+  "questions": [
+    {
+      "q": "Who is known as the father of the World Wide Web?",
+      "options": [
+        "Vint Cerf",
+        "Bill Gates",
+        "Charles Babbage",
+        "Tim Berners-Lee"
+      ],
+      "answer": "D",
+      "points": [
+        "Tim Berners-Lee invented the WWW in 1989",
+        "Vint Cerf is called a father of the Internet",
+        "Charles Babbage is the father of the computer"
+      ]
+    },
+    {
+      "q": "Which was the earliest network that led to the Internet?",
+      "options": [
+        "Ethernet",
+        "ARPANET",
+        "Intranet",
+        "Extranet"
+      ],
+      "answer": "B",
+      "points": [
+        "ARPANET was developed by the US Department of Defense",
+        "It started in 1969",
+        "It used packet switching"
+      ]
+    },
+    {
+      "q": "What is an ISP?",
+      "options": [
+        "A company that provides Internet access",
+        "A type of virus",
+        "An email protocol",
+        "A file format"
+      ],
+      "answer": "A",
+      "points": [
+        "ISP means Internet Service Provider",
+        "It connects users to the Internet",
+        "Examples: Jio, Airtel, BSNL"
+      ]
+    },
+    {
+      "q": "Which of the following is a private network inside an organisation using Internet technology?",
+      "options": [
+        "Extranet",
+        "Internet",
+        "Intranet",
+        "Ethernet"
+      ],
+      "answer": "C",
+      "points": [
+        "Intranet is accessible only to organisation members",
+        "Extranet allows limited outside access",
+        "The Internet is a public global network"
+      ]
+    },
+    {
+      "q": "Which domain extension is used for government sites in India?",
+      "options": [
+        ".edu",
+        ".gov.in",
+        ".org",
+        ".mil"
+      ],
+      "answer": "B",
+      "points": [
+        ".gov.in is used by Indian government sites",
+        ".edu is for educational institutions",
+        ".org is mainly for organisations"
+      ]
+    },
+    {
+      "q": "Which email field is used to send a copy visible to all recipients?",
+      "options": [
+        "BCC",
+        "To",
+        "Subject",
+        "CC"
+      ],
+      "answer": "D",
+      "points": [
+        "CC means Carbon Copy",
+        "Everyone can see CC recipients",
+        "BCC hides them"
+      ]
+    },
+    {
+      "q": "Which protocol retrieves email and keeps it on the server for multiple devices?",
+      "options": [
+        "POP3",
+        "IMAP",
+        "SMTP",
+        "FTP"
+      ],
+      "answer": "B",
+      "points": [
+        "IMAP syncs mail across devices",
+        "POP3 usually downloads and removes mail from the server",
+        "SMTP is only for sending"
+      ]
+    },
+    {
+      "q": "What does the \"@\" symbol separate in an email address?",
+      "options": [
+        "Domain and extension",
+        "Protocol and path",
+        "Port and host",
+        "Username and domain"
+      ],
+      "answer": "D",
+      "points": [
+        "Format: username@domain.com",
+        "Left part is the user, right part is the mail server domain",
+        "Spaces are not allowed in an address"
+      ]
+    },
+    {
+      "q": "Which of the following is an example of a web server software?",
+      "options": [
+        "Notepad",
+        "Paint",
+        "Apache",
+        "WinZip"
+      ],
+      "answer": "C",
+      "points": [
+        "A web server delivers web pages to browsers",
+        "Apache, Nginx and IIS are web servers",
+        "Browser is the client, server gives the page"
+      ]
+    },
+    {
+      "q": "Which key combination reloads a web page ignoring the cache?",
+      "options": [
+        "Ctrl + F5",
+        "Ctrl + D",
+        "Ctrl + H",
+        "Ctrl + J"
+      ],
+      "answer": "A",
+      "points": [
+        "Ctrl + F5 forces a hard refresh",
+        "F5 is a normal refresh",
+        "Ctrl + D bookmarks the page"
+      ]
+    },
+    {
+      "q": "Which shortcut opens a new tab in most browsers?",
+      "options": [
+        "Ctrl + N",
+        "Ctrl + W",
+        "Ctrl + T",
+        "Ctrl + L"
+      ],
+      "answer": "C",
+      "points": [
+        "Ctrl + T opens a new tab",
+        "Ctrl + N opens a new window",
+        "Ctrl + W closes the tab"
+      ]
+    },
+    {
+      "q": "Which shortcut opens browsing history in Chrome?",
+      "options": [
+        "Ctrl + J",
+        "Ctrl + B",
+        "Ctrl + K",
+        "Ctrl + H"
+      ],
+      "answer": "D",
+      "points": [
+        "Ctrl + H opens History",
+        "Ctrl + J opens Downloads",
+        "Ctrl + Shift + N opens Incognito"
+      ]
+    },
+    {
+      "q": "What is phishing?",
+      "options": [
+        "A type of hardware",
+        "Fake messages that steal personal information",
+        "A web design tool",
+        "A file compression method"
+      ],
+      "answer": "B",
+      "points": [
+        "Phishing tricks users into sharing passwords or card details",
+        "It often uses fake emails and websites",
+        "Never click unknown links"
+      ]
+    },
+    {
+      "q": "Which of the following is the safest password practice?",
+      "options": [
+        "Use a long mix of letters, numbers and symbols",
+        "Use your name",
+        "Use 123456",
+        "Use the same password everywhere"
+      ],
+      "answer": "A",
+      "points": [
+        "Strong passwords are long and unpredictable",
+        "Use different passwords for different accounts",
+        "Enable two-factor authentication when possible"
+      ]
+    },
+    {
+      "q": "Which language is used to style web pages?",
+      "options": [
+        "SQL",
+        "Java",
+        "C",
+        "CSS"
+      ],
+      "answer": "D",
+      "points": [
+        "CSS means Cascading Style Sheets",
+        "It controls colour, layout and fonts",
+        "HTML gives structure, CSS gives style"
+      ]
+    },
+    {
+      "q": "Which HTML tag is the root element of a page?",
+      "options": [
+        "<head>",
+        "<body>",
+        "<html>",
+        "<doctype>"
+      ],
+      "answer": "C",
+      "points": [
+        "<html> wraps the entire page",
+        "It contains <head> and <body>",
+        "<!DOCTYPE html> is a declaration, not a tag"
+      ]
+    },
+    {
+      "q": "Which HTML tag defines the title shown in the browser tab?",
+      "options": [
+        "<h1>",
+        "<header>",
+        "<meta>",
+        "<title>"
+      ],
+      "answer": "D",
+      "points": [
+        "<title> goes inside <head>",
+        "It is also used by search engines",
+        "<h1> is a visible heading in the body"
+      ]
+    },
+    {
+      "q": "Which HTML tag is used for the largest part of paragraph text?",
+      "options": [
+        "<para>",
+        "<text>",
+        "<pg>",
+        "<p>"
+      ],
+      "answer": "D",
+      "points": [
+        "<p> defines a paragraph",
+        "Browsers add space before and after it",
+        "<br> only breaks the line"
+      ]
+    },
+    {
+      "q": "Which tag creates a horizontal line?",
+      "options": [
+        "<br>",
+        "<line>",
+        "<hr>",
+        "<hl>"
+      ],
+      "answer": "C",
+      "points": [
+        "<hr> draws a horizontal rule",
+        "It is an empty tag",
+        "<br> gives a line break only"
+      ]
+    },
+    {
+      "q": "Which HTML attribute sets the width of an image?",
+      "options": [
+        "size",
+        "length",
+        "width",
+        "span"
+      ],
+      "answer": "C",
+      "points": [
+        "Example: <img src=\"a.jpg\" width=\"200\">",
+        "height sets the height",
+        "CSS can also set size"
+      ]
+    },
+    {
+      "q": "Which tag is used to define a table header cell?",
+      "options": [
+        "<td>",
+        "<tr>",
+        "<thead> only",
+        "<th>"
+      ],
+      "answer": "D",
+      "points": [
+        "<th> is bold and centred by default",
+        "<td> is for normal data cells",
+        "<tr> is a row"
+      ]
+    },
+    {
+      "q": "Which HTML tag embeds a video file?",
+      "options": [
+        "<movie>",
+        "<video>",
+        "<media>",
+        "<film>"
+      ],
+      "answer": "B",
+      "points": [
+        "<video> is an HTML5 tag",
+        "It supports controls and autoplay attributes",
+        "<audio> plays sound"
+      ]
+    },
+    {
+      "q": "Which HTML5 tag defines the navigation links section?",
+      "options": [
+        "<nav>",
+        "<menu-bar>",
+        "<links>",
+        "<navigate>"
+      ],
+      "answer": "A",
+      "points": [
+        "<nav> marks a block of navigation links",
+        "<header> and <footer> are other HTML5 semantic tags",
+        "Semantic tags improve readability and SEO"
+      ]
+    },
+    {
+      "q": "Which of the following is a valid HTML comment?",
+      "options": [
+        "// comment",
+        "/* comment */",
+        "<!-- comment -->",
+        "# comment"
+      ],
+      "answer": "C",
+      "points": [
+        "HTML comments start with <!-- and end with -->",
+        "They are not shown on the page",
+        "// is a JavaScript comment"
+      ]
+    },
+    {
+      "q": "Which input type creates a checkbox?",
+      "options": [
+        "type=\"checkbox\"",
+        "type=\"check\"",
+        "type=\"tick\"",
+        "type=\"box\""
+      ],
+      "answer": "A",
+      "points": [
+        "Checkbox lets the user pick several options",
+        "type=\"radio\" allows only one choice in a group",
+        "type=\"submit\" creates a submit button"
+      ]
+    },
+    {
+      "q": "Which attribute makes a form field compulsory?",
+      "options": [
+        "mandatory",
+        "required",
+        "must",
+        "validate"
+      ],
+      "answer": "B",
+      "points": [
+        "required stops form submission if empty",
+        "It is an HTML5 attribute",
+        "Works with <input> and <select>"
+      ]
+    },
+    {
+      "q": "Which CSS selector targets an element with id \"main\"?",
+      "options": [
+        ".main",
+        "main",
+        "*main",
+        "#main"
+      ],
+      "answer": "D",
+      "points": [
+        "# selects by id",
+        ". selects by class",
+        "An id should be unique on a page"
+      ]
+    },
+    {
+      "q": "Which CSS property controls text size?",
+      "options": [
+        "text-size",
+        "font-size",
+        "font-style",
+        "text-style"
+      ],
+      "answer": "B",
+      "points": [
+        "Example: p { font-size: 16px; }",
+        "font-style sets italic or normal",
+        "font-weight sets boldness"
+      ]
+    },
+    {
+      "q": "Which JavaScript keyword declares a variable?",
+      "options": [
+        "int",
+        "var",
+        "define",
+        "dim"
+      ],
+      "answer": "B",
+      "points": [
+        "var, let and const declare variables",
+        "JavaScript is case sensitive",
+        "It runs inside the browser"
+      ]
+    },
+    {
+      "q": "Which event occurs when a user clicks an HTML element?",
+      "options": [
+        "onhover",
+        "onpress",
+        "onclick",
+        "ontouch only"
+      ],
+      "answer": "C",
+      "points": [
+        "onclick fires on a mouse click",
+        "onmouseover fires when the pointer moves over",
+        "onload fires when the page loads"
+      ]
+    },
+    {
+      "q": "Which company created JavaScript?",
+      "options": [
+        "Microsoft",
+        "Netscape",
+        "Google",
+        "Oracle"
+      ],
+      "answer": "B",
+      "points": [
+        "Brendan Eich created JavaScript at Netscape in 1995",
+        "It is not the same as Java",
+        "It is the main language of DHTML scripting"
+      ]
+    },
+    {
+      "q": "Which of these is NOT a part of DHTML?",
+      "options": [
+        "HTML",
+        "CSS",
+        "C++ compiler",
+        "JavaScript"
+      ],
+      "answer": "C",
+      "points": [
+        "DHTML = HTML + CSS + JavaScript + DOM",
+        "It changes pages without reloading from the server",
+        "C++ is not part of it"
+      ]
+    },
+    {
+      "q": "Which Excel feature keeps top rows visible while scrolling?",
+      "options": [
+        "Split Window",
+        "Hide",
+        "Protect Sheet",
+        "Freeze Panes"
+      ],
+      "answer": "D",
+      "points": [
+        "Freeze Panes is in the View tab",
+        "It keeps headings in sight",
+        "Split divides the window into parts"
+      ]
+    },
+    {
+      "q": "Which Excel shortcut inserts the current date?",
+      "options": [
+        "Ctrl + :",
+        "Ctrl + D",
+        "Ctrl + ;",
+        "Ctrl + T"
+      ],
+      "answer": "C",
+      "points": [
+        "Ctrl + ; enters today's date",
+        "Ctrl + Shift + : enters the current time",
+        "Both enter fixed values, not formulas"
+      ]
+    },
+    {
+      "q": "Which Excel function counts cells that meet a condition?",
+      "options": [
+        "COUNTIF",
+        "COUNT only",
+        "SUMIF",
+        "IFERROR"
+      ],
+      "answer": "A",
+      "points": [
+        "COUNTIF(range, condition) counts matching cells",
+        "SUMIF adds matching cells",
+        "Example: =COUNTIF(A1:A10,\">50\")"
+      ]
+    },
+    {
+      "q": "What does the Excel IF function do?",
+      "options": [
+        "Tests a condition and returns one of two values",
+        "Adds values",
+        "Sorts data",
+        "Counts cells"
+      ],
+      "answer": "A",
+      "points": [
+        "Syntax: IF(test, value_if_true, value_if_false)",
+        "Example: =IF(A1>=40,\"Pass\",\"Fail\")",
+        "Nested IFs handle many conditions"
+      ]
+    },
+    {
+      "q": "Which Excel error appears when a formula divides by zero?",
+      "options": [
+        "#VALUE!",
+        "#REF!",
+        "#DIV/0!",
+        "#NAME?"
+      ],
+      "answer": "C",
+      "points": [
+        "#DIV/0! means division by zero",
+        "#VALUE! means wrong data type",
+        "#REF! means an invalid cell reference"
+      ]
+    },
+    {
+      "q": "How many rows does a worksheet have in modern Excel?",
+      "options": [
+        "65,536",
+        "16,384",
+        "1,048,576",
+        "256"
+      ],
+      "answer": "C",
+      "points": [
+        "Excel 2007 onwards has 1,048,576 rows",
+        "It has 16,384 columns, up to column XFD",
+        "Older Excel 2003 had 65,536 rows"
+      ]
+    },
+    {
+      "q": "Which Word feature shows changes made by reviewers?",
+      "options": [
+        "Track Changes",
+        "Mail Merge",
+        "Find and Replace",
+        "Word Count"
+      ],
+      "answer": "A",
+      "points": [
+        "Track Changes is in the Review tab",
+        "Changes can be accepted or rejected",
+        "Comments allow notes beside the text"
+      ]
+    },
+    {
+      "q": "Which shortcut opens Find and Replace dialog in Word?",
+      "options": [
+        "Ctrl + F",
+        "Ctrl + H",
+        "Ctrl + G",
+        "Ctrl + J"
+      ],
+      "answer": "B",
+      "points": [
+        "Ctrl + H opens Replace",
+        "Ctrl + F opens Find",
+        "Ctrl + G opens Go To"
+      ]
+    },
+    {
+      "q": "Which Word feature adds text at the top of every page?",
+      "options": [
+        "Header",
+        "Footer",
+        "Footnote",
+        "Watermark"
+      ],
+      "answer": "A",
+      "points": [
+        "Header repeats text at the top margin",
+        "Footer repeats text at the bottom",
+        "Insert tab > Header and Footer"
+      ]
+    },
+    {
+      "q": "Which shortcut selects the entire document in Word?",
+      "options": [
+        "Ctrl + A",
+        "Ctrl + S",
+        "Ctrl + E",
+        "Ctrl + K"
+      ],
+      "answer": "A",
+      "points": [
+        "Ctrl + A selects all",
+        "Ctrl + E centres text",
+        "Ctrl + K inserts a hyperlink"
+      ]
+    },
+    {
+      "q": "Which Word feature creates a list of headings with page numbers?",
+      "options": [
+        "Index only",
+        "Bibliography",
+        "Cross-reference",
+        "Table of Contents"
+      ],
+      "answer": "D",
+      "points": [
+        "Table of Contents is in the References tab",
+        "It uses heading styles",
+        "It can update automatically"
+      ]
+    },
+    {
+      "q": "What is the default line spacing in recent MS Word versions?",
+      "options": [
+        "1.08",
+        "1.0",
+        "2.0",
+        "1.5"
+      ],
+      "answer": "A",
+      "points": [
+        "New Word versions use 1.08 line spacing",
+        "Single spacing is 1.0",
+        "Change it from the Paragraph group"
+      ]
+    },
+    {
+      "q": "Which PowerPoint feature controls how one slide moves to the next?",
+      "options": [
+        "Transition",
+        "Animation",
+        "Master",
+        "Hyperlink"
+      ],
+      "answer": "A",
+      "points": [
+        "Transitions apply between slides",
+        "Animations apply to objects on a slide",
+        "Both have their own tabs"
+      ]
+    },
+    {
+      "q": "Which PowerPoint view controls the common layout of all slides?",
+      "options": [
+        "Notes Master",
+        "Slide Master",
+        "Outline view",
+        "Reading view"
+      ],
+      "answer": "B",
+      "points": [
+        "Slide Master sets fonts, colours and logos for all slides",
+        "Change it once to update the whole deck",
+        "Find it in the View tab"
+      ]
+    },
+    {
+      "q": "Which key ends a slide show in PowerPoint?",
+      "options": [
+        "Esc",
+        "F5",
+        "Tab",
+        "Enter"
+      ],
+      "answer": "A",
+      "points": [
+        "Esc exits the slide show",
+        "F5 starts from the beginning",
+        "Shift + F5 starts from the current slide"
+      ]
+    },
+    {
+      "q": "Which Access object stores the data?",
+      "options": [
+        "Query",
+        "Form",
+        "Report",
+        "Table"
+      ],
+      "answer": "D",
+      "points": [
+        "Tables hold records in rows and fields in columns",
+        "Queries retrieve data, forms enter data",
+        "Reports present data for printing"
+      ]
+    },
+    {
+      "q": "Which file format is best for sharing a read-only document that keeps layout?",
+      "options": [
+        "TXT",
+        "PDF",
+        "BMP",
+        "CSV"
+      ],
+      "answer": "B",
+      "points": [
+        "PDF keeps layout the same on all devices",
+        "It was developed by Adobe",
+        "CSV stores comma separated values"
+      ]
+    },
+    {
+      "q": "Which of the following is a cloud storage service?",
+      "options": [
+        "Notepad",
+        "Paint",
+        "Calculator",
+        "Google Drive"
+      ],
+      "answer": "D",
+      "points": [
+        "Cloud storage keeps files on remote servers",
+        "Dropbox and OneDrive are also cloud storage",
+        "Files can be reached from any device with Internet"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,815 @@
+{
+  "meta": {
+    "title": "HARTRON DEO MOCK TEST 4",
+    "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+    "channel": "Target1st",
+    "voice": "hi-IN-MadhurNeural",
+    "rate": "+0%",
+    "countdown": 1,
+    "intro": "o",
+    "outro": "o",
+    "outro_show": "देखने के लिए धन्यवाद!",
+    "theme": "royal",
+    "layout": "grid",
+    "format": "revision",
+    "tts": "gemini",
+    "checkpoint_every": 10,
+    "checkpoint_secs": 5,
+    "pronounce": {
+      "RBI": "आर बी आई",
+      "SBI": "एस बी आई",
+      "UPSC": "यू पी एस सी",
+      "GDP": "जी डी पी",
+      "CAG": "कैग",
+      "SSC": "एस एस सी",
+      "GS": "जी एस",
+      "CGL": "सी जी एल",
+      "CHSL": "सी एच एस एल",
+      "MTS": "एम टी एस",
+      "GD": "जी डी"
+    },
+    "filler_lines": [
+      "इस टॉपिक के पूरे नोट्स चाहिए? नोट्स का लिंक डिस्क्रिप्शन में है, नोट्स ज़रूर ले लीजिए।",
+      "प्रैक्टिस के लिए मॉक टेस्ट चाहिए? मॉक्स का लिंक डिस्क्रिप्शन में है, मॉक्स ज़रूर ले लीजिए।",
+      "नोट्स और मॉक्स, दोनों के लिंक डिस्क्रिप्शन में मौजूद हैं, उन्हें लेना मत भूलिए।",
+      "रिवीज़न के लिए नोट्स लीजिए, और परीक्षा जैसी प्रैक्टिस के लिए मॉक्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "जो प्रश्न अभी छूट गए, उनके नोट्स डिस्क्रिप्शन में दिए लिंक से ले लीजिए।",
+      "हर हफ्ते मॉक टेस्ट हल करने से स्कोर बढ़ता है, मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "अगर अब तक के प्रश्न सही रहे, तो मॉक्स लेकर अपना स्तर और परखिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स लेना न भूलें, लिंक डिस्क्रिप्शन में है, और अपने दोस्तों को भी बताइए।",
+      "कंप्यूटर के प्रश्नों पर पकड़ मज़बूत करनी है? तो नोट्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "वीडियो पसंद आ रहा है तो लाइक कीजिए, और नोट्स व मॉक्स के लिए डिस्क्रिप्शन का लिंक खोलिए।",
+      "मॉक टेस्ट हल करने की आदत डालिए, मॉक्स का लिंक डिस्क्रिप्शन में है, अभी ले लीजिए।",
+      "चैनल Target1st को सब्सक्राइब कीजिए, नोट्स और मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "ये पॉइंट नोट कर लीजिए, और पूरे नोट्स के लिए डिस्क्रिप्शन में दिया लिंक देखिए।",
+      "सिर्फ़ वीडियो देखना काफ़ी नहीं, मॉक्स भी हल कीजिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स ले लो, मॉक्स ले लो, दोनों के लिंक डिस्क्रिप्शन में हैं, और तैयारी में जुट जाओ।"
+    ],
+    "filler_every": [
+      7,
+      8
+    ],
+    "speech_prep": true,
+    "speech_prep_key_slot": 2,
+    "gemini_voice": "Kore",
+    "gemini_speed": 1.15,
+    "gemini_models": [
+      "gemini-3.1-flash-tts-preview",
+      "gemini-3.8-flash-tts",
+      "gemini-3.8-flash-lite-tts"
+    ],
+    "gemini_batch": 2
+  },
+  "questions": [
+    {
+      "q": "Which generation of computers used integrated circuits (ICs)?",
+      "options": [
+        "First generation",
+        "Third generation",
+        "Second generation",
+        "Fourth generation"
+      ],
+      "answer": "B",
+      "points": [
+        "1st: vacuum tubes, 2nd: transistors, 3rd: ICs",
+        "4th generation used microprocessors",
+        "5th generation is based on AI"
+      ]
+    },
+    {
+      "q": "Who is called the father of the computer?",
+      "options": [
+        "Alan Turing",
+        "Bill Gates",
+        "Charles Babbage",
+        "Steve Jobs"
+      ],
+      "answer": "C",
+      "points": [
+        "Charles Babbage designed the Analytical Engine",
+        "Alan Turing is father of theoretical computer science",
+        "Bill Gates co-founded Microsoft"
+      ]
+    },
+    {
+      "q": "Which of the following is an example of an optical storage device?",
+      "options": [
+        "CD-ROM",
+        "Hard disk",
+        "Pen drive",
+        "Floppy disk"
+      ],
+      "answer": "A",
+      "points": [
+        "Optical discs are read by laser light",
+        "CD, DVD and Blu-ray are optical media",
+        "Hard disk and floppy are magnetic"
+      ]
+    },
+    {
+      "q": "Which port is mostly used to connect a pen drive?",
+      "options": [
+        "VGA",
+        "USB",
+        "HDMI",
+        "PS/2"
+      ],
+      "answer": "B",
+      "points": [
+        "USB means Universal Serial Bus",
+        "It supports plug and play",
+        "USB 3.0 is faster than USB 2.0"
+      ]
+    },
+    {
+      "q": "Which computer language is directly understood by the CPU?",
+      "options": [
+        "Assembly language",
+        "Machine language",
+        "C language",
+        "Python"
+      ],
+      "answer": "B",
+      "points": [
+        "Machine language is made of 0s and 1s",
+        "Assembly needs an assembler",
+        "High-level languages need a compiler or interpreter"
+      ]
+    },
+    {
+      "q": "Which translator converts a whole program into machine code at once?",
+      "options": [
+        "Interpreter",
+        "Assembler",
+        "Compiler",
+        "Debugger"
+      ],
+      "answer": "C",
+      "points": [
+        "Compiler translates the whole program together",
+        "Interpreter translates line by line",
+        "Assembler converts assembly into machine code"
+      ]
+    },
+    {
+      "q": "Which Windows tool shows running processes and CPU usage?",
+      "options": [
+        "Notepad",
+        "Task Manager",
+        "Calculator",
+        "Paint"
+      ],
+      "answer": "B",
+      "points": [
+        "Task Manager shows processes, performance and startup apps",
+        "It can end a not-responding program",
+        "Open it with Ctrl + Shift + Esc"
+      ]
+    },
+    {
+      "q": "Which folder stores deleted files temporarily in Windows?",
+      "options": [
+        "Documents",
+        "Downloads",
+        "Recycle Bin",
+        "Temp"
+      ],
+      "answer": "C",
+      "points": [
+        "Deleted files wait in the Recycle Bin",
+        "They can be restored from there",
+        "Emptying it deletes them permanently"
+      ]
+    },
+    {
+      "q": "What does a \"pixel\" mean?",
+      "options": [
+        "Smallest unit of a digital image",
+        "A type of memory",
+        "A network cable",
+        "A keyboard key"
+      ],
+      "answer": "A",
+      "points": [
+        "Pixel = Picture Element",
+        "More pixels give a sharper image",
+        "Resolution is the number of pixels"
+      ]
+    },
+    {
+      "q": "Which Windows key combination takes a screenshot of the full screen to the clipboard?",
+      "options": [
+        "Ctrl + P",
+        "Alt + S",
+        "Ctrl + Insert",
+        "Print Screen"
+      ],
+      "answer": "D",
+      "points": [
+        "Print Screen copies the full screen",
+        "Alt + Print Screen copies the active window",
+        "Win + Shift + S opens the snipping tool"
+      ]
+    },
+    {
+      "q": "Which file extension is used for a compressed archive?",
+      "options": [
+        ".exe",
+        ".zip",
+        ".txt",
+        ".mp3"
+      ],
+      "answer": "B",
+      "points": [
+        ".zip files hold compressed files",
+        ".rar is another archive format",
+        ".exe is an executable program"
+      ]
+    },
+    {
+      "q": "Which of these is an audio file format?",
+      "options": [
+        ".jpg",
+        ".mp3",
+        ".pdf",
+        ".html"
+      ],
+      "answer": "B",
+      "points": [
+        ".mp3 is a compressed audio format",
+        ".wav is another audio format",
+        ".jpg and .png are images"
+      ]
+    },
+    {
+      "q": "Which device is used to capture a printed page as a digital image?",
+      "options": [
+        "Plotter",
+        "Projector",
+        "Scanner",
+        "Speaker"
+      ],
+      "answer": "C",
+      "points": [
+        "A scanner converts paper into digital form",
+        "OCR can turn scanned text into editable text",
+        "Plotter prints large drawings"
+      ]
+    },
+    {
+      "q": "Which storage medium is fastest?",
+      "options": [
+        "HDD",
+        "CD",
+        "SSD",
+        "Floppy"
+      ],
+      "answer": "C",
+      "points": [
+        "SSD has no moving parts",
+        "It is faster and quieter than HDD",
+        "HDD uses spinning magnetic platters"
+      ]
+    },
+    {
+      "q": "Which type of software is Linux?",
+      "options": [
+        "Shareware",
+        "Freeware only",
+        "Proprietary",
+        "Open source"
+      ],
+      "answer": "D",
+      "points": [
+        "Open source code can be viewed and modified",
+        "Linux was created by Linus Torvalds",
+        "Windows is proprietary"
+      ]
+    },
+    {
+      "q": "How many bytes are in 1 KB (as per computer standard)?",
+      "options": [
+        "1000",
+        "1024",
+        "512",
+        "2048"
+      ],
+      "answer": "B",
+      "points": [
+        "1 KB = 1024 bytes",
+        "1 MB = 1024 KB",
+        "1 GB = 1024 MB"
+      ]
+    },
+    {
+      "q": "Which layer of the OSI model deals with end-to-end delivery and TCP/UDP?",
+      "options": [
+        "Network layer",
+        "Physical layer",
+        "Application layer",
+        "Transport layer"
+      ],
+      "answer": "D",
+      "points": [
+        "Transport layer is Layer 4",
+        "TCP is reliable, UDP is faster but unreliable",
+        "Port numbers work at this layer"
+      ]
+    },
+    {
+      "q": "How many layers does the OSI model have?",
+      "options": [
+        "5",
+        "4",
+        "7",
+        "6"
+      ],
+      "answer": "C",
+      "points": [
+        "OSI has 7 layers",
+        "Physical, Data Link, Network, Transport, Session, Presentation, Application",
+        "TCP/IP model has 4 layers"
+      ]
+    },
+    {
+      "q": "Which layer of OSI is closest to the user?",
+      "options": [
+        "Physical layer",
+        "Network layer",
+        "Application layer",
+        "Data Link layer"
+      ],
+      "answer": "C",
+      "points": [
+        "Layer 7 is the Application layer",
+        "It gives services like HTTP, FTP and SMTP",
+        "Layer 1 is the Physical layer"
+      ]
+    },
+    {
+      "q": "Which device amplifies and regenerates a weak signal?",
+      "options": [
+        "Router",
+        "Repeater",
+        "Gateway",
+        "Bridge"
+      ],
+      "answer": "B",
+      "points": [
+        "A repeater regenerates a weakened signal",
+        "It works at the Physical layer",
+        "It extends the network distance"
+      ]
+    },
+    {
+      "q": "Which device connects two different types of networks with different protocols?",
+      "options": [
+        "Hub",
+        "Gateway",
+        "Repeater",
+        "Switch"
+      ],
+      "answer": "B",
+      "points": [
+        "A gateway translates between protocols",
+        "It can work at any OSI layer",
+        "Router connects similar networks"
+      ]
+    },
+    {
+      "q": "Which wireless technology is used for short-range device connection?",
+      "options": [
+        "Bluetooth",
+        "Wi-Fi only",
+        "Satellite",
+        "Ethernet"
+      ],
+      "answer": "A",
+      "points": [
+        "Bluetooth works over short distances",
+        "It is used for headsets and file sharing",
+        "Wi-Fi covers a larger range"
+      ]
+    },
+    {
+      "q": "Which IEEE standard is used for Wi-Fi?",
+      "options": [
+        "802.11",
+        "802.3",
+        "802.5",
+        "802.16"
+      ],
+      "answer": "A",
+      "points": [
+        "802.11 defines Wi-Fi",
+        "802.3 is Ethernet",
+        "802.16 is WiMAX"
+      ]
+    },
+    {
+      "q": "What is the loopback IP address?",
+      "options": [
+        "192.168.0.1",
+        "127.0.0.1",
+        "10.0.0.1",
+        "255.255.255.0"
+      ],
+      "answer": "B",
+      "points": [
+        "127.0.0.1 points to your own computer",
+        "It is also called localhost",
+        "It is used for testing network software"
+      ]
+    },
+    {
+      "q": "Which private IP range belongs to Class C?",
+      "options": [
+        "10.0.0.0 to 10.255.255.255",
+        "172.16.0.0 to 172.31.255.255",
+        "224.0.0.0 to 239.255.255.255",
+        "192.168.0.0 to 192.168.255.255"
+      ],
+      "answer": "D",
+      "points": [
+        "Class C private range: 192.168.x.x",
+        "Class A private: 10.x.x.x",
+        "Class B private: 172.16 to 172.31"
+      ]
+    },
+    {
+      "q": "Which protocol is connectionless and fast but unreliable?",
+      "options": [
+        "TCP",
+        "FTP",
+        "HTTP",
+        "UDP"
+      ],
+      "answer": "D",
+      "points": [
+        "UDP does not set up a connection",
+        "It is used for streaming and DNS queries",
+        "TCP is reliable and connection oriented"
+      ]
+    },
+    {
+      "q": "Which switching technique is used in the Internet?",
+      "options": [
+        "Packet switching",
+        "Circuit switching",
+        "Message switching only",
+        "Line switching"
+      ],
+      "answer": "A",
+      "points": [
+        "Data is divided into small packets",
+        "Packets can take different routes",
+        "Telephone networks used circuit switching"
+      ]
+    },
+    {
+      "q": "Which topology is the most fault tolerant but costly?",
+      "options": [
+        "Mesh",
+        "Star",
+        "Bus",
+        "Ring"
+      ],
+      "answer": "A",
+      "points": [
+        "Every device connects to every other device",
+        "Cables needed = n(n-1)/2",
+        "Failure of one link does not stop the network"
+      ]
+    },
+    {
+      "q": "Which Windows command shows the path to a destination hop by hop?",
+      "options": [
+        "ping",
+        "ipconfig",
+        "nslookup",
+        "tracert"
+      ],
+      "answer": "D",
+      "points": [
+        "tracert shows every router on the route",
+        "nslookup queries DNS",
+        "ping tests whether a host replies"
+      ]
+    },
+    {
+      "q": "Which command in Command Prompt lists files in a folder?",
+      "options": [
+        "ls",
+        "list",
+        "show",
+        "dir"
+      ],
+      "answer": "D",
+      "points": [
+        "dir lists files and folders in Windows",
+        "ls is the Linux command",
+        "cls clears the screen"
+      ]
+    },
+    {
+      "q": "Which command clears the Command Prompt screen?",
+      "options": [
+        "cls",
+        "clear",
+        "clr",
+        "del"
+      ],
+      "answer": "A",
+      "points": [
+        "cls clears the Windows Command Prompt",
+        "clear is used in Linux terminals",
+        "del deletes files"
+      ]
+    },
+    {
+      "q": "Which HTML tag is used to define an internal style sheet?",
+      "options": [
+        "<css>",
+        "<script>",
+        "<style>",
+        "<link>"
+      ],
+      "answer": "C",
+      "points": [
+        "<style> holds CSS inside the page",
+        "<link> connects an external CSS file",
+        "<script> holds JavaScript"
+      ]
+    },
+    {
+      "q": "Which HTML tag is used to include JavaScript?",
+      "options": [
+        "<script>",
+        "<js>",
+        "<javascript>",
+        "<code>"
+      ],
+      "answer": "A",
+      "points": [
+        "<script> holds or links JavaScript",
+        "The src attribute links an external file",
+        "It can be placed in head or body"
+      ]
+    },
+    {
+      "q": "Which HTML5 tag holds the introductory content of a page or section?",
+      "options": [
+        "<aside>",
+        "<footer>",
+        "<section> only",
+        "<header>"
+      ],
+      "answer": "D",
+      "points": [
+        "<header> holds introductory content",
+        "<footer> holds footer content",
+        "<aside> holds side content"
+      ]
+    },
+    {
+      "q": "Which HTML attribute gives an element a unique identifier?",
+      "options": [
+        "id",
+        "class",
+        "name only",
+        "key"
+      ],
+      "answer": "A",
+      "points": [
+        "id should be unique in a page",
+        "class can be shared by many elements",
+        "CSS and JavaScript use id to find elements"
+      ]
+    },
+    {
+      "q": "Which attribute opens a link in a new tab?",
+      "options": [
+        "target=\"_new\"",
+        "open=\"new\"",
+        "target=\"_blank\"",
+        "href=\"_blank\""
+      ],
+      "answer": "C",
+      "points": [
+        "target=\"_blank\" opens the link in a new tab",
+        "_self opens in the same tab",
+        "It is used with the <a> tag"
+      ]
+    },
+    {
+      "q": "Which of these is a block-level HTML element?",
+      "options": [
+        "<div>",
+        "<span>",
+        "<a>",
+        "<b>"
+      ],
+      "answer": "A",
+      "points": [
+        "<div> starts on a new line and takes full width",
+        "<span> is inline",
+        "<p> and <h1> are also block-level"
+      ]
+    },
+    {
+      "q": "Which CSS property adds space inside an element border?",
+      "options": [
+        "margin",
+        "border-spacing",
+        "spacing",
+        "padding"
+      ],
+      "answer": "D",
+      "points": [
+        "Padding is space between content and border",
+        "Margin is space outside the border",
+        "Box model: content, padding, border, margin"
+      ]
+    },
+    {
+      "q": "Which JavaScript function prints output in the browser console?",
+      "options": [
+        "print()",
+        "console.log()",
+        "echo()",
+        "write()"
+      ],
+      "answer": "B",
+      "points": [
+        "console.log() writes to the console",
+        "document.write() writes into the page",
+        "alert() shows a pop-up"
+      ]
+    },
+    {
+      "q": "Which operator is used for strict equality in JavaScript?",
+      "options": [
+        "==",
+        "=",
+        "===",
+        "!="
+      ],
+      "answer": "C",
+      "points": [
+        "=== checks value and type",
+        "== checks value only",
+        "= is the assignment operator"
+      ]
+    },
+    {
+      "q": "In Excel, which function joins text from two cells?",
+      "options": [
+        "JOIN only",
+        "MERGE",
+        "CONCATENATE (or CONCAT)",
+        "TEXTADD"
+      ],
+      "answer": "C",
+      "points": [
+        "CONCATENATE joins text strings",
+        "The & operator also joins text",
+        "Example: =A1&\" \"&B1"
+      ]
+    },
+    {
+      "q": "Which Excel function returns the number of characters in a text?",
+      "options": [
+        "COUNT",
+        "SIZE",
+        "CHAR",
+        "LEN"
+      ],
+      "answer": "D",
+      "points": [
+        "LEN counts characters including spaces",
+        "Example: =LEN(\"Hello\") gives 5",
+        "UPPER changes text to capital letters"
+      ]
+    },
+    {
+      "q": "Which Excel function rounds a number to specified digits?",
+      "options": [
+        "INT only",
+        "TRIM",
+        "FIX only",
+        "ROUND"
+      ],
+      "answer": "D",
+      "points": [
+        "=ROUND(3.456,1) gives 3.5",
+        "INT gives the integer part",
+        "TRIM removes extra spaces"
+      ]
+    },
+    {
+      "q": "Which Excel feature restricts what a user can type in a cell?",
+      "options": [
+        "Conditional Formatting",
+        "Data Validation",
+        "Sort",
+        "Filter"
+      ],
+      "answer": "B",
+      "points": [
+        "Data Validation is in the Data tab",
+        "It can allow only a list or number range",
+        "Conditional Formatting changes cell look by rule"
+      ]
+    },
+    {
+      "q": "Which Excel chart is best to show parts of a whole?",
+      "options": [
+        "Pie chart",
+        "Line chart",
+        "Scatter chart",
+        "Histogram"
+      ],
+      "answer": "A",
+      "points": [
+        "Pie chart shows each part as a slice of 100 percent",
+        "Line chart shows trends over time",
+        "Column chart compares categories"
+      ]
+    },
+    {
+      "q": "Which shortcut in Excel selects the entire row?",
+      "options": [
+        "Ctrl + Space",
+        "Alt + Space",
+        "Ctrl + R",
+        "Shift + Space"
+      ],
+      "answer": "D",
+      "points": [
+        "Shift + Space selects the row",
+        "Ctrl + Space selects the column",
+        "Ctrl + A selects the whole sheet"
+      ]
+    },
+    {
+      "q": "Which Word feature is used to insert a symbol such as © ?",
+      "options": [
+        "Review > Spelling",
+        "View > Zoom",
+        "Insert > Symbol",
+        "Layout > Margins"
+      ],
+      "answer": "C",
+      "points": [
+        "Symbols are found in the Insert tab",
+        "Ctrl + Alt + C also gives ©",
+        "Equation inserts math expressions"
+      ]
+    },
+    {
+      "q": "What is the shortcut to insert a page break in Word?",
+      "options": [
+        "Ctrl + Enter",
+        "Shift + Enter",
+        "Alt + Enter",
+        "Ctrl + Tab"
+      ],
+      "answer": "A",
+      "points": [
+        "Ctrl + Enter starts a new page",
+        "Shift + Enter makes a line break",
+        "Enter starts a new paragraph"
+      ]
+    },
+    {
+      "q": "Which Word view shows the document exactly as it will print?",
+      "options": [
+        "Draft",
+        "Outline",
+        "Web Layout",
+        "Print Layout"
+      ],
+      "answer": "D",
+      "points": [
+        "Print Layout shows pages, margins and headers",
+        "Draft shows only plain text",
+        "Outline helps organise headings"
+      ]
+    },
+    {
+      "q": "Which unit measures printer speed for laser printers?",
+      "options": [
+        "Pages per minute (PPM)",
+        "Characters per second",
+        "Dots per inch",
+        "Bits per second"
+      ],
+      "answer": "A",
+      "points": [
+        "Laser printers are rated in PPM",
+        "Dot matrix printers use CPS",
+        "DPI measures print resolution"
+      ]
+    }
+  ]
+}
