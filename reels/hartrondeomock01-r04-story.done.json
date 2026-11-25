@@ -1,0 +1,53 @@
+{
+ "meta": {
+  "title": "HARTRON DEO MOCK TEST 1 (50 Questions) · भाग 4",
+  "subtitle": "Windows, Networking, Computer Fundamentals, Internet, HTML and MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "क्या आपको सही जवाब पता है? आख़िर तक देखिए।",
+  "theme": "classic",
+  "layout": "list",
+  "format": "revision",
+  "tts": "gemini",
+  "key_slot": 3,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "speech_prep": true,
+  "speech_prep_key_slot": 2,
+  "long_fx": true,
+  "checkpoint_every": 10,
+  "checkpoint_secs": 9,
+  "aspect": "reel",
+  "max_points": 2,
+  "filler_lines": [],
+  "intro_show": "क्या आपको सही जवाब पता है?",
+  "intro_small": "अपनी तैयारी जाँचिए",
+  "promo": true,
+  "reel_of": "4/5",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "Which layer of the OSI model is responsible for routing of packets?",
+   "options": [
+    "Network layer",
+    "Transport layer",
+    "Data Link layer",
+    "Session layer"
+   ],
+   "answer": "A",
+   "points": [
+    "The Network layer is layer 3 and uses IP addresses",
+    "The Data Link layer uses MAC addresses",
+    "The Transport layer provides end to end delivery"
+   ],
+   "trick": "Network layer = Navigate with IP."
+  }
+ ]
+}

@@ -1,0 +1,198 @@
+{
+ "meta": {
+  "title": "HARTRON DEO MOCK TEST 1 (50 Questions) · भाग 1",
+  "subtitle": "Windows, Networking, Computer Fundamentals, Internet, HTML and MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "10 में से कितने सही कर पाएँगे? आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "classic",
+  "layout": "list",
+  "format": "revision",
+  "tts": "gemini",
+  "key_slot": 3,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "speech_prep": true,
+  "speech_prep_key_slot": 2,
+  "long_fx": true,
+  "checkpoint_every": 10,
+  "checkpoint_secs": 9,
+  "aspect": "reel",
+  "max_points": 2,
+  "filler_lines": [],
+  "intro_show": "10 में से कितने सही कर पाएँगे?",
+  "intro_small": "जवाब सोचिए, फिर स्कोर कमेंट कीजिए",
+  "promo": true,
+  "reel_of": "1/5"
+ },
+ "questions": [
+  {
+   "q": "Which part of the computer is called its 'brain'?",
+   "options": [
+    "CPU",
+    "Monitor",
+    "Keyboard",
+    "Mouse"
+   ],
+   "answer": "A",
+   "points": [
+    "CPU stands for Central Processing Unit",
+    "It contains the ALU, control unit and registers",
+    "It executes instructions and controls all other parts"
+   ],
+   "trick": "ALU calculates, CU controls, registers remember."
+  },
+  {
+   "q": "Which of the following is a volatile memory?",
+   "options": [
+    "ROM",
+    "Hard disk",
+    "Pen drive",
+    "RAM"
+   ],
+   "answer": "D",
+   "points": [
+    "RAM loses its data when the power goes off",
+    "ROM and hard disk are non-volatile",
+    "RAM is the main working memory of a computer"
+   ],
+   "trick": "RAM = Remembers Always Momentarily only."
+  },
+  {
+   "q": "Which shortcut key is used to paste copied content in Windows?",
+   "options": [
+    "Ctrl+C",
+    "Ctrl+X",
+    "Ctrl+V",
+    "Ctrl+Z"
+   ],
+   "answer": "C",
+   "points": [
+    "Ctrl+V pastes the content from the clipboard",
+    "Ctrl+C copies and Ctrl+X cuts",
+    "Ctrl+Z undoes the last action"
+   ],
+   "trick": "V looks like an arrow dropping content down."
+  },
+  {
+   "q": "What is the full form of HTML?",
+   "options": [
+    "HyperText Machine Language",
+    "High Text Markup Language",
+    "HyperTool Markup Language",
+    "HyperText Markup Language"
+   ],
+   "answer": "D",
+   "points": [
+    "HTML is the standard language for creating web pages",
+    "It uses tags written inside angle brackets",
+    "It was created by Tim Berners-Lee"
+   ],
+   "trick": "H-T-M-L = HyperText Markup Language, not a programming language."
+  },
+  {
+   "q": "What is the full form of LAN?",
+   "options": [
+    "Large Area Network",
+    "Logical Area Network",
+    "Local Area Network",
+    "Linked Area Network"
+   ],
+   "answer": "C",
+   "points": [
+    "A LAN connects computers in a small area like an office",
+    "MAN covers a city and WAN covers a country or world",
+    "Ethernet is the most common LAN technology"
+   ],
+   "trick": "LAN < MAN < WAN in size."
+  },
+  {
+   "q": "How many bits make one byte?",
+   "options": [
+    "8",
+    "4",
+    "16",
+    "10"
+   ],
+   "answer": "A",
+   "points": [
+    "1 byte = 8 bits",
+    "4 bits make one nibble",
+    "1 KB = 1024 bytes"
+   ],
+   "trick": "Byte = Bit x 8, a nibble is half of it."
+  },
+  {
+   "q": "What is the default file extension of a Microsoft Word 2016 document?",
+   "options": [
+    ".doc",
+    ".txt",
+    ".dotx",
+    ".docx"
+   ],
+   "answer": "D",
+   "points": [
+    "The .docx format started with Word 2007",
+    "Word 97 to 2003 used the .doc extension",
+    "A .dotx file is a Word template"
+   ],
+   "trick": "the extra x means XML based."
+  },
+  {
+   "q": "In Windows, where do deleted files go first by default?",
+   "options": [
+    "Recycle Bin",
+    "Control Panel",
+    "My Computer",
+    "Clipboard"
+   ],
+   "answer": "A",
+   "points": [
+    "Deleted files stay in the Recycle Bin until it is emptied",
+    "Shift+Delete removes a file permanently",
+    "Files can be restored from the Recycle Bin"
+   ],
+   "trick": "Delete = Recycle, Shift+Delete = Gone."
+  },
+  {
+   "q": "Which HTML tag creates the largest heading?",
+   "options": [
+    "<h1>",
+    "<h6>",
+    "<head>",
+    "<heading>"
+   ],
+   "answer": "A",
+   "points": [
+    "<h1> is the largest and <h6> is the smallest heading",
+    "<head> holds page information, not a heading",
+    "Headings run from <h1> to <h6>"
+   ],
+   "trick": "h1 = number one = biggest."
+  },
+  {
+   "q": "Which function is used to add numbers in MS Excel?",
+   "options": [
+    "ADD",
+    "SUM",
+    "TOTAL",
+    "PLUS"
+   ],
+   "answer": "B",
+   "points": [
+    "SUM adds all numbers in a range",
+    "Example: =SUM(A1:A5)",
+    "Every Excel formula starts with the = sign"
+   ],
+   "trick": "SUM = Sum Up Many."
+  }
+ ]
+}

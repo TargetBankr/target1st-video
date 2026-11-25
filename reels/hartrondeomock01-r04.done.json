@@ -1,0 +1,198 @@
+{
+ "meta": {
+  "title": "HARTRON DEO MOCK TEST 1 (50 Questions) · भाग 4",
+  "subtitle": "Windows, Networking, Computer Fundamentals, Internet, HTML and MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "परीक्षा जैसे 10 प्रश्न, तैयार हैं? आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "classic",
+  "layout": "list",
+  "format": "revision",
+  "tts": "gemini",
+  "key_slot": 3,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "speech_prep": true,
+  "speech_prep_key_slot": 2,
+  "long_fx": true,
+  "checkpoint_every": 10,
+  "checkpoint_secs": 9,
+  "aspect": "reel",
+  "max_points": 2,
+  "filler_lines": [],
+  "intro_show": "परीक्षा जैसे 10 प्रश्न, तैयार हैं?",
+  "intro_small": "जवाब सोचिए · स्कोर बताइए",
+  "promo": true,
+  "reel_of": "4/5"
+ },
+ "questions": [
+  {
+   "q": "Which layer of the OSI model is responsible for routing of packets?",
+   "options": [
+    "Network layer",
+    "Transport layer",
+    "Data Link layer",
+    "Session layer"
+   ],
+   "answer": "A",
+   "points": [
+    "The Network layer is layer 3 and uses IP addresses",
+    "The Data Link layer uses MAC addresses",
+    "The Transport layer provides end to end delivery"
+   ],
+   "trick": "Network layer = Navigate with IP."
+  },
+  {
+   "q": "Which HTML tag is used to create a hyperlink?",
+   "options": [
+    "<link>",
+    "<href>",
+    "<url>",
+    "<a>"
+   ],
+   "answer": "D",
+   "points": [
+    "The <a> anchor tag creates a link",
+    "The href attribute holds the destination address",
+    "Example: <a href=\"page.html\">Click</a>"
+   ],
+   "trick": "a = anchor, href = where to go."
+  },
+  {
+   "q": "Which Excel function returns the largest value in a range?",
+   "options": [
+    "MAX",
+    "HIGH",
+    "TOP",
+    "BIG"
+   ],
+   "answer": "A",
+   "points": [
+    "MAX returns the highest number in the range",
+    "MIN returns the lowest number",
+    "Example: =MAX(B2:B10)"
+   ],
+   "trick": "MAX = maximum."
+  },
+  {
+   "q": "Which file system is the default for modern Windows installations?",
+   "options": [
+    "FAT32",
+    "ext4",
+    "NTFS",
+    "HFS+"
+   ],
+   "answer": "C",
+   "points": [
+    "NTFS supports large files, security and compression",
+    "FAT32 cannot store a single file above 4 GB",
+    "ext4 is used in Linux"
+   ],
+   "trick": "NT = New Technology."
+  },
+  {
+   "q": "What is the binary equivalent of the decimal number 10?",
+   "options": [
+    "1001",
+    "1100",
+    "1110",
+    "1010"
+   ],
+   "answer": "D",
+   "points": [
+    "10 = 8 + 2, so bits 8 and 2 are on",
+    "Place values run 8, 4, 2, 1",
+    "9 is 1001 and 12 is 1100"
+   ],
+   "trick": "write 8 4 2 1 and switch on 8 and 2."
+  },
+  {
+   "q": "What is the default port number of the FTP control connection?",
+   "options": [
+    "22",
+    "21",
+    "23",
+    "25"
+   ],
+   "answer": "B",
+   "points": [
+    "FTP uses port 21 for commands",
+    "22 is SSH, 23 is Telnet and 25 is SMTP",
+    "FTP transfers files between computers"
+   ],
+   "trick": "FTP = 21, like the 21 gun salute for files."
+  },
+  {
+   "q": "What does CSS stand for?",
+   "options": [
+    "Creative Style Sheets",
+    "Computer Style Sheets",
+    "Cascading Style Sheets",
+    "Colorful Style Sheets"
+   ],
+   "answer": "C",
+   "points": [
+    "CSS controls the look and layout of web pages",
+    "It separates design from the HTML content",
+    "CSS can be inline, internal or external"
+   ],
+   "trick": "Cascading means styles flow from top to bottom."
+  },
+  {
+   "q": "Which Excel function looks up a value in the first column of a table and returns a value from another column?",
+   "options": [
+    "HLOOKUP",
+    "VLOOKUP",
+    "COUNTIF",
+    "ROUND"
+   ],
+   "answer": "B",
+   "points": [
+    "VLOOKUP searches vertically down the first column",
+    "HLOOKUP searches across the first row",
+    "Example: =VLOOKUP(A2,A1:C10,3,FALSE)"
+   ],
+   "trick": "V = Vertical."
+  },
+  {
+   "q": "Which command in Command Prompt shows the IP configuration of a Windows computer?",
+   "options": [
+    "ipconfig",
+    "ifconfig",
+    "ping",
+    "tracert"
+   ],
+   "answer": "A",
+   "points": [
+    "ipconfig shows IP address, subnet mask and gateway",
+    "ifconfig is the Linux equivalent",
+    "ping tests whether another host is reachable"
+   ],
+   "trick": "Windows = ipconfig, Linux = ifconfig."
+  },
+  {
+   "q": "Which protocol converts domain names into IP addresses?",
+   "options": [
+    "DHCP",
+    "DNS",
+    "ARP",
+    "SNMP"
+   ],
+   "answer": "B",
+   "points": [
+    "DNS works like the phonebook of the internet",
+    "DHCP assigns IP addresses automatically",
+    "ARP finds the MAC address for an IP"
+   ],
+   "trick": "DNS = Domain Name to Number."
+  }
+ ]
+}

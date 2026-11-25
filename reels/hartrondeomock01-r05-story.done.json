@@ -1,0 +1,53 @@
+{
+ "meta": {
+  "title": "HARTRON DEO MOCK TEST 1 (50 Questions) · भाग 5",
+  "subtitle": "Windows, Networking, Computer Fundamentals, Internet, HTML and MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "इस प्रश्न का जवाब आता है? आख़िर तक देखिए।",
+  "theme": "classic",
+  "layout": "list",
+  "format": "revision",
+  "tts": "gemini",
+  "key_slot": 3,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "speech_prep": true,
+  "speech_prep_key_slot": 2,
+  "long_fx": true,
+  "checkpoint_every": 10,
+  "checkpoint_secs": 9,
+  "aspect": "reel",
+  "max_points": 2,
+  "filler_lines": [],
+  "intro_show": "इस प्रश्न का जवाब आता है?",
+  "intro_small": "जवाब सोचिए, फिर मिलाइए",
+  "promo": true,
+  "reel_of": "5/5",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "Which HTML tag defines a table row?",
+   "options": [
+    "<td>",
+    "<tr>",
+    "<th>",
+    "<table>"
+   ],
+   "answer": "B",
+   "points": [
+    "<tr> is table row and <td> is table data",
+    "<th> is a table heading cell",
+    "<table> is the outer container"
+   ],
+   "trick": "tr = Table Row."
+  }
+ ]
+}
