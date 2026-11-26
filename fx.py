@@ -261,13 +261,26 @@ def build_video_long(bld, meta, steps, work, theme, out_mp4, voice_mix, total_fr
     th = bld.THEMES[theme]
     fill = "0x" + th["q"].lstrip("#")
     track = "white@0.28" if theme == "night" else "black@0.2"
+    # small QR in the corner for the whole video (meta qr / qr_url); hidden while the big QR slide is on screen
+    qr_in, qr_fc = [], ""
+    links = bld.qr_list(meta) if meta.get("qr_corner", True) else []
+    if links:
+        qpng = fxd / "qr_corner.png"
+        qpng.write_bytes(bld.qr_png_bytes(links[0]["url"]))
+        size = int(meta.get("qr_corner_size", 170))
+        pos = {"bl": "30:H-h-30", "br": "W-w-30:H-h-30", "tl": "30:30", "tr": "W-w-30:30"}[meta.get("qr_corner_pos", "bl")]
+        hide = "".join(f"+between(t,{s['t']:.3f},{s['t'] + s['dur']:.3f})" for s in steps if s["state"]["mode"] == "qrcta")
+        en = f":enable='not(0{hide})'" if hide else ""
+        qr_in = ["-loop", "1", "-framerate", str(FPS), "-t", f"{total:.3f}", "-i", qpng]
+        qr_fc = f"[2:v]scale={size}:{size}[qrs];[vq][qrs]overlay={pos}{en}"
     if meta.get("progress_bar", True):
         fc = (f"color=c={track}:s=1920x10:r={FPS},format=rgba[tr];color=c={fill}:s=1920x10:r={FPS},format=rgba[fl];"
               f"[tr][fl]overlay=x='-1920+1920*t/{total:.3f}':y=0:eval=frame:shortest=1[hud];"
-              f"[0:v]fps={FPS},format=yuv420p[b];[b][hud]overlay=0:0:shortest=1,format=yuv420p[v]")
+              f"[0:v]fps={FPS},format=yuv420p[b];[b][hud]overlay=0:0:shortest=1[vq]")
     else:
-        fc = f"[0:v]fps={FPS},format=yuv420p[v]"
-    run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", fxd / "all.txt", "-i", voice_mix, "-filter_complex", fc,
+        fc = f"[0:v]fps={FPS},format=yuv420p[vq]"
+    fc += (";" + qr_fc + ",format=yuv420p[v]") if qr_fc else ";[vq]format=yuv420p[v]"
+    run(["ffmpeg", "-y", "-f", "concat", "-safe", "0", "-i", fxd / "all.txt", "-i", voice_mix] + qr_in + ["-filter_complex", fc,
          "-map", "[v]", "-map", "1:a", "-c:v", "libx264", "-preset", "veryfast", "-crf", "23", "-pix_fmt", "yuv420p",
          "-r", FPS, "-c:a", "aac", "-b:a", "160k", "-t", f"{total:.3f}", "-movflags", "+faststart", out_mp4])
 
@@ -371,7 +384,7 @@ def sfx_events(meta, steps, kind="reel"):
         if kind == "long":   # calm: a soft whoosh on the hook, a pop on checkpoint and trick, a ding on every answer
             if m == "hook" and st.get("stage") == 0:
                 ev.append((t, "whoosh", 0.35))
-            elif m == "check":
+            elif m in ("check", "qrcta"):
                 ev.append((t, "pop", 0.35))
             elif m == "answer" and st["pts"] == 0:
                 ev.append((t, "ding", 0.35))

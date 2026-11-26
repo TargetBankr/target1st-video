@@ -247,6 +247,15 @@ CSS_CHECK = """
 .rr{font-size:50px;line-height:1.3;padding:5px 0;color:var(--pt)}
 .rr b{display:inline-block;min-width:74px;color:var(--num)}
 """
+# big QR slide of long videos (wide look)
+CSS_QRCTA = """
+.promo-t{font-size:64px;line-height:1.3;text-align:center;margin-top:44px}
+.promo-t small{display:block;font-size:44px;color:var(--q);margin-top:12px}
+.qrs{display:flex;gap:60px;justify-content:center;margin-top:34px}
+.qrc{width:430px;background:#fff;color:#111;border-radius:28px;padding:22px 22px 26px;text-align:center;border:6px solid var(--rule)}
+.qrc img{display:block;width:382px;height:382px}
+.qrc .lab{font-size:40px;line-height:1.25;margin-top:12px}
+"""
 # calm effects for YouTube (aspect wide): counter, ring bottom-right, small answer pop, trick highlight. No zoom.
 CSS_LONG_FX = """
 .qn{font-size:38px;line-height:1.2;padding:6px 26px;margin:26px 0 0 0}
@@ -281,6 +290,46 @@ PROMO_ITEMS = [{"img": "assets/qr-notes.png", "label": "नोट्स + मॉ
 
 def promo_items(meta):
     return (meta.get("promo_items") or PROMO_ITEMS)[:2]
+
+
+def qr_list(meta):
+    """QR links of this video, up to 2: meta "qr": [{"url", "label"}] or the short form "qr_url" + "qr_label".
+    The picture is drawn here from the link, so the link only lives in the JSON."""
+    items = meta.get("qr")
+    if isinstance(items, dict):
+        items = [items]
+    if not items and meta.get("qr_url"):
+        items = [{"url": meta["qr_url"], "label": meta.get("qr_label", "")}]
+    out = []
+    for it in items or []:
+        if isinstance(it, str):
+            it = {"url": it}
+        url = str(it.get("url", "")).strip()
+        if url:
+            out.append({"url": url, "label": str(it.get("label", "")).strip()})
+    return out[:2]
+
+
+@functools.lru_cache(maxsize=16)
+def qr_png_bytes(url):
+    """Plain black-on-white QR with a quiet border (scans best), made with segno (pip install segno)."""
+    import io
+    try:
+        import segno
+    except ImportError:
+        sys.exit("The QR code needs the segno package: pip install segno (video.yml installs it)")
+    buf = io.BytesIO()
+    segno.make(url, error="m").save(buf, kind="png", scale=12, border=4, dark="#111111", light="#ffffff")
+    return buf.getvalue()
+
+
+def qr_uri(url):
+    return "data:image/png;base64," + base64.b64encode(qr_png_bytes(url)).decode()
+
+
+def item_src(it):
+    """Picture of a promo card: drawn from "url" when the item has one, else the PNG file in "img"."""
+    return qr_uri(it["url"]) if it.get("url") else data_uri(it["img"])
 
 
 @functools.lru_cache(maxsize=8)
@@ -369,12 +418,19 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
             if k >= len(items):
                 return ""
             if prog <= 0:   # not shown yet: keeps its place so nothing jumps when it pops in
-                return f'<div class="qrc" style="visibility:hidden"><img src="{data_uri(items[k]["img"])}"><div class="lab">.</div></div>'
+                return f'<div class="qrc" style="visibility:hidden"><img src="{item_src(items[k])}"><div class="lab">.</div></div>'
             return (f'<div class="qrc" style="transform:scale({POP[min(prog, len(POP)) - 1]:.3f});opacity:{min(1.0, prog / 3):.2f}">'
-                    f'<img src="{data_uri(items[k]["img"])}"><div class="lab">{esc(items[k]["label"])}</div></div>')
+                    f'<img src="{item_src(items[k])}"><div class="lab">{esc(items[k].get("label", ""))}</div></div>')
         body = (f'<div class="promo-t">{esc(meta.get("promo_title", "हरियाणा ग्रुप D के नोट्स और मॉक टेस्ट"))}'
                 f'<small>{esc(meta.get("promo_sub", "लिंक बायो और हाइलाइट्स में"))}</small></div>'
                 f'<div class="qrs">{card(0, st.get("a", 0))}{card(1, st.get("b", 0))}</div>')
+    elif mode == "qrcta":
+        cards = "".join(f'<div class="qrc"><img src="{qr_uri(it["url"])}">'
+                        + (f'<div class="lab">{esc(it["label"])}</div>' if it["label"] else "") + '</div>'
+                        for it in qr_list(meta))
+        body = (f'<div class="promo-t">{esc(meta.get("qr_title", "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए"))}'
+                f'<small>{esc(meta.get("qr_sub", "लिंक डिस्क्रिप्शन में भी है"))}</small></div>'
+                f'<div class="qrs">{cards}</div>')
     elif mode == "outro":
         body = (f'<div class="center">{esc(meta.get("outro_show", "देखने के लिए धन्यवाद!"))}'
                 f'<small>{esc(meta.get("channel", "Target1st"))}</small></div>')
@@ -443,7 +499,7 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
         # "fit" is shrunk (CSS zoom) by render_images only when a slide would run into the bottom safe zone
         return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS_REEL}{CSS_REEL_FX if fx else ""}</style></head>'
                 f'<body><div class="wm">Target1st</div><div class="wrap"><div id="fit">{head}{body}</div></div></body></html>')
-    return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS}{CSS_CHECK}{CSS_REEL_FX + CSS_LONG_FX if fx else ""}</style></head>'
+    return (f'<html><head><meta charset="utf-8"><style>{vars_css}{CSS}{CSS_CHECK}{CSS_QRCTA}{CSS_REEL_FX + CSS_LONG_FX if fx else ""}</style></head>'
             f'<body><div class="wm">Target1st</div><div class="wrap">{head}{body}</div></body></html>')
 
 
@@ -604,6 +660,11 @@ def make_steps(data, limit, fmt, aspect="wide", long_fx=False):
     check_every = int(meta.get("checkpoint_every", 5)) if long_fx else 0
     check_secs = min(10.0, float(meta.get("checkpoint_secs", 9.0)))
     cta_at = 0       # the first checkpoint past 40% also asks for a subscribe, once
+    qr_at = 0        # long video with a QR link: the big QR slide comes after this question (about 30% of the video)
+    if long_fx and qr_list(meta) and len(qs) >= 2:
+        qr_at = min(len(qs) - 1, max(1, -(-len(qs) * 3 // 10)))
+    qr_say = meta.get("qr_say") or "इस पेपर के नोट्स और मॉक टेस्ट चाहिए? स्क्रीन पर दिया QR कोड स्कैन कीजिए।"
+    qr_secs = float(meta.get("qr_secs", 7.0))
     if long_fx:
         pv = pick_preview(qs)
         hook_say = (f"नमस्कार दोस्तों! इस वीडियो में {len(qs)} प्रश्न हैं। पेन तैयार रखिए"
@@ -643,7 +704,12 @@ def make_steps(data, limit, fmt, aspect="wide", long_fx=False):
         if long_fx and check_every and i % check_every == 0 and i < len(qs) and len(qs) - i >= 3:
             say = CHECK_LINES[(i // check_every - 1) % len(CHECK_LINES)] + (" " + CHECK_CTA if i == cta_at else "")
             steps.append({"state": {"mode": "check", "i": i, "a": i - check_every + 1}, "say": say, "min_dur": check_secs})
+            if i == qr_at:
+                steps.append({"state": {"mode": "qrcta"}, "say": qr_say, "min_dur": qr_secs, "chapter": "Notes and mocks"})
             continue   # no filler line on top of a checkpoint
+        if i == qr_at:
+            steps.append({"state": {"mode": "qrcta"}, "say": qr_say, "min_dur": qr_secs, "chapter": "Notes and mocks"})
+            continue   # no filler line on top of the QR slide
         if i in fillers:
             # spoken over the slide that is already on screen; the image is reused, so no new slide is rendered
             steps.append({"state": dict(steps[-1]["state"]), "say": fillers[i], "filler": True})
@@ -1498,6 +1564,8 @@ async def tts_all(steps, meta, work, fake, provider):
                     gk = "intro"      # hook, preview line and own intro share one call (hook steps have no question number)
                 elif mode == "outro":
                     gk = "outro"
+                elif "i" not in s["state"]:
+                    gk = mode         # promo / qrcta slides have no question number
                 else:
                     gk = (s["state"]["i"] - 1) // g_batch
             if gk not in groups:

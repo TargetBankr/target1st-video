@@ -214,7 +214,7 @@ jobs:
 
       - name: Install Python packages
         if: steps.find.outputs.build == 'true'
-        run: pip install edge-tts playwright
+        run: pip install edge-tts playwright segno
 
       - name: Browser check
         if: steps.find.outputs.build == 'true'
