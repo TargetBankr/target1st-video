@@ -87,9 +87,20 @@ jobs:
           COUNT: ${{ inputs.count }}
           STORIES: ${{ inputs.stories }}
         run: |
-          FILE=$(printf '%s' "$FILE" | sed 's/^ *//; s/ *$//')
+          FILE=$(printf '%s' "$FILE" | sed 's/^ *//; s/ *$//; s#^\./##')
+          if [ ! -f "$FILE" ] && [[ "$FILE" != *.json ]] && [ -f "$FILE.json" ]; then FILE="$FILE.json"; fi
           if [ ! -f "$FILE" ]; then
-            echo "::error::File '$FILE' is not in the repo. Check the name (capital letters, .done.json, folder)."; exit 1
+            # only the name was typed: look for it in every folder (series/ready/, reels/ ...)
+            b=$(basename "$FILE"); [[ "$b" == *.json ]] || b="$b.json"
+            m=$(git ls-files | awk -F/ -v b="$b" '$NF==b')
+            n=$(printf '%s' "$m" | grep -c . || true)
+            if [ "$n" -eq 1 ]; then
+              echo "::notice::'$FILE' found at $m"; FILE="$m"
+            elif [ "$n" -gt 1 ]; then
+              echo "::error::'$FILE' is in more than one folder: $(printf '%s' "$m" | paste -sd' ' -). Type the full path, e.g. series/ready/gd05.json"; exit 1
+            else
+              echo "::error::File '$FILE' is not anywhere in the repo. Check the spelling (capital letters, .done.json)."; exit 1
+            fi
           fi
           python tools/make_reels.py "$FILE" --out reels --size "${SIZE:-10}" --points "${POINTS:-2}" \
             --countdown "${COUNTDOWN:-3}" --format "$FORMAT" --first "${FIRST:-1}" --count "${COUNT:-0}" --list-file made.txt \

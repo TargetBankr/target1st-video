@@ -131,6 +131,19 @@ jobs:
           }
           # how many OTHER runs of this workflow with a lower run number are still running or queued.
           # One API call. If GitHub does not answer, prints "?" (unknown): the caller keeps waiting, it never starts early.
+          # a typed file name -> its real path in the repo. "gd05.json" or "gd05" finds series/ready/gd05.json.
+          # prints the path, or NONE (not in the repo) or MANY:<paths> (same name in several folders)
+          resolve_file() {
+            local f="$1" b m
+            f=$(printf '%s' "$f" | sed 's/^ *//; s/ *$//; s#^\./##')
+            if [ -f "$f" ]; then echo "$f"; return; fi
+            if [[ "$f" != *.json ]] && [ -f "$f.json" ]; then echo "$f.json"; return; fi
+            b=$(basename "$f"); [[ "$b" == *.json ]] || b="$b.json"
+            m=$(git ls-files | awk -F/ -v b="$b" '$NF==b')
+            if [ -z "$m" ]; then echo NONE
+            elif [ "$(printf '%s\n' "$m" | wc -l)" -eq 1 ]; then echo "$m"
+            else echo "MANY:$(printf '%s' "$m" | paste -sd' ' -)"; fi
+          }
           earlier_runs_active() {
             local out
             out=$(gh run list --workflow "$WORKFLOW_NAME" --limit 100 --json number,status \
@@ -162,6 +175,17 @@ jobs:
           : > rest.txt
           while read -r f; do
             [ -z "$f" ] && continue
+            if [ "$EVENT" != "push" ]; then
+              r=$(resolve_file "$f")
+              if [ "$r" = "NONE" ]; then
+                echo "::error::'$f' is not anywhere in the repo. Check the spelling (capital letters, .done.json)."; exit 1
+              elif [[ "$r" == MANY:* ]]; then
+                echo "::error::'$f' is in more than one folder: ${r#MANY:}. Type the full path, e.g. series/ready/gd05.json"; exit 1
+              elif [ "$r" != "$f" ]; then
+                echo "::notice::'$f' found at $r"
+              fi
+              f="$r"
+            fi
             base=$(basename "$f" .json)
             name="$base"
             spec="$INPUT_DELAY"
@@ -188,13 +212,14 @@ jobs:
             attempt=${INPUT_ATTEMPT:-0}
             after=0
             if [ "$(printf '%s' "$spec" | tr 'A-Z' 'a-z')" = "after" ]; then after=1; fi
+            if [ -n "$INPUT_WAKE" ] && [ "$INPUT_DELAY" = "after" ]; then after=1; fi   # a resumed file keeps its place in the line
             if [ $(( wake - START )) -gt "$CAP" ]; then
               echo "$wake|$f|$attempt" >> handover.txt
             else
               echo "$wake|$f|$name|$attempt|$after" >> plan.txt
             fi
           done < files.txt
-          sort -n -t'|' -k1,1 plan.txt -o plan.txt
+          sort -s -n -t'|' -k1,1 plan.txt -o plan.txt
           echo "Build now or after a wait (start epoch | file | name | resumes so far | wait for earlier runs):"; cat plan.txt
           echo "Too far for this run, handed to a later run (start epoch | file | resumes so far):"; cat handover.txt
           # a run that only has far-away files just sleeps and hands over: skip the installs
@@ -381,9 +406,18 @@ jobs:
             echo "Next start is far away. Sleeping $S s, then a new run takes over."
             sleep "$S"
           fi
-          while IFS='|' read -r -u 3 wake f att; do
-            [ -z "$f" ] && continue
-            args=(-f "file=$f" -f "wake=$wake" -f "attempt=$att" "${pass_args[@]}")
-            echo "Starting a new run for $f (start epoch $wake, resumes so far $att)"
+          # files with the SAME start time go into ONE new run and are built one after another (never side by side:
+          # parallel runs would fight over the same Gemini keys and use up each other's quota)
+          sort -n -t'|' -k1,1 -s handover.txt | awk -F'|' '
+            $1 == "" || $2 == "" { next }
+            { if (!($1 in files)) { order[++n] = $1; files[$1] = $2; att[$1] = $3 }
+              else { files[$1] = files[$1] "," $2; if ($3 + 0 > att[$1] + 0) att[$1] = $3 } }
+            END { for (i = 1; i <= n; i++) print order[i] "|" files[order[i]] "|" att[order[i]] }' > handover-groups.txt
+          while IFS='|' read -r -u 3 wake list att; do
+            [ -z "$list" ] && continue
+            # delay=after: at its start time it also waits until earlier runs of this workflow are finished
+            args=(-f "file=$list" -f "wake=$wake" -f "attempt=$att" -f "delay=after" "${pass_args[@]}")
+            echo "Starting a new run for $list (start epoch $wake, resumes so far $att)"
             gh workflow run "$WORKFLOW_NAME" --ref "$REF" "${args[@]}" < /dev/null
-          done 3< handover.txt
+            sleep 3
+          done 3< handover-groups.txt

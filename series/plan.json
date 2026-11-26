@@ -1,7 +1,7 @@
 {
  "_readme": "60 sets, 2 per upload day: day N = gdNN + sscNN. Edit topics/subtopics freely; the generator reads this file.",
  "count": 50,
- "base_meta": "sscmock01-gemini.done.json",
+ "base_meta": "series/base_meta.json",
  "themes": [
   "royal",
   "night",

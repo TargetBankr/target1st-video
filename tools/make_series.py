@@ -73,13 +73,21 @@ def get_keys():
     return keys
 
 
+class QuotaOut(RuntimeError):
+    """Every key/model answered with its DAILY limit: waiting minutes will not help, only the next quota day."""
+
+
 def ask_gemini(prompt, keys, first_slot, grounded=False):
     """Try every key (starting at first_slot) with every model. Returns the parsed dict.
     grounded=True lets the model search Google (used by the checking pass; the API does not allow JSON mode together with search,
-    so the JSON is cut out of the text instead)."""
+    so the JSON is cut out of the text instead).
+    Busy / per-minute limits: waits longer each round (1, 2, 4 min) instead of giving up the whole set.
+    Every key/model out for the DAY: raises QuotaOut at once (main() then stops instead of failing set after set)."""
     order = sorted(keys, key=lambda k: (k[0] - first_slot) % 6)
     last = "no key"
-    for rnd in range(2):
+    waits = [60, 120, 240]
+    for rnd in range(len(waits) + 1):
+        tries = day_out = 0
         for slot, key in order:
             for model in MODELS:
                 cfg = {"temperature": 0.1 if grounded else 0.5, "maxOutputTokens": 32768}
@@ -92,6 +100,7 @@ def ask_gemini(prompt, keys, first_slot, grounded=False):
                 req = urllib.request.Request(
                     f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
                     data=body, headers={"Content-Type": "application/json", "x-goog-api-key": key})
+                tries += 1
                 try:
                     with urllib.request.urlopen(req, timeout=300) as r:
                         resp = json.loads(r.read().decode("utf-8"))
@@ -101,13 +110,20 @@ def ask_gemini(prompt, keys, first_slot, grounded=False):
                         text = text[text.index("{"):text.rindex("}") + 1]
                     return json.loads(text)
                 except urllib.error.HTTPError as e:
-                    last = f"key {slot} {model}: HTTP {e.code}"
+                    msg = e.read().decode("utf-8", "ignore")
+                    if e.code == 429 and re.search(r"per\s*day", msg, re.I):
+                        day_out += 1
+                        last = f"key {slot} {model}: HTTP 429 daily limit"
+                    else:
+                        last = f"key {slot} {model}: HTTP {e.code}"
                 except Exception as e:
                     last = f"key {slot} {model}: {type(e).__name__}: {e}"
                 log(f"  failed: {last}")
-        if rnd == 0:
-            log("  every key/model failed, waiting 60 s and trying once more")
-            time.sleep(60)
+        if tries and day_out == tries:
+            raise QuotaOut(f"every Gemini key/model is out of its daily limit ({last})")
+        if rnd < len(waits):
+            log(f"  every key/model failed, waiting {waits[rnd]} s and trying again ({rnd + 1}/{len(waits)})")
+            time.sleep(waits[rnd])
     raise RuntimeError(f"no Gemini key/model answered ({last})")
 
 
@@ -379,6 +395,27 @@ def parse_days(spec):
     return out
 
 
+def load_base_meta(name, out_dir):
+    """The meta (voice, models, fillers...) every new set starts from. Looks for plan.json's base_meta as typed, then for the
+    same file name in any folder, and as a last resort copies the meta of an already made set in series/ready/."""
+    tried = []
+    if name:
+        tried.append(name)
+        if os.path.isfile(name):
+            return json.load(open(name, encoding="utf-8"))["meta"]
+        found = sorted(glob.glob(f"**/{os.path.basename(name)}", recursive=True))
+        if found:
+            log(f"base_meta {name} found at {found[0]}")
+            return json.load(open(found[0], encoding="utf-8"))["meta"]
+    ready = sorted(glob.glob(os.path.join(out_dir, "*.json")) + glob.glob(os.path.join("series", "ready", "*.json")),
+                   key=os.path.getmtime, reverse=True)
+    if ready:
+        log(f"::warning::base_meta {name or '(not set)'} is not in the repo; using the settings of {ready[0]} instead "
+            "(put the file back or fix base_meta in series/plan.json)")
+        return json.load(open(ready[0], encoding="utf-8"))["meta"]
+    raise SystemExit(f"base_meta not found ({', '.join(tried) or 'not set in plan.json'}) and no made set to copy settings from")
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--plan", default="series/plan.json")
@@ -404,7 +441,7 @@ def main():
     if bad:
         raise SystemExit(f"not in the plan: {', '.join(bad)}")
 
-    base_meta = json.load(open(plan["base_meta"], encoding="utf-8"))["meta"]
+    base_meta = load_base_meta(plan.get("base_meta", ""), args.out_dir)
     keys = get_keys()
     if not keys and not args.fake and not args.dry_run:
         log("::error::no GEMINI_API_KEY secret is set in this run")
@@ -419,6 +456,12 @@ def main():
             continue
         try:
             p = make_set(plan, rows[sid], keys, args, base_meta)
+        except QuotaOut as e:
+            # every key is out for the day: the next sets would fail the same way, so stop here (they stay to do)
+            left = wanted[wanted.index(sid):]
+            log(f"::warning::{sid}: {e}. Stopping here; not made yet: {', '.join(left)}. Run again after about 1:30 pm IST.")
+            failed.extend(left)
+            break
         except Exception as e:   # e.g. the fact check could not run: never write unchecked questions, go on with the next set
             log(f"::error::{sid} failed: {type(e).__name__}: {e}")
             p = None

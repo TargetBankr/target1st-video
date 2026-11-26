@@ -43,6 +43,8 @@ SEVERAL API KEYS (more videos from the daily limits / credits of each key)
     AUTO KEY SWITCH (Gemini voice, on by default): when every model of the current key has hit its daily limit, the build
     moves on by itself to the next key, in order key_slot, +1, +2 ... 5, then the lower slots (only keys whose secret
     exists in video.yml / GitHub). Lines already voiced stay cached. Exit code 75 only when ALL keys are used up.
+    QUOTA MEMORY: a key/model that answered "per day" is saved in the voice cache (_quota_dead.json) until the quota resets
+    (midnight US Pacific, about 1:30 pm IST), so later videos skip it at once. meta "quota_memory": false = off.
     meta "key_auto_switch": false = stay on one key. Keys from the SAME Google project share one daily limit, so
     switching between them gains nothing: use keys from different projects.
     Set meta "key_slot": 2 to use the second key of the same engine: GEMINI_API_KEY_2 or SARVAM_API_KEY_2
@@ -1290,6 +1292,38 @@ async def tts_all(steps, meta, work, fake, provider):
     kst = {"slot": slot, "key": g_key, "tried": [slot]}
     k_auto = bool(meta.get("key_auto_switch", True)) and provider == "gemini" and not fake
 
+    # QUOTA MEMORY: models that answered "per day" are remembered (key slot + model) until Google resets the free
+    # quota (midnight US Pacific = about 1:30 pm IST). The file sits in the voice cache folder, so the next video in
+    # the same run, and the next run, skip those keys at once instead of asking all 15 key/model pairs again.
+    q_file = work / "audio" / "_quota_dead.json"
+    try:
+        from datetime import datetime
+        from zoneinfo import ZoneInfo
+        q_day = datetime.now(ZoneInfo("America/Los_Angeles")).strftime("%Y-%m-%d")
+    except Exception:
+        q_day = time.strftime("%Y-%m-%d", time.gmtime(time.time() - 8 * 3600))
+    q_dead = set()
+    if provider == "gemini" and not fake and meta.get("quota_memory", True):
+        try:
+            d = json.loads(q_file.read_text(encoding="utf-8"))
+            if d.get("day") == q_day:
+                q_dead = {(int(a), b) for a, b in d.get("dead", [])}
+        except Exception:
+            pass
+        if q_dead:
+            print(f"Quota memory ({q_day} Pacific): already out today -> "
+                  + ", ".join(f"slot {a} {b}" for a, b in sorted(q_dead)), flush=True)
+
+    def q_mark(sl, model):
+        if not meta.get("quota_memory", True) or fake:
+            return
+        q_dead.add((sl, model))
+        try:
+            q_file.parent.mkdir(parents=True, exist_ok=True)
+            q_file.write_text(json.dumps({"day": q_day, "dead": sorted([a, b] for a, b in q_dead)}), encoding="utf-8")
+        except Exception:
+            pass
+
     def switch_key(failed_slot):
         """Make the next unused key active. True if there is one (or another call already switched)."""
         if kst["slot"] != failed_slot:
@@ -1374,7 +1408,7 @@ async def tts_all(steps, meta, work, fake, provider):
         """One TTS call. Tries the models in order; a per-day 429 moves on to the next model."""
         while True:
             cur = kst["slot"]
-            live = [m for m in g_models if m not in g_dead]
+            live = [m for m in g_models if m not in g_dead and (cur, m) not in q_dead]
             if not live:
                 if k_auto and switch_key(cur):
                     continue
@@ -1401,10 +1435,13 @@ async def tts_all(steps, meta, work, fake, provider):
                 except Exception as e:  # network trouble, or the reply had no audio
                     code, body = 0, str(e)
                 if code == 429:
-                    if re.search(r"per\s*day", body, re.I) or minute_hits >= 4:
-                        print(f"  {model}: daily limit reached, switching to the next model", flush=True)
+                    per_day = bool(re.search(r"per\s*day", body, re.I))
+                    if per_day or minute_hits >= 4:
+                        print(f"  {model}: daily limit reached on key slot {cur}, switching to the next model", flush=True)
                         if kst["slot"] == cur:
                             g_dead.add(model)
+                        if per_day:
+                            q_mark(cur, model)   # only a real "per day" answer is remembered for the rest of the day
                         break
                     minute_hits += 1
                     m = re.search(r'"retryDelay":\s*"(\d+(?:\.\d+)?)s"', body)
