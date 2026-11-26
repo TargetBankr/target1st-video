@@ -775,9 +775,10 @@ def gemini_lang_code(text, meta):
     """Accent anchor. Every Gemini call is independent: with bare text it guesses the accent from THAT call's
     text only, so an all-English question call drifts to a foreign accent while Hindi-heavy calls sound Indian.
     Fix: send an explicit languageCode with every call (not spoken, so it can never be read aloud).
-    meta gemini_lang: "auto" (default) = hi-IN when the call has Devanagari, else en-IN; or a fixed code such as
-    "en-IN" / "hi-IN"; "off" = send none (old behaviour)."""
-    mode = str(meta.get("gemini_lang", "auto"))
+    meta gemini_lang: "hi-IN" (default, since 26 Nov 2026: en-IN gave a foreign accent on English lines, hi-IN sounds
+    Indian for English words too); "auto" = hi-IN when the call has Devanagari, else en-IN; any fixed code such as
+    "en-IN"; "off" = send none (old behaviour)."""
+    mode = str(meta.get("gemini_lang", "hi-IN"))
     if mode.lower() == "off":
         return ""
     if mode.lower() != "auto":
@@ -1391,7 +1392,7 @@ async def tts_all(steps, meta, work, fake, provider):
         # same cache file whichever model made it, so switching models mid-video keeps finished lines
         # language mode is part of the key only when set, so old caches stay valid with "off"; the default "auto"
         # re-voices clips once so the whole video gets the same accent treatment
-        lk = "" if str(meta.get("gemini_lang", "auto")).lower() == "off" else "|lang" + str(meta.get("gemini_lang", "auto"))
+        lk = "" if str(meta.get("gemini_lang", "hi-IN")).lower() == "off" else "|lang" + str(meta.get("gemini_lang", "hi-IN"))
         key = hashlib.md5(f"gemini|{g_voice}|{g_style}{lk}|{s.get('prep_key') or s['say']}".encode()).hexdigest()
         return work / "audio" / f"{key}.wav"
 
