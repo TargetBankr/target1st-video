@@ -1,0 +1,1478 @@
+{
+  "meta": {
+    "title": "HARTRON DATA ENTRY OPERATOR 3",
+    "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+    "channel": "Target1st",
+    "voice": "hi-IN-MadhurNeural",
+    "rate": "+0%",
+    "countdown": 1,
+    "intro": "",
+    "outro": "",
+    "outro_show": "देखने के लिए धन्यवाद!",
+    "theme": "royal",
+    "layout": "grid",
+    "format": "revision",
+    "tts": "gemini",
+    "checkpoint_every": 10,
+    "checkpoint_secs": 4,
+    "auto_reels": true,
+    "auto_stories": true,
+    "reel_size": 10,
+    "qr": [
+      {
+        "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+        "label": "EBOOK (ALL SUBJECTS)"
+      },
+      {
+        "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+        "label": "MOCK PAPER"
+      }
+    ],
+    "pronounce": {
+      "RBI": "आर बी आई",
+      "SBI": "एस बी आई",
+      "UPSC": "यू पी एस सी",
+      "GDP": "जी डी पी",
+      "CAG": "कैग",
+      "SSC": "एस एस सी",
+      "GS": "जी एस",
+      "CGL": "सी जी एल",
+      "CHSL": "सी एच एस एल",
+      "MTS": "एम टी एस",
+      "GD": "जी डी"
+    },
+    "key_slot": 4,
+    "filler_lines": [
+      "इस टॉपिक के पूरे नोट्स चाहिए? नोट्स का लिंक डिस्क्रिप्शन में है, नोट्स ज़रूर ले लीजिए।",
+      "प्रैक्टिस के लिए मॉक टेस्ट चाहिए? मॉक्स का लिंक डिस्क्रिप्शन में है, मॉक्स ज़रूर ले लीजिए।",
+      "नोट्स और मॉक्स, दोनों के लिंक डिस्क्रिप्शन में मौजूद हैं, उन्हें लेना मत भूलिए।",
+      "रिवीज़न के लिए नोट्स लीजिए, और परीक्षा जैसी प्रैक्टिस के लिए मॉक्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "जो प्रश्न अभी छूट गए, उनके नोट्स डिस्क्रिप्शन में दिए लिंक से ले लीजिए।",
+      "हर हफ्ते मॉक टेस्ट हल करने से स्कोर बढ़ता है, मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "अगर अब तक के प्रश्न सही रहे, तो मॉक्स लेकर अपना स्तर और परखिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स लेना न भूलें, लिंक डिस्क्रिप्शन में है, और अपने दोस्तों को भी बताइए।",
+      "कंप्यूटर के प्रश्नों पर पकड़ मज़बूत करनी है? तो नोट्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "वीडियो पसंद आ रहा है तो लाइक कीजिए, और नोट्स व मॉक्स के लिए डिस्क्रिप्शन का लिंक खोलिए।",
+      "मॉक टेस्ट हल करने की आदत डालिए, मॉक्स का लिंक डिस्क्रिप्शन में है, अभी ले लीजिए।",
+      "चैनल Target1st को सब्सक्राइब कीजिए, नोट्स और मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "ये पॉइंट नोट कर लीजिए, और पूरे नोट्स के लिए डिस्क्रिप्शन में दिया लिंक देखिए।",
+      "सिर्फ़ वीडियो देखना काफ़ी नहीं, मॉक्स भी हल कीजिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स ले लो, मॉक्स ले लो, दोनों के लिंक डिस्क्रिप्शन में हैं, और तैयारी में जुट जाओ।"
+    ],
+    "filler_every": [
+      7,
+      8
+    ],
+    "speech_prep": true,
+    "gemini_voice": "Kore",
+    "gemini_speed": 1.15,
+    "gemini_models": [
+      "gemini-3.1-flash-tts-preview",
+      "gemini-3.8-flash-tts",
+      "gemini-3.8-flash-lite-tts"
+    ],
+    "gemini_batch": 2
+  },
+  "questions": [
+    {
+      "q": "Which component is known as the brain of the computer? || इनमें से किस कंपोनेंट को कंप्यूटर का ब्रेन कहा जाता है?",
+      "options": [
+        "RAM || रैम",
+        "CPU || सी पी यू",
+        "Hard Disk || हार्ड डिस्क",
+        "Monitor || मॉनिटर"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "CPU processes all instructions and controls operations.",
+          "say": "सी पी यू सभी निर्देशों को प्रोसेस करता है और काम को नियंत्रित करता है।"
+        },
+        {
+          "show": "CPU stands for Central Processing Unit.",
+          "say": "सी पी यू का पूरा नाम सेंट्रल प्रोसेसिंग यूनिट है।"
+        },
+        {
+          "show": "ALU and CU are main parts of CPU.",
+          "say": "ए एल यू और सी यू इसके मुख्य भाग हैं।"
+        }
+      ],
+      "trick": {
+        "show": "C-P-U = Computer Power Unit (Brain)",
+        "say": "ट्रिक: सी पी यू यानी कंप्यूटर पावर यूनिट, यही इसका दिमाग है।"
+      }
+    },
+    {
+      "q": "Which memory is volatile in nature? || इनमें से कौन सी मेमोरी वोलेटाइल प्रकृति की होती है?",
+      "options": [
+        "ROM || रॉम",
+        "Hard Drive || हार्ड ड्राइव",
+        "RAM || रैम",
+        "Pen Drive || पेन ड्राइव"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "RAM loses all stored data when power is turned off.",
+          "say": "बिजली बंद होने पर रैम का सारा डेटा मिट जाता है।"
+        },
+        {
+          "show": "RAM stands for Random Access Memory.",
+          "say": "रैम का पूरा नाम रैंडम एक्सेस मेमोरी है।"
+        },
+        {
+          "show": "It is temporary primary memory.",
+          "say": "यह एक अस्थायी प्राइमरी मेमोरी है।"
+        }
+      ],
+      "trick": {
+        "show": "RAM = Run Away Memory (vanishes without power)",
+        "say": "ट्रिक: रैम मतलब रन अवे मेमोरी, लाइट जाते ही भाग जाती है।"
+      }
+    },
+    {
+      "q": "What is the full form of BIOS? || बी आई ओ एस का पूरा नाम क्या है?",
+      "options": [
+        "Basic Input Output System || बेसिक इनपुट आउटपुट सिस्टम",
+        "Binary Input Output Software || बाइनरी इनपुट आउटपुट सॉफ्टवेयर",
+        "Basic Internal Operating System || बेसिक इंटरनल ऑपरेटिंग सिस्टम",
+        "Built In Operating System || बिल्ट इन ऑपरेटिंग सिस्टम"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "BIOS initializes hardware during the booting process.",
+          "say": "बूटिंग के समय बी आई ओ एस हार्डवेयर को शुरू करता है।"
+        },
+        {
+          "show": "It is stored on a ROM chip on the motherboard.",
+          "say": "यह मदरबोर्ड की रॉम चिप में स्टोर रहता है।"
+        },
+        {
+          "show": "BIOS performs POST before loading the OS.",
+          "say": "ऑपरेटिंग सिस्टम लोड करने से पहले यह पोस्ट टेस्ट करता है।"
+        }
+      ],
+      "trick": {
+        "show": "B-I-O-S = Basic I/O System",
+        "say": "ट्रिक: बी आई ओ एस मतलब बेसिक इनपुट आउटपुट सिस्टम।"
+      }
+    },
+    {
+      "q": "Which of the following is an input device? || इनमें से कौन सा एक इनपुट डिवाइस है?",
+      "options": [
+        "Plotter || प्लॉटर",
+        "Speaker || स्पीकर",
+        "Barcode Reader || बारकोड रीडर",
+        "Projector || प्रोजेक्टर"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Barcode Reader scans lines and sends data to computer.",
+          "say": "बारकोड रीडर लाइनों को स्कैन करके डेटा कंप्यूटर में भेजता है।"
+        },
+        {
+          "show": "Plotter, Speaker, and Projector are output devices.",
+          "say": "प्लॉटर, स्पीकर और प्रोजेक्टर आउटपुट डिवाइस हैं।"
+        },
+        {
+          "show": "It uses laser light to read black and white bars.",
+          "say": "यह काली और सफेद पट्टियों को पढ़ने के लिए लेजर का उपयोग करता है।"
+        }
+      ],
+      "trick": {
+        "show": "Reader = Reads data INTO computer (Input)",
+        "say": "ट्रिक: रीडर डेटा को अंदर पढ़ता है, इसलिए यह इनपुट डिवाइस है।"
+      }
+    },
+    {
+      "q": "One kilobyte is equal to how many bytes? || एक किलोबाइट कितने बाइट्स के बराबर होता है?",
+      "options": [
+        "1000 bytes || एक हज़ार बाइट्स",
+        "1024 bytes || एक हज़ार चौबीस बाइट्स",
+        "512 bytes || पांच सौ बारह बाइट्स",
+        "2048 bytes || दो हज़ार अड़तालीस बाइट्स"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "In binary system, 1 KB equals 2 to the power 10 bytes.",
+          "say": "बाइनरी सिस्टम में एक के बी दो की घात दस बाइट्स के बराबर है।"
+        },
+        {
+          "show": "1 Byte equals 8 bits.",
+          "say": "एक बाइट आठ बिट्स के बराबर होता है।"
+        },
+        {
+          "show": "1024 KB makes 1 Megabyte (MB).",
+          "say": "एक हज़ार चौबीस के बी मिलकर एक मेगाबाइट बनाते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Computer counts in 1024, not 1000",
+        "say": "ट्रिक: कंप्यूटर हज़ार नहीं बल्कि एक हज़ार चौबीस में गिनती करता है।"
+      }
+    },
+    {
+      "q": "Which key combination is used to permanently delete a file in Windows? || विंडोज़ में किसी फ़ाइल को स्थायी रूप से डिलीट करने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + Delete || कंट्रोल प्लस डिलीट",
+        "Alt + Delete || ऑल्ट प्लस डिलीट",
+        "Shift + Delete || शिफ्ट प्लस डिलीट",
+        "Tab + Delete || टैब प्लस डिलीट"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Shift + Delete bypasses the Recycle Bin completely.",
+          "say": "शिफ्ट प्लस डिलीट फ़ाइल को रीसायकल बिन में भेजे बिना हटा देता है।"
+        },
+        {
+          "show": "Normal Delete sends files to Recycle Bin.",
+          "say": "सामान्य डिलीट करने पर फ़ाइल रीसायकल बिन में जाती है।"
+        },
+        {
+          "show": "Deleted files from pen drives also skip Recycle Bin.",
+          "say": "पेन ड्राइव से डिलीट की गई फ़ाइलें भी रीसायकल बिन में नहीं जातीं।"
+        }
+      ],
+      "trick": {
+        "show": "Shift = Shift out of computer forever",
+        "say": "ट्रिक: शिफ्ट दबाने से फ़ाइल हमेशा के लिए कंप्यूटर से बाहर शिफ्ट हो जाती है।"
+      }
+    },
+    {
+      "q": "What is the shortcut key to select the entire document in MS Word? || एम एस वर्ड में पूरे डॉक्यूमेंट को एक साथ सेलेक्ट करने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + S || कंट्रोल प्लस एस",
+        "Ctrl + A || कंट्रोल प्लस ए",
+        "Ctrl + E || कंट्रोल प्लस ई",
+        "Ctrl + W || कंट्रोल प्लस डब्लू"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ctrl + A selects all text and objects in the file.",
+          "say": "कंट्रोल प्लस ए फ़ाइल के सभी टेक्स्ट और ऑब्जेक्ट्स को चुन लेता है।"
+        },
+        {
+          "show": "Ctrl + S is used to save the document.",
+          "say": "कंट्रोल प्लस एस डॉक्यूमेंट को सेव करने के काम आता है।"
+        },
+        {
+          "show": "Ctrl + E centers the selected paragraph.",
+          "say": "कंट्रोल प्लस ई पैराग्राफ को सेंटर में अलाइन करता है।"
+        }
+      ],
+      "trick": {
+        "show": "A for All = Ctrl + A",
+        "say": "ट्रिक: ए से ऑल होता है, इसलिए कंट्रोल प्लस ए से सब कुछ सेलेक्ट होता है।"
+      }
+    },
+    {
+      "q": "Which generation of computers used vacuum tubes? || कंप्यूटर की किस पीढ़ी में वैक्यूम ट्यूब का उपयोग किया गया था?",
+      "options": [
+        "First Generation || पहली पीढ़ी",
+        "Second Generation || दूसरी पीढ़ी",
+        "Third Generation || तीसरी पीढ़ी",
+        "Fourth Generation || चौथी पीढ़ी"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "First generation (1940-1956) used vacuum tubes for circuitry.",
+          "say": "पहली पीढ़ी के कंप्यूटरों में सर्किट के लिए वैक्यूम ट्यूब का उपयोग हुआ।"
+        },
+        {
+          "show": "Second generation used transistors.",
+          "say": "दूसरी पीढ़ी में ट्रांजिस्टर का इस्तेमाल किया गया।"
+        },
+        {
+          "show": "Third generation introduced Integrated Circuits (IC).",
+          "say": "तीसरी पीढ़ी में इंटीग्रेटेड सर्किट यानी आई सी की शुरुआत हुई।"
+        }
+      ],
+      "trick": {
+        "show": "1st = Vacuum, 2nd = Transistor, 3rd = IC",
+        "say": "ट्रिक: पहली में वैक्यूम, दूसरी में ट्रांजिस्टर और तीसरी में आई सी।"
+      }
+    },
+    {
+      "q": "In MS Excel, every formula must begin with which symbol? || एम एस एक्सेल में हर फ़ॉर्मूला किस चिह्न से शुरू होना ज़रूरी है?",
+      "options": [
+        "Plus (+) || प्लस",
+        "Hash (#) || हैश",
+        "Equal to (=) || इक्वल टू",
+        "Dollar ($) || डॉलर"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "An equal sign tells Excel that the text is a formula.",
+          "say": "इक्वल साइन एक्सेल को बताता है कि लिखा गया टेक्स्ट एक फ़ॉर्मूला है।"
+        },
+        {
+          "show": "Without '=', Excel treats input as plain text.",
+          "say": "इक्वल के बिना एक्सेल इसे साधारण टेक्स्ट मान लेता है।"
+        },
+        {
+          "show": "Example: =SUM(A1:A5) adds values from A1 to A5.",
+          "say": "उदाहरण के लिए इक्वल सम ए वन से ए फाइव तक जोड़ता है।"
+        }
+      ],
+      "trick": {
+        "show": "Formula gives an answer, so start with '='",
+        "say": "ट्रिक: फ़ॉर्मूला से जवाब निकलता है, इसलिए बराबर का निशान पहले लगाएं।"
+      }
+    },
+    {
+      "q": "Which protocol is used to send emails over the Internet? || इंटरनेट पर ईमेल भेजने के लिए किस प्रोटोकॉल का उपयोग होता है?",
+      "options": [
+        "HTTP || एच टी टी पी",
+        "FTP || एफ टी पी",
+        "SMTP || एस एम टी पी",
+        "POP3 || पी ओ पी थ्री"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "SMTP stands for Simple Mail Transfer Protocol.",
+          "say": "एस एम टी पी का पूरा नाम सिंपल मेल ट्रांसफर प्रोटोकॉल है।"
+        },
+        {
+          "show": "POP3 and IMAP are used to receive emails.",
+          "say": "ईमेल प्राप्त करने के लिए पी ओ पी थ्री और आई मैप का उपयोग होता है।"
+        },
+        {
+          "show": "FTP transfers files between client and server.",
+          "say": "एफ टी पी क्लाइंट और सर्वर के बीच फ़ाइल ट्रांसफर करता है।"
+        }
+      ],
+      "trick": {
+        "show": "SMTP = Send Mail To People",
+        "say": "ट्रिक: एस एम टी पी मतलब सेंड मेल टू पीपल, यानी मेल भेजने के लिए।"
+      }
+    },
+    {
+      "q": "What is the default file extension of an MS Excel 2019 workbook? || एम एस एक्सेल दो हज़ार उन्नीस वर्कबुक का डिफ़ॉल्ट फ़ाइल एक्सटेंशन क्या है?",
+      "options": [
+        ".xls || डॉट एक्स एल एस",
+        ".xlsx || डॉट एक्स एल एस एक्स",
+        ".docx || डॉट डी ओ सी एक्स",
+        ".pptx || डॉट पी पी टी एक्स"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Versions from Excel 2007 onward use .xlsx extension.",
+          "say": "एक्सेल दो हज़ार सात के बाद के सभी वर्जन डॉट एक्स एल एस एक्स का उपयोग करते हैं।"
+        },
+        {
+          "show": "Older versions (97-2003) used .xls extension.",
+          "say": "पुराने वर्जन में डॉट एक्स एल एस एक्सटेंशन इस्तेमाल होता था।"
+        },
+        {
+          "show": "The 'x' stands for XML-based file format.",
+          "say": "इसमें एक्स का मतलब एक्स एम एल आधारित फ़ाइल फ़ॉर्मेट है।"
+        }
+      ],
+      "trick": {
+        "show": "Excel + XML = .xlsx",
+        "say": "ट्रिक: एक्सेल और एक्स एम एल मिलकर डॉट एक्स एल एस एक्स बनाते हैं।"
+      }
+    },
+    {
+      "q": "Which device converts digital signals to analog signals and vice versa? || कौन सा डिवाइस डिजिटल सिग्नल को एनालॉग में और एनालॉग को डिजिटल में बदलता है?",
+      "options": [
+        "Router || राउटर",
+        "Switch || स्विच",
+        "Modem || मॉडेम",
+        "Hub || हब"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Modem stands for Modulator-Demodulator.",
+          "say": "मॉडेम का पूरा नाम मॉड्यूलेटर डीमॉड्यूलेटर है।"
+        },
+        {
+          "show": "Modulation converts digital to analog signals.",
+          "say": "मॉड्यूलेशन डिजिटल सिग्नल को एनालॉग में बदलता है।"
+        },
+        {
+          "show": "Demodulation converts analog back to digital.",
+          "say": "डीमॉड्यूलेशन एनालॉग सिग्नल को वापस डिजिटल में बदलता है।"
+        }
+      ],
+      "trick": {
+        "show": "MO-DEM = MOdulator + DEModulator",
+        "say": "ट्रिक: मॉडेम दो शब्दों से बना है, मॉड्यूलेटर और डीमॉड्यूलेटर।"
+      }
+    },
+    {
+      "q": "Which function key is used to refresh the active window in Windows? || विंडोज़ में सक्रिय विंडो को रिफ्रेश करने के लिए किस फंक्शन की का उपयोग होता है?",
+      "options": [
+        "F2 || एफ टू",
+        "F5 || एफ फाइव",
+        "F7 || एफ सेवन",
+        "F12 || एफ ट्वेल्व"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "F5 reloads or refreshes the current window or webpage.",
+          "say": "एफ फाइव वर्तमान विंडो या वेबपेज को फिर से लोड करता है।"
+        },
+        {
+          "show": "F2 is used to rename a selected file or folder.",
+          "say": "एफ टू का उपयोग चुनी गई फ़ाइल का नाम बदलने के लिए होता है।"
+        },
+        {
+          "show": "F7 checks spelling and grammar in MS Office.",
+          "say": "एफ सेवन एम एस ऑफिस में स्पेलिंग और ग्रामर चेक करता है।"
+        }
+      ],
+      "trick": {
+        "show": "F5 = Fresh 5 (Refresh)",
+        "say": "ट्रिक: एफ फाइव से फ्रेश फाइव याद रखें, यानी रिफ्रेश करना।"
+      }
+    },
+    {
+      "q": "What type of software is Linux? || लिनक्स किस प्रकार का सॉफ्टवेयर है?",
+      "options": [
+        "Application Software || एप्लीकेशन सॉफ्टवेयर",
+        "Open-Source Operating System || ओपन सोर्स ऑपरेटिंग सिस्टम",
+        "Antivirus Software || एंटीवायरस सॉफ्टवेयर",
+        "Proprietary Database || प्रोपराइटरी डेटाबेस"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Linux is a free and open-source operating system kernel.",
+          "say": "लिनक्स एक मुफ्त और ओपन सोर्स ऑपरेटिंग सिस्टम है।"
+        },
+        {
+          "show": "It was created by Linus Torvalds in 1991.",
+          "say": "इसे उन्नीस सौ इक्यानवे में लिनस टोरवाल्ड्स ने बनाया था।"
+        },
+        {
+          "show": "Users can view, modify, and distribute its source code.",
+          "say": "उपयोगकर्ता इसके सोर्स कोड को देख और बदल सकते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Linux = Liberty (Free and Open Source)",
+        "say": "ट्रिक: लिनक्स से लिबर्टी याद रखें, यानी पूरी तरह मुफ्त और ओपन सोर्स।"
+      }
+    },
+    {
+      "q": "Which of the following is the fastest type of computer memory? || इनमें से सबसे तेज़ कंप्यूटर मेमोरी कौन सी है?",
+      "options": [
+        "Cache Memory || कैश मेमोरी",
+        "Register || रजिस्टर",
+        "RAM || रैम",
+        "SSD || एस एस डी"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Registers are located directly inside the CPU.",
+          "say": "रजिस्टर सीधे सी पी यू के अंदर स्थित होते हैं।"
+        },
+        {
+          "show": "Speed order: Register > Cache > RAM > SSD.",
+          "say": "गति का क्रम रजिस्टर, फिर कैश, फिर रैम और फिर एस एस डी है।"
+        },
+        {
+          "show": "Registers hold data currently being executed by CPU.",
+          "say": "रजिस्टर उस डेटा को रखते हैं जिस पर सी पी यू अभी काम कर रहा है।"
+        }
+      ],
+      "trick": {
+        "show": "Inside CPU = Fastest = Register",
+        "say": "ट्रिक: जो सी पी यू के सबसे अंदर है वही सबसे तेज़ है, यानी रजिस्टर।"
+      }
+    },
+    {
+      "q": "In MS PowerPoint, which key starts the slideshow from the beginning? || एम एस पावरपॉइंट में शुरुआत से स्लाइडशो चलाने की शॉर्टकट की क्या है?",
+      "options": [
+        "F5 || एफ फाइव",
+        "Shift + F5 || शिफ्ट प्लस एफ फाइव",
+        "Ctrl + F5 || कंट्रोल प्लस एफ फाइव",
+        "Alt + F5 || ऑल्ट प्लस एफ फाइव"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "F5 starts the presentation from the very first slide.",
+          "say": "एफ फाइव प्रेजेंटेशन को बिल्कुल पहली स्लाइड से शुरू करता है।"
+        },
+        {
+          "show": "Shift + F5 starts slideshow from the current slide.",
+          "say": "शिफ्ट प्लस एफ फाइव मौजूदा स्लाइड से स्लाइडशो चलाता है।"
+        },
+        {
+          "show": "Esc key is pressed to exit the slideshow.",
+          "say": "स्लाइडशो से बाहर निकलने के लिए एस्केप की दबाई जाती है।"
+        }
+      ],
+      "trick": {
+        "show": "F5 = First slide, Shift+F5 = Selected slide",
+        "say": "ट्रिक: एफ फाइव से फर्स्ट स्लाइड और शिफ्ट प्लस एफ फाइव से सेलेक्टेड स्लाइड।"
+      }
+    },
+    {
+      "q": "What does URL stand for? || यू आर एल का पूरा नाम क्या है?",
+      "options": [
+        "Uniform Resource Locator || यूनिफ़ॉर्म रिसोर्स लोकेटर",
+        "Universal Resource Link || यूनिवर्सल रिसोर्स लिंक",
+        "Uniform Registered Link || यूनिफ़ॉर्म रजिस्टर्ड लिंक",
+        "Unified Resource Locator || यूनिफ़ाइड रिसोर्स लोकेटर"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "A URL is the unique web address of a resource on the Internet.",
+          "say": "यू आर एल इंटरनेट पर किसी वेबसाइट का अनूठा पता होता है।"
+        },
+        {
+          "show": "Example: https://www.hartron.org.in is a URL.",
+          "say": "उदाहरण के लिए एच टी टी पी एस डॉट हारट्रॉन एक यू आर एल है।"
+        },
+        {
+          "show": "It consists of protocol, domain name, and path.",
+          "say": "इसमें प्रोटोकॉल, डोमेन नाम और पाथ शामिल होते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Locator = Locates a website address",
+        "say": "ट्रिक: लोकेटर यानी जो वेबसाइट की लोकेशन या पता ढूंढे।"
+      }
+    },
+    {
+      "q": "Which printer sprays tiny droplets of liquid ink onto paper? || कौन सा प्रिंटर कागज़ पर तरल स्याही की छोटी बूंदें छिड़कता है?",
+      "options": [
+        "Laser Printer || लेजर प्रिंटर",
+        "Dot Matrix Printer || डॉट मैट्रिक्स प्रिंटर",
+        "Inkjet Printer || इंकजेट प्रिंटर",
+        "Thermal Printer || थर्मल प्रिंटर"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Inkjet printers spray liquid ink through microscopic nozzles.",
+          "say": "इंकजेट प्रिंटर सूक्ष्म नोजल के माध्यम से तरल स्याही छिड़कते हैं।"
+        },
+        {
+          "show": "Laser printers use dry toner powder and heat.",
+          "say": "लेजर प्रिंटर सूखे टोनर पाउडर और गर्मी का उपयोग करते हैं।"
+        },
+        {
+          "show": "Dot matrix is an impact printer using pins and ribbon.",
+          "say": "डॉट मैट्रिक्स एक इम्पैक्ट प्रिंटर है जो पिन और रिबन का उपयोग करता है।"
+        }
+      ],
+      "trick": {
+        "show": "Ink + Jet = Sprays jet of liquid ink",
+        "say": "ट्रिक: इंक और जेट से याद रखें, यह स्याही की फुहार छोड़ता है।"
+      }
+    },
+    {
+      "q": "What is the intersection of a row and a column in MS Excel called? || एम एस एक्सेल में रो और कॉलम के मिलन बिंदु को क्या कहा जाता है?",
+      "options": [
+        "Box || बॉक्स",
+        "Cell || सेल",
+        "Grid || ग्रिड",
+        "Field || फ़ील्ड"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Every cell has a unique address like A1 or B5.",
+          "say": "हर सेल का एक अनूठा पता होता है जैसे ए वन या बी फाइव।"
+        },
+        {
+          "show": "Rows are numbered (1, 2, 3) and columns are lettered (A, B, C).",
+          "say": "रो को नंबर से और कॉलम को अक्षरों से दर्शाया जाता है।"
+        },
+        {
+          "show": "Active cell has a thick dark border around it.",
+          "say": "सक्रिय सेल के चारों ओर एक गहरी मोटी सीमा होती है।"
+        }
+      ],
+      "trick": {
+        "show": "Row + Column = Cell",
+        "say": "ट्रिक: रो और कॉलम के मिलने से एक छोटा कमरा यानी सेल बनता है।"
+      }
+    },
+    {
+      "q": "Which malware disguises itself as legitimate software to trick users? || कौन सा मैलवेयर उपयोगकर्ताओं को धोखा देने के लिए वैध सॉफ्टवेयर का रूप धारण करता है?",
+      "options": [
+        "Worm || वॉर्म",
+        "Trojan Horse || ट्रोजन हॉर्स",
+        "Spyware || स्पाइवेयर",
+        "Adware || एडवेयर"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "A Trojan appears useful but steals data once installed.",
+          "say": "ट्रोजन उपयोगी दिखता है लेकिन इंस्टॉल होने पर डेटा चुराता है।"
+        },
+        {
+          "show": "Unlike viruses, Trojans do not replicate themselves.",
+          "say": "वायरस के विपरीत ट्रोजन खुद की कॉपी नहीं बनाते हैं।"
+        },
+        {
+          "show": "Worms self-replicate across networks without user action.",
+          "say": "वॉर्म बिना किसी मदद के नेटवर्क पर खुद की कॉपी बनाते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Trojan = Fake gift hiding an attack inside",
+        "say": "ट्रिक: ट्रोजन एक नकली उपहार है जिसके अंदर खतरा छिपा होता है।"
+      }
+    },
+    {
+      "q": "Which shortcut key is used to undo the last action? || अंतिम क्रिया को पूर्ववत करने यानी अनडू करने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + Y || कंट्रोल प्लस वाई",
+        "Ctrl + Z || कंट्रोल प्लस ज़ेड",
+        "Ctrl + U || कंट्रोल प्लस यू",
+        "Ctrl + X || कंट्रोल प्लस एक्स"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ctrl + Z reverses the most recent edit or command.",
+          "say": "कंट्रोल प्लस ज़ेड हाल ही में किए गए बदलाव को वापस ले लेता है।"
+        },
+        {
+          "show": "Ctrl + Y is used to redo an undone action.",
+          "say": "कंट्रोल प्लस वाई अनडू किए गए काम को फिर से करने के लिए है।"
+        },
+        {
+          "show": "Ctrl + X cuts the selected item to clipboard.",
+          "say": "कंट्रोल प्लस एक्स चुने हुए आइटम को कट करता है।"
+        }
+      ],
+      "trick": {
+        "show": "Z is the last letter, goes back one step",
+        "say": "ट्रिक: ज़ेड आखिरी अक्षर है, यह एक कदम पीछे ले जाता है।"
+      }
+    },
+    {
+      "q": "Which topology connects all devices to a single central cable? || किस टोपोलॉजी में सभी डिवाइस एक ही मुख्य केबल से जुड़े होते हैं?",
+      "options": [
+        "Star Topology || स्टार टोपोलॉजी",
+        "Ring Topology || रिंग टोपोलॉजी",
+        "Bus Topology || बस टोपोलॉजी",
+        "Mesh Topology || मेश टोपोलॉजी"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Bus topology uses one backbone cable for all nodes.",
+          "say": "बस टोपोलॉजी में सभी कंप्यूटर एक ही मुख्य केबल से जुड़ते हैं।"
+        },
+        {
+          "show": "If the main cable breaks, the entire network fails.",
+          "say": "यदि मुख्य केबल टूट जाए तो पूरा नेटवर्क बंद हो जाता है।"
+        },
+        {
+          "show": "Star topology connects all devices to a central hub or switch.",
+          "say": "स्टार टोपोलॉजी में सभी डिवाइस एक केंद्रीय हब या स्विच से जुड़ते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Bus = One single road (cable) for all stops",
+        "say": "ट्रिक: बस जैसे एक ही सड़क पर चलती है, वैसे ही इसमें एक केबल होती है।"
+      }
+    },
+    {
+      "q": "What is the base of the hexadecimal number system? || हेक्साडेसिमल नंबर सिस्टम का आधार यानी बेस क्या होता है?",
+      "options": [
+        "2 || दो",
+        "8 || आठ",
+        "10 || दस",
+        "16 || सोलह"
+      ],
+      "answer": "D",
+      "points": [
+        {
+          "show": "Hexadecimal uses 16 symbols: 0-9 and A-F.",
+          "say": "हेक्साडेसिमल में सोलह प्रतीक होते हैं, शून्य से नौ और ए से एफ तक।"
+        },
+        {
+          "show": "Binary has base 2, Octal has base 8, Decimal has base 10.",
+          "say": "बाइनरी का बेस दो, ऑक्टल का आठ और डेसिमल का दस होता है।"
+        },
+        {
+          "show": "In hexadecimal, A represents 10 and F represents 15.",
+          "say": "इसमें ए का मान दस और एफ का मान पंद्रह होता है।"
+        }
+      ],
+      "trick": {
+        "show": "Hexa (6) + Deci (10) = 16",
+        "say": "ट्रिक: हेक्सा यानी छह और डेसी यानी दस, दोनों मिलकर सोलह होते हैं।"
+      }
+    },
+    {
+      "q": "Which MS Word feature automatically moves text to the next line when it reaches the right margin? || एम एस वर्ड की कौन सी सुविधा दाएं मार्जिन पर पहुंचने पर टेक्स्ट को अपने आप अगली लाइन में ले जाती है?",
+      "options": [
+        "Word Art || वर्ड आर्ट",
+        "Word Wrap || वर्ड रैप",
+        "Auto Text || ऑटो टेक्स्ट",
+        "Drop Cap || ड्रॉप कैप"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Word Wrap eliminates the need to press Enter after every line.",
+          "say": "वर्ड रैप के कारण हर लाइन के बाद एंटर दबाने की ज़रूरत नहीं पड़ती।"
+        },
+        {
+          "show": "Enter key is pressed only to start a new paragraph.",
+          "say": "एंटर की केवल नया पैराग्राफ शुरू करने के लिए दबाई जाती है।"
+        },
+        {
+          "show": "Drop Cap creates a large capital letter at paragraph start.",
+          "say": "ड्रॉप कैप पैराग्राफ की शुरुआत में एक बड़ा अक्षर बनाता है।"
+        }
+      ],
+      "trick": {
+        "show": "Wrap = Wraps text neatly onto the next line",
+        "say": "ट्रिक: रैप यानी टेक्स्ट को मोड़कर अगली लाइन में ले जाना।"
+      }
+    },
+    {
+      "q": "Which component on a motherboard supplies power to keep the system clock running? || मदरबोर्ड पर कौन सा घटक सिस्टम घड़ी को चालू रखने के लिए बिजली देता है?",
+      "options": [
+        "SMPS || एस एम पी एस",
+        "CMOS Battery || सी मॉस बैटरी",
+        "Heat Sink || हीट सिंक",
+        "Graphics Card || ग्राफिक्स कार्ड"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "CMOS battery powers the RTC (Real-Time Clock) and BIOS settings.",
+          "say": "सी मॉस बैटरी सिस्टम की घड़ी और बी आई ओ एस सेटिंग्स को चालू रखती है।"
+        },
+        {
+          "show": "It is usually a coin-shaped CR2032 lithium cell.",
+          "say": "यह आमतौर पर सिक्के के आकार की लिथियम बैटरी होती है।"
+        },
+        {
+          "show": "If it dies, the computer resets its date and time on boot.",
+          "say": "इसके खराब होने पर कंप्यूटर चालू होते ही तारीख और समय रीसेट हो जाता है।"
+        }
+      ],
+      "trick": {
+        "show": "CMOS = Clock Memory On System",
+        "say": "ट्रिक: सी मॉस से क्लॉक मेमोरी ऑन सिस्टम याद रखें, जो घड़ी चलाती है।"
+      }
+    },
+    {
+      "q": "What is the full form of PDF? || पी डी एफ का पूरा नाम क्या है?",
+      "options": [
+        "Portable Document Format || पोर्टेबल डॉक्यूमेंट फ़ॉर्मेट",
+        "Printed Document File || प्रिंटेड डॉक्यूमेंट फ़ाइल",
+        "Public Data Format || पब्लिक डेटा फ़ॉर्मेट",
+        "Personal Document File || पर्सनल डॉक्यूमेंट फ़ाइल"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "PDF was developed by Adobe to present documents consistently.",
+          "say": "पी डी एफ को एडोब ने डॉक्यूमेंट को एक जैसा दिखाने के लिए बनाया था।"
+        },
+        {
+          "show": "PDF files retain formatting across all devices and OS.",
+          "say": "पी डी एफ फ़ाइलें सभी डिवाइस पर अपना फ़ॉर्मेट बनाए रखती हैं।"
+        },
+        {
+          "show": "It is an ISO standardized open file format.",
+          "say": "यह एक अंतरराष्ट्रीय मानक ओपन फ़ाइल फ़ॉर्मेट है।"
+        }
+      ],
+      "trick": {
+        "show": "Portable = Carry document anywhere unchanged",
+        "say": "ट्रिक: पोर्टेबल यानी जिसे कहीं भी ले जाएं पर रूप न बदले।"
+      }
+    },
+    {
+      "q": "Which shortcut key opens the 'Save As' dialog box in MS Office? || एम एस ऑफिस में सेव ऐज़ डायलॉग बॉक्स खोलने की शॉर्टकट की क्या है?",
+      "options": [
+        "F1 || एफ वन",
+        "F4 || एफ फोर",
+        "F11 || एफ इलेवन",
+        "F12 || एफ ट्वेल्व"
+      ],
+      "answer": "D",
+      "points": [
+        {
+          "show": "F12 opens the Save As window directly in Word, Excel, and PPT.",
+          "say": "एफ ट्वेल्व वर्ड, एक्सेल और पावरपॉइंट में सीधे सेव ऐज़ विंडो खोलता है।"
+        },
+        {
+          "show": "Save As allows saving a copy with a new name or format.",
+          "say": "सेव ऐज़ फ़ाइल को नए नाम या फ़ॉर्मेट में सेव करने की सुविधा देता है।"
+        },
+        {
+          "show": "F1 opens the Help window in almost all programs.",
+          "say": "एफ वन लगभग सभी प्रोग्रामों में हेल्प विंडो खोलता है।"
+        }
+      ],
+      "trick": {
+        "show": "F12 = Final 12th step to save a copy",
+        "say": "ट्रिक: एफ ट्वेल्व दबाएं और फ़ाइल की नई कॉपी सेव करें।"
+      }
+    },
+    {
+      "q": "Which type of software translates high-level language code into machine code line by line? || कौन सा सॉफ्टवेयर हाई-लेवल भाषा के कोड को लाइन दर लाइन मशीन कोड में बदलता है?",
+      "options": [
+        "Compiler || कंपाइलर",
+        "Interpreter || इंटरप्रेटर",
+        "Assembler || असेंबलर",
+        "Linker || लिंकर"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "An interpreter translates and executes code one line at a time.",
+          "say": "इंटरप्रेटर एक बार में एक लाइन कोड का अनुवाद और निष्पादन करता है।"
+        },
+        {
+          "show": "A compiler translates the entire program at once.",
+          "say": "कंपाइलर पूरे प्रोग्राम का एक ही बार में अनुवाद कर देता है।"
+        },
+        {
+          "show": "Python and JavaScript commonly use interpreters.",
+          "say": "पायथन और जावास्क्रिप्ट आमतौर पर इंटरप्रेटर का उपयोग करते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Interpreter = Translates speech sentence by sentence",
+        "say": "ट्रिक: जैसे दुभाषिया एक-एक वाक्य का अनुवाद करता है, वैसे ही इंटरप्रेटर करता है।"
+      }
+    },
+    {
+      "q": "What is the maximum zoom percentage available in MS Word? || एम एस वर्ड में उपलब्ध अधिकतम ज़ूम प्रतिशत कितना होता है?",
+      "options": [
+        "200% || दो सौ प्रतिशत",
+        "400% || चार सौ प्रतिशत",
+        "500% || पांच सौ प्रतिशत",
+        "100% || सौ प्रतिशत"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "MS Word supports zoom levels from 10% minimum to 500% maximum.",
+          "say": "एम एस वर्ड में न्यूनतम दस प्रतिशत से अधिकतम पांच सौ प्रतिशत ज़ूम होता है।"
+        },
+        {
+          "show": "MS Excel and PowerPoint have a maximum zoom of 400%.",
+          "say": "एम एस एक्सेल और पावरपॉइंट में अधिकतम ज़ूम चार सौ प्रतिशत है।"
+        },
+        {
+          "show": "Default zoom level in MS Word is 100%.",
+          "say": "एम एस वर्ड में डिफ़ॉल्ट ज़ूम स्तर सौ प्रतिशत होता है।"
+        }
+      ],
+      "trick": {
+        "show": "Word = 500%, Excel & PPT = 400%",
+        "say": "ट्रिक: वर्ड में पांच सौ प्रतिशत और एक्सेल व पावरपॉइंट में चार सौ प्रतिशत।"
+      }
+    },
+    {
+      "q": "Which network covers a small geographical area like a single office or building? || कौन सा नेटवर्क एक छोटे भौगोलिक क्षेत्र जैसे एक कार्यालय या इमारत को कवर करता है?",
+      "options": [
+        "WAN || वैन",
+        "MAN || मैन",
+        "LAN || लैन",
+        "PAN || पैन"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "LAN stands for Local Area Network.",
+          "say": "लैन का पूरा नाम लोकल एरिया नेटवर्क है।"
+        },
+        {
+          "show": "Ethernet cables and Wi-Fi are commonly used in LANs.",
+          "say": "लैन में आमतौर पर ईथरनेट केबल और वाई-फ़ाई का उपयोग होता है।"
+        },
+        {
+          "show": "WAN spans countries or continents, like the Internet.",
+          "say": "वैन देशों या महाद्वीपों तक फैला होता है, जैसे इंटरनेट।"
+        }
+      ],
+      "trick": {
+        "show": "LAN = Local = Limited to one building",
+        "say": "ट्रिक: लैन यानी लोकल, जो एक ही इमारत तक सीमित रहता है।"
+      }
+    },
+    {
+      "q": "Which of the following is NOT a web browser? || इनमें से कौन सा एक वेब ब्राउज़र नहीं है?",
+      "options": [
+        "Mozilla Firefox || मोज़िला फ़ायरफ़ॉक्स",
+        "Google Chrome || गूगल क्रोम",
+        "Bing || बिंग",
+        "Microsoft Edge || माइक्रोसॉफ्ट एज"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Bing is a web search engine owned by Microsoft.",
+          "say": "बिंग माइक्रोसॉफ्ट का एक वेब सर्च इंजन है।"
+        },
+        {
+          "show": "Chrome, Firefox, and Edge are web browsers used to view websites.",
+          "say": "क्रोम, फ़ायरफ़ॉक्स और एज वेबसाइट देखने वाले वेब ब्राउज़र हैं।"
+        },
+        {
+          "show": "Google and Yahoo are other examples of search engines.",
+          "say": "गूगल और याहू सर्च इंजन के अन्य उदाहरण हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Bing searches the web; Browser opens the web",
+        "say": "ट्रिक: बिंग वेब पर खोजता है, जबकि ब्राउज़र वेबसाइट खोलता है।"
+      }
+    },
+    {
+      "q": "In MS Excel, which function returns the largest value in a selected range? || एम एस एक्सेल में कौन सा फ़ंक्शन चुनी गई रेंज में सबसे बड़ा मान देता है?",
+      "options": [
+        "=HIGH() || इक्वल हाई",
+        "=MAX() || इक्वल मैक्स",
+        "=LARGE() || इक्वल लार्ज",
+        "=TOP() || इक्वल टॉप"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "=MAX(A1:A10) finds the highest numeric value in cells A1 to A10.",
+          "say": "इक्वल मैक्स ए वन से ए टेन तक सबसे बड़ा नंबर ढूंढता है।"
+        },
+        {
+          "show": "=MIN() returns the smallest value in a range.",
+          "say": "इक्वल मिन रेंज में सबसे छोटा मान देता है।"
+        },
+        {
+          "show": "=AVERAGE() calculates the arithmetic mean of numbers.",
+          "say": "इक्वल एवरेज संख्याओं का औसत निकालता है।"
+        }
+      ],
+      "trick": {
+        "show": "MAX = Maximum value",
+        "say": "ट्रिक: मैक्स का मतलब मैक्सिमम यानी सबसे बड़ा मान।"
+      }
+    },
+    {
+      "q": "What is the smallest unit of data in a computer? || कंप्यूटर में डेटा की सबसे छोटी इकाई क्या है?",
+      "options": [
+        "Nibble || निबल",
+        "Bit || बिट",
+        "Byte || बाइट",
+        "Word || वर्ड"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "A bit is a Binary Digit, representing either 0 or 1.",
+          "say": "बिट एक बाइनरी डिजिट है जो शून्य या एक को दर्शाता है।"
+        },
+        {
+          "show": "4 bits equal 1 Nibble.",
+          "say": "चार बिट्स मिलकर एक निबल बनाते हैं।"
+        },
+        {
+          "show": "8 bits equal 1 Byte.",
+          "say": "आठ बिट्स मिलकर एक बाइट बनाते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Bit = BInary digiT (smallest piece)",
+        "say": "ट्रिक: बिट यानी बाइनरी डिजिट, यह डेटा का सबसे छोटा टुकड़ा है।"
+      }
+    },
+    {
+      "q": "Which shortcut key creates a hyperlink in MS Word? || एम एस वर्ड में हाइपरलिंक बनाने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + H || कंट्रोल प्लस एच",
+        "Ctrl + K || कंट्रोल प्लस के",
+        "Ctrl + L || कंट्रोल प्लस एल",
+        "Ctrl + M || कंट्रोल प्लस एम"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ctrl + K opens the Insert Hyperlink dialog box.",
+          "say": "कंट्रोल प्लस के इंसर्ट हाइपरलिंक डायलॉग बॉक्स खोलता है।"
+        },
+        {
+          "show": "Ctrl + H opens the Find and Replace dialog box.",
+          "say": "कंट्रोल प्लस एच फाइंड एंड रिप्लेस बॉक्स खोलता है।"
+        },
+        {
+          "show": "Ctrl + L aligns selected text to the left.",
+          "say": "कंट्रोल प्लस एल चुने हुए टेक्स्ट को बाईं ओर अलाइन करता है।"
+        }
+      ],
+      "trick": {
+        "show": "LinK ends with K = Ctrl + K",
+        "say": "ट्रिक: लिंक शब्द के अंत में के आता है, इसलिए कंट्रोल प्लस के दबाएं।"
+      }
+    },
+    {
+      "q": "Which storage device has no moving mechanical parts? || किस स्टोरेज डिवाइस में कोई घूमने वाला मैकेनिकल पुर्जा नहीं होता है?",
+      "options": [
+        "Hard Disk Drive (HDD) || हार्ड डिस्क ड्राइव",
+        "Floppy Disk || फ्लॉपी डिस्क",
+        "Solid State Drive (SS",
+        "सॉलिड स्टेट ड्राइव D) Magnetic Tape || मैग्नेटिक टेप"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "SSD stores data on flash memory chips with zero moving parts.",
+          "say": "एस एस डी बिना किसी घूमने वाले पुर्जे के फ्लैश चिप पर डेटा स्टोर करता है।"
+        },
+        {
+          "show": "HDD uses spinning magnetic platters and read/write heads.",
+          "say": "एच डी डी में घूमने वाली मैग्नेटिक डिस्क होती हैं।"
+        },
+        {
+          "show": "SSDs are faster, quieter, and more shock-resistant than HDDs.",
+          "say": "एस एस डी हार्ड डिस्क की तुलना में तेज़ और अधिक टिकाऊ होते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Solid State = Solid chip, nothing spins",
+        "say": "ट्रिक: सॉलिड स्टेट यानी ठोस चिप, इसमें कुछ भी घूमता नहीं है।"
+      }
+    },
+    {
+      "q": "Which port is commonly used to connect modern monitors for both high-definition video and audio? || आधुनिक मॉनिटर को हाई-डेफिनिशन वीडियो और ऑडियो दोनों से जोड़ने के लिए किस पोर्ट का उपयोग होता है?",
+      "options": [
+        "VGA || वी जी ए",
+        "PS/2 || पी एस टू",
+        "HDMI || एच डी एम आई",
+        "Parallel Port || पैरेलल पोर्ट"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "HDMI stands for High-Definition Multimedia Interface.",
+          "say": "एच डी एम आई का पूरा नाम हाई-डेफिनिशन मल्टीमीडिया इंटरफ़ेस है।"
+        },
+        {
+          "show": "HDMI transmits uncompressed digital video and audio together.",
+          "say": "एच डी एम आई डिजिटल वीडियो और ऑडियो दोनों एक साथ भेजता है।"
+        },
+        {
+          "show": "VGA carries only analog video signals, not audio.",
+          "say": "वी जी ए केवल एनालॉग वीडियो सिग्नल ले जाता है, ऑडियो नहीं।"
+        }
+      ],
+      "trick": {
+        "show": "HDMI = HD Multimedia (Video + Audio)",
+        "say": "ट्रिक: एच डी एम आई यानी मल्टीमीडिया, जिसमें वीडियो और ऑडियो दोनों हैं।"
+      }
+    },
+    {
+      "q": "What is 'Phishing' in cyber security? || साइबर सुरक्षा में फ़िशिंग क्या है?",
+      "options": [
+        "Speeding up internet connection || इंटरनेट की गति बढ़ाना",
+        "Fraudulent attempt to steal sensitive info via fake emails || नकली ईमेल से संवेदनशील जानकारी चुराने का धोखाधड़ी प्रयास",
+        "Cleaning computer viruses || कंप्यूटर वायरस साफ करना",
+        "Backing up cloud data || क्लाउड डेटा का बैकअप लेना"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Attackers impersonate trusted banks or sites to steal passwords.",
+          "say": "हमलावर पासवर्ड चुराने के लिए भरोसेमंद बैंक या साइट का रूप धरते हैं।"
+        },
+        {
+          "show": "Phishing usually arrives via deceptive emails or SMS links.",
+          "say": "फ़िशिंग आमतौर पर धोखाधड़ी वाले ईमेल या एस एम एस लिंक से आती है।"
+        },
+        {
+          "show": "Never click unknown links asking for OTP or PIN.",
+          "say": "ओ टी पी या पिन मांगने वाले अनजान लिंक पर कभी क्लिक न करें।"
+        }
+      ],
+      "trick": {
+        "show": "Phishing = Fishing for your passwords with fake bait",
+        "say": "ट्रिक: फ़िशिंग यानी नकली चारा डालकर आपके पासवर्ड फंसाना।"
+      }
+    },
+    {
+      "q": "Which MS Excel feature lets you quickly fill a series of numbers or dates by dragging? || एम एस एक्सेल की कौन सी सुविधा ड्रैग करके संख्याओं या तारीखों की श्रृंखला को तेज़ी से भरती है?",
+      "options": [
+        "AutoSum || ऑटो सम",
+        "Fill Handle || फ़िल हैंडल",
+        "Format Painter || फ़ॉर्मेट पेंटर",
+        "Conditional Formatting || कंडीशनल फ़ॉर्मेटिंग"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Fill Handle is the small square at the bottom-right corner of a cell.",
+          "say": "फ़िल हैंडल सेल के निचले दाएं कोने पर एक छोटा चौकोर बिंदु होता है।"
+        },
+        {
+          "show": "Dragging it copies formulas or extends patterns like Mon, Tue.",
+          "say": "इसे खींचने से फ़ॉर्मूला कॉपी होता है या पैटर्न आगे बढ़ता है।"
+        },
+        {
+          "show": "Format Painter copies cell styling without copying data.",
+          "say": "फ़ॉर्मेट पेंटर बिना डेटा कॉपी किए सेल की स्टाइल कॉपी करता है।"
+        }
+      ],
+      "trick": {
+        "show": "Handle at corner = Drag to fill",
+        "say": "ट्रिक: कोने पर बने हैंडल को पकड़ें और खींचकर भर दें।"
+      }
+    },
+    {
+      "q": "Which register holds the memory address of the next instruction to be executed? || कौन सा रजिस्टर निष्पादित होने वाले अगले निर्देश का मेमोरी पता रखता है?",
+      "options": [
+        "Accumulator || एक्यूमुलेटर",
+        "Program Counter (P",
+        "प्रोग्राम काउंटर C) Instruction Register (IR) || इंस्ट्रक्शन रजिस्टर",
+        "Memory Data Register (MDR) || मेमोरी डेटा रजिस्टर"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Program Counter tracks the address of the upcoming instruction.",
+          "say": "प्रोग्राम काउंटर आने वाले निर्देश के पते पर नज़र रखता है।"
+        },
+        {
+          "show": "Instruction Register holds the currently executing instruction.",
+          "say": "इंस्ट्रक्शन रजिस्टर वर्तमान में चल रहे निर्देश को रखता है।"
+        },
+        {
+          "show": "Accumulator stores intermediate arithmetic and logic results.",
+          "say": "एक्यूमुलेटर गणितीय गणनाओं के मध्यवर्ती परिणाम स्टोर करता है।"
+        }
+      ],
+      "trick": {
+        "show": "Counter = Counts which instruction comes next",
+        "say": "ट्रिक: काउंटर गिनती रखता है कि अगला निर्देश कौन सा आएगा।"
+      }
+    },
+    {
+      "q": "What is the full form of ASCII? || ए एस सी आई आई का पूरा नाम क्या है?",
+      "options": [
+        "American Standard Code for Information Interchange || अमेरिकन स्टैंडर्ड कोड फ़ॉर इन्फ़ॉर्मेशन इंटरचेंज",
+        "Asian Standard Code for Internet Information || एशियन स्टैंडर्ड कोड फ़ॉर इंटरनेट इन्फ़ॉर्मेशन",
+        "Advanced System Code for Information Input || एडवांस्ड सिस्टम कोड फ़ॉर इन्फ़ॉर्मेशन इनपुट",
+        "American System Control for Internal Interchange || अमेरिकन सिस्टम कंट्रोल फ़ॉर इंटरनल इंटरचेंज"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "ASCII assigns numeric codes to letters, digits, and symbols.",
+          "say": "ए एस सी आई आई अक्षरों, अंकों और चिह्नों को संख्यात्मक कोड देता है।"
+        },
+        {
+          "show": "Standard ASCII uses 7 bits to represent 128 characters.",
+          "say": "मानक ए एस सी आई आई एक सौ अट्ठाईस अक्षरों के लिए सात बिट्स का उपयोग करता है।"
+        },
+        {
+          "show": "ASCII value of capital 'A' is 65 and small 'a' is 97.",
+          "say": "बड़े ए का मान पैंसठ और छोटे ए का मान सत्तानवे होता है।"
+        }
+      ],
+      "trick": {
+        "show": "A-S-C-I-I = American Standard Code",
+        "say": "ट्रिक: ए एस सी आई आई यानी अमेरिकन स्टैंडर्ड कोड।"
+      }
+    },
+    {
+      "q": "Which shortcut key opens the Task Manager directly in Windows? || विंडोज़ में सीधे टास्क मैनेजर खोलने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + Shift + Esc || कंट्रोल प्लस शिफ्ट प्लस एस्केप",
+        "Alt + Tab || ऑल्ट प्लस टैब",
+        "Win + D || विंडोज़ की प्लस डी",
+        "Ctrl + Alt + Z || कंट्रोल प्लस ऑल्ट प्लस ज़ेड"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "Ctrl + Shift + Esc launches Task Manager immediately.",
+          "say": "कंट्रोल प्लस शिफ्ट प्लस एस्केप तुरंत टास्क मैनेजर खोल देता है।"
+        },
+        {
+          "show": "Win + D minimizes all open windows to show the Desktop.",
+          "say": "विंडोज़ प्लस डी सभी खुली विंडो को छोटा करके डेस्कटॉप दिखाता है।"
+        },
+        {
+          "show": "Alt + Tab switches between currently open applications.",
+          "say": "ऑल्ट प्लस टैब खुले हुए प्रोग्रामों के बीच स्विच करता है।"
+        }
+      ],
+      "trick": {
+        "show": "Esc = Escape from a frozen app using Task Manager",
+        "say": "ट्रिक: हैंग हुए ऐप से बचने के लिए एस्केप वाला शॉर्टकट दबाएं।"
+      }
+    },
+    {
+      "q": "Which OSI layer is responsible for routing packets across different networks? || विभिन्न नेटवर्कों के बीच पैकेट को रूट करने के लिए कौन सी ओ एस आई लेयर ज़िम्मेदार है?",
+      "options": [
+        "Data Link Layer || डेटा लिंक लेयर",
+        "Network Layer || नेटवर्क लेयर",
+        "Transport Layer || ट्रांसपोर्ट लेयर",
+        "Physical Layer || फ़िज़िकल लेयर"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Network Layer (Layer 3) handles IP addressing and packet routing.",
+          "say": "नेटवर्क लेयर आई पी एड्रेसिंग और पैकेट रूटिंग को संभालती है।"
+        },
+        {
+          "show": "Routers operate primarily at the Network Layer.",
+          "say": "राउटर मुख्य रूप से नेटवर्क लेयर पर काम करते हैं।"
+        },
+        {
+          "show": "Data Link Layer (Layer 2) uses MAC addresses for local delivery.",
+          "say": "डेटा लिंक लेयर लोकल डिलीवरी के लिए मैक एड्रेस का उपयोग करती है।"
+        }
+      ],
+      "trick": {
+        "show": "Network Layer = Finds the best network path",
+        "say": "ट्रिक: नेटवर्क लेयर ही नेटवर्क का सबसे सही रास्ता ढूंढती है।"
+      }
+    },
+    {
+      "q": "In MS Word, what is 'Gutter Margin'? || एम एस वर्ड में गटर मार्जिन क्या होता है?",
+      "options": [
+        "Margin added to the bottom of page || पेज के निचले भाग में जोड़ा गया मार्जिन",
+        "Extra space added to binding side of page || पेज के बाइंडिंग वाले हिस्से में जोड़ी गई अतिरिक्त जगह",
+        "Space between two columns || दो कॉलम के बीच की जगह",
+        "Space inside header and footer || हेडर और फुटर के अंदर की जगह"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Gutter margin prevents text from being hidden when pages are bound.",
+          "say": "गटर मार्जिन किताब की बाइंडिंग करते समय टेक्स्ट को छिपने से बचाता है।"
+        },
+        {
+          "show": "It can be placed on the Left or Top side of a document.",
+          "say": "इसे डॉक्यूमेंट के बाएं या ऊपरी हिस्से में रखा जा सकता है।"
+        },
+        {
+          "show": "It is configured under the Page Setup dialog box.",
+          "say": "इसे पेज सेटअप डायलॉग बॉक्स के अंतर्गत सेट किया जाता है।"
+        }
+      ],
+      "trick": {
+        "show": "Gutter = Extra gap kept for stitching/binding",
+        "say": "ट्रिक: गटर यानी बाइंडिंग और सिलाई के लिए छोड़ी गई अतिरिक्त जगह।"
+      }
+    },
+    {
+      "q": "Which SQL command is used to remove a table completely from a database? || डेटाबेस से किसी टेबल को पूरी तरह हटाने के लिए किस एस क्यू एल कमांड का उपयोग होता है?",
+      "options": [
+        "DELETE || डिलीट",
+        "REMOVE || रिमूव",
+        "DROP || ड्रॉप",
+        "ERASE || इरेज़"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "DROP TABLE deletes both the data and the table structure permanently.",
+          "say": "ड्रॉप टेबल डेटा और टेबल की संरचना दोनों को स्थायी रूप से हटा देता है।"
+        },
+        {
+          "show": "DELETE removes rows but keeps the empty table structure intact.",
+          "say": "डिलीट केवल पंक्तियों को हटाता है पर खाली टेबल बनी रहती है।"
+        },
+        {
+          "show": "TRUNCATE removes all rows quickly without logging individual deletions.",
+          "say": "ट्रंकेट बिना लॉग बनाए सभी पंक्तियों को तेज़ी से हटा देता है।"
+        }
+      ],
+      "trick": {
+        "show": "DROP = Drops the entire table in the bin",
+        "say": "ट्रिक: ड्रॉप पूरी टेबल को ही कचरे में गिरा देता है।"
+      }
+    },
+    {
+      "q": "What is a 'Cookie' on the Internet? || इंटरनेट पर कुकी क्या होती है?",
+      "options": [
+        "A hardware component || एक हार्डवेयर कंपोनेंट",
+        "A small text file stored by websites on user's browser || वेबसाइटों द्वारा यूज़र के ब्राउज़र में सेव की गई छोटी टेक्स्ट फ़ाइल",
+        "A type of computer virus || एक प्रकार का कंप्यूटर वायरस",
+        "An email attachment || एक ईमेल अटैचमेंट"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Cookies remember login status, preferences, and shopping cart items.",
+          "say": "कुकीज़ लॉगिन स्थिति, पसंद और शॉपिंग कार्ट आइटम याद रखती हैं।"
+        },
+        {
+          "show": "They are created by the web server and stored locally by the browser.",
+          "say": "इन्हें वेब सर्वर बनाता है और ब्राउज़र कंप्यूटर में सेव करता है।"
+        },
+        {
+          "show": "Users can clear cookies anytime from browser privacy settings.",
+          "say": "यूज़र ब्राउज़र की प्राइवेसी सेटिंग्स से कभी भी कुकीज़ हटा सकते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Cookie = Crumbs left behind to remember your visit",
+        "say": "ट्रिक: कुकी वेबसाइट द्वारा छोड़ी गई निशानी है जो आपको याद रखती है।"
+      }
+    },
+    {
+      "q": "Which shortcut key inserts a page break in MS Word? || एम एस वर्ड में पेज ब्रेक डालने की शॉर्टकट की क्या है?",
+      "options": [
+        "Shift + Enter || शिफ्ट प्लस एंटर",
+        "Ctrl + Enter || कंट्रोल प्लस एंटर",
+        "Alt + Enter || ऑल्ट प्लस एंटर",
+        "Tab + Enter || टैब प्लस एंटर"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ctrl + Enter forces text after the cursor onto a new page.",
+          "say": "कंट्रोल प्लस एंटर कर्सर के बाद के टेक्स्ट को नए पेज पर ले जाता है।"
+        },
+        {
+          "show": "Shift + Enter inserts a line break without starting a new paragraph.",
+          "say": "शिफ्ट प्लस एंटर नया पैराग्राफ शुरू किए बिना लाइन ब्रेक डालता है।"
+        },
+        {
+          "show": "Page Break is also found under the Insert tab.",
+          "say": "पेज ब्रेक विकल्प इंसर्ट टैब के अंतर्गत भी मिलता है।"
+        }
+      ],
+      "trick": {
+        "show": "Ctrl + Enter = Enter a brand new page",
+        "say": "ट्रिक: कंट्रोल प्लस एंटर दबाएं और बिल्कुल नए पेज पर प्रवेश करें।"
+      }
+    },
+    {
+      "q": "What does IPv6 address length equal in bits? || आई पी वी सिक्स एड्रेस की लंबाई कितने बिट्स की होती है?",
+      "options": [
+        "32 bits || बत्तीस बिट्स",
+        "64 bits || चौंसठ बिट्स",
+        "128 bits || एक सौ अट्ठाईस बिट्स",
+        "256 bits || दो सौ छप्पन बिट्स"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "IPv6 uses 128-bit addresses written in hexadecimal notation.",
+          "say": "आई पी वी सिक्स हेक्साडेसिमल में लिखे एक सौ अट्ठाईस बिट एड्रेस का उपयोग करता है।"
+        },
+        {
+          "show": "IPv4 uses 32-bit addresses written in dotted-decimal format.",
+          "say": "आई पी वी फोर बत्तीस बिट एड्रेस का उपयोग करता है।"
+        },
+        {
+          "show": "IPv6 was introduced to solve IPv4 address exhaustion.",
+          "say": "आई पी वी फोर पतों की कमी को दूर करने के लिए आई पी वी सिक्स लाया गया।"
+        }
+      ],
+      "trick": {
+        "show": "IPv4 = 32 bits, IPv6 = 128 bits (4 times larger)",
+        "say": "ट्रिक: आई पी वी फोर बत्तीस बिट का और आई पी वी सिक्स एक सौ अट्ठाईस बिट का होता है।"
+      }
+    },
+    {
+      "q": "Which key is used to check spelling and grammar in MS Word? || एम एस वर्ड में स्पेलिंग और ग्रामर जांचने के लिए किस की का उपयोग होता है?",
+      "options": [
+        "F3 || एफ थ्री",
+        "F5 || एफ फाइव",
+        "F7 || एफ सेवन",
+        "F9 || एफ नाइन"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "F7 opens the Spelling & Grammar proofing pane.",
+          "say": "एफ सेवन स्पेलिंग और ग्रामर जांचने का पैनल खोलता है।"
+        },
+        {
+          "show": "Red wavy underline indicates a spelling error.",
+          "say": "लाल लहराती रेखा स्पेलिंग की गलती को दर्शाती है।"
+        },
+        {
+          "show": "Blue double underline indicates a grammar or contextual error.",
+          "say": "नीली दोहरी रेखा ग्रामर की गलती को दिखाती है।"
+        }
+      ],
+      "trick": {
+        "show": "F7 = 7 days a week check your spelling",
+        "say": "ट्रिक: एफ सेवन से याद रखें कि हफ्ते के सातों दिन स्पेलिंग सही रखें।"
+      }
+    },
+    {
+      "q": "Which of the following is an example of system software? || इनमें से कौन सा सिस्टम सॉफ्टवेयर का एक उदाहरण है?",
+      "options": [
+        "MS Paint || एम एस पेंट",
+        "Adobe Photoshop || एडोब फ़ोटोशॉप",
+        "Device Driver || डिवाइस ड्राइवर",
+        "VLC Media Player || वी एल सी मीडिया प्लेयर"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Device drivers allow the OS to communicate with hardware devices.",
+          "say": "डिवाइस ड्राइवर ऑपरेटिंग सिस्टम को हार्डवेयर से बात करने देते हैं।"
+        },
+        {
+          "show": "Operating systems and utility programs are also system software.",
+          "say": "ऑपरेटिंग सिस्टम और यूटिलिटी प्रोग्राम भी सिस्टम सॉफ्टवेयर हैं।"
+        },
+        {
+          "show": "Paint, Photoshop, and VLC are application software.",
+          "say": "पेंट, फ़ोटोशॉप और वी एल सी एप्लीकेशन सॉफ्टवेयर हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Driver = Drives hardware for the system",
+        "say": "ट्रिक: ड्राइवर सिस्टम के लिए हार्डवेयर को चलाता है।"
+      }
+    },
+    {
+      "q": "Which MS Excel error appears when a number is divided by zero? || किसी संख्या को शून्य से भाग देने पर एम एस एक्सेल में कौन सा एरर दिखाई देता है?",
+      "options": [
+        "#VALUE! || हैश वैल्यू",
+        "#NAME? || हैश नेम",
+        "#DIV/0! || हैश डिव बाय ज़ीरो",
+        "#REF! || हैश रेफ़"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "#DIV/0! occurs when a formula divides a number by 0 or an empty cell.",
+          "say": "जब फ़ॉर्मूला किसी संख्या को शून्य या खाली सेल से भाग देता है तो यह एरर आता है।"
+        },
+        {
+          "show": "#NAME? occurs when Excel does not recognize text in a formula.",
+          "say": "जब एक्सेल फ़ॉर्मूले में लिखे टेक्स्ट को नहीं पहचानता तो हैश नेम आता है।"
+        },
+        {
+          "show": "#REF! appears when a cell reference is invalid or deleted.",
+          "say": "जब सेल का पता गलत हो या डिलीट हो जाए तो हैश रेफ़ आता है।"
+        }
+      ],
+      "trick": {
+        "show": "DIV/0 = Divided by Zero",
+        "say": "ट्रिक: डिव बाय ज़ीरो का सीधा मतलब है शून्य से भाग देना।"
+      }
+    }
+  ]
+}
