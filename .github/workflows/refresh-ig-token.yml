@@ -1,4 +1,4 @@
-name: Refresh Instagram token
+name: "Tool · Refresh Instagram token (runs by itself)"
 
 # The Instagram token lasts 60 days. This extends it every 2 weeks (it must be older than 24 hours).
 # If the token is dead or about to die, this run FAILS and GitHub emails you: then make a new token

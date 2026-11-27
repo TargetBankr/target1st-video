@@ -1,9 +1,11 @@
-name: Make reels from a JSON
+name: "Extra · Make reels from an old JSON"
 
 # Turns a question JSON that is ALREADY in this repo (an old one, no need to edit or upload it again) into reel JSON files
 # (9:16 for Instagram) and starts the video build for them. The original file is not touched.
 #
-# Run it: Actions > Make reels from a JSON > Run workflow
+# You normally do NOT need this: "2 · Build video + reels + stories" starts it by itself when the JSON has auto_reels on.
+# Use it by hand for an OLD JSON (made before the switch existed).
+# Run it: Actions > Extra · Make reels from an old JSON > Run workflow
 #   file      = the JSON file name in the repo, e.g. questionshr25.done.json
 #   size      = questions per reel (10 = a reel of 10 questions; 0 = the whole set in ONE reel)
 #   points    = how many explanation points per question are shown and spoken (0 = all)
@@ -12,12 +14,12 @@ name: Make reels from a JSON
 #   first, count = only make some reels: first = number of the first reel (1 = from the start),
 #                  count = how many (0 = all). Handy for a small test: first 1, count 1.
 #   stories   = true: also make one Instagram STORY per reel (hook + the first question of that reel + the QR promo, no outro).
-#               They are named <name>-r01-story.done.json and are posted as stories by "Post reel to Instagram".
+#               They are named <name>-r01-story.done.json and are posted as stories by "3 · Post to Instagram".
 #   build     = true: start the video build for the new files right away. false: only create the files.
 #
 # New files are saved in the folder  reels/  as  <name>-r01.done.json, <name>-r02.done.json ...
 # The build then makes one video per file, one after another. Voice lines that already exist are reused from the cache.
-# To post: see "Post reel to Instagram" (AUTO_POST_REELS or SCHEDULED_POSTING variable).
+# Posting: "3 · Post to Instagram" does it by itself (SCHEDULED_POSTING variable).
 
 on:
   workflow_dispatch:
@@ -125,6 +127,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           list=$(sort made.txt | paste -sd, -)
-          echo "Starting 'Build quiz video' for: $list"
-          # a push made by this workflow does not start other workflows by itself, so start the build directly
-          gh workflow run "Build quiz video" --ref "$GITHUB_REF_NAME" -f "file=$list" < /dev/null
+          echo "Starting the build for: $list"
+          # a push made by this workflow does not start other workflows by itself, so start the build directly.
+          # delay=after: it waits until the YouTube video build (and any other build) has finished, never two at once
+          gh workflow run video.yml --ref "$GITHUB_REF_NAME" -f "file=$list" -f "delay=after" < /dev/null

@@ -1,4 +1,12 @@
-name: Build quiz video
+name: "2 · Build video + reels + stories"
+
+# ONE PUSH = EVERYTHING: push a JSON named <name>.done.json (put it in the jsons/ folder) ->
+#   1. the YouTube video is built -> Releases (download the .mp4 + description, upload to YouTube yourself)
+#   2. if the JSON meta says "auto_reels": true  (the on/off switch in the PDF tool, Export Video JSON > Auto Instagram)
+#      the reels (and stories if "auto_stories": true) are made from it and built right after, one by one
+#   3. "3 · Post to Instagram" posts the finished reels and stories by itself on its time slots
+#   Old JSONs without the switch make only the YouTube video. A test run with "limit" never makes reels.
+#
 
 # AUTO: push (or edit) any file named  <name>.done.json  -> the video is built and a release is created.
 #       Example: haryana-clerk.done.json
@@ -28,7 +36,7 @@ name: Build quiz video
 #       queues itself again for the next 1:35 pm IST (env QUOTA_RESET_AT below), at most 3 times per video.
 #       Other failures (bad JSON, bad key, no Sarvam credits...) are NOT resumed: they fail as before.
 #
-# MANUAL: Actions > Build quiz video > Run workflow still works (type the JSON file name).
+# MANUAL: Actions > 2 · Build video + reels + stories > Run workflow still works (type the JSON file name).
 #       The optional "delay" box takes the same things: 15m, 2h, 1h30m, @1335, after.
 #       ("wake" and "attempt" are used by the workflow itself when it continues a run: leave them empty.)
 # SEVERAL KEYS: in the JSON meta "key_slot": 2 uses the repository secret GEMINI_API_KEY_2 / SARVAM_API_KEY_2
@@ -356,7 +364,24 @@ jobs:
             if [ -f output/caption.txt ] && [ "$AUTO_POST_REELS" = "true" ]; then
               echo "AUTO_POST_REELS is on: posting video-$RUN_NO-$name to Instagram"
               gh workflow run post-reel.yml --ref "$GITHUB_REF_NAME" -f "tag=video-$RUN_NO-$name" -f "dry_run=false" < /dev/null \
-                || echo "::warning::Could not start the Instagram post for $name. Run 'Post reel to Instagram' by hand."
+                || echo "::warning::Could not start the Instagram post for $name. Run '3 · Post to Instagram' by hand."
+            fi
+            # the on/off switch from the PDF tool: make reels (+ stories) from this YouTube video
+            read -r AUTO_R AUTO_S REEL_N < <(python3 - "$f" <<'PY2'
+          import json, sys
+          m = json.load(open(sys.argv[1], encoding="utf-8")).get("meta", {})
+          wide = m.get("aspect", "wide") != "reel" and not m.get("story")
+          try: n = max(0, int(m.get("reel_size", 10)))
+          except (TypeError, ValueError): n = 10
+          print("true" if wide and m.get("auto_reels") is True else "false",
+                "false" if m.get("auto_stories") is False else "true", n)
+          PY2
+            )
+            if [ "$AUTO_R" = "true" ] && [ "${LIMIT:-0}" = "0" ]; then
+              echo "Auto Instagram is ON for $f: making reels (stories: $AUTO_S, $REEL_N questions per reel)"
+              gh workflow run make-reels.yml --ref "$GITHUB_REF_NAME" -f "file=$f" -f "size=$REEL_N" \
+                -f "stories=$AUTO_S" -f "build=true" < /dev/null \
+                || echo "::warning::Could not start the reels for $f. Run 'Extra · Make reels from an old JSON' by hand."
             fi
           done 3< plan.txt
 

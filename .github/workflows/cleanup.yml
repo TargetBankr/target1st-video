@@ -1,4 +1,4 @@
-name: Cleanup files
+name: "Tool · Delete files"
 on:
   workflow_dispatch:
     inputs:

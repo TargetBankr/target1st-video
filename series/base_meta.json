@@ -61,7 +61,10 @@
     ],
     "gemini_batch": 2,
     "long_fx": true,
-    "checkpoint_secs": 9
+    "checkpoint_secs": 9,
+    "auto_reels": false,
+    "auto_stories": false,
+    "reel_size": 10
   },
   "questions": [
     {

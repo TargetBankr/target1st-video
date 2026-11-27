@@ -1,8 +1,8 @@
-name: Post reel to Instagram
+name: "3 · Post to Instagram"
 
-# Posts a finished reel (a release made by "Build quiz video" with aspect "reel") to the Target1st Instagram account.
+# Posts a finished reel or story (made by "2 · Build video + reels + stories") to the Target1st Instagram account.
 #
-# Run it yourself: Actions > Post reel to Instagram > Run workflow
+# Run it yourself: Actions > 3 · Post to Instagram > Run workflow
 #   tag     = empty (oldest reel not posted yet) or a release tag, e.g. video-12-questionshr25-r01.done
 #   dry_run = true  -> checks the token and the video link and shows the caption, posts NOTHING (default)
 #             false -> really posts
@@ -18,7 +18,7 @@ name: Post reel to Instagram
 #                               of that kind was posted since. A late or lost tick is simply made up by the next hour's tick.
 #                               Change the slot times in tools/due_kinds.py (SLOTS). Nothing to post = nothing happens.
 #
-# Stories (made with "Make stories from built reels"): video only, Instagram's API cannot add link stickers, so the QR codes are
+# Stories: video only, Instagram's API cannot add link stickers, so the QR codes are
 #   part of the video. A tag containing "-story" is always posted as a story.
 #
 # Needs the repository SECRETS  IG_ACCESS_TOKEN  and  IG_USER_ID.  The repository must be public (Instagram downloads the file).

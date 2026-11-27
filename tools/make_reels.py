@@ -84,6 +84,8 @@ def main():
         if not (start < k <= end):
             continue
         meta = dict(data["meta"])
+        for key in ("auto_reels", "auto_stories", "reel_size"):   # a reel never makes reels of itself
+            meta.pop(key, None)
         title = str(meta.get("title", "")).strip()
         hook, small = HOOKS[(k - 1) % len(HOOKS)]
         hook, small = hook.format(n=len(chunk)), small.format(n=len(chunk))

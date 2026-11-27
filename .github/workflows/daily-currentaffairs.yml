@@ -1,4 +1,4 @@
-name: Daily current affairs
+name: "1B · Make JSON with Gemini (daily current affairs)"
 
 # Every night: news feeds -> Gemini writes the questions -> daily/currentaffairs-<date>.done.json is committed
 # -> the video build (video.yml) is started -> in the morning the .mp4 is in Releases, ready for YouTube.
@@ -8,7 +8,7 @@ name: Daily current affairs
 # Your morning check: open daily/currentaffairs-<date>.sources.txt (which news item each question came from).
 #
 # Pause it: Settings > Secrets and variables > Actions > Variables > DAILY_CA_PAUSED = true
-# Test by hand: Actions > Daily current affairs > Run workflow (count 5, build = false makes only the file).
+# Test by hand: Actions > 1B · Make JSON with Gemini (daily current affairs) > Run workflow (count 5, build = false makes only the file).
 
 on:
   schedule:
