@@ -1,0 +1,355 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 4 · भाग 1",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "10 में से कितने सही कर पाएँगे? आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 5,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "10 में से कितने सही कर पाएँगे?",
+  "intro_small": "जवाब सोचिए, फिर स्कोर कमेंट कीजिए",
+  "promo": true,
+  "reel_of": "1/5"
+ },
+ "questions": [
+  {
+   "q": "Which type of memory is permanently programmed during manufacturing and cannot be altered? || किस प्रकार की मेमोरी निर्माण के समय स्थायी रूप से प्रोग्राम की जाती है और बदली नहीं जा सकती?",
+   "options": [
+    "RAM || रैम",
+    "PROM || पी रॉम",
+    "Mask ROM || मास्क रॉम",
+    "EEPROM || ई ई पी रॉम"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Mask ROM has data permanently etched onto the chip at the factory.",
+     "say": "मास्क रॉम में डेटा फैक्ट्री में ही चिप पर स्थायी रूप से दर्ज किया जाता है।"
+    },
+    {
+     "show": "EEPROM can be erased and reprogrammed using electrical signals.",
+     "say": "ई ई पी रॉम को विद्युत संकेतों से मिटाकर दोबारा प्रोग्राम किया जा सकता है।"
+    },
+    {
+     "show": "ROM is non-volatile memory that retains data without power.",
+     "say": "रॉम एक नॉन वोलेटाइल मेमोरी है जो बिजली के बिना भी डेटा रखती है।"
+    }
+   ],
+   "trick": {
+    "show": "Mask = Cast in stone during manufacturing",
+    "say": "ट्रिक: मास्क रॉम फैक्ट्री में ही पत्थर की लकीर की तरह पक्की बनती है।"
+   }
+  },
+  {
+   "q": "Which shortcut key is used to center-align selected text in MS Word? || एम एस वर्ड में चुने गए टेक्स्ट को सेंटर अलाइन करने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + C || कंट्रोल प्लस सी",
+    "Ctrl + E || कंट्रोल प्लस ई",
+    "Ctrl + R || कंट्रोल प्लस आर",
+    "Ctrl + J || कंट्रोल प्लस जे"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + E aligns text evenly between left and right margins.",
+     "say": "कंट्रोल प्लस ई टेक्स्ट को बाएं और दाएं मार्जिन के बीच केंद्र में रखता है।"
+    },
+    {
+     "show": "Ctrl + R aligns text to the right margin.",
+     "say": "कंट्रोल प्लस आर टेक्स्ट को दाएं मार्जिन की ओर संरेखित करता है।"
+    },
+    {
+     "show": "Ctrl + J justifies text across both left and right edges.",
+     "say": "कंट्रोल प्लस जे टेक्स्ट को दोनों किनारों पर बराबर फैलाता है।"
+    }
+   ],
+   "trick": {
+    "show": "C is for Copy, so use E (cEnter) for Center",
+    "say": "ट्रिक: सी से कॉपी होता है, इसलिए सेंटर के लिए दूसरा अक्षर ई इस्तेमाल करें।"
+   }
+  },
+  {
+   "q": "What is the full form of USB? || यू एस बी का पूरा नाम क्या है?",
+   "options": [
+    "Universal Serial Bus || यूनिवर्सल सीरियल बस",
+    "United System Bus || यूनाइटेड सिस्टम बस",
+    "Universal Storage Byte || यूनिवर्सल स्टोरेज बाइट",
+    "Uniform Serial Bridge || यूनिफ़ॉर्म सीरियल ब्रिज"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "USB is a standard interface for connecting peripherals to computers.",
+     "say": "यू एस बी कंप्यूटर से बाहरी उपकरणों को जोड़ने का एक मानक इंटरफ़ेस है।"
+    },
+    {
+     "show": "It supports Plug and Play functionality without rebooting.",
+     "say": "यह कंप्यूटर को रीबूट किए बिना प्लग एंड प्ले की सुविधा देता है।"
+    },
+    {
+     "show": "USB Type-C is reversible and supports high-speed data and power.",
+     "say": "यू एस बी टाइप सी दोनों तरफ से लग सकता है और तेज़ चार्जिंग देता है।"
+    }
+   ],
+   "trick": {
+    "show": "Serial Bus = Sends data bits one after another",
+    "say": "ट्रिक: सीरियल बस यानी एक के बाद एक डेटा भेजने वाला रास्ता।"
+   }
+  },
+  {
+   "q": "Which unit of the CPU performs all arithmetic and logical operations? || सी पी यू की कौन सी इकाई सभी गणितीय और तार्किक गणनाएं करती है?",
+   "options": [
+    "Control Unit || कंट्रोल यूनिट",
+    "Arithmetic Logic Unit || अरिथमेटिक लॉजिक यूनिट",
+    "Memory Unit || मेमोरी यूनिट",
+    "Cache Unit || कैश यूनिट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "ALU performs addition, subtraction, and comparisons like greater than.",
+     "say": "ए एल यू जोड़, घटाव और तुलनात्मक कार्य जैसे बड़ा या छोटा करता है।"
+    },
+    {
+     "show": "Control Unit directs the flow of data between CPU and devices.",
+     "say": "कंट्रोल यूनिट सी पी यू और उपकरणों के बीच डेटा के प्रवाह को नियंत्रित करती है।"
+    },
+    {
+     "show": "Both ALU and CU together form the processor core.",
+     "say": "ए एल यू और सी यू दोनों मिलकर प्रोसेसर का मुख्य भाग बनाते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "A-L-U = Arithmetic (Math) + Logic (Decisions)",
+    "say": "ट्रिक: ए एल यू यानी अरिथमेटिक से गणित और लॉजिक से सही गलत का फैसला।"
+   }
+  },
+  {
+   "q": "What is a 'Firewall' in computer networks? || कंप्यूटर नेटवर्क में फ़ायरवॉल क्या होता है?",
+   "options": [
+    "A cooling fan inside CPU || सी पी यू के अंदर का कूलिंग फैन",
+    "A security system that monitors and filters network traffic || एक सुरक्षा प्रणाली जो नेटवर्क ट्रैफ़िक की निगरानी और फ़िल्टर करती है",
+    "A high-speed fiber cable || एक हाई स्पीड फ़ाइबर केबल",
+    "A software to format hard drives || हार्ड ड्राइव फ़ॉर्मेट करने का सॉफ्टवेयर"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "A firewall blocks unauthorized access while permitting safe traffic.",
+     "say": "फ़ायरवॉल सुरक्षित ट्रैफ़िक को अनुमति देते हुए अनधिकृत पहुंच को रोकता है।"
+    },
+    {
+     "show": "It can be implemented as hardware, software, or both.",
+     "say": "इसे हार्डवेयर, सॉफ्टवेयर या दोनों के रूप में लागू किया जा सकता है।"
+    },
+    {
+     "show": "Windows Defender Firewall comes built into Windows OS.",
+     "say": "विंडोज़ डिफ़ेंडर फ़ायरवॉल विंडोज़ ऑपरेटिंग सिस्टम में पहले से मौजूद होता है।"
+    }
+   ],
+   "trick": {
+    "show": "Fire-wall = Protective wall against cyber fire",
+    "say": "ट्रिक: फ़ायरवॉल यानी साइबर खतरों की आग से बचाने वाली सुरक्षा दीवार।"
+   }
+  },
+  {
+   "q": "Which generation of computers introduced microprocessors? || कंप्यूटर की किस पीढ़ी में माइक्रोप्रोसेसर की शुरुआत हुई थी?",
+   "options": [
+    "Second Generation || दूसरी पीढ़ी",
+    "Third Generation || तीसरी पीढ़ी",
+    "Fourth Generation || चौथी पीढ़ी",
+    "Fifth Generation || पांचवीं पीढ़ी"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Fourth generation (1971-present) uses VLSI microprocessors.",
+     "say": "चौथी पीढ़ी में वी एल एस आई तकनीक वाले माइक्रोप्रोसेसर का उपयोग होता है।"
+    },
+    {
+     "show": "Intel 4004 was the world's first commercial microprocessor.",
+     "say": "इंटेल चार हज़ार चार दुनिया का पहला व्यावसायिक माइक्रोप्रोसेसर था।"
+    },
+    {
+     "show": "Fifth generation focuses on Artificial Intelligence and ULSI.",
+     "say": "पांचवीं पीढ़ी आर्टिफ़िशियल इंटेलिजेंस और यू एल एस आई पर केंद्रित है।"
+    }
+   ],
+   "trick": {
+    "show": "4th Gen = Intel 4004 Microprocessor",
+    "say": "ट्रिक: चौथी पीढ़ी को इंटेल चार हज़ार चार माइक्रोप्रोसेसर से याद रखें।"
+   }
+  },
+  {
+   "q": "In MS Excel, which symbol is used to create an absolute cell reference? || एम एस एक्सेल में एब्सोल्यूट सेल रेफ़रेंस बनाने के लिए किस चिह्न का उपयोग होता है?",
+   "options": [
+    "@ || एट द रेट",
+    "# || हैश",
+    "$ || डॉलर",
+    "& || एंड"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "A dollar sign locks the column and row, such as $A$1.",
+     "say": "डॉलर चिह्न कॉलम और रो को लॉक कर देता है, जैसे डॉलर ए डॉलर वन।"
+    },
+    {
+     "show": "Pressing F4 toggles between relative, absolute, and mixed references.",
+     "say": "एफ फोर दबाने से रेफ़रेंस के प्रकार आपस में बदलते हैं।"
+    },
+    {
+     "show": "Relative reference (A1) changes automatically when copied.",
+     "say": "रिलेटिव रेफ़रेंस कॉपी करने पर अपने आप बदल जाता है।"
+    }
+   ],
+   "trick": {
+    "show": "Dollar ($) = Locks cell value like money in a safe",
+    "say": "ट्रिक: डॉलर तिजोरी के ताले की तरह सेल के पते को लॉक कर देता है।"
+   }
+  },
+  {
+   "q": "Which device is used to read answers marked with pencil or pen on examination sheets? || परीक्षा शीट पर पेंसिल या पेन से चिह्नित उत्तरों को पढ़ने के लिए किस डिवाइस का उपयोग होता है?",
+   "options": [
+    "MICR || एम आई सी आर",
+    "OCR || ओ सी आर",
+    "OMR || ओ एम आर",
+    "BCR || बी सी आर"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "OMR stands for Optical Mark Recognition.",
+     "say": "ओ एम आर का पूरा नाम ऑप्टिकल मार्क रिकग्निशन है।"
+    },
+    {
+     "show": "It detects reflected light from darkened bubbles on forms.",
+     "say": "यह फ़ॉर्म पर काले किए गए गोलों से परावर्तित प्रकाश को पहचानता है।"
+    },
+    {
+     "show": "MICR is used in banks to read cheque numbers printed in magnetic ink.",
+     "say": "बैंकों में चेक नंबर पढ़ने के लिए एम आई सी आर का उपयोग होता है।"
+    }
+   ],
+   "trick": {
+    "show": "O-M-R = Optical Mark (bubbles) Reader",
+    "say": "ट्रिक: ओ एम आर यानी परीक्षा की शीट पर बने गोल निशान पढ़ने वाला।"
+   }
+  },
+  {
+   "q": "What is the full form of HTTP? || एच टी टी पी का पूरा नाम क्या है?",
+   "options": [
+    "HyperText Transfer Protocol || हाइपरटेक्स्ट ट्रांसफर प्रोटोकॉल",
+    "High Transfer Text Process || हाई ट्रांसफर टेक्स्ट प्रोसेस",
+    "Hyperlink Text Transmission Program || हाइपरलिंक टेक्स्ट ट्रांसमिशन प्रोग्राम",
+    "Home Tool Transfer Protocol || होम टूल ट्रांसफर प्रोटोकॉल"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "HTTP governs how web browsers request and receive web pages.",
+     "say": "एच टी टी पी तय करता है कि वेब ब्राउज़र वेबपेज कैसे मांगते और प्राप्त करते हैं।"
+    },
+    {
+     "show": "HTTPS adds SSL/TLS encryption for secure communication.",
+     "say": "सुरक्षित संचार के लिए एच टी टी पी एस में एन्क्रिप्शन जोड़ा जाता है।"
+    },
+    {
+     "show": "HTTP uses port 80, whereas HTTPS uses port 443.",
+     "say": "एच टी टी पी पोर्ट अस्सी का और एच टी टी पी एस पोर्ट चार सौ तैंतालीस का उपयोग करता है।"
+    }
+   ],
+   "trick": {
+    "show": "HyperText = Web pages linked together",
+    "say": "ट्रिक: हाइपरटेक्स्ट यानी आपस में जुड़े हुए वेबपेज को ट्रांसफर करने का नियम।"
+   }
+  },
+  {
+   "q": "Which shortcut key opens the 'Find and Replace' dialog box in MS Word? || एम एस वर्ड में फ़ाइंड एंड रिप्लेस डायलॉग बॉक्स खोलने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + F || कंट्रोल प्लस एफ",
+    "Ctrl + H || कंट्रोल प्लस एच",
+    "Ctrl + R || कंट्रोल प्लस आर",
+    "Ctrl + G || कंट्रोल प्लस जी"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + H opens directly to the Replace tab in Find and Replace.",
+     "say": "कंट्रोल प्लस एच सीधे फ़ाइंड एंड रिप्लेस के रिप्लेस टैब को खोलता है।"
+    },
+    {
+     "show": "Ctrl + F opens only the Find navigation pane.",
+     "say": "कंट्रोल प्लस एफ केवल खोजने के लिए नेविगेशन पैनल खोलता है।"
+    },
+    {
+     "show": "Ctrl + G opens the Go To tab to jump to a specific page.",
+     "say": "कंट्रोल प्लस जी किसी खास पेज पर जाने के लिए गो टू टैब खोलता है।"
+    }
+   ],
+   "trick": {
+    "show": "H = Hunt and change (Replace)",
+    "say": "ट्रिक: एच से हंट एंड चेंज याद रखें, यानी ढूंढकर बदलना।"
+   }
+  }
+ ]
+}

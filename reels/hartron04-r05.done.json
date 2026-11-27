@@ -1,0 +1,355 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 4 · भाग 5",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "सिर्फ़ 1 मिनट, 10 प्रश्न! आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 5,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "सिर्फ़ 1 मिनट, 10 प्रश्न!",
+  "intro_small": "अपनी तैयारी जाँचिए",
+  "promo": true,
+  "reel_of": "5/5"
+ },
+ "questions": [
+  {
+   "q": "Which port number is used by default for secure HTTPS traffic? || सुरक्षित एच टी टी पी एस ट्रैफ़िक के लिए डिफ़ॉल्ट रूप से किस पोर्ट नंबर का उपयोग होता है?",
+   "options": [
+    "21 || इक्कीस",
+    "25 || पच्चीस",
+    "80 || अस्सी",
+    "443 || चार सौ तैंतालीस"
+   ],
+   "answer": "D",
+   "points": [
+    {
+     "show": "HTTPS uses port 443 to encrypt data with TLS/SSL.",
+     "say": "एच टी टी पी एस डेटा को एन्क्रिप्ट करने के लिए पोर्ट चार सौ तैंतालीस का उपयोग करता है।"
+    },
+    {
+     "show": "Port 80 is used for unencrypted HTTP traffic.",
+     "say": "बिना एन्क्रिप्शन वाले एच टी टी पी ट्रैफ़िक के लिए पोर्ट अस्सी का उपयोग होता है।"
+    },
+    {
+     "show": "Port 21 is used by FTP, and Port 25 is used by SMTP.",
+     "say": "पोर्ट इक्कीस का उपयोग एफ टी पी और पोर्ट पच्चीस का एस एम टी पी करता है।"
+    }
+   ],
+   "trick": {
+    "show": "HTTPS has 5 letters -> 443 (4+4+3=11, bigger & safer than 80)",
+    "say": "ट्रिक: एच टी टी पी का अस्सी और सुरक्षित एच टी टी पी एस का चार सौ तैंतालीस याद रखें।"
+   }
+  },
+  {
+   "q": "What does 'POST' stand for when a computer boots up? || कंप्यूटर चालू होते समय पोस्ट का पूरा नाम क्या होता है?",
+   "options": [
+    "Power-On Self-Test || पावर ऑन सेल्फ टेस्ट",
+    "Program Operating System Transfer || प्रोग्राम ऑपरेटिंग सिस्टम ट्रांसफर",
+    "Peripheral Output System Test || पेरिफ़ेरल आउटपुट सिस्टम टेस्ट",
+    "Primary Operating Startup Task || प्राइमरी ऑपरेटिंग स्टार्टअप टास्क"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "POST checks RAM, keyboard, and storage drives before loading OS.",
+     "say": "पोस्ट ऑपरेटिंग सिस्टम लोड होने से पहले रैम, कीबोर्ड और ड्राइव की जांच करता है।"
+    },
+    {
+     "show": "Beep codes indicate hardware errors detected during POST.",
+     "say": "बीप की आवाज़ें पोस्ट के दौरान पकड़ी गई हार्डवेयर खराबी का संकेत देती हैं।"
+    },
+    {
+     "show": "It is executed by the BIOS or UEFI firmware.",
+     "say": "यह बी आई ओ एस या यू ई एफ आई फ़र्मवेयर द्वारा चलाया जाता है।"
+    }
+   ],
+   "trick": {
+    "show": "Power-On = Computer tests itself right after power button",
+    "say": "ट्रिक: पावर बटन दबाते ही कंप्यूटर खुद की जांच करता है, यही पावर ऑन सेल्फ टेस्ट है।"
+   }
+  },
+  {
+   "q": "Which shortcut key opens the 'Font' dialog box in MS Word? || एम एस वर्ड में फ़ॉन्ट डायलॉग बॉक्स खोलने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + D || कंट्रोल प्लस डी",
+    "Ctrl + F || कंट्रोल प्लस एफ",
+    "Ctrl + Shift + P || कंट्रोल प्लस शिफ्ट प्लस पी",
+    "Alt + F || ऑल्ट प्लस एफ"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "Ctrl + D opens the full Font formatting window in MS Word.",
+     "say": "कंट्रोल प्लस डी एम एस वर्ड में पूरा फ़ॉन्ट फ़ॉर्मेटिंग विंडो खोलता है।"
+    },
+    {
+     "show": "In PowerPoint, Ctrl + D duplicates the selected slide or object.",
+     "say": "पावरपॉइंट में कंट्रोल प्लस डी चुनी गई स्लाइड या ऑब्जेक्ट की डुप्लीकेट कॉपी बनाता है।"
+    },
+    {
+     "show": "In web browsers, Ctrl + D bookmarks the current webpage.",
+     "say": "वेब ब्राउज़र में कंट्रोल प्लस डी वर्तमान वेबपेज को बुकमार्क करता है।"
+    }
+   ],
+   "trick": {
+    "show": "D = Design your font in Word",
+    "say": "ट्रिक: वर्ड में कंट्रोल प्लस डी दबाकर अपने फ़ॉन्ट को डिज़ाइन करें।"
+   }
+  },
+  {
+   "q": "What is the full form of SQL? || एस क्यू एल का पूरा नाम क्या है?",
+   "options": [
+    "Structured Query Language || स्ट्रक्चर्ड क्वेरी लैंग्वेज",
+    "Simple Question Language || सिंपल क्वेश्चन लैंग्वेज",
+    "System Query Logic || सिस्टम क्वेरी लॉजिक",
+    "Standard Quality Language || स्टैंडर्ड क्वालिटी लैंग्वेज"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "SQL is used to store, retrieve, and manage data in relational databases.",
+     "say": "एस क्यू एल का उपयोग रिलेशनल डेटाबेस में डेटा स्टोर और प्रबंधित करने के लिए होता है।"
+    },
+    {
+     "show": "Common SQL commands include SELECT, INSERT, UPDATE, and DELETE.",
+     "say": "प्रमुख एस क्यू एल कमांड में सेलेक्ट, इंसर्ट, अपडेट और डिलीट शामिल हैं।"
+    },
+    {
+     "show": "MySQL, PostgreSQL, and Oracle Database use SQL.",
+     "say": "माई एस क्यू एल, पोस्टग्रे एस क्यू एल और ओरेकल डेटाबेस एस क्यू एल का उपयोग करते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Query = Asking structured questions to a database",
+    "say": "ट्रिक: क्वेरी यानी डेटाबेस से व्यवस्थित तरीके से सवाल पूछकर डेटा निकालना।"
+   }
+  },
+  {
+   "q": "Which type of malware secretly records every keystroke typed by a user? || कौन सा मैलवेयर उपयोगकर्ता द्वारा दबाए गए हर कीस्ट्रोक को चुपके से रिकॉर्ड करता है?",
+   "options": [
+    "Adware || एडवेयर",
+    "Keylogger || कीलॉगर",
+    "Rootkit || रूटकिट",
+    "Botnet || बॉटनेट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Keyloggers capture passwords, PINs, and credit card numbers typed on keyboards.",
+     "say": "कीलॉगर कीबोर्ड पर टाइप किए गए पासवर्ड, पिन और कार्ड नंबर चुरा लेते हैं।"
+    },
+    {
+     "show": "Using virtual on-screen keyboards helps bypass hardware/software keyloggers.",
+     "say": "वर्चुअल ऑन स्क्रीन कीबोर्ड का उपयोग कीलॉगर से बचने में मदद करता है।"
+    },
+    {
+     "show": "Keyloggers are a common form of spyware.",
+     "say": "कीलॉगर स्पाइवेयर का एक सामान्य रूप है।"
+    }
+   ],
+   "trick": {
+    "show": "Key + Logger = Logs every key you press",
+    "say": "ट्रिक: की और लॉगर यानी आपके द्वारा दबाई गई हर की का रिकॉर्ड रखने वाला।"
+   }
+  },
+  {
+   "q": "In MS Word, which shortcut key increases the font size by 1 point? || एम एस वर्ड में फ़ॉन्ट का आकार एक पॉइंट बढ़ाने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + ] || कंट्रोल प्लस क्लोज़िंग स्क्वायर ब्रैकेट",
+    "Ctrl + [ || कंट्रोल प्लस ओपनिंग स्क्वायर ब्रैकेट",
+    "Ctrl + > || कंट्रोल प्लस ग्रेटर दैन",
+    "Ctrl + + || कंट्रोल प्लस प्लस"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "Ctrl + ] increases font size by exactly 1 point at a time.",
+     "say": "कंट्रोल प्लस क्लोज़िंग स्क्वायर ब्रैकेट फ़ॉन्ट साइज को एक बार में एक पॉइंट बढ़ाता है।"
+    },
+    {
+     "show": "Ctrl + [ decreases font size by 1 point at a time.",
+     "say": "कंट्रोल प्लस ओपनिंग स्क्वायर ब्रैकेट फ़ॉन्ट साइज को एक पॉइंट घटाता है।"
+    },
+    {
+     "show": "Ctrl + Shift + > increases font size to the next preset size.",
+     "say": "कंट्रोल प्लस शिफ्ट प्लस ग्रेटर दैन फ़ॉन्ट साइज को अगले बड़े आकार पर ले जाता है।"
+    }
+   ],
+   "trick": {
+    "show": "] opens outward = Grows size by 1 point",
+    "say": "ट्रिक: बाहर की ओर खुलने वाला ब्रैकेट साइज को एक पॉइंट बढ़ाता है।"
+   }
+  },
+  {
+   "q": "Which wireless technology is used for short-range data exchange over a Personal Area Network (PAN)? || पर्सनल एरिया नेटवर्क पर कम दूरी के डेटा आदान-प्रदान के लिए किस वायरलेस तकनीक का उपयोग होता है?",
+   "options": [
+    "WiMAX || वाई मैक्स",
+    "Bluetooth || ब्लूटूथ",
+    "VSAT || वी सैट",
+    "Ethernet || ईथरनेट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Bluetooth connects devices like headphones and mice within about 10 meters.",
+     "say": "ब्लूटूथ लगभग दस मीटर के दायरे में हेडफ़ोन और माउस जैसे उपकरणों को जोड़ता है।"
+    },
+    {
+     "show": "It operates in the 2.4 GHz unlicensed ISM frequency band.",
+     "say": "यह दो दशमलव चार गीगाहर्ट्ज़ फ़्रीक्वेंसी बैंड पर काम करता है।"
+    },
+    {
+     "show": "IEEE 802.15.1 is the standard associated with Bluetooth.",
+     "say": "आई ट्रिपल ई आठ सौ दो दशमलव पंद्रह ब्लूटूथ से जुड़ा मानक है।"
+    }
+   ],
+   "trick": {
+    "show": "Bluetooth = Connects personal gadgets right next to you",
+    "say": "ट्रिक: ब्लूटूथ आपके बिल्कुल पास के निजी उपकरणों को आपस में जोड़ता है।"
+   }
+  },
+  {
+   "q": "What is 'Cloud Computing'? || क्लाउड कंप्यूटिंग क्या है?",
+   "options": [
+    "Predicting weather using supercomputers || सुपरकंप्यूटर से मौसम की भविष्यवाणी करना",
+    "Delivering computing services and storage over the Internet || इंटरनेट के माध्यम से कंप्यूटिंग सेवाएं और स्टोरेज प्रदान करना",
+    "Cooling servers with water vapor || जल वाष्प से सर्वर को ठंडा करना",
+    "Connecting two PCs via LAN cable || लैन केबल से दो कंप्यूटर जोड़ना"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Cloud services include Google Drive, Dropbox, AWS, and Microsoft Azure.",
+     "say": "क्लाउड सेवाओं में गूगल ड्राइव, ड्रॉपबॉक्स, ए डब्ल्यू एस और एज़्योर शामिल हैं।"
+    },
+    {
+     "show": "Users can access files from any device with an Internet connection.",
+     "say": "उपयोगकर्ता इंटरनेट वाले किसी भी डिवाइस से अपनी फ़ाइलें खोल सकते हैं।"
+    },
+    {
+     "show": "Main cloud models are IaaS, PaaS, and SaaS.",
+     "say": "मुख्य क्लाउड मॉडल आई ए ए एस, पी ए ए एस और एस ए ए एस हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Cloud = Your files float online, accessible anywhere",
+    "say": "ट्रिक: क्लाउड यानी आपकी फ़ाइलें इंटरनेट पर सुरक्षित हैं जिन्हें कहीं से भी खोल सकते हैं।"
+   }
+  },
+  {
+   "q": "Which Excel function joins text from two or more cells into one cell? || कौन सा एक्सेल फ़ंक्शन दो या अधिक सेल के टेक्स्ट को एक सेल में जोड़ता है?",
+   "options": [
+    "=JOIN() || इक्वल जॉइन",
+    "=CONCATENATE() || इक्वल कॉन्कैटेनेट",
+    "=MERGE() || इक्वल मर्ज",
+    "=COMBINE() || इक्वल कंबाइन"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "=CONCATENATE(A1, \" \", B1) combines first and last names with a space.",
+     "say": "इक्वल कॉन्कैटेनेट पहले और आखिरी नाम को बीच में स्पेस देकर जोड़ता है।"
+    },
+    {
+     "show": "The ampersand (&) operator can also join text, like =A1&B1.",
+     "say": "एंड चिह्न का उपयोग करके भी दो सेल के टेक्स्ट को जोड़ा जा सकता है।"
+    },
+    {
+     "show": "Newer Excel versions also provide the shorter =CONCAT() function.",
+     "say": "नए एक्सेल वर्जन में इसके लिए छोटा फ़ंक्शन इक्वल कॉनकैट भी उपलब्ध है।"
+    }
+   ],
+   "trick": {
+    "show": "Con-CAT-enate = Links text strings together like a chain",
+    "say": "ट्रिक: कॉन्कैटेनेट टेक्स्ट के टुकड़ों को एक जंजीर की तरह आपस में जोड़ता है।"
+   }
+  },
+  {
+   "q": "Which key combination permanently deletes an item without sending it to Recycle Bin? || कौन सा की संयोजन किसी आइटम को रीसायकल बिन में भेजे बिना स्थायी रूप से हटा देता है?",
+   "options": [
+    "Ctrl + D || कंट्रोल प्लस डी",
+    "Shift + Delete || शिफ्ट प्लस डिलीट",
+    "Alt + F4 || ऑल्ट प्लस एफ फोर",
+    "Ctrl + Backspace || कंट्रोल प्लस बैकस्पेस"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Shift + Delete skips the Recycle Bin and immediately frees disk space.",
+     "say": "शिफ्ट प्लस डिलीट रीसायकल बिन को छोड़कर तुरंत डिस्क स्पेस खाली करता है।"
+    },
+    {
+     "show": "Ctrl + Backspace deletes one whole word to the left of the cursor.",
+     "say": "कंट्रोल प्लस बैकस्पेस कर्सर के बाईं ओर का एक पूरा शब्द मिटाता है।"
+    },
+    {
+     "show": "Ctrl + Delete deletes one whole word to the right of the cursor.",
+     "say": "कंट्रोल प्लस डिलीट कर्सर के दाईं ओर का एक पूरा शब्द मिटाता है।"
+    }
+   ],
+   "trick": {
+    "show": "Shift + Del = Permanently gone, no second chance",
+    "say": "ट्रिक: शिफ्ट प्लस डिलीट दबाने पर फ़ाइल स्थायी रूप से जाती है, वापस नहीं आती।"
+   }
+  }
+ ]
+}

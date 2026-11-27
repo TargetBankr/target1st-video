@@ -1,0 +1,355 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 4 · भाग 4",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "परीक्षा जैसे 10 प्रश्न, तैयार हैं? आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 5,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "परीक्षा जैसे 10 प्रश्न, तैयार हैं?",
+  "intro_small": "जवाब सोचिए · स्कोर बताइए",
+  "promo": true,
+  "reel_of": "4/5"
+ },
+ "questions": [
+  {
+   "q": "In MS Excel, what does the error '#NAME?' indicate? || एम एस एक्सेल में हैश नेम एरर क्या दर्शाता है?",
+   "options": [
+    "Division by zero || शून्य से भाग",
+    "Unrecognized function name or text in formula || फ़ॉर्मूले में अज्ञात फ़ंक्शन नाम या गलत वर्तनी",
+    "Column width is too narrow || कॉलम की चौड़ाई बहुत कम होना",
+    "Invalid cell intersection || अमान्य सेल मिलन"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "#NAME? appears when a function name is misspelled, like =SUME(A1:A5).",
+     "say": "फ़ंक्शन के नाम की स्पेलिंग गलत लिखने पर हैश नेम एरर आता है।"
+    },
+    {
+     "show": "Forgetting quotes around text strings in formulas also triggers #NAME?.",
+     "say": "फ़ॉर्मूले में टेक्स्ट के चारों ओर कोटेशन मार्क न लगाने पर भी यह एरर आता है।"
+    },
+    {
+     "show": "'#####' indicates that the column is too narrow to display the number.",
+     "say": "हैश चिह्न की लाइन बताती है कि संख्या दिखाने के लिए कॉलम छोटा है।"
+    }
+   ],
+   "trick": {
+    "show": "#NAME? = Excel asks \"What is this name?\"",
+    "say": "ट्रिक: हैश नेम यानी एक्सेल पूछ रहा है कि आपने यह कौन सा गलत नाम लिख दिया।"
+   }
+  },
+  {
+   "q": "Which gate outputs 1 only when all of its inputs are 1? || कौन सा लॉजिक गेट केवल तभी एक आउटपुट देता है जब उसके सभी इनपुट एक हों?",
+   "options": [
+    "OR Gate || ऑर गेट",
+    "AND Gate || एंड गेट",
+    "NOT Gate || नॉट गेट",
+    "XOR Gate || एक्स ऑर गेट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "AND gate performs logical multiplication (A · B).",
+     "say": "एंड गेट तार्किक गुणा करता है, इसलिए दोनों इनपुट एक होने पर ही एक मिलता है।"
+    },
+    {
+     "show": "OR gate outputs 1 if at least one input is 1.",
+     "say": "ऑर गेट में कोई भी एक इनपुट एक होने पर आउटपुट एक मिलता है।"
+    },
+    {
+     "show": "NOT gate is an inverter that flips 0 to 1 and 1 to 0.",
+     "say": "नॉट गेट एक इन्वर्टर है जो शून्य को एक और एक को शून्य में बदलता है।"
+    }
+   ],
+   "trick": {
+    "show": "AND = Both A AND B must be 1",
+    "say": "ट्रिक: एंड का मतलब है कि पहला और दूसरा दोनों इनपुट एक होने ज़रूरी हैं।"
+   }
+  },
+  {
+   "q": "Which command in Windows Command Prompt displays the IP configuration of a computer? || विंडोज़ कमांड प्रॉम्प्ट में कौन सा कमांड कंप्यूटर का आई पी कॉन्फ़िगरेशन दिखाता है?",
+   "options": [
+    "ping || पिंग",
+    "ipconfig || आई पी कॉन्फ़िग",
+    "tracert || ट्रेसर्ट",
+    "netstat || नेटस्टैट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "ipconfig displays IPv4 address, Subnet Mask, and Default Gateway.",
+     "say": "आई पी कॉन्फ़िग आई पी एड्रेस, सबनेट मास्क और डिफ़ॉल्ट गेटवे दिखाता है।"
+    },
+    {
+     "show": "ping tests network connectivity to another host or website.",
+     "say": "पिंग किसी अन्य कंप्यूटर या वेबसाइट से नेटवर्क कनेक्शन की जांच करता है।"
+    },
+    {
+     "show": "In Linux/macOS, the equivalent command is ifconfig or ip addr.",
+     "say": "लिनक्स और मैक में इसके समान कमांड आई एफ कॉन्फ़िग है।"
+    }
+   ],
+   "trick": {
+    "show": "IP + Config = Shows your IP configuration",
+    "say": "ट्रिक: आई पी कॉन्फ़िग नाम से ही स्पष्ट है कि यह आई पी की सेटिंग दिखाता है।"
+   }
+  },
+  {
+   "q": "What is the full form of PDF's creator company, or what does OCR stand for? || ओ सी आर का पूरा नाम क्या है?",
+   "options": [
+    "Optical Character Recognition || ऑप्टिकल कैरेक्टर रिकग्निशन",
+    "Online Computer Reader || ऑनलाइन कंप्यूटर रीडर",
+    "Optical Code Register || ऑप्टिकल कोड रजिस्टर",
+    "Output Character Render || आउटपुट कैरेक्टर रेंडर"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "OCR converts scanned images of printed text into editable digital text.",
+     "say": "ओ सी आर छपे हुए टेक्स्ट की स्कैन की गई छवि को एडिट करने योग्य टेक्स्ट में बदलता है।"
+    },
+    {
+     "show": "It is widely used to digitize printed books, invoices, and passports.",
+     "say": "इसका उपयोग किताबों, बिलों और पासपोर्ट को डिजिटल बनाने में होता है।"
+    },
+    {
+     "show": "Google Lens uses OCR technology to extract text from photos.",
+     "say": "गूगल लेंस फ़ोटो से टेक्स्ट निकालने के लिए ओ सी आर तकनीक का उपयोग करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Character = Reads typed letters and characters",
+    "say": "ट्रिक: कैरेक्टर यानी यह स्कैन किए गए पन्नों से एक-एक अक्षर को पहचानता है।"
+   }
+  },
+  {
+   "q": "Which MS Word feature allows you to send the same letter to multiple recipients with personalized names and addresses? || एम एस वर्ड की कौन सी सुविधा अलग-अलग नाम और पते के साथ एक ही पत्र कई लोगों को भेजने की अनुमति देती है?",
+   "options": [
+    "Track Changes || ट्रैक चेंजेस",
+    "Mail Merge || मेल मर्ज",
+    "Cross-Reference || क्रॉस रेफ़रेंस",
+    "Macros || मैक्रोज़"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Mail Merge combines a main document with a data source like Excel.",
+     "say": "मेल मर्ज मुख्य डॉक्यूमेंट को एक्सेल जैसी डेटा सूची के साथ जोड़ता है।"
+    },
+    {
+     "show": "It generates personalized letters, labels, or envelopes automatically.",
+     "say": "यह अपने आप व्यक्तिगत पत्र, लेबल या लिफ़ाफ़े तैयार कर देता है।"
+    },
+    {
+     "show": "It is located under the Mailings tab in MS Word.",
+     "say": "यह विकल्प एम एस वर्ड के मेलिंग्स टैब के अंतर्गत मिलता है।"
+    }
+   ],
+   "trick": {
+    "show": "Mail + Merge = Merges address list into your mail",
+    "say": "ट्रिक: मेल मर्ज पतों की सूची को आपके पत्र के साथ जोड़ देता है।"
+   }
+  },
+  {
+   "q": "Which memory sits between the CPU and RAM to speed up data access? || डेटा एक्सेस को तेज़ करने के लिए सी पी यू और रैम के बीच कौन सी मेमोरी स्थित होती है?",
+   "options": [
+    "Virtual Memory || वर्चुअल मेमोरी",
+    "Cache Memory || कैश मेमोरी",
+    "Flash Memory || फ़्लैश मेमोरी",
+    "Secondary Memory || सेकेंडरी मेमोरी"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Cache memory stores frequently accessed instructions and data.",
+     "say": "कैश मेमोरी बार-बार उपयोग होने वाले निर्देशों और डेटा को स्टोर करती है।"
+    },
+    {
+     "show": "It is built using high-speed SRAM (Static RAM).",
+     "say": "यह तेज़ गति वाली स्टैटिक रैम से बनी होती है।"
+    },
+    {
+     "show": "Cache has L1, L2, and L3 levels, with L1 being the fastest.",
+     "say": "कैश के एल वन, एल टू और एल थ्री स्तर होते हैं, जिनमें एल वन सबसे तेज़ है।"
+    }
+   ],
+   "trick": {
+    "show": "Cache = Pocket change kept handy for quick spending",
+    "say": "ट्रिक: कैश जेब में रखे खुले पैसों की तरह है जिसे सी पी यू तुरंत खर्च कर सकता है।"
+   }
+  },
+  {
+   "q": "What is a 'Trojan' vs a 'Worm' — how does a Computer Worm spread? || कंप्यूटर वॉर्म कैसे फैलता है?",
+   "options": [
+    "Only when user opens an infected file || केवल तब जब यूज़र कोई संक्रमित फ़ाइल खोले",
+    "Self-replicates automatically across networks without human action || बिना किसी मानवीय क्रिया के नेटवर्क पर अपने आप अपनी कॉपी बनाकर",
+    "Through dusty USB ports || धूल भरे यू एस बी पोर्ट के माध्यम से",
+    "By overheating the CPU || सी पी यू के अधिक गर्म होने से"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Worms exploit network vulnerabilities to spread independently.",
+     "say": "वॉर्म स्वतंत्र रूप से फैलने के लिए नेटवर्क की कमजोरियों का फ़ायदा उठाते हैं।"
+    },
+    {
+     "show": "A computer virus requires a host file and human action to spread.",
+     "say": "कंप्यूटर वायरस को फैलने के लिए होस्ट फ़ाइल और मानवीय क्रिया की ज़रूरत होती है।"
+    },
+    {
+     "show": "Worms consume heavy network bandwidth and slow down systems.",
+     "say": "वॉर्म नेटवर्क बैंडविड्थ की अधिक खपत करते हैं और सिस्टम को धीमा कर देते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Worm = Crawls across networks on its own",
+    "say": "ट्रिक: वॉर्म कीड़े की तरह अपने आप रेंगकर पूरे नेटवर्क में फैल जाता है।"
+   }
+  },
+  {
+   "q": "Which shortcut key repeats the last action or performs Redo in MS Word? || एम एस वर्ड में अंतिम क्रिया को दोहराने या रीडू करने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + Z || कंट्रोल प्लस ज़ेड",
+    "Ctrl + Y || कंट्रोल प्लस वाई",
+    "Ctrl + R || कंट्रोल प्लस आर",
+    "Ctrl + D || कंट्रोल प्लस डी"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + Y redoes an action that was previously undone with Ctrl + Z.",
+     "say": "कंट्रोल प्लस वाई पहले अनडू की गई क्रिया को फिर से कर देता है।"
+    },
+    {
+     "show": "F4 key also repeats the last formatting or typing action in Word.",
+     "say": "वर्ड में एफ फोर की भी अंतिम क्रिया को दोहराने का काम करती है।"
+    },
+    {
+     "show": "Ctrl + Z undoes up to multiple previous steps.",
+     "say": "कंट्रोल प्लस ज़ेड पिछले कई चरणों को वापस ले सकता है।"
+    }
+   ],
+   "trick": {
+    "show": "Z goes back, Y brings it back forward",
+    "say": "ट्रिक: ज़ेड पीछे ले जाता है और वाई उसे वापस आगे ले आता है।"
+   }
+  },
+  {
+   "q": "What is the full form of SATA, used for connecting hard drives? || हार्ड ड्राइव जोड़ने के लिए उपयोग होने वाले साटा का पूरा नाम क्या है?",
+   "options": [
+    "Serial Advanced Technology Attachment || सीरियल एडवांस्ड टेक्नोलॉजी अटैचमेंट",
+    "System Automated Transfer Architecture || सिस्टम ऑटोमेटेड ट्रांसफर आर्किटेक्चर",
+    "Standard Array Technology Adapter || स्टैंडर्ड अरे टेक्नोलॉजी एडाप्टर",
+    "Serial Access Terminal Application || सीरियल एक्सेस टर्मिनल एप्लीकेशन"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "SATA replaced older, bulky parallel PATA/IDE ribbon cables.",
+     "say": "साटा ने पुरानी और चौड़ी पैरेलल आई डी ई केबल की जगह ली है।"
+    },
+    {
+     "show": "SATA cables are thin, flexible, and support faster data rates.",
+     "say": "साटा केबल पतली और लचीली होती हैं और तेज़ डेटा गति देती हैं।"
+    },
+    {
+     "show": "Modern NVMe SSDs use the even faster PCIe interface.",
+     "say": "आधुनिक एन वी एम ई एस एस डी इससे भी तेज़ पी सी आई ई इंटरफ़ेस का उपयोग करते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "S-A-T-A = Serial Advanced Technology Attachment",
+    "say": "ट्रिक: साटा यानी सीरियल एडवांस्ड टेक्नोलॉजी अटैचमेंट।"
+   }
+  },
+  {
+   "q": "Which Excel chart type is best suited for showing trends over time? || समय के साथ होने वाले बदलाव या रुझान को दिखाने के लिए कौन सा एक्सेल चार्ट सबसे उपयुक्त है?",
+   "options": [
+    "Pie Chart || पाई चार्ट",
+    "Line Chart || लाइन चार्ट",
+    "Scatter Chart || स्कैटर चार्ट",
+    "Doughnut Chart || डोनट चार्ट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Line charts connect data points across continuous time intervals.",
+     "say": "लाइन चार्ट निरंतर समय अंतराल में डेटा बिंदुओं को जोड़कर दिखाते हैं।"
+    },
+    {
+     "show": "Pie charts show proportions or percentages of a single whole.",
+     "say": "पाई चार्ट किसी एक संपूर्ण भाग के अनुपात या प्रतिशत को दिखाते हैं।"
+    },
+    {
+     "show": "Bar/Column charts compare values across distinct categories.",
+     "say": "बार या कॉलम चार्ट विभिन्न श्रेणियों के मानों की तुलना करते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "TimeLine = Line Chart shows trends over time",
+    "say": "ट्रिक: टाइमलाइन शब्द से याद रखें कि समय के साथ रुझान लाइन चार्ट दिखाता है।"
+   }
+  }
+ ]
+}

@@ -1,0 +1,102 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 4 · भाग 5",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "इस प्रश्न का जवाब आता है? आख़िर तक देखिए।",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 5,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "इस प्रश्न का जवाब आता है?",
+  "intro_small": "जवाब सोचिए, फिर मिलाइए",
+  "promo": true,
+  "reel_of": "5/5",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "Which port number is used by default for secure HTTPS traffic? || सुरक्षित एच टी टी पी एस ट्रैफ़िक के लिए डिफ़ॉल्ट रूप से किस पोर्ट नंबर का उपयोग होता है?",
+   "options": [
+    "21 || इक्कीस",
+    "25 || पच्चीस",
+    "80 || अस्सी",
+    "443 || चार सौ तैंतालीस"
+   ],
+   "answer": "D",
+   "points": [
+    {
+     "show": "HTTPS uses port 443 to encrypt data with TLS/SSL.",
+     "say": "एच टी टी पी एस डेटा को एन्क्रिप्ट करने के लिए पोर्ट चार सौ तैंतालीस का उपयोग करता है।"
+    },
+    {
+     "show": "Port 80 is used for unencrypted HTTP traffic.",
+     "say": "बिना एन्क्रिप्शन वाले एच टी टी पी ट्रैफ़िक के लिए पोर्ट अस्सी का उपयोग होता है।"
+    },
+    {
+     "show": "Port 21 is used by FTP, and Port 25 is used by SMTP.",
+     "say": "पोर्ट इक्कीस का उपयोग एफ टी पी और पोर्ट पच्चीस का एस एम टी पी करता है।"
+    }
+   ],
+   "trick": {
+    "show": "HTTPS has 5 letters -> 443 (4+4+3=11, bigger & safer than 80)",
+    "say": "ट्रिक: एच टी टी पी का अस्सी और सुरक्षित एच टी टी पी एस का चार सौ तैंतालीस याद रखें।"
+   }
+  }
+ ]
+}

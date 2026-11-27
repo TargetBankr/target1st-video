@@ -1,0 +1,102 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 4 · भाग 3",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "10 सेकंड में बताइए! आख़िर तक देखिए।",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 5,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "10 सेकंड में बताइए!",
+  "intro_small": "जवाब सोचिए · फिर मिलाइए",
+  "promo": true,
+  "reel_of": "3/5",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "Which of the following is an open-source office productivity suite? || इनमें से कौन सा एक ओपन-सोर्स ऑफिस प्रोडक्टिविटी सुइट है?",
+   "options": [
+    "Microsoft Office || माइक्रोसॉफ्ट ऑफिस",
+    "LibreOffice || लिब्रे ऑफिस",
+    "Apple iWork || एप्पल आई वर्क",
+    "Corel WordPerfect || कोरल वर्डपरफेक्ट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "LibreOffice includes Writer, Calc, and Impress as free alternatives.",
+     "say": "लिब्रे ऑफिस में मुफ्त विकल्प के रूप में राइटर, कैल्क और इम्प्रेस शामिल हैं।"
+    },
+    {
+     "show": "Writer corresponds to Word, Calc to Excel, and Impress to PowerPoint.",
+     "say": "राइटर वर्ड जैसा, कैल्क एक्सेल जैसा और इम्प्रेस पावरपॉइंट जैसा है।"
+    },
+    {
+     "show": "It is maintained by The Document Foundation.",
+     "say": "इसका रखरखाव द डॉक्यूमेंट फ़ाउंडेशन द्वारा किया जाता है।"
+    }
+   ],
+   "trick": {
+    "show": "Libre = Liberty (Free open-source office)",
+    "say": "ट्रिक: लिब्रे का अर्थ है आज़ादी, यह पूरी तरह मुफ्त ओपन सोर्स ऑफिस है।"
+   }
+  }
+ ]
+}

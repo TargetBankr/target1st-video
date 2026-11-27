@@ -1,0 +1,355 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 4 · भाग 3",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "अपना स्कोर बताइए: 10 में से कितने? आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 5,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "अपना स्कोर बताइए: 10 में से कितने?",
+  "intro_small": "10 प्रश्न · कमेंट में लिखिए",
+  "promo": true,
+  "reel_of": "3/5"
+ },
+ "questions": [
+  {
+   "q": "Which of the following is an open-source office productivity suite? || इनमें से कौन सा एक ओपन-सोर्स ऑफिस प्रोडक्टिविटी सुइट है?",
+   "options": [
+    "Microsoft Office || माइक्रोसॉफ्ट ऑफिस",
+    "LibreOffice || लिब्रे ऑफिस",
+    "Apple iWork || एप्पल आई वर्क",
+    "Corel WordPerfect || कोरल वर्डपरफेक्ट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "LibreOffice includes Writer, Calc, and Impress as free alternatives.",
+     "say": "लिब्रे ऑफिस में मुफ्त विकल्प के रूप में राइटर, कैल्क और इम्प्रेस शामिल हैं।"
+    },
+    {
+     "show": "Writer corresponds to Word, Calc to Excel, and Impress to PowerPoint.",
+     "say": "राइटर वर्ड जैसा, कैल्क एक्सेल जैसा और इम्प्रेस पावरपॉइंट जैसा है।"
+    },
+    {
+     "show": "It is maintained by The Document Foundation.",
+     "say": "इसका रखरखाव द डॉक्यूमेंट फ़ाउंडेशन द्वारा किया जाता है।"
+    }
+   ],
+   "trick": {
+    "show": "Libre = Liberty (Free open-source office)",
+    "say": "ट्रिक: लिब्रे का अर्थ है आज़ादी, यह पूरी तरह मुफ्त ओपन सोर्स ऑफिस है।"
+   }
+  },
+  {
+   "q": "What is the shortcut key to subscript selected text in MS Word? || एम एस वर्ड में चुने गए टेक्स्ट को सबस्क्रिप्ट करने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + = || कंट्रोल प्लस इक्वल",
+    "Ctrl + Shift + + || कंट्रोल प्लस शिफ्ट प्लस प्लस",
+    "Ctrl + Alt + S || कंट्रोल प्लस ऑल्ट प्लस एस",
+    "Alt + = || ऑल्ट प्लस इक्वल"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "Subscript places small text slightly below the baseline, like H2O.",
+     "say": "सबस्क्रिप्ट छोटे अक्षर को लाइन से थोड़ा नीचे रखता है, जैसे पानी का सूत्र।"
+    },
+    {
+     "show": "Ctrl + Shift + + (Plus) applies Superscript, like X2.",
+     "say": "कंट्रोल प्लस शिफ्ट प्लस से सुपरस्क्रिप्ट लगता है, जैसे घात लिखना।"
+    },
+    {
+     "show": "Both options are found in the Font group on the Home tab.",
+     "say": "ये दोनों विकल्प होम टैब के फ़ॉन्ट समूह में मिलते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Sub = Down low like '=' sign (Ctrl + =)",
+    "say": "ट्रिक: सबस्क्रिप्ट नीचे बैठता है, इसलिए बिना शिफ्ट दबाए कंट्रोल प्लस बराबर दबाएं।"
+   }
+  },
+  {
+   "q": "Which network device operates at the Data Link Layer and uses MAC addresses? || कौन सा नेटवर्क डिवाइस डेटा लिंक लेयर पर काम करता है और मैक एड्रेस का उपयोग करता है?",
+   "options": [
+    "Hub || हब",
+    "Repeater || रिपीटर",
+    "Switch || स्विच",
+    "Modem || मॉडेम"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "A switch inspects MAC addresses to forward frames only to the target port.",
+     "say": "स्विच मैक एड्रेस की जांच करके डेटा को केवल सही पोर्ट पर भेजता है।"
+    },
+    {
+     "show": "A hub operates at Physical Layer and broadcasts data to all ports.",
+     "say": "हब फ़िज़िकल लेयर पर काम करता है और सभी पोर्ट पर डेटा भेज देता है।"
+    },
+    {
+     "show": "A MAC address is a 48-bit physical hardware address.",
+     "say": "मैक एड्रेस अड़तालीस बिट का एक भौतिक हार्डवेयर पता होता है।"
+    }
+   ],
+   "trick": {
+    "show": "Switch = Smartly switches data using MAC address",
+    "say": "ट्रिक: स्विच समझदारी से मैक एड्रेस देखकर सही कंप्यूटर को डेटा भेजता है।"
+   }
+  },
+  {
+   "q": "What does 'BCC' stand for in an email? || ईमेल में बी सी सी का पूरा नाम क्या होता है?",
+   "options": [
+    "Blind Carbon Copy || ब्लाइंड कार्बन कॉपी",
+    "Basic Carbon Copy || बेसिक कार्बन कॉपी",
+    "Binary Communication Code || बाइनरी कम्युनिकेशन कोड",
+    "Backup Copy Control || बैकअप कॉपी कंट्रोल"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "BCC hides the email addresses of recipients from each other.",
+     "say": "बी सी सी प्राप्तकर्ताओं के ईमेल पते एक दूसरे से छिपाकर रखता है।"
+    },
+    {
+     "show": "CC (Carbon Copy) shows all recipient addresses publicly to everyone.",
+     "say": "सी सी में सभी प्राप्तकर्ताओं के ईमेल पते सबको दिखाई देते हैं।"
+    },
+    {
+     "show": "BCC is ideal when sending bulk emails to protect privacy.",
+     "say": "गोपनीयता बनाए रखते हुए एक साथ कई लोगों को मेल भेजने के लिए बी सी सी श्रेष्ठ है।"
+    }
+   ],
+   "trick": {
+    "show": "Blind = Recipients are blind to who else got the mail",
+    "say": "ट्रिक: ब्लाइंड का मतलब है कि बाकी लोगों को पता नहीं चलेगा कि मेल किसे भेजा गया है।"
+   }
+  },
+  {
+   "q": "Which scheduling algorithm executes the process with the shortest burst time first? || कौन सा शेड्यूलिंग एल्गोरिदम सबसे कम बर्स्ट टाइम वाली प्रक्रिया को पहले निष्पादित करता है?",
+   "options": [
+    "FCFS || एफ सी एफ एस",
+    "SJF || एस जे एफ",
+    "Round Robin || राउंड रॉबिन",
+    "Priority Scheduling || प्रायोरिटी शेड्यूलिंग"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "SJF stands for Shortest Job First.",
+     "say": "एस जे एफ का पूरा नाम शॉर्टेस्ट जॉब फर्स्ट है।"
+    },
+    {
+     "show": "It minimizes average waiting time for a set of processes.",
+     "say": "यह प्रक्रियाओं के औसत प्रतीक्षा समय को कम करता है।"
+    },
+    {
+     "show": "Round Robin assigns a fixed time quantum to each process in turn.",
+     "say": "राउंड रॉबिन हर प्रक्रिया को बारी-बारी से एक निश्चित समय देता है।"
+    }
+   ],
+   "trick": {
+    "show": "S-J-F = Shortest Job First",
+    "say": "ट्रिक: एस जे एफ यानी जो काम सबसे छोटा है उसे पहले निपटाओ।"
+   }
+  },
+  {
+   "q": "Which programming language is primarily used to style web pages? || वेब पेजों को स्टाइल और डिज़ाइन देने के लिए मुख्य रूप से किस भाषा का उपयोग होता है?",
+   "options": [
+    "HTML || एच टी एम एल",
+    "CSS || सी एस एस",
+    "SQL || एस क्यू एल",
+    "C++ || सी प्लस प्लस"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "CSS stands for Cascading Style Sheets.",
+     "say": "सी एस एस का पूरा नाम कैस्केडिंग स्टाइल शीट्स है।"
+    },
+    {
+     "show": "HTML defines the structure of a webpage, while CSS controls colors and layout.",
+     "say": "एच टी एम एल वेबपेज का ढांचा बनाता है और सी एस एस रंग व लेआउट तय करता है।"
+    },
+    {
+     "show": "JavaScript adds interactivity and dynamic behavior to webpages.",
+     "say": "जावास्क्रिप्ट वेबपेज में इंटरैक्टिविटी और गतिशीलता जोड़ता है।"
+    }
+   ],
+   "trick": {
+    "show": "CSS = Cascading Style (Makes websites stylish)",
+    "say": "ट्रिक: सी एस एस में स्टाइल शब्द है, यह वेबसाइट को सुंदर और स्टाइलिश बनाता है।"
+   }
+  },
+  {
+   "q": "What is the default orientation of a page in MS Word? || एम एस वर्ड में पेज का डिफ़ॉल्ट ओरिएंटेशन क्या होता है?",
+   "options": [
+    "Landscape || लैंडस्केप",
+    "Portrait || पोर्ट्रेट",
+    "Vertical || वर्टिकल",
+    "Horizontal || हॉरिज़ॉन्टल"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Portrait orientation is taller than it is wide.",
+     "say": "पोर्ट्रेट ओरिएंटेशन में पेज की लंबाई उसकी चौड़ाई से अधिक होती है।"
+    },
+    {
+     "show": "Landscape orientation is wider than it is tall, used for wide tables.",
+     "say": "लैंडस्केप में चौड़ाई अधिक होती है, जिसका उपयोग चौड़ी टेबल के लिए होता है।"
+    },
+    {
+     "show": "Orientation settings are located under the Layout tab.",
+     "say": "ओरिएंटेशन सेटिंग्स लेआउट टैब के अंतर्गत स्थित होती हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Portrait = Vertical photo frame (Default in Word)",
+    "say": "ट्रिक: पोर्ट्रेट यानी सीधा खड़ा फोटो फ्रेम, यही वर्ड में डिफ़ॉल्ट होता है।"
+   }
+  },
+  {
+   "q": "Which shortcut key closes the currently active window or tab in most applications? || अधिकांश एप्लीकेशन में वर्तमान सक्रिय विंडो या टैब को बंद करने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + Q || कंट्रोल प्लस क्यू",
+    "Ctrl + W || कंट्रोल प्लस डब्लू",
+    "Ctrl + X || कंट्रोल प्लस एक्स",
+    "Ctrl + D || कंट्रोल प्लस डी"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + W closes the active document or browser tab without exiting the app.",
+     "say": "कंट्रोल प्लस डब्लू पूरा ऐप बंद किए बिना केवल सक्रिय डॉक्यूमेंट या टैब बंद करता है।"
+    },
+    {
+     "show": "Alt + F4 closes the entire application window.",
+     "say": "ऑल्ट प्लस एफ फोर पूरे एप्लीकेशन प्रोग्राम को बंद कर देता है।"
+    },
+    {
+     "show": "Ctrl + T opens a new tab in web browsers.",
+     "say": "कंट्रोल प्लस टी वेब ब्राउज़र में नया टैब खोलता है।"
+    }
+   ],
+   "trick": {
+    "show": "W = Window/tab Wipeout (Ctrl + W)",
+    "say": "ट्रिक: डब्लू से विंडो या टैब को बंद करना याद रखें।"
+   }
+  },
+  {
+   "q": "Which of the following is an example of an optical storage device? || इनमें से कौन सा एक ऑप्टिकल स्टोरेज डिवाइस का उदाहरण है?",
+   "options": [
+    "Pen Drive || पेन ड्राइव",
+    "Blu-ray Disc || ब्लू-रे डिस्क",
+    "Hard Disk || हार्ड डिस्क",
+    "Memory Card || मेमोरी कार्ड"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Blu-ray Disc uses a blue-violet laser to read and write data.",
+     "say": "ब्लू-रे डिस्क डेटा पढ़ने और लिखने के लिए नीले बैंगनी लेजर का उपयोग करती है।"
+    },
+    {
+     "show": "CD (700 MB), DVD (4.7 GB), and Blu-ray (25-50 GB) are optical media.",
+     "say": "सी डी, डी वी डी और ब्लू-रे ऑप्टिकल स्टोरेज के उदाहरण हैं।"
+    },
+    {
+     "show": "Pen drives and memory cards use solid-state flash memory.",
+     "say": "पेन ड्राइव और मेमोरी कार्ड सॉलिड स्टेट फ्लैश मेमोरी का उपयोग करते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Disc with laser light = Optical storage",
+    "say": "ट्रिक: जो डिस्क लेजर प्रकाश से पढ़ी जाती है वह ऑप्टिकल स्टोरेज है।"
+   }
+  },
+  {
+   "q": "What is 'Ransomware'? || रैंसमवेयर क्या होता है?",
+   "options": [
+    "Free antivirus software || मुफ्त एंटीवायरस सॉफ्टवेयर",
+    "Malware that encrypts files and demands payment to unlock them || मैलवेयर जो फ़ाइलों को लॉक करता है और खोलने के लिए फिरौती मांगता है",
+    "A hardware firewall || एक हार्डवेयर फ़ायरवॉल",
+    "A backup utility tool || एक बैकअप यूटिलिटी टूल"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ransomware blocks access to victim's data until a ransom is paid.",
+     "say": "रैंसमवेयर फिरौती मिलने तक पीड़ित के डेटा तक पहुंच रोक देता है।"
+    },
+    {
+     "show": "WannaCry (2017) is a famous example of a ransomware attack.",
+     "say": "वानाक्राई रैंसमवेयर हमले का एक प्रसिद्ध उदाहरण है।"
+    },
+    {
+     "show": "Regular offline backups are the best defense against ransomware.",
+     "say": "नियमित ऑफ़लाइन बैकअप रैंसमवेयर से बचने का सबसे अच्छा उपाय है।"
+    }
+   ],
+   "trick": {
+    "show": "Ransom = Kidnaps your files and asks for ransom money",
+    "say": "ट्रिक: रैंसम यानी फिरौती, यह आपकी फ़ाइलों का अपहरण करके पैसे मांगता है।"
+   }
+  }
+ ]
+}

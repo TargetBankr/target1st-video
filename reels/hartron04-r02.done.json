@@ -1,0 +1,355 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 4 · भाग 2",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "पहले जवाब सोचिए, फिर मिलाइए! आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 5,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "पहले जवाब सोचिए, फिर मिलाइए!",
+  "intro_small": "10 प्रश्न · आख़िर तक देखिए",
+  "promo": true,
+  "reel_of": "2/5"
+ },
+ "questions": [
+  {
+   "q": "One Terabyte (TB) is equal to how many Gigabytes (GB)? || एक टेराबाइट कितने गीगाबाइट के बराबर होता है?",
+   "options": [
+    "1000 GB || एक हज़ार जी बी",
+    "1024 GB || एक हज़ार चौबीस जी बी",
+    "512 GB || पांच सौ बारह जी बी",
+    "2048 GB || दो हज़ार अड़तालीस जी बी"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Memory hierarchy: 1024 MB = 1 GB, and 1024 GB = 1 TB.",
+     "say": "एक हज़ार चौबीस एम बी से एक जी बी और एक हज़ार चौबीस जी बी से एक टी बी बनता है।"
+    },
+    {
+     "show": "1024 TB equals 1 Petabyte (PB).",
+     "say": "एक हज़ार चौबीस टी बी मिलकर एक पेटाबाइट बनाते हैं।"
+    },
+    {
+     "show": "Storage manufacturers sometimes advertise 1 TB as 1000 GB decimal.",
+     "say": "हार्ड डिस्क कंपनियां विज्ञापन में कभी-कभी इसे एक हज़ार जी बी लिखती हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Every step up multiplies by 1024",
+    "say": "ट्रिक: मेमोरी की हर अगली बड़ी इकाई एक हज़ार चौबीस के गुणा से बनती है।"
+   }
+  },
+  {
+   "q": "Which of the following is a non-impact printer? || इनमें से कौन सा एक नॉन-इम्पैक्ट प्रिंटर है?",
+   "options": [
+    "Daisy Wheel Printer || डेज़ी व्हील प्रिंटर",
+    "Dot Matrix Printer || डॉट मैट्रिक्स प्रिंटर",
+    "Line Printer || लाइन प्रिंटर",
+    "Laser Printer || लेजर प्रिंटर"
+   ],
+   "answer": "D",
+   "points": [
+    {
+     "show": "Laser printers print without striking an ink ribbon against paper.",
+     "say": "लेजर प्रिंटर कागज़ पर रिबन से टकराए बिना प्रिंट करते हैं।"
+    },
+    {
+     "show": "Impact printers make noise because pins strike the paper physically.",
+     "say": "इम्पैक्ट प्रिंटर शोर करते हैं क्योंकि उनमें पिन कागज़ से टकराती हैं।"
+    },
+    {
+     "show": "Laser printers produce high-resolution text very quickly.",
+     "say": "लेजर प्रिंटर बहुत तेज़ी से उच्च गुणवत्ता वाले अक्षर छापते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Laser uses light beam, no hammering impact",
+    "say": "ट्रिक: लेजर प्रकाश की किरण से छपाई करता है, इसमें कोई चोट या टक्कर नहीं होती।"
+   }
+  },
+  {
+   "q": "What is 'Booting' in a computer system? || कंप्यूटर सिस्टम में बूटिंग क्या होती है?",
+   "options": [
+    "Installing new software || नया सॉफ्टवेयर इंस्टॉल करना",
+    "Starting up the computer and loading the operating system || कंप्यूटर को चालू करना और ऑपरेटिंग सिस्टम लोड करना",
+    "Scanning for viruses || वायरस की जांच करना",
+    "Formatting a hard disk || हार्ड डिस्क को फ़ॉर्मेट करना"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Cold booting means starting a computer from a completely powered-off state.",
+     "say": "कोल्ड बूटिंग का अर्थ है पूरी तरह बंद कंप्यूटर को चालू करना।"
+    },
+    {
+     "show": "Warm booting means restarting an already running computer.",
+     "say": "वॉर्म बूटिंग का अर्थ है पहले से चल रहे कंप्यूटर को रीस्टार्ट करना।"
+    },
+    {
+     "show": "Bootloader loads the OS kernel from disk into RAM.",
+     "say": "बूटलोडर ऑपरेटिंग सिस्टम को हार्ड डिस्क से रैम में लोड करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Put on boots to start walking = Booting starts PC",
+    "say": "ट्रिक: जैसे चलने से पहले जूते यानी बूट पहनते हैं, वैसे ही कंप्यूटर बूटिंग से शुरू होता है।"
+   }
+  },
+  {
+   "q": "Which key combination minimizes all open windows and displays the Desktop in Windows? || विंडोज़ में सभी खुली विंडो को छोटा करके डेस्कटॉप दिखाने की शॉर्टकट की क्या है?",
+   "options": [
+    "Win + M || विंडोज़ की प्लस एम",
+    "Win + D || विंडोज़ की प्लस डी",
+    "Win + E || विंडोज़ की प्लस ई",
+    "Win + L || विंडोज़ की प्लस एल"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Win + D toggles between showing the Desktop and restoring windows.",
+     "say": "विंडोज़ प्लस डी डेस्कटॉप दिखाने और विंडो वापस लाने के बीच टॉगल करता है।"
+    },
+    {
+     "show": "Win + L locks the computer screen immediately.",
+     "say": "विंडोज़ प्लस एल कंप्यूटर स्क्रीन को तुरंत लॉक कर देता है।"
+    },
+    {
+     "show": "Win + E opens File Explorer.",
+     "say": "विंडोज़ प्लस ई फ़ाइल एक्सप्लोरर खोलता है।"
+    }
+   ],
+   "trick": {
+    "show": "Win + D = Desktop",
+    "say": "ट्रिक: विंडोज़ प्लस डी से सीधे डेस्कटॉप सामने आ जाता है।"
+   }
+  },
+  {
+   "q": "What does GUI stand for? || जी यू आई का पूरा नाम क्या है?",
+   "options": [
+    "General User Internet || जनरल यूज़र इंटरनेट",
+    "Graphical User Interface || ग्राफ़िकल यूज़र इंटरफ़ेस",
+    "Guided Utility Interaction || गाइडेड यूटिलिटी इंटरैक्शन",
+    "Global User Integration || ग्लोबल यूज़र इंटीग्रेशन"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "GUI allows users to interact via icons, windows, and mouse clicks.",
+     "say": "जी यू आई उपयोगकर्ताओं को आइकन, विंडो और माउस क्लिक से काम करने देता है।"
+    },
+    {
+     "show": "CLI (Command Line Interface) requires typing text commands, like DOS.",
+     "say": "सी एल आई में डॉस की तरह टेक्स्ट कमांड टाइप करने पड़ते हैं।"
+    },
+    {
+     "show": "Windows, macOS, and Android use graphical interfaces.",
+     "say": "विंडोज़, मैक ओ एस और एंड्रॉइड ग्राफ़िकल इंटरफ़ेस का उपयोग करते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Graphics = Icons and buttons you can see and click",
+    "say": "ट्रिक: ग्राफ़िक्स यानी वे चित्र और आइकन जिन्हें देखकर आप क्लिक करते हैं।"
+   }
+  },
+  {
+   "q": "In MS Excel, which function counts only cells that contain numbers? || एम एस एक्सेल में कौन सा फ़ंक्शन केवल उन सेल की गिनती करता है जिनमें नंबर हैं?",
+   "options": [
+    "=COUNTA() || इक्वल काउंट ए",
+    "=COUNT() || इक्वल काउंट",
+    "=COUNTIF() || इक्वल काउंट इफ़",
+    "=SUM() || इक्वल सम"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "=COUNT() ignores text and empty cells, counting only numeric entries.",
+     "say": "इक्वल काउंट टेक्स्ट और खाली सेल को छोड़कर केवल नंबर गिनता है।"
+    },
+    {
+     "show": "=COUNTA() counts all non-empty cells including text and numbers.",
+     "say": "इक्वल काउंट ए टेक्स्ट और नंबर सहित सभी भरी हुई सेल गिनता है।"
+    },
+    {
+     "show": "=COUNTBLANK() counts only empty cells in a range.",
+     "say": "इक्वल काउंट ब्लैंक रेंज में केवल खाली सेल गिनता है।"
+    }
+   ],
+   "trick": {
+    "show": "COUNT = Numbers only, COUNTA = All non-empty",
+    "say": "ट्रिक: काउंट केवल नंबर गिनता है और काउंट ए का ए मतलब ऑल यानी सब कुछ।"
+   }
+  },
+  {
+   "q": "Which protocol assigns dynamic IP addresses automatically to devices on a network? || कौन सा प्रोटोकॉल नेटवर्क पर उपकरणों को अपने आप डायनेमिक आई पी एड्रेस देता है?",
+   "options": [
+    "DNS || डी एन एस",
+    "DHCP || डी एच सी पी",
+    "ARP || ए आर पी",
+    "SNMP || एस एन एम पी"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "DHCP stands for Dynamic Host Configuration Protocol.",
+     "say": "डी एच सी पी का पूरा नाम डायनेमिक होस्ट कॉन्फ़िगरेशन प्रोटोकॉल है।"
+    },
+    {
+     "show": "It prevents IP address conflicts on local networks.",
+     "say": "यह लोकल नेटवर्क पर आई पी एड्रेस के टकराव को रोकता है।"
+    },
+    {
+     "show": "DNS translates human-readable domain names into IP addresses.",
+     "say": "डी एन एस डोमेन नामों को आई पी एड्रेस में बदलता है।"
+    }
+   ],
+   "trick": {
+    "show": "D-H-C-P = Dynamic Host (hands out IPs automatically)",
+    "say": "ट्रिक: डी एच सी पी में डी का मतलब डायनेमिक है, जो अपने आप आई पी बांटता है।"
+   }
+  },
+  {
+   "q": "Which MS PowerPoint view displays miniature thumbnails of all slides on one screen? || एम एस पावरपॉइंट का कौन सा व्यू एक ही स्क्रीन पर सभी स्लाइड के छोटे थंबनेल दिखाता है?",
+   "options": [
+    "Normal View || नॉर्मल व्यू",
+    "Slide Sorter View || स्लाइड सॉर्टर व्यू",
+    "Outline View || आउटलाइन व्यू",
+    "Reading View || रीडिंग व्यू"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Slide Sorter View makes it easy to reorder, delete, or add transitions.",
+     "say": "स्लाइड सॉर्टर व्यू से स्लाइड का क्रम बदलना और हटाना आसान हो जाता है।"
+    },
+    {
+     "show": "Normal View is the default editing view in PowerPoint.",
+     "say": "पावरपॉइंट में नॉर्मल व्यू डिफ़ॉल्ट एडिटिंग व्यू होता है।"
+    },
+    {
+     "show": "Notes Page View lets presenters add speaker notes below each slide.",
+     "say": "नोट्स पेज व्यू में वक्ता प्रत्येक स्लाइड के नीचे अपने नोट्स लिख सकते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Sorter = Lets you sort and rearrange all slides",
+    "say": "ट्रिक: सॉर्टर व्यू सारी स्लाइड को एक साथ दिखाकर उन्हें क्रम में लगाने देता है।"
+   }
+  },
+  {
+   "q": "What is the binary equivalent of the decimal number 10? || दशमलव संख्या दस का बाइनरी मान क्या होता है?",
+   "options": [
+    "1001 || वन ज़ीरो ज़ीरो वन",
+    "1010 || वन ज़ीरो वन ज़ीरो",
+    "1100 || वन वन ज़ीरो ज़ीरो",
+    "1011 || वन ज़ीरो वन वन"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Using place values 8-4-2-1: 8 + 0 + 2 + 0 = 10, which is 1010.",
+     "say": "आठ चार दो एक के मान से आठ और दो जोड़ने पर दस यानी एक शून्य एक शून्य बनता है।"
+    },
+    {
+     "show": "Binary system uses only two digits: 0 and 1.",
+     "say": "बाइनरी सिस्टम केवल दो अंकों शून्य और एक का उपयोग करता है।"
+    },
+    {
+     "show": "Decimal 8 in binary is 1000, and decimal 15 is 1111.",
+     "say": "बाइनरी में आठ को एक हज़ार और पंद्रह को चार बार एक लिखा जाता है।"
+    }
+   ],
+   "trick": {
+    "show": "8 + 2 = 10 -> turn ON 8 and 2 -> 1010",
+    "say": "ट्रिक: आठ और दो जोड़कर दस बनता है, इसलिए आठ और दो की जगह एक रखें।"
+   }
+  },
+  {
+   "q": "Which key is used to rename a selected file or folder in Windows? || विंडोज़ में चुनी गई फ़ाइल या फ़ोल्डर का नाम बदलने के लिए किस की का उपयोग होता है?",
+   "options": [
+    "F1 || एफ वन",
+    "F2 || एफ टू",
+    "F3 || एफ थ्री",
+    "F4 || एफ फोर"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Pressing F2 highlights the file name for immediate editing.",
+     "say": "एफ टू दबाने से फ़ाइल का नाम तुरंत एडिट करने के लिए हाईलाइट हो जाता है।"
+    },
+    {
+     "show": "In MS Excel, F2 edits the active cell content directly.",
+     "say": "एम एस एक्सेल में एफ टू सक्रिय सेल के अंदर सीधे एडिटिंग शुरू करता है।"
+    },
+    {
+     "show": "F3 opens the search box in Windows File Explorer.",
+     "say": "एफ थ्री विंडोज़ फ़ाइल एक्सप्लोरर में सर्च बॉक्स खोलता है।"
+    }
+   ],
+   "trick": {
+    "show": "F2 = 2nd name (Rename)",
+    "say": "ट्रिक: एफ टू से दूसरा नाम रखना यानी रीनेम करना याद रखें।"
+   }
+  }
+ ]
+}

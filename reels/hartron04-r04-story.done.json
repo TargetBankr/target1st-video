@@ -1,0 +1,102 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 4 · भाग 4",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "क्या आपको सही जवाब पता है? आख़िर तक देखिए।",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 5,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "क्या आपको सही जवाब पता है?",
+  "intro_small": "अपनी तैयारी जाँचिए",
+  "promo": true,
+  "reel_of": "4/5",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "In MS Excel, what does the error '#NAME?' indicate? || एम एस एक्सेल में हैश नेम एरर क्या दर्शाता है?",
+   "options": [
+    "Division by zero || शून्य से भाग",
+    "Unrecognized function name or text in formula || फ़ॉर्मूले में अज्ञात फ़ंक्शन नाम या गलत वर्तनी",
+    "Column width is too narrow || कॉलम की चौड़ाई बहुत कम होना",
+    "Invalid cell intersection || अमान्य सेल मिलन"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "#NAME? appears when a function name is misspelled, like =SUME(A1:A5).",
+     "say": "फ़ंक्शन के नाम की स्पेलिंग गलत लिखने पर हैश नेम एरर आता है।"
+    },
+    {
+     "show": "Forgetting quotes around text strings in formulas also triggers #NAME?.",
+     "say": "फ़ॉर्मूले में टेक्स्ट के चारों ओर कोटेशन मार्क न लगाने पर भी यह एरर आता है।"
+    },
+    {
+     "show": "'#####' indicates that the column is too narrow to display the number.",
+     "say": "हैश चिह्न की लाइन बताती है कि संख्या दिखाने के लिए कॉलम छोटा है।"
+    }
+   ],
+   "trick": {
+    "show": "#NAME? = Excel asks \"What is this name?\"",
+    "say": "ट्रिक: हैश नेम यानी एक्सेल पूछ रहा है कि आपने यह कौन सा गलत नाम लिख दिया।"
+   }
+  }
+ ]
+}
