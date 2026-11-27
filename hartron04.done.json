@@ -1,0 +1,1477 @@
+{
+  "meta": {
+    "title": "HARTRON DATA ENTRY OPERATOR 4",
+    "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+    "channel": "Target1st",
+    "voice": "hi-IN-MadhurNeural",
+    "rate": "+0%",
+    "countdown": 1,
+    "intro": "",
+    "outro": "",
+    "outro_show": "देखने के लिए धन्यवाद!",
+    "theme": "royal",
+    "layout": "grid",
+    "format": "revision",
+    "tts": "gemini",
+    "checkpoint_every": 10,
+    "checkpoint_secs": 5,
+    "auto_reels": true,
+    "auto_stories": true,
+    "reel_size": 10,
+    "qr": [
+      {
+        "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+        "label": "EBOOK (ALL SUBJECTS)"
+      },
+      {
+        "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+        "label": "MOCK PAPER"
+      }
+    ],
+    "pronounce": {
+      "RBI": "आर बी आई",
+      "SBI": "एस बी आई",
+      "UPSC": "यू पी एस सी",
+      "GDP": "जी डी पी",
+      "CAG": "कैग",
+      "SSC": "एस एस सी",
+      "GS": "जी एस",
+      "CGL": "सी जी एल",
+      "CHSL": "सी एच एस एल",
+      "MTS": "एम टी एस",
+      "GD": "जी डी"
+    },
+    "filler_lines": [
+      "इस टॉपिक के पूरे नोट्स चाहिए? नोट्स का लिंक डिस्क्रिप्शन में है, नोट्स ज़रूर ले लीजिए।",
+      "प्रैक्टिस के लिए मॉक टेस्ट चाहिए? मॉक्स का लिंक डिस्क्रिप्शन में है, मॉक्स ज़रूर ले लीजिए।",
+      "नोट्स और मॉक्स, दोनों के लिंक डिस्क्रिप्शन में मौजूद हैं, उन्हें लेना मत भूलिए।",
+      "रिवीज़न के लिए नोट्स लीजिए, और परीक्षा जैसी प्रैक्टिस के लिए मॉक्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "जो प्रश्न अभी छूट गए, उनके नोट्स डिस्क्रिप्शन में दिए लिंक से ले लीजिए।",
+      "हर हफ्ते मॉक टेस्ट हल करने से स्कोर बढ़ता है, मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "अगर अब तक के प्रश्न सही रहे, तो मॉक्स लेकर अपना स्तर और परखिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स लेना न भूलें, लिंक डिस्क्रिप्शन में है, और अपने दोस्तों को भी बताइए।",
+      "कंप्यूटर के प्रश्नों पर पकड़ मज़बूत करनी है? तो नोट्स लीजिए, लिंक डिस्क्रिप्शन में है।",
+      "वीडियो पसंद आ रहा है तो लाइक कीजिए, और नोट्स व मॉक्स के लिए डिस्क्रिप्शन का लिंक खोलिए।",
+      "मॉक टेस्ट हल करने की आदत डालिए, मॉक्स का लिंक डिस्क्रिप्शन में है, अभी ले लीजिए।",
+      "चैनल Target1st को सब्सक्राइब कीजिए, नोट्स और मॉक्स का लिंक डिस्क्रिप्शन में है।",
+      "ये पॉइंट नोट कर लीजिए, और पूरे नोट्स के लिए डिस्क्रिप्शन में दिया लिंक देखिए।",
+      "सिर्फ़ वीडियो देखना काफ़ी नहीं, मॉक्स भी हल कीजिए, लिंक डिस्क्रिप्शन में है।",
+      "नोट्स ले लो, मॉक्स ले लो, दोनों के लिंक डिस्क्रिप्शन में हैं, और तैयारी में जुट जाओ।"
+    ],
+    "filler_every": [
+      7,
+      8
+    ],
+    "speech_prep": true,
+    "gemini_voice": "Kore",
+    "gemini_speed": 1.15,
+    "gemini_models": [
+      "gemini-3.1-flash-tts-preview",
+      "gemini-3.8-flash-tts",
+      "gemini-3.8-flash-lite-tts"
+    ],
+    "gemini_batch": 2
+  },
+  "questions": [
+    {
+      "q": "Which type of memory is permanently programmed during manufacturing and cannot be altered? || किस प्रकार की मेमोरी निर्माण के समय स्थायी रूप से प्रोग्राम की जाती है और बदली नहीं जा सकती?",
+      "options": [
+        "RAM || रैम",
+        "PROM || पी रॉम",
+        "Mask ROM || मास्क रॉम",
+        "EEPROM || ई ई पी रॉम"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Mask ROM has data permanently etched onto the chip at the factory.",
+          "say": "मास्क रॉम में डेटा फैक्ट्री में ही चिप पर स्थायी रूप से दर्ज किया जाता है।"
+        },
+        {
+          "show": "EEPROM can be erased and reprogrammed using electrical signals.",
+          "say": "ई ई पी रॉम को विद्युत संकेतों से मिटाकर दोबारा प्रोग्राम किया जा सकता है।"
+        },
+        {
+          "show": "ROM is non-volatile memory that retains data without power.",
+          "say": "रॉम एक नॉन वोलेटाइल मेमोरी है जो बिजली के बिना भी डेटा रखती है।"
+        }
+      ],
+      "trick": {
+        "show": "Mask = Cast in stone during manufacturing",
+        "say": "ट्रिक: मास्क रॉम फैक्ट्री में ही पत्थर की लकीर की तरह पक्की बनती है।"
+      }
+    },
+    {
+      "q": "Which shortcut key is used to center-align selected text in MS Word? || एम एस वर्ड में चुने गए टेक्स्ट को सेंटर अलाइन करने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + C || कंट्रोल प्लस सी",
+        "Ctrl + E || कंट्रोल प्लस ई",
+        "Ctrl + R || कंट्रोल प्लस आर",
+        "Ctrl + J || कंट्रोल प्लस जे"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ctrl + E aligns text evenly between left and right margins.",
+          "say": "कंट्रोल प्लस ई टेक्स्ट को बाएं और दाएं मार्जिन के बीच केंद्र में रखता है।"
+        },
+        {
+          "show": "Ctrl + R aligns text to the right margin.",
+          "say": "कंट्रोल प्लस आर टेक्स्ट को दाएं मार्जिन की ओर संरेखित करता है।"
+        },
+        {
+          "show": "Ctrl + J justifies text across both left and right edges.",
+          "say": "कंट्रोल प्लस जे टेक्स्ट को दोनों किनारों पर बराबर फैलाता है।"
+        }
+      ],
+      "trick": {
+        "show": "C is for Copy, so use E (cEnter) for Center",
+        "say": "ट्रिक: सी से कॉपी होता है, इसलिए सेंटर के लिए दूसरा अक्षर ई इस्तेमाल करें।"
+      }
+    },
+    {
+      "q": "What is the full form of USB? || यू एस बी का पूरा नाम क्या है?",
+      "options": [
+        "Universal Serial Bus || यूनिवर्सल सीरियल बस",
+        "United System Bus || यूनाइटेड सिस्टम बस",
+        "Universal Storage Byte || यूनिवर्सल स्टोरेज बाइट",
+        "Uniform Serial Bridge || यूनिफ़ॉर्म सीरियल ब्रिज"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "USB is a standard interface for connecting peripherals to computers.",
+          "say": "यू एस बी कंप्यूटर से बाहरी उपकरणों को जोड़ने का एक मानक इंटरफ़ेस है।"
+        },
+        {
+          "show": "It supports Plug and Play functionality without rebooting.",
+          "say": "यह कंप्यूटर को रीबूट किए बिना प्लग एंड प्ले की सुविधा देता है।"
+        },
+        {
+          "show": "USB Type-C is reversible and supports high-speed data and power.",
+          "say": "यू एस बी टाइप सी दोनों तरफ से लग सकता है और तेज़ चार्जिंग देता है।"
+        }
+      ],
+      "trick": {
+        "show": "Serial Bus = Sends data bits one after another",
+        "say": "ट्रिक: सीरियल बस यानी एक के बाद एक डेटा भेजने वाला रास्ता।"
+      }
+    },
+    {
+      "q": "Which unit of the CPU performs all arithmetic and logical operations? || सी पी यू की कौन सी इकाई सभी गणितीय और तार्किक गणनाएं करती है?",
+      "options": [
+        "Control Unit || कंट्रोल यूनिट",
+        "Arithmetic Logic Unit || अरिथमेटिक लॉजिक यूनिट",
+        "Memory Unit || मेमोरी यूनिट",
+        "Cache Unit || कैश यूनिट"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "ALU performs addition, subtraction, and comparisons like greater than.",
+          "say": "ए एल यू जोड़, घटाव और तुलनात्मक कार्य जैसे बड़ा या छोटा करता है।"
+        },
+        {
+          "show": "Control Unit directs the flow of data between CPU and devices.",
+          "say": "कंट्रोल यूनिट सी पी यू और उपकरणों के बीच डेटा के प्रवाह को नियंत्रित करती है।"
+        },
+        {
+          "show": "Both ALU and CU together form the processor core.",
+          "say": "ए एल यू और सी यू दोनों मिलकर प्रोसेसर का मुख्य भाग बनाते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "A-L-U = Arithmetic (Math) + Logic (Decisions)",
+        "say": "ट्रिक: ए एल यू यानी अरिथमेटिक से गणित और लॉजिक से सही गलत का फैसला।"
+      }
+    },
+    {
+      "q": "What is a 'Firewall' in computer networks? || कंप्यूटर नेटवर्क में फ़ायरवॉल क्या होता है?",
+      "options": [
+        "A cooling fan inside CPU || सी पी यू के अंदर का कूलिंग फैन",
+        "A security system that monitors and filters network traffic || एक सुरक्षा प्रणाली जो नेटवर्क ट्रैफ़िक की निगरानी और फ़िल्टर करती है",
+        "A high-speed fiber cable || एक हाई स्पीड फ़ाइबर केबल",
+        "A software to format hard drives || हार्ड ड्राइव फ़ॉर्मेट करने का सॉफ्टवेयर"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "A firewall blocks unauthorized access while permitting safe traffic.",
+          "say": "फ़ायरवॉल सुरक्षित ट्रैफ़िक को अनुमति देते हुए अनधिकृत पहुंच को रोकता है।"
+        },
+        {
+          "show": "It can be implemented as hardware, software, or both.",
+          "say": "इसे हार्डवेयर, सॉफ्टवेयर या दोनों के रूप में लागू किया जा सकता है।"
+        },
+        {
+          "show": "Windows Defender Firewall comes built into Windows OS.",
+          "say": "विंडोज़ डिफ़ेंडर फ़ायरवॉल विंडोज़ ऑपरेटिंग सिस्टम में पहले से मौजूद होता है।"
+        }
+      ],
+      "trick": {
+        "show": "Fire-wall = Protective wall against cyber fire",
+        "say": "ट्रिक: फ़ायरवॉल यानी साइबर खतरों की आग से बचाने वाली सुरक्षा दीवार।"
+      }
+    },
+    {
+      "q": "Which generation of computers introduced microprocessors? || कंप्यूटर की किस पीढ़ी में माइक्रोप्रोसेसर की शुरुआत हुई थी?",
+      "options": [
+        "Second Generation || दूसरी पीढ़ी",
+        "Third Generation || तीसरी पीढ़ी",
+        "Fourth Generation || चौथी पीढ़ी",
+        "Fifth Generation || पांचवीं पीढ़ी"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "Fourth generation (1971-present) uses VLSI microprocessors.",
+          "say": "चौथी पीढ़ी में वी एल एस आई तकनीक वाले माइक्रोप्रोसेसर का उपयोग होता है।"
+        },
+        {
+          "show": "Intel 4004 was the world's first commercial microprocessor.",
+          "say": "इंटेल चार हज़ार चार दुनिया का पहला व्यावसायिक माइक्रोप्रोसेसर था।"
+        },
+        {
+          "show": "Fifth generation focuses on Artificial Intelligence and ULSI.",
+          "say": "पांचवीं पीढ़ी आर्टिफ़िशियल इंटेलिजेंस और यू एल एस आई पर केंद्रित है।"
+        }
+      ],
+      "trick": {
+        "show": "4th Gen = Intel 4004 Microprocessor",
+        "say": "ट्रिक: चौथी पीढ़ी को इंटेल चार हज़ार चार माइक्रोप्रोसेसर से याद रखें।"
+      }
+    },
+    {
+      "q": "In MS Excel, which symbol is used to create an absolute cell reference? || एम एस एक्सेल में एब्सोल्यूट सेल रेफ़रेंस बनाने के लिए किस चिह्न का उपयोग होता है?",
+      "options": [
+        "@ || एट द रेट",
+        "# || हैश",
+        "$ || डॉलर",
+        "& || एंड"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "A dollar sign locks the column and row, such as $A$1.",
+          "say": "डॉलर चिह्न कॉलम और रो को लॉक कर देता है, जैसे डॉलर ए डॉलर वन।"
+        },
+        {
+          "show": "Pressing F4 toggles between relative, absolute, and mixed references.",
+          "say": "एफ फोर दबाने से रेफ़रेंस के प्रकार आपस में बदलते हैं।"
+        },
+        {
+          "show": "Relative reference (A1) changes automatically when copied.",
+          "say": "रिलेटिव रेफ़रेंस कॉपी करने पर अपने आप बदल जाता है।"
+        }
+      ],
+      "trick": {
+        "show": "Dollar ($) = Locks cell value like money in a safe",
+        "say": "ट्रिक: डॉलर तिजोरी के ताले की तरह सेल के पते को लॉक कर देता है।"
+      }
+    },
+    {
+      "q": "Which device is used to read answers marked with pencil or pen on examination sheets? || परीक्षा शीट पर पेंसिल या पेन से चिह्नित उत्तरों को पढ़ने के लिए किस डिवाइस का उपयोग होता है?",
+      "options": [
+        "MICR || एम आई सी आर",
+        "OCR || ओ सी आर",
+        "OMR || ओ एम आर",
+        "BCR || बी सी आर"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "OMR stands for Optical Mark Recognition.",
+          "say": "ओ एम आर का पूरा नाम ऑप्टिकल मार्क रिकग्निशन है।"
+        },
+        {
+          "show": "It detects reflected light from darkened bubbles on forms.",
+          "say": "यह फ़ॉर्म पर काले किए गए गोलों से परावर्तित प्रकाश को पहचानता है।"
+        },
+        {
+          "show": "MICR is used in banks to read cheque numbers printed in magnetic ink.",
+          "say": "बैंकों में चेक नंबर पढ़ने के लिए एम आई सी आर का उपयोग होता है।"
+        }
+      ],
+      "trick": {
+        "show": "O-M-R = Optical Mark (bubbles) Reader",
+        "say": "ट्रिक: ओ एम आर यानी परीक्षा की शीट पर बने गोल निशान पढ़ने वाला।"
+      }
+    },
+    {
+      "q": "What is the full form of HTTP? || एच टी टी पी का पूरा नाम क्या है?",
+      "options": [
+        "HyperText Transfer Protocol || हाइपरटेक्स्ट ट्रांसफर प्रोटोकॉल",
+        "High Transfer Text Process || हाई ट्रांसफर टेक्स्ट प्रोसेस",
+        "Hyperlink Text Transmission Program || हाइपरलिंक टेक्स्ट ट्रांसमिशन प्रोग्राम",
+        "Home Tool Transfer Protocol || होम टूल ट्रांसफर प्रोटोकॉल"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "HTTP governs how web browsers request and receive web pages.",
+          "say": "एच टी टी पी तय करता है कि वेब ब्राउज़र वेबपेज कैसे मांगते और प्राप्त करते हैं।"
+        },
+        {
+          "show": "HTTPS adds SSL/TLS encryption for secure communication.",
+          "say": "सुरक्षित संचार के लिए एच टी टी पी एस में एन्क्रिप्शन जोड़ा जाता है।"
+        },
+        {
+          "show": "HTTP uses port 80, whereas HTTPS uses port 443.",
+          "say": "एच टी टी पी पोर्ट अस्सी का और एच टी टी पी एस पोर्ट चार सौ तैंतालीस का उपयोग करता है।"
+        }
+      ],
+      "trick": {
+        "show": "HyperText = Web pages linked together",
+        "say": "ट्रिक: हाइपरटेक्स्ट यानी आपस में जुड़े हुए वेबपेज को ट्रांसफर करने का नियम।"
+      }
+    },
+    {
+      "q": "Which shortcut key opens the 'Find and Replace' dialog box in MS Word? || एम एस वर्ड में फ़ाइंड एंड रिप्लेस डायलॉग बॉक्स खोलने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + F || कंट्रोल प्लस एफ",
+        "Ctrl + H || कंट्रोल प्लस एच",
+        "Ctrl + R || कंट्रोल प्लस आर",
+        "Ctrl + G || कंट्रोल प्लस जी"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ctrl + H opens directly to the Replace tab in Find and Replace.",
+          "say": "कंट्रोल प्लस एच सीधे फ़ाइंड एंड रिप्लेस के रिप्लेस टैब को खोलता है।"
+        },
+        {
+          "show": "Ctrl + F opens only the Find navigation pane.",
+          "say": "कंट्रोल प्लस एफ केवल खोजने के लिए नेविगेशन पैनल खोलता है।"
+        },
+        {
+          "show": "Ctrl + G opens the Go To tab to jump to a specific page.",
+          "say": "कंट्रोल प्लस जी किसी खास पेज पर जाने के लिए गो टू टैब खोलता है।"
+        }
+      ],
+      "trick": {
+        "show": "H = Hunt and change (Replace)",
+        "say": "ट्रिक: एच से हंट एंड चेंज याद रखें, यानी ढूंढकर बदलना।"
+      }
+    },
+    {
+      "q": "One Terabyte (TB) is equal to how many Gigabytes (GB)? || एक टेराबाइट कितने गीगाबाइट के बराबर होता है?",
+      "options": [
+        "1000 GB || एक हज़ार जी बी",
+        "1024 GB || एक हज़ार चौबीस जी बी",
+        "512 GB || पांच सौ बारह जी बी",
+        "2048 GB || दो हज़ार अड़तालीस जी बी"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Memory hierarchy: 1024 MB = 1 GB, and 1024 GB = 1 TB.",
+          "say": "एक हज़ार चौबीस एम बी से एक जी बी और एक हज़ार चौबीस जी बी से एक टी बी बनता है।"
+        },
+        {
+          "show": "1024 TB equals 1 Petabyte (PB).",
+          "say": "एक हज़ार चौबीस टी बी मिलकर एक पेटाबाइट बनाते हैं।"
+        },
+        {
+          "show": "Storage manufacturers sometimes advertise 1 TB as 1000 GB decimal.",
+          "say": "हार्ड डिस्क कंपनियां विज्ञापन में कभी-कभी इसे एक हज़ार जी बी लिखती हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Every step up multiplies by 1024",
+        "say": "ट्रिक: मेमोरी की हर अगली बड़ी इकाई एक हज़ार चौबीस के गुणा से बनती है।"
+      }
+    },
+    {
+      "q": "Which of the following is a non-impact printer? || इनमें से कौन सा एक नॉन-इम्पैक्ट प्रिंटर है?",
+      "options": [
+        "Daisy Wheel Printer || डेज़ी व्हील प्रिंटर",
+        "Dot Matrix Printer || डॉट मैट्रिक्स प्रिंटर",
+        "Line Printer || लाइन प्रिंटर",
+        "Laser Printer || लेजर प्रिंटर"
+      ],
+      "answer": "D",
+      "points": [
+        {
+          "show": "Laser printers print without striking an ink ribbon against paper.",
+          "say": "लेजर प्रिंटर कागज़ पर रिबन से टकराए बिना प्रिंट करते हैं।"
+        },
+        {
+          "show": "Impact printers make noise because pins strike the paper physically.",
+          "say": "इम्पैक्ट प्रिंटर शोर करते हैं क्योंकि उनमें पिन कागज़ से टकराती हैं।"
+        },
+        {
+          "show": "Laser printers produce high-resolution text very quickly.",
+          "say": "लेजर प्रिंटर बहुत तेज़ी से उच्च गुणवत्ता वाले अक्षर छापते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Laser uses light beam, no hammering impact",
+        "say": "ट्रिक: लेजर प्रकाश की किरण से छपाई करता है, इसमें कोई चोट या टक्कर नहीं होती।"
+      }
+    },
+    {
+      "q": "What is 'Booting' in a computer system? || कंप्यूटर सिस्टम में बूटिंग क्या होती है?",
+      "options": [
+        "Installing new software || नया सॉफ्टवेयर इंस्टॉल करना",
+        "Starting up the computer and loading the operating system || कंप्यूटर को चालू करना और ऑपरेटिंग सिस्टम लोड करना",
+        "Scanning for viruses || वायरस की जांच करना",
+        "Formatting a hard disk || हार्ड डिस्क को फ़ॉर्मेट करना"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Cold booting means starting a computer from a completely powered-off state.",
+          "say": "कोल्ड बूटिंग का अर्थ है पूरी तरह बंद कंप्यूटर को चालू करना।"
+        },
+        {
+          "show": "Warm booting means restarting an already running computer.",
+          "say": "वॉर्म बूटिंग का अर्थ है पहले से चल रहे कंप्यूटर को रीस्टार्ट करना।"
+        },
+        {
+          "show": "Bootloader loads the OS kernel from disk into RAM.",
+          "say": "बूटलोडर ऑपरेटिंग सिस्टम को हार्ड डिस्क से रैम में लोड करता है।"
+        }
+      ],
+      "trick": {
+        "show": "Put on boots to start walking = Booting starts PC",
+        "say": "ट्रिक: जैसे चलने से पहले जूते यानी बूट पहनते हैं, वैसे ही कंप्यूटर बूटिंग से शुरू होता है।"
+      }
+    },
+    {
+      "q": "Which key combination minimizes all open windows and displays the Desktop in Windows? || विंडोज़ में सभी खुली विंडो को छोटा करके डेस्कटॉप दिखाने की शॉर्टकट की क्या है?",
+      "options": [
+        "Win + M || विंडोज़ की प्लस एम",
+        "Win + D || विंडोज़ की प्लस डी",
+        "Win + E || विंडोज़ की प्लस ई",
+        "Win + L || विंडोज़ की प्लस एल"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Win + D toggles between showing the Desktop and restoring windows.",
+          "say": "विंडोज़ प्लस डी डेस्कटॉप दिखाने और विंडो वापस लाने के बीच टॉगल करता है।"
+        },
+        {
+          "show": "Win + L locks the computer screen immediately.",
+          "say": "विंडोज़ प्लस एल कंप्यूटर स्क्रीन को तुरंत लॉक कर देता है।"
+        },
+        {
+          "show": "Win + E opens File Explorer.",
+          "say": "विंडोज़ प्लस ई फ़ाइल एक्सप्लोरर खोलता है।"
+        }
+      ],
+      "trick": {
+        "show": "Win + D = Desktop",
+        "say": "ट्रिक: विंडोज़ प्लस डी से सीधे डेस्कटॉप सामने आ जाता है।"
+      }
+    },
+    {
+      "q": "What does GUI stand for? || जी यू आई का पूरा नाम क्या है?",
+      "options": [
+        "General User Internet || जनरल यूज़र इंटरनेट",
+        "Graphical User Interface || ग्राफ़िकल यूज़र इंटरफ़ेस",
+        "Guided Utility Interaction || गाइडेड यूटिलिटी इंटरैक्शन",
+        "Global User Integration || ग्लोबल यूज़र इंटीग्रेशन"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "GUI allows users to interact via icons, windows, and mouse clicks.",
+          "say": "जी यू आई उपयोगकर्ताओं को आइकन, विंडो और माउस क्लिक से काम करने देता है।"
+        },
+        {
+          "show": "CLI (Command Line Interface) requires typing text commands, like DOS.",
+          "say": "सी एल आई में डॉस की तरह टेक्स्ट कमांड टाइप करने पड़ते हैं।"
+        },
+        {
+          "show": "Windows, macOS, and Android use graphical interfaces.",
+          "say": "विंडोज़, मैक ओ एस और एंड्रॉइड ग्राफ़िकल इंटरफ़ेस का उपयोग करते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Graphics = Icons and buttons you can see and click",
+        "say": "ट्रिक: ग्राफ़िक्स यानी वे चित्र और आइकन जिन्हें देखकर आप क्लिक करते हैं।"
+      }
+    },
+    {
+      "q": "In MS Excel, which function counts only cells that contain numbers? || एम एस एक्सेल में कौन सा फ़ंक्शन केवल उन सेल की गिनती करता है जिनमें नंबर हैं?",
+      "options": [
+        "=COUNTA() || इक्वल काउंट ए",
+        "=COUNT() || इक्वल काउंट",
+        "=COUNTIF() || इक्वल काउंट इफ़",
+        "=SUM() || इक्वल सम"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "=COUNT() ignores text and empty cells, counting only numeric entries.",
+          "say": "इक्वल काउंट टेक्स्ट और खाली सेल को छोड़कर केवल नंबर गिनता है।"
+        },
+        {
+          "show": "=COUNTA() counts all non-empty cells including text and numbers.",
+          "say": "इक्वल काउंट ए टेक्स्ट और नंबर सहित सभी भरी हुई सेल गिनता है।"
+        },
+        {
+          "show": "=COUNTBLANK() counts only empty cells in a range.",
+          "say": "इक्वल काउंट ब्लैंक रेंज में केवल खाली सेल गिनता है।"
+        }
+      ],
+      "trick": {
+        "show": "COUNT = Numbers only, COUNTA = All non-empty",
+        "say": "ट्रिक: काउंट केवल नंबर गिनता है और काउंट ए का ए मतलब ऑल यानी सब कुछ।"
+      }
+    },
+    {
+      "q": "Which protocol assigns dynamic IP addresses automatically to devices on a network? || कौन सा प्रोटोकॉल नेटवर्क पर उपकरणों को अपने आप डायनेमिक आई पी एड्रेस देता है?",
+      "options": [
+        "DNS || डी एन एस",
+        "DHCP || डी एच सी पी",
+        "ARP || ए आर पी",
+        "SNMP || एस एन एम पी"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "DHCP stands for Dynamic Host Configuration Protocol.",
+          "say": "डी एच सी पी का पूरा नाम डायनेमिक होस्ट कॉन्फ़िगरेशन प्रोटोकॉल है।"
+        },
+        {
+          "show": "It prevents IP address conflicts on local networks.",
+          "say": "यह लोकल नेटवर्क पर आई पी एड्रेस के टकराव को रोकता है।"
+        },
+        {
+          "show": "DNS translates human-readable domain names into IP addresses.",
+          "say": "डी एन एस डोमेन नामों को आई पी एड्रेस में बदलता है।"
+        }
+      ],
+      "trick": {
+        "show": "D-H-C-P = Dynamic Host (hands out IPs automatically)",
+        "say": "ट्रिक: डी एच सी पी में डी का मतलब डायनेमिक है, जो अपने आप आई पी बांटता है।"
+      }
+    },
+    {
+      "q": "Which MS PowerPoint view displays miniature thumbnails of all slides on one screen? || एम एस पावरपॉइंट का कौन सा व्यू एक ही स्क्रीन पर सभी स्लाइड के छोटे थंबनेल दिखाता है?",
+      "options": [
+        "Normal View || नॉर्मल व्यू",
+        "Slide Sorter View || स्लाइड सॉर्टर व्यू",
+        "Outline View || आउटलाइन व्यू",
+        "Reading View || रीडिंग व्यू"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Slide Sorter View makes it easy to reorder, delete, or add transitions.",
+          "say": "स्लाइड सॉर्टर व्यू से स्लाइड का क्रम बदलना और हटाना आसान हो जाता है।"
+        },
+        {
+          "show": "Normal View is the default editing view in PowerPoint.",
+          "say": "पावरपॉइंट में नॉर्मल व्यू डिफ़ॉल्ट एडिटिंग व्यू होता है।"
+        },
+        {
+          "show": "Notes Page View lets presenters add speaker notes below each slide.",
+          "say": "नोट्स पेज व्यू में वक्ता प्रत्येक स्लाइड के नीचे अपने नोट्स लिख सकते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Sorter = Lets you sort and rearrange all slides",
+        "say": "ट्रिक: सॉर्टर व्यू सारी स्लाइड को एक साथ दिखाकर उन्हें क्रम में लगाने देता है।"
+      }
+    },
+    {
+      "q": "What is the binary equivalent of the decimal number 10? || दशमलव संख्या दस का बाइनरी मान क्या होता है?",
+      "options": [
+        "1001 || वन ज़ीरो ज़ीरो वन",
+        "1010 || वन ज़ीरो वन ज़ीरो",
+        "1100 || वन वन ज़ीरो ज़ीरो",
+        "1011 || वन ज़ीरो वन वन"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Using place values 8-4-2-1: 8 + 0 + 2 + 0 = 10, which is 1010.",
+          "say": "आठ चार दो एक के मान से आठ और दो जोड़ने पर दस यानी एक शून्य एक शून्य बनता है।"
+        },
+        {
+          "show": "Binary system uses only two digits: 0 and 1.",
+          "say": "बाइनरी सिस्टम केवल दो अंकों शून्य और एक का उपयोग करता है।"
+        },
+        {
+          "show": "Decimal 8 in binary is 1000, and decimal 15 is 1111.",
+          "say": "बाइनरी में आठ को एक हज़ार और पंद्रह को चार बार एक लिखा जाता है।"
+        }
+      ],
+      "trick": {
+        "show": "8 + 2 = 10 -> turn ON 8 and 2 -> 1010",
+        "say": "ट्रिक: आठ और दो जोड़कर दस बनता है, इसलिए आठ और दो की जगह एक रखें।"
+      }
+    },
+    {
+      "q": "Which key is used to rename a selected file or folder in Windows? || विंडोज़ में चुनी गई फ़ाइल या फ़ोल्डर का नाम बदलने के लिए किस की का उपयोग होता है?",
+      "options": [
+        "F1 || एफ वन",
+        "F2 || एफ टू",
+        "F3 || एफ थ्री",
+        "F4 || एफ फोर"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Pressing F2 highlights the file name for immediate editing.",
+          "say": "एफ टू दबाने से फ़ाइल का नाम तुरंत एडिट करने के लिए हाईलाइट हो जाता है।"
+        },
+        {
+          "show": "In MS Excel, F2 edits the active cell content directly.",
+          "say": "एम एस एक्सेल में एफ टू सक्रिय सेल के अंदर सीधे एडिटिंग शुरू करता है।"
+        },
+        {
+          "show": "F3 opens the search box in Windows File Explorer.",
+          "say": "एफ थ्री विंडोज़ फ़ाइल एक्सप्लोरर में सर्च बॉक्स खोलता है।"
+        }
+      ],
+      "trick": {
+        "show": "F2 = 2nd name (Rename)",
+        "say": "ट्रिक: एफ टू से दूसरा नाम रखना यानी रीनेम करना याद रखें।"
+      }
+    },
+    {
+      "q": "Which of the following is an open-source office productivity suite? || इनमें से कौन सा एक ओपन-सोर्स ऑफिस प्रोडक्टिविटी सुइट है?",
+      "options": [
+        "Microsoft Office || माइक्रोसॉफ्ट ऑफिस",
+        "LibreOffice || लिब्रे ऑफिस",
+        "Apple iWork || एप्पल आई वर्क",
+        "Corel WordPerfect || कोरल वर्डपरफेक्ट"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "LibreOffice includes Writer, Calc, and Impress as free alternatives.",
+          "say": "लिब्रे ऑफिस में मुफ्त विकल्प के रूप में राइटर, कैल्क और इम्प्रेस शामिल हैं।"
+        },
+        {
+          "show": "Writer corresponds to Word, Calc to Excel, and Impress to PowerPoint.",
+          "say": "राइटर वर्ड जैसा, कैल्क एक्सेल जैसा और इम्प्रेस पावरपॉइंट जैसा है।"
+        },
+        {
+          "show": "It is maintained by The Document Foundation.",
+          "say": "इसका रखरखाव द डॉक्यूमेंट फ़ाउंडेशन द्वारा किया जाता है।"
+        }
+      ],
+      "trick": {
+        "show": "Libre = Liberty (Free open-source office)",
+        "say": "ट्रिक: लिब्रे का अर्थ है आज़ादी, यह पूरी तरह मुफ्त ओपन सोर्स ऑफिस है।"
+      }
+    },
+    {
+      "q": "What is the shortcut key to subscript selected text in MS Word? || एम एस वर्ड में चुने गए टेक्स्ट को सबस्क्रिप्ट करने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + = || कंट्रोल प्लस इक्वल",
+        "Ctrl + Shift + + || कंट्रोल प्लस शिफ्ट प्लस प्लस",
+        "Ctrl + Alt + S || कंट्रोल प्लस ऑल्ट प्लस एस",
+        "Alt + = || ऑल्ट प्लस इक्वल"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "Subscript places small text slightly below the baseline, like H2O.",
+          "say": "सबस्क्रिप्ट छोटे अक्षर को लाइन से थोड़ा नीचे रखता है, जैसे पानी का सूत्र।"
+        },
+        {
+          "show": "Ctrl + Shift + + (Plus) applies Superscript, like X2.",
+          "say": "कंट्रोल प्लस शिफ्ट प्लस से सुपरस्क्रिप्ट लगता है, जैसे घात लिखना।"
+        },
+        {
+          "show": "Both options are found in the Font group on the Home tab.",
+          "say": "ये दोनों विकल्प होम टैब के फ़ॉन्ट समूह में मिलते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Sub = Down low like '=' sign (Ctrl + =)",
+        "say": "ट्रिक: सबस्क्रिप्ट नीचे बैठता है, इसलिए बिना शिफ्ट दबाए कंट्रोल प्लस बराबर दबाएं।"
+      }
+    },
+    {
+      "q": "Which network device operates at the Data Link Layer and uses MAC addresses? || कौन सा नेटवर्क डिवाइस डेटा लिंक लेयर पर काम करता है और मैक एड्रेस का उपयोग करता है?",
+      "options": [
+        "Hub || हब",
+        "Repeater || रिपीटर",
+        "Switch || स्विच",
+        "Modem || मॉडेम"
+      ],
+      "answer": "C",
+      "points": [
+        {
+          "show": "A switch inspects MAC addresses to forward frames only to the target port.",
+          "say": "स्विच मैक एड्रेस की जांच करके डेटा को केवल सही पोर्ट पर भेजता है।"
+        },
+        {
+          "show": "A hub operates at Physical Layer and broadcasts data to all ports.",
+          "say": "हब फ़िज़िकल लेयर पर काम करता है और सभी पोर्ट पर डेटा भेज देता है।"
+        },
+        {
+          "show": "A MAC address is a 48-bit physical hardware address.",
+          "say": "मैक एड्रेस अड़तालीस बिट का एक भौतिक हार्डवेयर पता होता है।"
+        }
+      ],
+      "trick": {
+        "show": "Switch = Smartly switches data using MAC address",
+        "say": "ट्रिक: स्विच समझदारी से मैक एड्रेस देखकर सही कंप्यूटर को डेटा भेजता है।"
+      }
+    },
+    {
+      "q": "What does 'BCC' stand for in an email? || ईमेल में बी सी सी का पूरा नाम क्या होता है?",
+      "options": [
+        "Blind Carbon Copy || ब्लाइंड कार्बन कॉपी",
+        "Basic Carbon Copy || बेसिक कार्बन कॉपी",
+        "Binary Communication Code || बाइनरी कम्युनिकेशन कोड",
+        "Backup Copy Control || बैकअप कॉपी कंट्रोल"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "BCC hides the email addresses of recipients from each other.",
+          "say": "बी सी सी प्राप्तकर्ताओं के ईमेल पते एक दूसरे से छिपाकर रखता है।"
+        },
+        {
+          "show": "CC (Carbon Copy) shows all recipient addresses publicly to everyone.",
+          "say": "सी सी में सभी प्राप्तकर्ताओं के ईमेल पते सबको दिखाई देते हैं।"
+        },
+        {
+          "show": "BCC is ideal when sending bulk emails to protect privacy.",
+          "say": "गोपनीयता बनाए रखते हुए एक साथ कई लोगों को मेल भेजने के लिए बी सी सी श्रेष्ठ है।"
+        }
+      ],
+      "trick": {
+        "show": "Blind = Recipients are blind to who else got the mail",
+        "say": "ट्रिक: ब्लाइंड का मतलब है कि बाकी लोगों को पता नहीं चलेगा कि मेल किसे भेजा गया है।"
+      }
+    },
+    {
+      "q": "Which scheduling algorithm executes the process with the shortest burst time first? || कौन सा शेड्यूलिंग एल्गोरिदम सबसे कम बर्स्ट टाइम वाली प्रक्रिया को पहले निष्पादित करता है?",
+      "options": [
+        "FCFS || एफ सी एफ एस",
+        "SJF || एस जे एफ",
+        "Round Robin || राउंड रॉबिन",
+        "Priority Scheduling || प्रायोरिटी शेड्यूलिंग"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "SJF stands for Shortest Job First.",
+          "say": "एस जे एफ का पूरा नाम शॉर्टेस्ट जॉब फर्स्ट है।"
+        },
+        {
+          "show": "It minimizes average waiting time for a set of processes.",
+          "say": "यह प्रक्रियाओं के औसत प्रतीक्षा समय को कम करता है।"
+        },
+        {
+          "show": "Round Robin assigns a fixed time quantum to each process in turn.",
+          "say": "राउंड रॉबिन हर प्रक्रिया को बारी-बारी से एक निश्चित समय देता है।"
+        }
+      ],
+      "trick": {
+        "show": "S-J-F = Shortest Job First",
+        "say": "ट्रिक: एस जे एफ यानी जो काम सबसे छोटा है उसे पहले निपटाओ।"
+      }
+    },
+    {
+      "q": "Which programming language is primarily used to style web pages? || वेब पेजों को स्टाइल और डिज़ाइन देने के लिए मुख्य रूप से किस भाषा का उपयोग होता है?",
+      "options": [
+        "HTML || एच टी एम एल",
+        "CSS || सी एस एस",
+        "SQL || एस क्यू एल",
+        "C++ || सी प्लस प्लस"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "CSS stands for Cascading Style Sheets.",
+          "say": "सी एस एस का पूरा नाम कैस्केडिंग स्टाइल शीट्स है।"
+        },
+        {
+          "show": "HTML defines the structure of a webpage, while CSS controls colors and layout.",
+          "say": "एच टी एम एल वेबपेज का ढांचा बनाता है और सी एस एस रंग व लेआउट तय करता है।"
+        },
+        {
+          "show": "JavaScript adds interactivity and dynamic behavior to webpages.",
+          "say": "जावास्क्रिप्ट वेबपेज में इंटरैक्टिविटी और गतिशीलता जोड़ता है।"
+        }
+      ],
+      "trick": {
+        "show": "CSS = Cascading Style (Makes websites stylish)",
+        "say": "ट्रिक: सी एस एस में स्टाइल शब्द है, यह वेबसाइट को सुंदर और स्टाइलिश बनाता है।"
+      }
+    },
+    {
+      "q": "What is the default orientation of a page in MS Word? || एम एस वर्ड में पेज का डिफ़ॉल्ट ओरिएंटेशन क्या होता है?",
+      "options": [
+        "Landscape || लैंडस्केप",
+        "Portrait || पोर्ट्रेट",
+        "Vertical || वर्टिकल",
+        "Horizontal || हॉरिज़ॉन्टल"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Portrait orientation is taller than it is wide.",
+          "say": "पोर्ट्रेट ओरिएंटेशन में पेज की लंबाई उसकी चौड़ाई से अधिक होती है।"
+        },
+        {
+          "show": "Landscape orientation is wider than it is tall, used for wide tables.",
+          "say": "लैंडस्केप में चौड़ाई अधिक होती है, जिसका उपयोग चौड़ी टेबल के लिए होता है।"
+        },
+        {
+          "show": "Orientation settings are located under the Layout tab.",
+          "say": "ओरिएंटेशन सेटिंग्स लेआउट टैब के अंतर्गत स्थित होती हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Portrait = Vertical photo frame (Default in Word)",
+        "say": "ट्रिक: पोर्ट्रेट यानी सीधा खड़ा फोटो फ्रेम, यही वर्ड में डिफ़ॉल्ट होता है।"
+      }
+    },
+    {
+      "q": "Which shortcut key closes the currently active window or tab in most applications? || अधिकांश एप्लीकेशन में वर्तमान सक्रिय विंडो या टैब को बंद करने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + Q || कंट्रोल प्लस क्यू",
+        "Ctrl + W || कंट्रोल प्लस डब्लू",
+        "Ctrl + X || कंट्रोल प्लस एक्स",
+        "Ctrl + D || कंट्रोल प्लस डी"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ctrl + W closes the active document or browser tab without exiting the app.",
+          "say": "कंट्रोल प्लस डब्लू पूरा ऐप बंद किए बिना केवल सक्रिय डॉक्यूमेंट या टैब बंद करता है।"
+        },
+        {
+          "show": "Alt + F4 closes the entire application window.",
+          "say": "ऑल्ट प्लस एफ फोर पूरे एप्लीकेशन प्रोग्राम को बंद कर देता है।"
+        },
+        {
+          "show": "Ctrl + T opens a new tab in web browsers.",
+          "say": "कंट्रोल प्लस टी वेब ब्राउज़र में नया टैब खोलता है।"
+        }
+      ],
+      "trick": {
+        "show": "W = Window/tab Wipeout (Ctrl + W)",
+        "say": "ट्रिक: डब्लू से विंडो या टैब को बंद करना याद रखें।"
+      }
+    },
+    {
+      "q": "Which of the following is an example of an optical storage device? || इनमें से कौन सा एक ऑप्टिकल स्टोरेज डिवाइस का उदाहरण है?",
+      "options": [
+        "Pen Drive || पेन ड्राइव",
+        "Blu-ray Disc || ब्लू-रे डिस्क",
+        "Hard Disk || हार्ड डिस्क",
+        "Memory Card || मेमोरी कार्ड"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Blu-ray Disc uses a blue-violet laser to read and write data.",
+          "say": "ब्लू-रे डिस्क डेटा पढ़ने और लिखने के लिए नीले बैंगनी लेजर का उपयोग करती है।"
+        },
+        {
+          "show": "CD (700 MB), DVD (4.7 GB), and Blu-ray (25-50 GB) are optical media.",
+          "say": "सी डी, डी वी डी और ब्लू-रे ऑप्टिकल स्टोरेज के उदाहरण हैं।"
+        },
+        {
+          "show": "Pen drives and memory cards use solid-state flash memory.",
+          "say": "पेन ड्राइव और मेमोरी कार्ड सॉलिड स्टेट फ्लैश मेमोरी का उपयोग करते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Disc with laser light = Optical storage",
+        "say": "ट्रिक: जो डिस्क लेजर प्रकाश से पढ़ी जाती है वह ऑप्टिकल स्टोरेज है।"
+      }
+    },
+    {
+      "q": "What is 'Ransomware'? || रैंसमवेयर क्या होता है?",
+      "options": [
+        "Free antivirus software || मुफ्त एंटीवायरस सॉफ्टवेयर",
+        "Malware that encrypts files and demands payment to unlock them || मैलवेयर जो फ़ाइलों को लॉक करता है और खोलने के लिए फिरौती मांगता है",
+        "A hardware firewall || एक हार्डवेयर फ़ायरवॉल",
+        "A backup utility tool || एक बैकअप यूटिलिटी टूल"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ransomware blocks access to victim's data until a ransom is paid.",
+          "say": "रैंसमवेयर फिरौती मिलने तक पीड़ित के डेटा तक पहुंच रोक देता है।"
+        },
+        {
+          "show": "WannaCry (2017) is a famous example of a ransomware attack.",
+          "say": "वानाक्राई रैंसमवेयर हमले का एक प्रसिद्ध उदाहरण है।"
+        },
+        {
+          "show": "Regular offline backups are the best defense against ransomware.",
+          "say": "नियमित ऑफ़लाइन बैकअप रैंसमवेयर से बचने का सबसे अच्छा उपाय है।"
+        }
+      ],
+      "trick": {
+        "show": "Ransom = Kidnaps your files and asks for ransom money",
+        "say": "ट्रिक: रैंसम यानी फिरौती, यह आपकी फ़ाइलों का अपहरण करके पैसे मांगता है।"
+      }
+    },
+    {
+      "q": "In MS Excel, what does the error '#NAME?' indicate? || एम एस एक्सेल में हैश नेम एरर क्या दर्शाता है?",
+      "options": [
+        "Division by zero || शून्य से भाग",
+        "Unrecognized function name or text in formula || फ़ॉर्मूले में अज्ञात फ़ंक्शन नाम या गलत वर्तनी",
+        "Column width is too narrow || कॉलम की चौड़ाई बहुत कम होना",
+        "Invalid cell intersection || अमान्य सेल मिलन"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "#NAME? appears when a function name is misspelled, like =SUME(A1:A5).",
+          "say": "फ़ंक्शन के नाम की स्पेलिंग गलत लिखने पर हैश नेम एरर आता है।"
+        },
+        {
+          "show": "Forgetting quotes around text strings in formulas also triggers #NAME?.",
+          "say": "फ़ॉर्मूले में टेक्स्ट के चारों ओर कोटेशन मार्क न लगाने पर भी यह एरर आता है।"
+        },
+        {
+          "show": "'#####' indicates that the column is too narrow to display the number.",
+          "say": "हैश चिह्न की लाइन बताती है कि संख्या दिखाने के लिए कॉलम छोटा है।"
+        }
+      ],
+      "trick": {
+        "show": "#NAME? = Excel asks \"What is this name?\"",
+        "say": "ट्रिक: हैश नेम यानी एक्सेल पूछ रहा है कि आपने यह कौन सा गलत नाम लिख दिया।"
+      }
+    },
+    {
+      "q": "Which gate outputs 1 only when all of its inputs are 1? || कौन सा लॉजिक गेट केवल तभी एक आउटपुट देता है जब उसके सभी इनपुट एक हों?",
+      "options": [
+        "OR Gate || ऑर गेट",
+        "AND Gate || एंड गेट",
+        "NOT Gate || नॉट गेट",
+        "XOR Gate || एक्स ऑर गेट"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "AND gate performs logical multiplication (A · B).",
+          "say": "एंड गेट तार्किक गुणा करता है, इसलिए दोनों इनपुट एक होने पर ही एक मिलता है।"
+        },
+        {
+          "show": "OR gate outputs 1 if at least one input is 1.",
+          "say": "ऑर गेट में कोई भी एक इनपुट एक होने पर आउटपुट एक मिलता है।"
+        },
+        {
+          "show": "NOT gate is an inverter that flips 0 to 1 and 1 to 0.",
+          "say": "नॉट गेट एक इन्वर्टर है जो शून्य को एक और एक को शून्य में बदलता है।"
+        }
+      ],
+      "trick": {
+        "show": "AND = Both A AND B must be 1",
+        "say": "ट्रिक: एंड का मतलब है कि पहला और दूसरा दोनों इनपुट एक होने ज़रूरी हैं।"
+      }
+    },
+    {
+      "q": "Which command in Windows Command Prompt displays the IP configuration of a computer? || विंडोज़ कमांड प्रॉम्प्ट में कौन सा कमांड कंप्यूटर का आई पी कॉन्फ़िगरेशन दिखाता है?",
+      "options": [
+        "ping || पिंग",
+        "ipconfig || आई पी कॉन्फ़िग",
+        "tracert || ट्रेसर्ट",
+        "netstat || नेटस्टैट"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "ipconfig displays IPv4 address, Subnet Mask, and Default Gateway.",
+          "say": "आई पी कॉन्फ़िग आई पी एड्रेस, सबनेट मास्क और डिफ़ॉल्ट गेटवे दिखाता है।"
+        },
+        {
+          "show": "ping tests network connectivity to another host or website.",
+          "say": "पिंग किसी अन्य कंप्यूटर या वेबसाइट से नेटवर्क कनेक्शन की जांच करता है।"
+        },
+        {
+          "show": "In Linux/macOS, the equivalent command is ifconfig or ip addr.",
+          "say": "लिनक्स और मैक में इसके समान कमांड आई एफ कॉन्फ़िग है।"
+        }
+      ],
+      "trick": {
+        "show": "IP + Config = Shows your IP configuration",
+        "say": "ट्रिक: आई पी कॉन्फ़िग नाम से ही स्पष्ट है कि यह आई पी की सेटिंग दिखाता है।"
+      }
+    },
+    {
+      "q": "What is the full form of PDF's creator company, or what does OCR stand for? || ओ सी आर का पूरा नाम क्या है?",
+      "options": [
+        "Optical Character Recognition || ऑप्टिकल कैरेक्टर रिकग्निशन",
+        "Online Computer Reader || ऑनलाइन कंप्यूटर रीडर",
+        "Optical Code Register || ऑप्टिकल कोड रजिस्टर",
+        "Output Character Render || आउटपुट कैरेक्टर रेंडर"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "OCR converts scanned images of printed text into editable digital text.",
+          "say": "ओ सी आर छपे हुए टेक्स्ट की स्कैन की गई छवि को एडिट करने योग्य टेक्स्ट में बदलता है।"
+        },
+        {
+          "show": "It is widely used to digitize printed books, invoices, and passports.",
+          "say": "इसका उपयोग किताबों, बिलों और पासपोर्ट को डिजिटल बनाने में होता है।"
+        },
+        {
+          "show": "Google Lens uses OCR technology to extract text from photos.",
+          "say": "गूगल लेंस फ़ोटो से टेक्स्ट निकालने के लिए ओ सी आर तकनीक का उपयोग करता है।"
+        }
+      ],
+      "trick": {
+        "show": "Character = Reads typed letters and characters",
+        "say": "ट्रिक: कैरेक्टर यानी यह स्कैन किए गए पन्नों से एक-एक अक्षर को पहचानता है।"
+      }
+    },
+    {
+      "q": "Which MS Word feature allows you to send the same letter to multiple recipients with personalized names and addresses? || एम एस वर्ड की कौन सी सुविधा अलग-अलग नाम और पते के साथ एक ही पत्र कई लोगों को भेजने की अनुमति देती है?",
+      "options": [
+        "Track Changes || ट्रैक चेंजेस",
+        "Mail Merge || मेल मर्ज",
+        "Cross-Reference || क्रॉस रेफ़रेंस",
+        "Macros || मैक्रोज़"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Mail Merge combines a main document with a data source like Excel.",
+          "say": "मेल मर्ज मुख्य डॉक्यूमेंट को एक्सेल जैसी डेटा सूची के साथ जोड़ता है।"
+        },
+        {
+          "show": "It generates personalized letters, labels, or envelopes automatically.",
+          "say": "यह अपने आप व्यक्तिगत पत्र, लेबल या लिफ़ाफ़े तैयार कर देता है।"
+        },
+        {
+          "show": "It is located under the Mailings tab in MS Word.",
+          "say": "यह विकल्प एम एस वर्ड के मेलिंग्स टैब के अंतर्गत मिलता है।"
+        }
+      ],
+      "trick": {
+        "show": "Mail + Merge = Merges address list into your mail",
+        "say": "ट्रिक: मेल मर्ज पतों की सूची को आपके पत्र के साथ जोड़ देता है।"
+      }
+    },
+    {
+      "q": "Which memory sits between the CPU and RAM to speed up data access? || डेटा एक्सेस को तेज़ करने के लिए सी पी यू और रैम के बीच कौन सी मेमोरी स्थित होती है?",
+      "options": [
+        "Virtual Memory || वर्चुअल मेमोरी",
+        "Cache Memory || कैश मेमोरी",
+        "Flash Memory || फ़्लैश मेमोरी",
+        "Secondary Memory || सेकेंडरी मेमोरी"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Cache memory stores frequently accessed instructions and data.",
+          "say": "कैश मेमोरी बार-बार उपयोग होने वाले निर्देशों और डेटा को स्टोर करती है।"
+        },
+        {
+          "show": "It is built using high-speed SRAM (Static RAM).",
+          "say": "यह तेज़ गति वाली स्टैटिक रैम से बनी होती है।"
+        },
+        {
+          "show": "Cache has L1, L2, and L3 levels, with L1 being the fastest.",
+          "say": "कैश के एल वन, एल टू और एल थ्री स्तर होते हैं, जिनमें एल वन सबसे तेज़ है।"
+        }
+      ],
+      "trick": {
+        "show": "Cache = Pocket change kept handy for quick spending",
+        "say": "ट्रिक: कैश जेब में रखे खुले पैसों की तरह है जिसे सी पी यू तुरंत खर्च कर सकता है।"
+      }
+    },
+    {
+      "q": "What is a 'Trojan' vs a 'Worm' — how does a Computer Worm spread? || कंप्यूटर वॉर्म कैसे फैलता है?",
+      "options": [
+        "Only when user opens an infected file || केवल तब जब यूज़र कोई संक्रमित फ़ाइल खोले",
+        "Self-replicates automatically across networks without human action || बिना किसी मानवीय क्रिया के नेटवर्क पर अपने आप अपनी कॉपी बनाकर",
+        "Through dusty USB ports || धूल भरे यू एस बी पोर्ट के माध्यम से",
+        "By overheating the CPU || सी पी यू के अधिक गर्म होने से"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Worms exploit network vulnerabilities to spread independently.",
+          "say": "वॉर्म स्वतंत्र रूप से फैलने के लिए नेटवर्क की कमजोरियों का फ़ायदा उठाते हैं।"
+        },
+        {
+          "show": "A computer virus requires a host file and human action to spread.",
+          "say": "कंप्यूटर वायरस को फैलने के लिए होस्ट फ़ाइल और मानवीय क्रिया की ज़रूरत होती है।"
+        },
+        {
+          "show": "Worms consume heavy network bandwidth and slow down systems.",
+          "say": "वॉर्म नेटवर्क बैंडविड्थ की अधिक खपत करते हैं और सिस्टम को धीमा कर देते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Worm = Crawls across networks on its own",
+        "say": "ट्रिक: वॉर्म कीड़े की तरह अपने आप रेंगकर पूरे नेटवर्क में फैल जाता है।"
+      }
+    },
+    {
+      "q": "Which shortcut key repeats the last action or performs Redo in MS Word? || एम एस वर्ड में अंतिम क्रिया को दोहराने या रीडू करने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + Z || कंट्रोल प्लस ज़ेड",
+        "Ctrl + Y || कंट्रोल प्लस वाई",
+        "Ctrl + R || कंट्रोल प्लस आर",
+        "Ctrl + D || कंट्रोल प्लस डी"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Ctrl + Y redoes an action that was previously undone with Ctrl + Z.",
+          "say": "कंट्रोल प्लस वाई पहले अनडू की गई क्रिया को फिर से कर देता है।"
+        },
+        {
+          "show": "F4 key also repeats the last formatting or typing action in Word.",
+          "say": "वर्ड में एफ फोर की भी अंतिम क्रिया को दोहराने का काम करती है।"
+        },
+        {
+          "show": "Ctrl + Z undoes up to multiple previous steps.",
+          "say": "कंट्रोल प्लस ज़ेड पिछले कई चरणों को वापस ले सकता है।"
+        }
+      ],
+      "trick": {
+        "show": "Z goes back, Y brings it back forward",
+        "say": "ट्रिक: ज़ेड पीछे ले जाता है और वाई उसे वापस आगे ले आता है।"
+      }
+    },
+    {
+      "q": "What is the full form of SATA, used for connecting hard drives? || हार्ड ड्राइव जोड़ने के लिए उपयोग होने वाले साटा का पूरा नाम क्या है?",
+      "options": [
+        "Serial Advanced Technology Attachment || सीरियल एडवांस्ड टेक्नोलॉजी अटैचमेंट",
+        "System Automated Transfer Architecture || सिस्टम ऑटोमेटेड ट्रांसफर आर्किटेक्चर",
+        "Standard Array Technology Adapter || स्टैंडर्ड अरे टेक्नोलॉजी एडाप्टर",
+        "Serial Access Terminal Application || सीरियल एक्सेस टर्मिनल एप्लीकेशन"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "SATA replaced older, bulky parallel PATA/IDE ribbon cables.",
+          "say": "साटा ने पुरानी और चौड़ी पैरेलल आई डी ई केबल की जगह ली है।"
+        },
+        {
+          "show": "SATA cables are thin, flexible, and support faster data rates.",
+          "say": "साटा केबल पतली और लचीली होती हैं और तेज़ डेटा गति देती हैं।"
+        },
+        {
+          "show": "Modern NVMe SSDs use the even faster PCIe interface.",
+          "say": "आधुनिक एन वी एम ई एस एस डी इससे भी तेज़ पी सी आई ई इंटरफ़ेस का उपयोग करते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "S-A-T-A = Serial Advanced Technology Attachment",
+        "say": "ट्रिक: साटा यानी सीरियल एडवांस्ड टेक्नोलॉजी अटैचमेंट।"
+      }
+    },
+    {
+      "q": "Which Excel chart type is best suited for showing trends over time? || समय के साथ होने वाले बदलाव या रुझान को दिखाने के लिए कौन सा एक्सेल चार्ट सबसे उपयुक्त है?",
+      "options": [
+        "Pie Chart || पाई चार्ट",
+        "Line Chart || लाइन चार्ट",
+        "Scatter Chart || स्कैटर चार्ट",
+        "Doughnut Chart || डोनट चार्ट"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Line charts connect data points across continuous time intervals.",
+          "say": "लाइन चार्ट निरंतर समय अंतराल में डेटा बिंदुओं को जोड़कर दिखाते हैं।"
+        },
+        {
+          "show": "Pie charts show proportions or percentages of a single whole.",
+          "say": "पाई चार्ट किसी एक संपूर्ण भाग के अनुपात या प्रतिशत को दिखाते हैं।"
+        },
+        {
+          "show": "Bar/Column charts compare values across distinct categories.",
+          "say": "बार या कॉलम चार्ट विभिन्न श्रेणियों के मानों की तुलना करते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "TimeLine = Line Chart shows trends over time",
+        "say": "ट्रिक: टाइमलाइन शब्द से याद रखें कि समय के साथ रुझान लाइन चार्ट दिखाता है।"
+      }
+    },
+    {
+      "q": "Which port number is used by default for secure HTTPS traffic? || सुरक्षित एच टी टी पी एस ट्रैफ़िक के लिए डिफ़ॉल्ट रूप से किस पोर्ट नंबर का उपयोग होता है?",
+      "options": [
+        "21 || इक्कीस",
+        "25 || पच्चीस",
+        "80 || अस्सी",
+        "443 || चार सौ तैंतालीस"
+      ],
+      "answer": "D",
+      "points": [
+        {
+          "show": "HTTPS uses port 443 to encrypt data with TLS/SSL.",
+          "say": "एच टी टी पी एस डेटा को एन्क्रिप्ट करने के लिए पोर्ट चार सौ तैंतालीस का उपयोग करता है।"
+        },
+        {
+          "show": "Port 80 is used for unencrypted HTTP traffic.",
+          "say": "बिना एन्क्रिप्शन वाले एच टी टी पी ट्रैफ़िक के लिए पोर्ट अस्सी का उपयोग होता है।"
+        },
+        {
+          "show": "Port 21 is used by FTP, and Port 25 is used by SMTP.",
+          "say": "पोर्ट इक्कीस का उपयोग एफ टी पी और पोर्ट पच्चीस का एस एम टी पी करता है।"
+        }
+      ],
+      "trick": {
+        "show": "HTTPS has 5 letters -> 443 (4+4+3=11, bigger & safer than 80)",
+        "say": "ट्रिक: एच टी टी पी का अस्सी और सुरक्षित एच टी टी पी एस का चार सौ तैंतालीस याद रखें।"
+      }
+    },
+    {
+      "q": "What does 'POST' stand for when a computer boots up? || कंप्यूटर चालू होते समय पोस्ट का पूरा नाम क्या होता है?",
+      "options": [
+        "Power-On Self-Test || पावर ऑन सेल्फ टेस्ट",
+        "Program Operating System Transfer || प्रोग्राम ऑपरेटिंग सिस्टम ट्रांसफर",
+        "Peripheral Output System Test || पेरिफ़ेरल आउटपुट सिस्टम टेस्ट",
+        "Primary Operating Startup Task || प्राइमरी ऑपरेटिंग स्टार्टअप टास्क"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "POST checks RAM, keyboard, and storage drives before loading OS.",
+          "say": "पोस्ट ऑपरेटिंग सिस्टम लोड होने से पहले रैम, कीबोर्ड और ड्राइव की जांच करता है।"
+        },
+        {
+          "show": "Beep codes indicate hardware errors detected during POST.",
+          "say": "बीप की आवाज़ें पोस्ट के दौरान पकड़ी गई हार्डवेयर खराबी का संकेत देती हैं।"
+        },
+        {
+          "show": "It is executed by the BIOS or UEFI firmware.",
+          "say": "यह बी आई ओ एस या यू ई एफ आई फ़र्मवेयर द्वारा चलाया जाता है।"
+        }
+      ],
+      "trick": {
+        "show": "Power-On = Computer tests itself right after power button",
+        "say": "ट्रिक: पावर बटन दबाते ही कंप्यूटर खुद की जांच करता है, यही पावर ऑन सेल्फ टेस्ट है।"
+      }
+    },
+    {
+      "q": "Which shortcut key opens the 'Font' dialog box in MS Word? || एम एस वर्ड में फ़ॉन्ट डायलॉग बॉक्स खोलने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + D || कंट्रोल प्लस डी",
+        "Ctrl + F || कंट्रोल प्लस एफ",
+        "Ctrl + Shift + P || कंट्रोल प्लस शिफ्ट प्लस पी",
+        "Alt + F || ऑल्ट प्लस एफ"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "Ctrl + D opens the full Font formatting window in MS Word.",
+          "say": "कंट्रोल प्लस डी एम एस वर्ड में पूरा फ़ॉन्ट फ़ॉर्मेटिंग विंडो खोलता है।"
+        },
+        {
+          "show": "In PowerPoint, Ctrl + D duplicates the selected slide or object.",
+          "say": "पावरपॉइंट में कंट्रोल प्लस डी चुनी गई स्लाइड या ऑब्जेक्ट की डुप्लीकेट कॉपी बनाता है।"
+        },
+        {
+          "show": "In web browsers, Ctrl + D bookmarks the current webpage.",
+          "say": "वेब ब्राउज़र में कंट्रोल प्लस डी वर्तमान वेबपेज को बुकमार्क करता है।"
+        }
+      ],
+      "trick": {
+        "show": "D = Design your font in Word",
+        "say": "ट्रिक: वर्ड में कंट्रोल प्लस डी दबाकर अपने फ़ॉन्ट को डिज़ाइन करें।"
+      }
+    },
+    {
+      "q": "What is the full form of SQL? || एस क्यू एल का पूरा नाम क्या है?",
+      "options": [
+        "Structured Query Language || स्ट्रक्चर्ड क्वेरी लैंग्वेज",
+        "Simple Question Language || सिंपल क्वेश्चन लैंग्वेज",
+        "System Query Logic || सिस्टम क्वेरी लॉजिक",
+        "Standard Quality Language || स्टैंडर्ड क्वालिटी लैंग्वेज"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "SQL is used to store, retrieve, and manage data in relational databases.",
+          "say": "एस क्यू एल का उपयोग रिलेशनल डेटाबेस में डेटा स्टोर और प्रबंधित करने के लिए होता है।"
+        },
+        {
+          "show": "Common SQL commands include SELECT, INSERT, UPDATE, and DELETE.",
+          "say": "प्रमुख एस क्यू एल कमांड में सेलेक्ट, इंसर्ट, अपडेट और डिलीट शामिल हैं।"
+        },
+        {
+          "show": "MySQL, PostgreSQL, and Oracle Database use SQL.",
+          "say": "माई एस क्यू एल, पोस्टग्रे एस क्यू एल और ओरेकल डेटाबेस एस क्यू एल का उपयोग करते हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Query = Asking structured questions to a database",
+        "say": "ट्रिक: क्वेरी यानी डेटाबेस से व्यवस्थित तरीके से सवाल पूछकर डेटा निकालना।"
+      }
+    },
+    {
+      "q": "Which type of malware secretly records every keystroke typed by a user? || कौन सा मैलवेयर उपयोगकर्ता द्वारा दबाए गए हर कीस्ट्रोक को चुपके से रिकॉर्ड करता है?",
+      "options": [
+        "Adware || एडवेयर",
+        "Keylogger || कीलॉगर",
+        "Rootkit || रूटकिट",
+        "Botnet || बॉटनेट"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Keyloggers capture passwords, PINs, and credit card numbers typed on keyboards.",
+          "say": "कीलॉगर कीबोर्ड पर टाइप किए गए पासवर्ड, पिन और कार्ड नंबर चुरा लेते हैं।"
+        },
+        {
+          "show": "Using virtual on-screen keyboards helps bypass hardware/software keyloggers.",
+          "say": "वर्चुअल ऑन स्क्रीन कीबोर्ड का उपयोग कीलॉगर से बचने में मदद करता है।"
+        },
+        {
+          "show": "Keyloggers are a common form of spyware.",
+          "say": "कीलॉगर स्पाइवेयर का एक सामान्य रूप है।"
+        }
+      ],
+      "trick": {
+        "show": "Key + Logger = Logs every key you press",
+        "say": "ट्रिक: की और लॉगर यानी आपके द्वारा दबाई गई हर की का रिकॉर्ड रखने वाला।"
+      }
+    },
+    {
+      "q": "In MS Word, which shortcut key increases the font size by 1 point? || एम एस वर्ड में फ़ॉन्ट का आकार एक पॉइंट बढ़ाने की शॉर्टकट की क्या है?",
+      "options": [
+        "Ctrl + ] || कंट्रोल प्लस क्लोज़िंग स्क्वायर ब्रैकेट",
+        "Ctrl + [ || कंट्रोल प्लस ओपनिंग स्क्वायर ब्रैकेट",
+        "Ctrl + > || कंट्रोल प्लस ग्रेटर दैन",
+        "Ctrl + + || कंट्रोल प्लस प्लस"
+      ],
+      "answer": "A",
+      "points": [
+        {
+          "show": "Ctrl + ] increases font size by exactly 1 point at a time.",
+          "say": "कंट्रोल प्लस क्लोज़िंग स्क्वायर ब्रैकेट फ़ॉन्ट साइज को एक बार में एक पॉइंट बढ़ाता है।"
+        },
+        {
+          "show": "Ctrl + [ decreases font size by 1 point at a time.",
+          "say": "कंट्रोल प्लस ओपनिंग स्क्वायर ब्रैकेट फ़ॉन्ट साइज को एक पॉइंट घटाता है।"
+        },
+        {
+          "show": "Ctrl + Shift + > increases font size to the next preset size.",
+          "say": "कंट्रोल प्लस शिफ्ट प्लस ग्रेटर दैन फ़ॉन्ट साइज को अगले बड़े आकार पर ले जाता है।"
+        }
+      ],
+      "trick": {
+        "show": "] opens outward = Grows size by 1 point",
+        "say": "ट्रिक: बाहर की ओर खुलने वाला ब्रैकेट साइज को एक पॉइंट बढ़ाता है।"
+      }
+    },
+    {
+      "q": "Which wireless technology is used for short-range data exchange over a Personal Area Network (PAN)? || पर्सनल एरिया नेटवर्क पर कम दूरी के डेटा आदान-प्रदान के लिए किस वायरलेस तकनीक का उपयोग होता है?",
+      "options": [
+        "WiMAX || वाई मैक्स",
+        "Bluetooth || ब्लूटूथ",
+        "VSAT || वी सैट",
+        "Ethernet || ईथरनेट"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Bluetooth connects devices like headphones and mice within about 10 meters.",
+          "say": "ब्लूटूथ लगभग दस मीटर के दायरे में हेडफ़ोन और माउस जैसे उपकरणों को जोड़ता है।"
+        },
+        {
+          "show": "It operates in the 2.4 GHz unlicensed ISM frequency band.",
+          "say": "यह दो दशमलव चार गीगाहर्ट्ज़ फ़्रीक्वेंसी बैंड पर काम करता है।"
+        },
+        {
+          "show": "IEEE 802.15.1 is the standard associated with Bluetooth.",
+          "say": "आई ट्रिपल ई आठ सौ दो दशमलव पंद्रह ब्लूटूथ से जुड़ा मानक है।"
+        }
+      ],
+      "trick": {
+        "show": "Bluetooth = Connects personal gadgets right next to you",
+        "say": "ट्रिक: ब्लूटूथ आपके बिल्कुल पास के निजी उपकरणों को आपस में जोड़ता है।"
+      }
+    },
+    {
+      "q": "What is 'Cloud Computing'? || क्लाउड कंप्यूटिंग क्या है?",
+      "options": [
+        "Predicting weather using supercomputers || सुपरकंप्यूटर से मौसम की भविष्यवाणी करना",
+        "Delivering computing services and storage over the Internet || इंटरनेट के माध्यम से कंप्यूटिंग सेवाएं और स्टोरेज प्रदान करना",
+        "Cooling servers with water vapor || जल वाष्प से सर्वर को ठंडा करना",
+        "Connecting two PCs via LAN cable || लैन केबल से दो कंप्यूटर जोड़ना"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Cloud services include Google Drive, Dropbox, AWS, and Microsoft Azure.",
+          "say": "क्लाउड सेवाओं में गूगल ड्राइव, ड्रॉपबॉक्स, ए डब्ल्यू एस और एज़्योर शामिल हैं।"
+        },
+        {
+          "show": "Users can access files from any device with an Internet connection.",
+          "say": "उपयोगकर्ता इंटरनेट वाले किसी भी डिवाइस से अपनी फ़ाइलें खोल सकते हैं।"
+        },
+        {
+          "show": "Main cloud models are IaaS, PaaS, and SaaS.",
+          "say": "मुख्य क्लाउड मॉडल आई ए ए एस, पी ए ए एस और एस ए ए एस हैं।"
+        }
+      ],
+      "trick": {
+        "show": "Cloud = Your files float online, accessible anywhere",
+        "say": "ट्रिक: क्लाउड यानी आपकी फ़ाइलें इंटरनेट पर सुरक्षित हैं जिन्हें कहीं से भी खोल सकते हैं।"
+      }
+    },
+    {
+      "q": "Which Excel function joins text from two or more cells into one cell? || कौन सा एक्सेल फ़ंक्शन दो या अधिक सेल के टेक्स्ट को एक सेल में जोड़ता है?",
+      "options": [
+        "=JOIN() || इक्वल जॉइन",
+        "=CONCATENATE() || इक्वल कॉन्कैटेनेट",
+        "=MERGE() || इक्वल मर्ज",
+        "=COMBINE() || इक्वल कंबाइन"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "=CONCATENATE(A1, \" \", B1) combines first and last names with a space.",
+          "say": "इक्वल कॉन्कैटेनेट पहले और आखिरी नाम को बीच में स्पेस देकर जोड़ता है।"
+        },
+        {
+          "show": "The ampersand (&) operator can also join text, like =A1&B1.",
+          "say": "एंड चिह्न का उपयोग करके भी दो सेल के टेक्स्ट को जोड़ा जा सकता है।"
+        },
+        {
+          "show": "Newer Excel versions also provide the shorter =CONCAT() function.",
+          "say": "नए एक्सेल वर्जन में इसके लिए छोटा फ़ंक्शन इक्वल कॉनकैट भी उपलब्ध है।"
+        }
+      ],
+      "trick": {
+        "show": "Con-CAT-enate = Links text strings together like a chain",
+        "say": "ट्रिक: कॉन्कैटेनेट टेक्स्ट के टुकड़ों को एक जंजीर की तरह आपस में जोड़ता है।"
+      }
+    },
+    {
+      "q": "Which key combination permanently deletes an item without sending it to Recycle Bin? || कौन सा की संयोजन किसी आइटम को रीसायकल बिन में भेजे बिना स्थायी रूप से हटा देता है?",
+      "options": [
+        "Ctrl + D || कंट्रोल प्लस डी",
+        "Shift + Delete || शिफ्ट प्लस डिलीट",
+        "Alt + F4 || ऑल्ट प्लस एफ फोर",
+        "Ctrl + Backspace || कंट्रोल प्लस बैकस्पेस"
+      ],
+      "answer": "B",
+      "points": [
+        {
+          "show": "Shift + Delete skips the Recycle Bin and immediately frees disk space.",
+          "say": "शिफ्ट प्लस डिलीट रीसायकल बिन को छोड़कर तुरंत डिस्क स्पेस खाली करता है।"
+        },
+        {
+          "show": "Ctrl + Backspace deletes one whole word to the left of the cursor.",
+          "say": "कंट्रोल प्लस बैकस्पेस कर्सर के बाईं ओर का एक पूरा शब्द मिटाता है।"
+        },
+        {
+          "show": "Ctrl + Delete deletes one whole word to the right of the cursor.",
+          "say": "कंट्रोल प्लस डिलीट कर्सर के दाईं ओर का एक पूरा शब्द मिटाता है।"
+        }
+      ],
+      "trick": {
+        "show": "Shift + Del = Permanently gone, no second chance",
+        "say": "ट्रिक: शिफ्ट प्लस डिलीट दबाने पर फ़ाइल स्थायी रूप से जाती है, वापस नहीं आती।"
+      }
+    }
+  ]
+}
