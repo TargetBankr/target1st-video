@@ -86,7 +86,23 @@ def main():
         meta = dict(data["meta"])
         for key in ("auto_reels", "auto_stories", "reel_size"):   # a reel never makes reels of itself
             meta.pop(key, None)
-        title = str(meta.get("title", "")).strip()
+        # the reel/story QR promo uses the video's own QR links (e.g. HARTRON), not the fixed HSSC Group D pictures
+        if not meta.get("promo_items"):
+            qr = meta.get("qr")
+            qr = [qr] if isinstance(qr, (dict, str)) else (qr or [])
+            if not qr and meta.get("qr_url"):
+                qr = [{"url": meta["qr_url"], "label": meta.get("qr_label", "")}]
+            items = []
+            for it in qr:
+                it = {"url": it} if isinstance(it, str) else it
+                url = str(it.get("url", "")).strip()
+                if url:
+                    items.append({"url": url, "label": str(it.get("label", "")).strip() or "स्कैन करें"})
+            if items:
+                meta["promo_items"] = items[:2]
+                # and a heading that fits any exam (the built-in one says Haryana Group D)
+                meta.setdefault("promo_title", meta.get("qr_title") or "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए")
+        title =str(meta.get("title", "")).strip()
         hook, small = HOOKS[(k - 1) % len(HOOKS)]
         hook, small = hook.format(n=len(chunk)), small.format(n=len(chunk))
         meta.update({
