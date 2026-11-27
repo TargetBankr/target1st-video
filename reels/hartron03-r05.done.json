@@ -1,0 +1,356 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 3 · भाग 5",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "सिर्फ़ 1 मिनट, 10 प्रश्न! आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 4,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "key_slot": 4,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "सिर्फ़ 1 मिनट, 10 प्रश्न!",
+  "intro_small": "अपनी तैयारी जाँचिए",
+  "promo": true,
+  "reel_of": "5/5"
+ },
+ "questions": [
+  {
+   "q": "Which shortcut key opens the Task Manager directly in Windows? || विंडोज़ में सीधे टास्क मैनेजर खोलने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + Shift + Esc || कंट्रोल प्लस शिफ्ट प्लस एस्केप",
+    "Alt + Tab || ऑल्ट प्लस टैब",
+    "Win + D || विंडोज़ की प्लस डी",
+    "Ctrl + Alt + Z || कंट्रोल प्लस ऑल्ट प्लस ज़ेड"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "Ctrl + Shift + Esc launches Task Manager immediately.",
+     "say": "कंट्रोल प्लस शिफ्ट प्लस एस्केप तुरंत टास्क मैनेजर खोल देता है।"
+    },
+    {
+     "show": "Win + D minimizes all open windows to show the Desktop.",
+     "say": "विंडोज़ प्लस डी सभी खुली विंडो को छोटा करके डेस्कटॉप दिखाता है।"
+    },
+    {
+     "show": "Alt + Tab switches between currently open applications.",
+     "say": "ऑल्ट प्लस टैब खुले हुए प्रोग्रामों के बीच स्विच करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Esc = Escape from a frozen app using Task Manager",
+    "say": "ट्रिक: हैंग हुए ऐप से बचने के लिए एस्केप वाला शॉर्टकट दबाएं।"
+   }
+  },
+  {
+   "q": "Which OSI layer is responsible for routing packets across different networks? || विभिन्न नेटवर्कों के बीच पैकेट को रूट करने के लिए कौन सी ओ एस आई लेयर ज़िम्मेदार है?",
+   "options": [
+    "Data Link Layer || डेटा लिंक लेयर",
+    "Network Layer || नेटवर्क लेयर",
+    "Transport Layer || ट्रांसपोर्ट लेयर",
+    "Physical Layer || फ़िज़िकल लेयर"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Network Layer (Layer 3) handles IP addressing and packet routing.",
+     "say": "नेटवर्क लेयर आई पी एड्रेसिंग और पैकेट रूटिंग को संभालती है।"
+    },
+    {
+     "show": "Routers operate primarily at the Network Layer.",
+     "say": "राउटर मुख्य रूप से नेटवर्क लेयर पर काम करते हैं।"
+    },
+    {
+     "show": "Data Link Layer (Layer 2) uses MAC addresses for local delivery.",
+     "say": "डेटा लिंक लेयर लोकल डिलीवरी के लिए मैक एड्रेस का उपयोग करती है।"
+    }
+   ],
+   "trick": {
+    "show": "Network Layer = Finds the best network path",
+    "say": "ट्रिक: नेटवर्क लेयर ही नेटवर्क का सबसे सही रास्ता ढूंढती है।"
+   }
+  },
+  {
+   "q": "In MS Word, what is 'Gutter Margin'? || एम एस वर्ड में गटर मार्जिन क्या होता है?",
+   "options": [
+    "Margin added to the bottom of page || पेज के निचले भाग में जोड़ा गया मार्जिन",
+    "Extra space added to binding side of page || पेज के बाइंडिंग वाले हिस्से में जोड़ी गई अतिरिक्त जगह",
+    "Space between two columns || दो कॉलम के बीच की जगह",
+    "Space inside header and footer || हेडर और फुटर के अंदर की जगह"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Gutter margin prevents text from being hidden when pages are bound.",
+     "say": "गटर मार्जिन किताब की बाइंडिंग करते समय टेक्स्ट को छिपने से बचाता है।"
+    },
+    {
+     "show": "It can be placed on the Left or Top side of a document.",
+     "say": "इसे डॉक्यूमेंट के बाएं या ऊपरी हिस्से में रखा जा सकता है।"
+    },
+    {
+     "show": "It is configured under the Page Setup dialog box.",
+     "say": "इसे पेज सेटअप डायलॉग बॉक्स के अंतर्गत सेट किया जाता है।"
+    }
+   ],
+   "trick": {
+    "show": "Gutter = Extra gap kept for stitching/binding",
+    "say": "ट्रिक: गटर यानी बाइंडिंग और सिलाई के लिए छोड़ी गई अतिरिक्त जगह।"
+   }
+  },
+  {
+   "q": "Which SQL command is used to remove a table completely from a database? || डेटाबेस से किसी टेबल को पूरी तरह हटाने के लिए किस एस क्यू एल कमांड का उपयोग होता है?",
+   "options": [
+    "DELETE || डिलीट",
+    "REMOVE || रिमूव",
+    "DROP || ड्रॉप",
+    "ERASE || इरेज़"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "DROP TABLE deletes both the data and the table structure permanently.",
+     "say": "ड्रॉप टेबल डेटा और टेबल की संरचना दोनों को स्थायी रूप से हटा देता है।"
+    },
+    {
+     "show": "DELETE removes rows but keeps the empty table structure intact.",
+     "say": "डिलीट केवल पंक्तियों को हटाता है पर खाली टेबल बनी रहती है।"
+    },
+    {
+     "show": "TRUNCATE removes all rows quickly without logging individual deletions.",
+     "say": "ट्रंकेट बिना लॉग बनाए सभी पंक्तियों को तेज़ी से हटा देता है।"
+    }
+   ],
+   "trick": {
+    "show": "DROP = Drops the entire table in the bin",
+    "say": "ट्रिक: ड्रॉप पूरी टेबल को ही कचरे में गिरा देता है।"
+   }
+  },
+  {
+   "q": "What is a 'Cookie' on the Internet? || इंटरनेट पर कुकी क्या होती है?",
+   "options": [
+    "A hardware component || एक हार्डवेयर कंपोनेंट",
+    "A small text file stored by websites on user's browser || वेबसाइटों द्वारा यूज़र के ब्राउज़र में सेव की गई छोटी टेक्स्ट फ़ाइल",
+    "A type of computer virus || एक प्रकार का कंप्यूटर वायरस",
+    "An email attachment || एक ईमेल अटैचमेंट"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Cookies remember login status, preferences, and shopping cart items.",
+     "say": "कुकीज़ लॉगिन स्थिति, पसंद और शॉपिंग कार्ट आइटम याद रखती हैं।"
+    },
+    {
+     "show": "They are created by the web server and stored locally by the browser.",
+     "say": "इन्हें वेब सर्वर बनाता है और ब्राउज़र कंप्यूटर में सेव करता है।"
+    },
+    {
+     "show": "Users can clear cookies anytime from browser privacy settings.",
+     "say": "यूज़र ब्राउज़र की प्राइवेसी सेटिंग्स से कभी भी कुकीज़ हटा सकते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Cookie = Crumbs left behind to remember your visit",
+    "say": "ट्रिक: कुकी वेबसाइट द्वारा छोड़ी गई निशानी है जो आपको याद रखती है।"
+   }
+  },
+  {
+   "q": "Which shortcut key inserts a page break in MS Word? || एम एस वर्ड में पेज ब्रेक डालने की शॉर्टकट की क्या है?",
+   "options": [
+    "Shift + Enter || शिफ्ट प्लस एंटर",
+    "Ctrl + Enter || कंट्रोल प्लस एंटर",
+    "Alt + Enter || ऑल्ट प्लस एंटर",
+    "Tab + Enter || टैब प्लस एंटर"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + Enter forces text after the cursor onto a new page.",
+     "say": "कंट्रोल प्लस एंटर कर्सर के बाद के टेक्स्ट को नए पेज पर ले जाता है।"
+    },
+    {
+     "show": "Shift + Enter inserts a line break without starting a new paragraph.",
+     "say": "शिफ्ट प्लस एंटर नया पैराग्राफ शुरू किए बिना लाइन ब्रेक डालता है।"
+    },
+    {
+     "show": "Page Break is also found under the Insert tab.",
+     "say": "पेज ब्रेक विकल्प इंसर्ट टैब के अंतर्गत भी मिलता है।"
+    }
+   ],
+   "trick": {
+    "show": "Ctrl + Enter = Enter a brand new page",
+    "say": "ट्रिक: कंट्रोल प्लस एंटर दबाएं और बिल्कुल नए पेज पर प्रवेश करें।"
+   }
+  },
+  {
+   "q": "What does IPv6 address length equal in bits? || आई पी वी सिक्स एड्रेस की लंबाई कितने बिट्स की होती है?",
+   "options": [
+    "32 bits || बत्तीस बिट्स",
+    "64 bits || चौंसठ बिट्स",
+    "128 bits || एक सौ अट्ठाईस बिट्स",
+    "256 bits || दो सौ छप्पन बिट्स"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "IPv6 uses 128-bit addresses written in hexadecimal notation.",
+     "say": "आई पी वी सिक्स हेक्साडेसिमल में लिखे एक सौ अट्ठाईस बिट एड्रेस का उपयोग करता है।"
+    },
+    {
+     "show": "IPv4 uses 32-bit addresses written in dotted-decimal format.",
+     "say": "आई पी वी फोर बत्तीस बिट एड्रेस का उपयोग करता है।"
+    },
+    {
+     "show": "IPv6 was introduced to solve IPv4 address exhaustion.",
+     "say": "आई पी वी फोर पतों की कमी को दूर करने के लिए आई पी वी सिक्स लाया गया।"
+    }
+   ],
+   "trick": {
+    "show": "IPv4 = 32 bits, IPv6 = 128 bits (4 times larger)",
+    "say": "ट्रिक: आई पी वी फोर बत्तीस बिट का और आई पी वी सिक्स एक सौ अट्ठाईस बिट का होता है।"
+   }
+  },
+  {
+   "q": "Which key is used to check spelling and grammar in MS Word? || एम एस वर्ड में स्पेलिंग और ग्रामर जांचने के लिए किस की का उपयोग होता है?",
+   "options": [
+    "F3 || एफ थ्री",
+    "F5 || एफ फाइव",
+    "F7 || एफ सेवन",
+    "F9 || एफ नाइन"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "F7 opens the Spelling & Grammar proofing pane.",
+     "say": "एफ सेवन स्पेलिंग और ग्रामर जांचने का पैनल खोलता है।"
+    },
+    {
+     "show": "Red wavy underline indicates a spelling error.",
+     "say": "लाल लहराती रेखा स्पेलिंग की गलती को दर्शाती है।"
+    },
+    {
+     "show": "Blue double underline indicates a grammar or contextual error.",
+     "say": "नीली दोहरी रेखा ग्रामर की गलती को दिखाती है।"
+    }
+   ],
+   "trick": {
+    "show": "F7 = 7 days a week check your spelling",
+    "say": "ट्रिक: एफ सेवन से याद रखें कि हफ्ते के सातों दिन स्पेलिंग सही रखें।"
+   }
+  },
+  {
+   "q": "Which of the following is an example of system software? || इनमें से कौन सा सिस्टम सॉफ्टवेयर का एक उदाहरण है?",
+   "options": [
+    "MS Paint || एम एस पेंट",
+    "Adobe Photoshop || एडोब फ़ोटोशॉप",
+    "Device Driver || डिवाइस ड्राइवर",
+    "VLC Media Player || वी एल सी मीडिया प्लेयर"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Device drivers allow the OS to communicate with hardware devices.",
+     "say": "डिवाइस ड्राइवर ऑपरेटिंग सिस्टम को हार्डवेयर से बात करने देते हैं।"
+    },
+    {
+     "show": "Operating systems and utility programs are also system software.",
+     "say": "ऑपरेटिंग सिस्टम और यूटिलिटी प्रोग्राम भी सिस्टम सॉफ्टवेयर हैं।"
+    },
+    {
+     "show": "Paint, Photoshop, and VLC are application software.",
+     "say": "पेंट, फ़ोटोशॉप और वी एल सी एप्लीकेशन सॉफ्टवेयर हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Driver = Drives hardware for the system",
+    "say": "ट्रिक: ड्राइवर सिस्टम के लिए हार्डवेयर को चलाता है।"
+   }
+  },
+  {
+   "q": "Which MS Excel error appears when a number is divided by zero? || किसी संख्या को शून्य से भाग देने पर एम एस एक्सेल में कौन सा एरर दिखाई देता है?",
+   "options": [
+    "#VALUE! || हैश वैल्यू",
+    "#NAME? || हैश नेम",
+    "#DIV/0! || हैश डिव बाय ज़ीरो",
+    "#REF! || हैश रेफ़"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "#DIV/0! occurs when a formula divides a number by 0 or an empty cell.",
+     "say": "जब फ़ॉर्मूला किसी संख्या को शून्य या खाली सेल से भाग देता है तो यह एरर आता है।"
+    },
+    {
+     "show": "#NAME? occurs when Excel does not recognize text in a formula.",
+     "say": "जब एक्सेल फ़ॉर्मूले में लिखे टेक्स्ट को नहीं पहचानता तो हैश नेम आता है।"
+    },
+    {
+     "show": "#REF! appears when a cell reference is invalid or deleted.",
+     "say": "जब सेल का पता गलत हो या डिलीट हो जाए तो हैश रेफ़ आता है।"
+    }
+   ],
+   "trick": {
+    "show": "DIV/0 = Divided by Zero",
+    "say": "ट्रिक: डिव बाय ज़ीरो का सीधा मतलब है शून्य से भाग देना।"
+   }
+  }
+ ]
+}

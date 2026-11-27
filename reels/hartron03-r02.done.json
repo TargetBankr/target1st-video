@@ -1,0 +1,356 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 3 · भाग 2",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "पहले जवाब सोचिए, फिर मिलाइए! आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 4,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "key_slot": 4,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "पहले जवाब सोचिए, फिर मिलाइए!",
+  "intro_small": "10 प्रश्न · आख़िर तक देखिए",
+  "promo": true,
+  "reel_of": "2/5"
+ },
+ "questions": [
+  {
+   "q": "What is the default file extension of an MS Excel 2019 workbook? || एम एस एक्सेल दो हज़ार उन्नीस वर्कबुक का डिफ़ॉल्ट फ़ाइल एक्सटेंशन क्या है?",
+   "options": [
+    ".xls || डॉट एक्स एल एस",
+    ".xlsx || डॉट एक्स एल एस एक्स",
+    ".docx || डॉट डी ओ सी एक्स",
+    ".pptx || डॉट पी पी टी एक्स"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Versions from Excel 2007 onward use .xlsx extension.",
+     "say": "एक्सेल दो हज़ार सात के बाद के सभी वर्जन डॉट एक्स एल एस एक्स का उपयोग करते हैं।"
+    },
+    {
+     "show": "Older versions (97-2003) used .xls extension.",
+     "say": "पुराने वर्जन में डॉट एक्स एल एस एक्सटेंशन इस्तेमाल होता था।"
+    },
+    {
+     "show": "The 'x' stands for XML-based file format.",
+     "say": "इसमें एक्स का मतलब एक्स एम एल आधारित फ़ाइल फ़ॉर्मेट है।"
+    }
+   ],
+   "trick": {
+    "show": "Excel + XML = .xlsx",
+    "say": "ट्रिक: एक्सेल और एक्स एम एल मिलकर डॉट एक्स एल एस एक्स बनाते हैं।"
+   }
+  },
+  {
+   "q": "Which device converts digital signals to analog signals and vice versa? || कौन सा डिवाइस डिजिटल सिग्नल को एनालॉग में और एनालॉग को डिजिटल में बदलता है?",
+   "options": [
+    "Router || राउटर",
+    "Switch || स्विच",
+    "Modem || मॉडेम",
+    "Hub || हब"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Modem stands for Modulator-Demodulator.",
+     "say": "मॉडेम का पूरा नाम मॉड्यूलेटर डीमॉड्यूलेटर है।"
+    },
+    {
+     "show": "Modulation converts digital to analog signals.",
+     "say": "मॉड्यूलेशन डिजिटल सिग्नल को एनालॉग में बदलता है।"
+    },
+    {
+     "show": "Demodulation converts analog back to digital.",
+     "say": "डीमॉड्यूलेशन एनालॉग सिग्नल को वापस डिजिटल में बदलता है।"
+    }
+   ],
+   "trick": {
+    "show": "MO-DEM = MOdulator + DEModulator",
+    "say": "ट्रिक: मॉडेम दो शब्दों से बना है, मॉड्यूलेटर और डीमॉड्यूलेटर।"
+   }
+  },
+  {
+   "q": "Which function key is used to refresh the active window in Windows? || विंडोज़ में सक्रिय विंडो को रिफ्रेश करने के लिए किस फंक्शन की का उपयोग होता है?",
+   "options": [
+    "F2 || एफ टू",
+    "F5 || एफ फाइव",
+    "F7 || एफ सेवन",
+    "F12 || एफ ट्वेल्व"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "F5 reloads or refreshes the current window or webpage.",
+     "say": "एफ फाइव वर्तमान विंडो या वेबपेज को फिर से लोड करता है।"
+    },
+    {
+     "show": "F2 is used to rename a selected file or folder.",
+     "say": "एफ टू का उपयोग चुनी गई फ़ाइल का नाम बदलने के लिए होता है।"
+    },
+    {
+     "show": "F7 checks spelling and grammar in MS Office.",
+     "say": "एफ सेवन एम एस ऑफिस में स्पेलिंग और ग्रामर चेक करता है।"
+    }
+   ],
+   "trick": {
+    "show": "F5 = Fresh 5 (Refresh)",
+    "say": "ट्रिक: एफ फाइव से फ्रेश फाइव याद रखें, यानी रिफ्रेश करना।"
+   }
+  },
+  {
+   "q": "What type of software is Linux? || लिनक्स किस प्रकार का सॉफ्टवेयर है?",
+   "options": [
+    "Application Software || एप्लीकेशन सॉफ्टवेयर",
+    "Open-Source Operating System || ओपन सोर्स ऑपरेटिंग सिस्टम",
+    "Antivirus Software || एंटीवायरस सॉफ्टवेयर",
+    "Proprietary Database || प्रोपराइटरी डेटाबेस"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Linux is a free and open-source operating system kernel.",
+     "say": "लिनक्स एक मुफ्त और ओपन सोर्स ऑपरेटिंग सिस्टम है।"
+    },
+    {
+     "show": "It was created by Linus Torvalds in 1991.",
+     "say": "इसे उन्नीस सौ इक्यानवे में लिनस टोरवाल्ड्स ने बनाया था।"
+    },
+    {
+     "show": "Users can view, modify, and distribute its source code.",
+     "say": "उपयोगकर्ता इसके सोर्स कोड को देख और बदल सकते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Linux = Liberty (Free and Open Source)",
+    "say": "ट्रिक: लिनक्स से लिबर्टी याद रखें, यानी पूरी तरह मुफ्त और ओपन सोर्स।"
+   }
+  },
+  {
+   "q": "Which of the following is the fastest type of computer memory? || इनमें से सबसे तेज़ कंप्यूटर मेमोरी कौन सी है?",
+   "options": [
+    "Cache Memory || कैश मेमोरी",
+    "Register || रजिस्टर",
+    "RAM || रैम",
+    "SSD || एस एस डी"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Registers are located directly inside the CPU.",
+     "say": "रजिस्टर सीधे सी पी यू के अंदर स्थित होते हैं।"
+    },
+    {
+     "show": "Speed order: Register > Cache > RAM > SSD.",
+     "say": "गति का क्रम रजिस्टर, फिर कैश, फिर रैम और फिर एस एस डी है।"
+    },
+    {
+     "show": "Registers hold data currently being executed by CPU.",
+     "say": "रजिस्टर उस डेटा को रखते हैं जिस पर सी पी यू अभी काम कर रहा है।"
+    }
+   ],
+   "trick": {
+    "show": "Inside CPU = Fastest = Register",
+    "say": "ट्रिक: जो सी पी यू के सबसे अंदर है वही सबसे तेज़ है, यानी रजिस्टर।"
+   }
+  },
+  {
+   "q": "In MS PowerPoint, which key starts the slideshow from the beginning? || एम एस पावरपॉइंट में शुरुआत से स्लाइडशो चलाने की शॉर्टकट की क्या है?",
+   "options": [
+    "F5 || एफ फाइव",
+    "Shift + F5 || शिफ्ट प्लस एफ फाइव",
+    "Ctrl + F5 || कंट्रोल प्लस एफ फाइव",
+    "Alt + F5 || ऑल्ट प्लस एफ फाइव"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "F5 starts the presentation from the very first slide.",
+     "say": "एफ फाइव प्रेजेंटेशन को बिल्कुल पहली स्लाइड से शुरू करता है।"
+    },
+    {
+     "show": "Shift + F5 starts slideshow from the current slide.",
+     "say": "शिफ्ट प्लस एफ फाइव मौजूदा स्लाइड से स्लाइडशो चलाता है।"
+    },
+    {
+     "show": "Esc key is pressed to exit the slideshow.",
+     "say": "स्लाइडशो से बाहर निकलने के लिए एस्केप की दबाई जाती है।"
+    }
+   ],
+   "trick": {
+    "show": "F5 = First slide, Shift+F5 = Selected slide",
+    "say": "ट्रिक: एफ फाइव से फर्स्ट स्लाइड और शिफ्ट प्लस एफ फाइव से सेलेक्टेड स्लाइड।"
+   }
+  },
+  {
+   "q": "What does URL stand for? || यू आर एल का पूरा नाम क्या है?",
+   "options": [
+    "Uniform Resource Locator || यूनिफ़ॉर्म रिसोर्स लोकेटर",
+    "Universal Resource Link || यूनिवर्सल रिसोर्स लिंक",
+    "Uniform Registered Link || यूनिफ़ॉर्म रजिस्टर्ड लिंक",
+    "Unified Resource Locator || यूनिफ़ाइड रिसोर्स लोकेटर"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "A URL is the unique web address of a resource on the Internet.",
+     "say": "यू आर एल इंटरनेट पर किसी वेबसाइट का अनूठा पता होता है।"
+    },
+    {
+     "show": "Example: https://www.hartron.org.in is a URL.",
+     "say": "उदाहरण के लिए एच टी टी पी एस डॉट हारट्रॉन एक यू आर एल है।"
+    },
+    {
+     "show": "It consists of protocol, domain name, and path.",
+     "say": "इसमें प्रोटोकॉल, डोमेन नाम और पाथ शामिल होते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Locator = Locates a website address",
+    "say": "ट्रिक: लोकेटर यानी जो वेबसाइट की लोकेशन या पता ढूंढे।"
+   }
+  },
+  {
+   "q": "Which printer sprays tiny droplets of liquid ink onto paper? || कौन सा प्रिंटर कागज़ पर तरल स्याही की छोटी बूंदें छिड़कता है?",
+   "options": [
+    "Laser Printer || लेजर प्रिंटर",
+    "Dot Matrix Printer || डॉट मैट्रिक्स प्रिंटर",
+    "Inkjet Printer || इंकजेट प्रिंटर",
+    "Thermal Printer || थर्मल प्रिंटर"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Inkjet printers spray liquid ink through microscopic nozzles.",
+     "say": "इंकजेट प्रिंटर सूक्ष्म नोजल के माध्यम से तरल स्याही छिड़कते हैं।"
+    },
+    {
+     "show": "Laser printers use dry toner powder and heat.",
+     "say": "लेजर प्रिंटर सूखे टोनर पाउडर और गर्मी का उपयोग करते हैं।"
+    },
+    {
+     "show": "Dot matrix is an impact printer using pins and ribbon.",
+     "say": "डॉट मैट्रिक्स एक इम्पैक्ट प्रिंटर है जो पिन और रिबन का उपयोग करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Ink + Jet = Sprays jet of liquid ink",
+    "say": "ट्रिक: इंक और जेट से याद रखें, यह स्याही की फुहार छोड़ता है।"
+   }
+  },
+  {
+   "q": "What is the intersection of a row and a column in MS Excel called? || एम एस एक्सेल में रो और कॉलम के मिलन बिंदु को क्या कहा जाता है?",
+   "options": [
+    "Box || बॉक्स",
+    "Cell || सेल",
+    "Grid || ग्रिड",
+    "Field || फ़ील्ड"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Every cell has a unique address like A1 or B5.",
+     "say": "हर सेल का एक अनूठा पता होता है जैसे ए वन या बी फाइव।"
+    },
+    {
+     "show": "Rows are numbered (1, 2, 3) and columns are lettered (A, B, C).",
+     "say": "रो को नंबर से और कॉलम को अक्षरों से दर्शाया जाता है।"
+    },
+    {
+     "show": "Active cell has a thick dark border around it.",
+     "say": "सक्रिय सेल के चारों ओर एक गहरी मोटी सीमा होती है।"
+    }
+   ],
+   "trick": {
+    "show": "Row + Column = Cell",
+    "say": "ट्रिक: रो और कॉलम के मिलने से एक छोटा कमरा यानी सेल बनता है।"
+   }
+  },
+  {
+   "q": "Which malware disguises itself as legitimate software to trick users? || कौन सा मैलवेयर उपयोगकर्ताओं को धोखा देने के लिए वैध सॉफ्टवेयर का रूप धारण करता है?",
+   "options": [
+    "Worm || वॉर्म",
+    "Trojan Horse || ट्रोजन हॉर्स",
+    "Spyware || स्पाइवेयर",
+    "Adware || एडवेयर"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "A Trojan appears useful but steals data once installed.",
+     "say": "ट्रोजन उपयोगी दिखता है लेकिन इंस्टॉल होने पर डेटा चुराता है।"
+    },
+    {
+     "show": "Unlike viruses, Trojans do not replicate themselves.",
+     "say": "वायरस के विपरीत ट्रोजन खुद की कॉपी नहीं बनाते हैं।"
+    },
+    {
+     "show": "Worms self-replicate across networks without user action.",
+     "say": "वॉर्म बिना किसी मदद के नेटवर्क पर खुद की कॉपी बनाते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Trojan = Fake gift hiding an attack inside",
+    "say": "ट्रिक: ट्रोजन एक नकली उपहार है जिसके अंदर खतरा छिपा होता है।"
+   }
+  }
+ ]
+}

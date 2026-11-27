@@ -1,0 +1,356 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 3 · भाग 3",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "अपना स्कोर बताइए: 10 में से कितने? आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 4,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "key_slot": 4,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "अपना स्कोर बताइए: 10 में से कितने?",
+  "intro_small": "10 प्रश्न · कमेंट में लिखिए",
+  "promo": true,
+  "reel_of": "3/5"
+ },
+ "questions": [
+  {
+   "q": "Which shortcut key is used to undo the last action? || अंतिम क्रिया को पूर्ववत करने यानी अनडू करने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + Y || कंट्रोल प्लस वाई",
+    "Ctrl + Z || कंट्रोल प्लस ज़ेड",
+    "Ctrl + U || कंट्रोल प्लस यू",
+    "Ctrl + X || कंट्रोल प्लस एक्स"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + Z reverses the most recent edit or command.",
+     "say": "कंट्रोल प्लस ज़ेड हाल ही में किए गए बदलाव को वापस ले लेता है।"
+    },
+    {
+     "show": "Ctrl + Y is used to redo an undone action.",
+     "say": "कंट्रोल प्लस वाई अनडू किए गए काम को फिर से करने के लिए है।"
+    },
+    {
+     "show": "Ctrl + X cuts the selected item to clipboard.",
+     "say": "कंट्रोल प्लस एक्स चुने हुए आइटम को कट करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Z is the last letter, goes back one step",
+    "say": "ट्रिक: ज़ेड आखिरी अक्षर है, यह एक कदम पीछे ले जाता है।"
+   }
+  },
+  {
+   "q": "Which topology connects all devices to a single central cable? || किस टोपोलॉजी में सभी डिवाइस एक ही मुख्य केबल से जुड़े होते हैं?",
+   "options": [
+    "Star Topology || स्टार टोपोलॉजी",
+    "Ring Topology || रिंग टोपोलॉजी",
+    "Bus Topology || बस टोपोलॉजी",
+    "Mesh Topology || मेश टोपोलॉजी"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Bus topology uses one backbone cable for all nodes.",
+     "say": "बस टोपोलॉजी में सभी कंप्यूटर एक ही मुख्य केबल से जुड़ते हैं।"
+    },
+    {
+     "show": "If the main cable breaks, the entire network fails.",
+     "say": "यदि मुख्य केबल टूट जाए तो पूरा नेटवर्क बंद हो जाता है।"
+    },
+    {
+     "show": "Star topology connects all devices to a central hub or switch.",
+     "say": "स्टार टोपोलॉजी में सभी डिवाइस एक केंद्रीय हब या स्विच से जुड़ते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Bus = One single road (cable) for all stops",
+    "say": "ट्रिक: बस जैसे एक ही सड़क पर चलती है, वैसे ही इसमें एक केबल होती है।"
+   }
+  },
+  {
+   "q": "What is the base of the hexadecimal number system? || हेक्साडेसिमल नंबर सिस्टम का आधार यानी बेस क्या होता है?",
+   "options": [
+    "2 || दो",
+    "8 || आठ",
+    "10 || दस",
+    "16 || सोलह"
+   ],
+   "answer": "D",
+   "points": [
+    {
+     "show": "Hexadecimal uses 16 symbols: 0-9 and A-F.",
+     "say": "हेक्साडेसिमल में सोलह प्रतीक होते हैं, शून्य से नौ और ए से एफ तक।"
+    },
+    {
+     "show": "Binary has base 2, Octal has base 8, Decimal has base 10.",
+     "say": "बाइनरी का बेस दो, ऑक्टल का आठ और डेसिमल का दस होता है।"
+    },
+    {
+     "show": "In hexadecimal, A represents 10 and F represents 15.",
+     "say": "इसमें ए का मान दस और एफ का मान पंद्रह होता है।"
+    }
+   ],
+   "trick": {
+    "show": "Hexa (6) + Deci (10) = 16",
+    "say": "ट्रिक: हेक्सा यानी छह और डेसी यानी दस, दोनों मिलकर सोलह होते हैं।"
+   }
+  },
+  {
+   "q": "Which MS Word feature automatically moves text to the next line when it reaches the right margin? || एम एस वर्ड की कौन सी सुविधा दाएं मार्जिन पर पहुंचने पर टेक्स्ट को अपने आप अगली लाइन में ले जाती है?",
+   "options": [
+    "Word Art || वर्ड आर्ट",
+    "Word Wrap || वर्ड रैप",
+    "Auto Text || ऑटो टेक्स्ट",
+    "Drop Cap || ड्रॉप कैप"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Word Wrap eliminates the need to press Enter after every line.",
+     "say": "वर्ड रैप के कारण हर लाइन के बाद एंटर दबाने की ज़रूरत नहीं पड़ती।"
+    },
+    {
+     "show": "Enter key is pressed only to start a new paragraph.",
+     "say": "एंटर की केवल नया पैराग्राफ शुरू करने के लिए दबाई जाती है।"
+    },
+    {
+     "show": "Drop Cap creates a large capital letter at paragraph start.",
+     "say": "ड्रॉप कैप पैराग्राफ की शुरुआत में एक बड़ा अक्षर बनाता है।"
+    }
+   ],
+   "trick": {
+    "show": "Wrap = Wraps text neatly onto the next line",
+    "say": "ट्रिक: रैप यानी टेक्स्ट को मोड़कर अगली लाइन में ले जाना।"
+   }
+  },
+  {
+   "q": "Which component on a motherboard supplies power to keep the system clock running? || मदरबोर्ड पर कौन सा घटक सिस्टम घड़ी को चालू रखने के लिए बिजली देता है?",
+   "options": [
+    "SMPS || एस एम पी एस",
+    "CMOS Battery || सी मॉस बैटरी",
+    "Heat Sink || हीट सिंक",
+    "Graphics Card || ग्राफिक्स कार्ड"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "CMOS battery powers the RTC (Real-Time Clock) and BIOS settings.",
+     "say": "सी मॉस बैटरी सिस्टम की घड़ी और बी आई ओ एस सेटिंग्स को चालू रखती है।"
+    },
+    {
+     "show": "It is usually a coin-shaped CR2032 lithium cell.",
+     "say": "यह आमतौर पर सिक्के के आकार की लिथियम बैटरी होती है।"
+    },
+    {
+     "show": "If it dies, the computer resets its date and time on boot.",
+     "say": "इसके खराब होने पर कंप्यूटर चालू होते ही तारीख और समय रीसेट हो जाता है।"
+    }
+   ],
+   "trick": {
+    "show": "CMOS = Clock Memory On System",
+    "say": "ट्रिक: सी मॉस से क्लॉक मेमोरी ऑन सिस्टम याद रखें, जो घड़ी चलाती है।"
+   }
+  },
+  {
+   "q": "What is the full form of PDF? || पी डी एफ का पूरा नाम क्या है?",
+   "options": [
+    "Portable Document Format || पोर्टेबल डॉक्यूमेंट फ़ॉर्मेट",
+    "Printed Document File || प्रिंटेड डॉक्यूमेंट फ़ाइल",
+    "Public Data Format || पब्लिक डेटा फ़ॉर्मेट",
+    "Personal Document File || पर्सनल डॉक्यूमेंट फ़ाइल"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "PDF was developed by Adobe to present documents consistently.",
+     "say": "पी डी एफ को एडोब ने डॉक्यूमेंट को एक जैसा दिखाने के लिए बनाया था।"
+    },
+    {
+     "show": "PDF files retain formatting across all devices and OS.",
+     "say": "पी डी एफ फ़ाइलें सभी डिवाइस पर अपना फ़ॉर्मेट बनाए रखती हैं।"
+    },
+    {
+     "show": "It is an ISO standardized open file format.",
+     "say": "यह एक अंतरराष्ट्रीय मानक ओपन फ़ाइल फ़ॉर्मेट है।"
+    }
+   ],
+   "trick": {
+    "show": "Portable = Carry document anywhere unchanged",
+    "say": "ट्रिक: पोर्टेबल यानी जिसे कहीं भी ले जाएं पर रूप न बदले।"
+   }
+  },
+  {
+   "q": "Which shortcut key opens the 'Save As' dialog box in MS Office? || एम एस ऑफिस में सेव ऐज़ डायलॉग बॉक्स खोलने की शॉर्टकट की क्या है?",
+   "options": [
+    "F1 || एफ वन",
+    "F4 || एफ फोर",
+    "F11 || एफ इलेवन",
+    "F12 || एफ ट्वेल्व"
+   ],
+   "answer": "D",
+   "points": [
+    {
+     "show": "F12 opens the Save As window directly in Word, Excel, and PPT.",
+     "say": "एफ ट्वेल्व वर्ड, एक्सेल और पावरपॉइंट में सीधे सेव ऐज़ विंडो खोलता है।"
+    },
+    {
+     "show": "Save As allows saving a copy with a new name or format.",
+     "say": "सेव ऐज़ फ़ाइल को नए नाम या फ़ॉर्मेट में सेव करने की सुविधा देता है।"
+    },
+    {
+     "show": "F1 opens the Help window in almost all programs.",
+     "say": "एफ वन लगभग सभी प्रोग्रामों में हेल्प विंडो खोलता है।"
+    }
+   ],
+   "trick": {
+    "show": "F12 = Final 12th step to save a copy",
+    "say": "ट्रिक: एफ ट्वेल्व दबाएं और फ़ाइल की नई कॉपी सेव करें।"
+   }
+  },
+  {
+   "q": "Which type of software translates high-level language code into machine code line by line? || कौन सा सॉफ्टवेयर हाई-लेवल भाषा के कोड को लाइन दर लाइन मशीन कोड में बदलता है?",
+   "options": [
+    "Compiler || कंपाइलर",
+    "Interpreter || इंटरप्रेटर",
+    "Assembler || असेंबलर",
+    "Linker || लिंकर"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "An interpreter translates and executes code one line at a time.",
+     "say": "इंटरप्रेटर एक बार में एक लाइन कोड का अनुवाद और निष्पादन करता है।"
+    },
+    {
+     "show": "A compiler translates the entire program at once.",
+     "say": "कंपाइलर पूरे प्रोग्राम का एक ही बार में अनुवाद कर देता है।"
+    },
+    {
+     "show": "Python and JavaScript commonly use interpreters.",
+     "say": "पायथन और जावास्क्रिप्ट आमतौर पर इंटरप्रेटर का उपयोग करते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Interpreter = Translates speech sentence by sentence",
+    "say": "ट्रिक: जैसे दुभाषिया एक-एक वाक्य का अनुवाद करता है, वैसे ही इंटरप्रेटर करता है।"
+   }
+  },
+  {
+   "q": "What is the maximum zoom percentage available in MS Word? || एम एस वर्ड में उपलब्ध अधिकतम ज़ूम प्रतिशत कितना होता है?",
+   "options": [
+    "200% || दो सौ प्रतिशत",
+    "400% || चार सौ प्रतिशत",
+    "500% || पांच सौ प्रतिशत",
+    "100% || सौ प्रतिशत"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "MS Word supports zoom levels from 10% minimum to 500% maximum.",
+     "say": "एम एस वर्ड में न्यूनतम दस प्रतिशत से अधिकतम पांच सौ प्रतिशत ज़ूम होता है।"
+    },
+    {
+     "show": "MS Excel and PowerPoint have a maximum zoom of 400%.",
+     "say": "एम एस एक्सेल और पावरपॉइंट में अधिकतम ज़ूम चार सौ प्रतिशत है।"
+    },
+    {
+     "show": "Default zoom level in MS Word is 100%.",
+     "say": "एम एस वर्ड में डिफ़ॉल्ट ज़ूम स्तर सौ प्रतिशत होता है।"
+    }
+   ],
+   "trick": {
+    "show": "Word = 500%, Excel & PPT = 400%",
+    "say": "ट्रिक: वर्ड में पांच सौ प्रतिशत और एक्सेल व पावरपॉइंट में चार सौ प्रतिशत।"
+   }
+  },
+  {
+   "q": "Which network covers a small geographical area like a single office or building? || कौन सा नेटवर्क एक छोटे भौगोलिक क्षेत्र जैसे एक कार्यालय या इमारत को कवर करता है?",
+   "options": [
+    "WAN || वैन",
+    "MAN || मैन",
+    "LAN || लैन",
+    "PAN || पैन"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "LAN stands for Local Area Network.",
+     "say": "लैन का पूरा नाम लोकल एरिया नेटवर्क है।"
+    },
+    {
+     "show": "Ethernet cables and Wi-Fi are commonly used in LANs.",
+     "say": "लैन में आमतौर पर ईथरनेट केबल और वाई-फ़ाई का उपयोग होता है।"
+    },
+    {
+     "show": "WAN spans countries or continents, like the Internet.",
+     "say": "वैन देशों या महाद्वीपों तक फैला होता है, जैसे इंटरनेट।"
+    }
+   ],
+   "trick": {
+    "show": "LAN = Local = Limited to one building",
+    "say": "ट्रिक: लैन यानी लोकल, जो एक ही इमारत तक सीमित रहता है।"
+   }
+  }
+ ]
+}

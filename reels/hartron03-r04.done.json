@@ -1,0 +1,356 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 3 · भाग 4",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "परीक्षा जैसे 10 प्रश्न, तैयार हैं? आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 4,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "key_slot": 4,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "परीक्षा जैसे 10 प्रश्न, तैयार हैं?",
+  "intro_small": "जवाब सोचिए · स्कोर बताइए",
+  "promo": true,
+  "reel_of": "4/5"
+ },
+ "questions": [
+  {
+   "q": "Which of the following is NOT a web browser? || इनमें से कौन सा एक वेब ब्राउज़र नहीं है?",
+   "options": [
+    "Mozilla Firefox || मोज़िला फ़ायरफ़ॉक्स",
+    "Google Chrome || गूगल क्रोम",
+    "Bing || बिंग",
+    "Microsoft Edge || माइक्रोसॉफ्ट एज"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Bing is a web search engine owned by Microsoft.",
+     "say": "बिंग माइक्रोसॉफ्ट का एक वेब सर्च इंजन है।"
+    },
+    {
+     "show": "Chrome, Firefox, and Edge are web browsers used to view websites.",
+     "say": "क्रोम, फ़ायरफ़ॉक्स और एज वेबसाइट देखने वाले वेब ब्राउज़र हैं।"
+    },
+    {
+     "show": "Google and Yahoo are other examples of search engines.",
+     "say": "गूगल और याहू सर्च इंजन के अन्य उदाहरण हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Bing searches the web; Browser opens the web",
+    "say": "ट्रिक: बिंग वेब पर खोजता है, जबकि ब्राउज़र वेबसाइट खोलता है।"
+   }
+  },
+  {
+   "q": "In MS Excel, which function returns the largest value in a selected range? || एम एस एक्सेल में कौन सा फ़ंक्शन चुनी गई रेंज में सबसे बड़ा मान देता है?",
+   "options": [
+    "=HIGH() || इक्वल हाई",
+    "=MAX() || इक्वल मैक्स",
+    "=LARGE() || इक्वल लार्ज",
+    "=TOP() || इक्वल टॉप"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "=MAX(A1:A10) finds the highest numeric value in cells A1 to A10.",
+     "say": "इक्वल मैक्स ए वन से ए टेन तक सबसे बड़ा नंबर ढूंढता है।"
+    },
+    {
+     "show": "=MIN() returns the smallest value in a range.",
+     "say": "इक्वल मिन रेंज में सबसे छोटा मान देता है।"
+    },
+    {
+     "show": "=AVERAGE() calculates the arithmetic mean of numbers.",
+     "say": "इक्वल एवरेज संख्याओं का औसत निकालता है।"
+    }
+   ],
+   "trick": {
+    "show": "MAX = Maximum value",
+    "say": "ट्रिक: मैक्स का मतलब मैक्सिमम यानी सबसे बड़ा मान।"
+   }
+  },
+  {
+   "q": "What is the smallest unit of data in a computer? || कंप्यूटर में डेटा की सबसे छोटी इकाई क्या है?",
+   "options": [
+    "Nibble || निबल",
+    "Bit || बिट",
+    "Byte || बाइट",
+    "Word || वर्ड"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "A bit is a Binary Digit, representing either 0 or 1.",
+     "say": "बिट एक बाइनरी डिजिट है जो शून्य या एक को दर्शाता है।"
+    },
+    {
+     "show": "4 bits equal 1 Nibble.",
+     "say": "चार बिट्स मिलकर एक निबल बनाते हैं।"
+    },
+    {
+     "show": "8 bits equal 1 Byte.",
+     "say": "आठ बिट्स मिलकर एक बाइट बनाते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Bit = BInary digiT (smallest piece)",
+    "say": "ट्रिक: बिट यानी बाइनरी डिजिट, यह डेटा का सबसे छोटा टुकड़ा है।"
+   }
+  },
+  {
+   "q": "Which shortcut key creates a hyperlink in MS Word? || एम एस वर्ड में हाइपरलिंक बनाने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + H || कंट्रोल प्लस एच",
+    "Ctrl + K || कंट्रोल प्लस के",
+    "Ctrl + L || कंट्रोल प्लस एल",
+    "Ctrl + M || कंट्रोल प्लस एम"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + K opens the Insert Hyperlink dialog box.",
+     "say": "कंट्रोल प्लस के इंसर्ट हाइपरलिंक डायलॉग बॉक्स खोलता है।"
+    },
+    {
+     "show": "Ctrl + H opens the Find and Replace dialog box.",
+     "say": "कंट्रोल प्लस एच फाइंड एंड रिप्लेस बॉक्स खोलता है।"
+    },
+    {
+     "show": "Ctrl + L aligns selected text to the left.",
+     "say": "कंट्रोल प्लस एल चुने हुए टेक्स्ट को बाईं ओर अलाइन करता है।"
+    }
+   ],
+   "trick": {
+    "show": "LinK ends with K = Ctrl + K",
+    "say": "ट्रिक: लिंक शब्द के अंत में के आता है, इसलिए कंट्रोल प्लस के दबाएं।"
+   }
+  },
+  {
+   "q": "Which storage device has no moving mechanical parts? || किस स्टोरेज डिवाइस में कोई घूमने वाला मैकेनिकल पुर्जा नहीं होता है?",
+   "options": [
+    "Hard Disk Drive (HDD) || हार्ड डिस्क ड्राइव",
+    "Floppy Disk || फ्लॉपी डिस्क",
+    "Solid State Drive (SS",
+    "सॉलिड स्टेट ड्राइव D) Magnetic Tape || मैग्नेटिक टेप"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "SSD stores data on flash memory chips with zero moving parts.",
+     "say": "एस एस डी बिना किसी घूमने वाले पुर्जे के फ्लैश चिप पर डेटा स्टोर करता है।"
+    },
+    {
+     "show": "HDD uses spinning magnetic platters and read/write heads.",
+     "say": "एच डी डी में घूमने वाली मैग्नेटिक डिस्क होती हैं।"
+    },
+    {
+     "show": "SSDs are faster, quieter, and more shock-resistant than HDDs.",
+     "say": "एस एस डी हार्ड डिस्क की तुलना में तेज़ और अधिक टिकाऊ होते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Solid State = Solid chip, nothing spins",
+    "say": "ट्रिक: सॉलिड स्टेट यानी ठोस चिप, इसमें कुछ भी घूमता नहीं है।"
+   }
+  },
+  {
+   "q": "Which port is commonly used to connect modern monitors for both high-definition video and audio? || आधुनिक मॉनिटर को हाई-डेफिनिशन वीडियो और ऑडियो दोनों से जोड़ने के लिए किस पोर्ट का उपयोग होता है?",
+   "options": [
+    "VGA || वी जी ए",
+    "PS/2 || पी एस टू",
+    "HDMI || एच डी एम आई",
+    "Parallel Port || पैरेलल पोर्ट"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "HDMI stands for High-Definition Multimedia Interface.",
+     "say": "एच डी एम आई का पूरा नाम हाई-डेफिनिशन मल्टीमीडिया इंटरफ़ेस है।"
+    },
+    {
+     "show": "HDMI transmits uncompressed digital video and audio together.",
+     "say": "एच डी एम आई डिजिटल वीडियो और ऑडियो दोनों एक साथ भेजता है।"
+    },
+    {
+     "show": "VGA carries only analog video signals, not audio.",
+     "say": "वी जी ए केवल एनालॉग वीडियो सिग्नल ले जाता है, ऑडियो नहीं।"
+    }
+   ],
+   "trick": {
+    "show": "HDMI = HD Multimedia (Video + Audio)",
+    "say": "ट्रिक: एच डी एम आई यानी मल्टीमीडिया, जिसमें वीडियो और ऑडियो दोनों हैं।"
+   }
+  },
+  {
+   "q": "What is 'Phishing' in cyber security? || साइबर सुरक्षा में फ़िशिंग क्या है?",
+   "options": [
+    "Speeding up internet connection || इंटरनेट की गति बढ़ाना",
+    "Fraudulent attempt to steal sensitive info via fake emails || नकली ईमेल से संवेदनशील जानकारी चुराने का धोखाधड़ी प्रयास",
+    "Cleaning computer viruses || कंप्यूटर वायरस साफ करना",
+    "Backing up cloud data || क्लाउड डेटा का बैकअप लेना"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Attackers impersonate trusted banks or sites to steal passwords.",
+     "say": "हमलावर पासवर्ड चुराने के लिए भरोसेमंद बैंक या साइट का रूप धरते हैं।"
+    },
+    {
+     "show": "Phishing usually arrives via deceptive emails or SMS links.",
+     "say": "फ़िशिंग आमतौर पर धोखाधड़ी वाले ईमेल या एस एम एस लिंक से आती है।"
+    },
+    {
+     "show": "Never click unknown links asking for OTP or PIN.",
+     "say": "ओ टी पी या पिन मांगने वाले अनजान लिंक पर कभी क्लिक न करें।"
+    }
+   ],
+   "trick": {
+    "show": "Phishing = Fishing for your passwords with fake bait",
+    "say": "ट्रिक: फ़िशिंग यानी नकली चारा डालकर आपके पासवर्ड फंसाना।"
+   }
+  },
+  {
+   "q": "Which MS Excel feature lets you quickly fill a series of numbers or dates by dragging? || एम एस एक्सेल की कौन सी सुविधा ड्रैग करके संख्याओं या तारीखों की श्रृंखला को तेज़ी से भरती है?",
+   "options": [
+    "AutoSum || ऑटो सम",
+    "Fill Handle || फ़िल हैंडल",
+    "Format Painter || फ़ॉर्मेट पेंटर",
+    "Conditional Formatting || कंडीशनल फ़ॉर्मेटिंग"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Fill Handle is the small square at the bottom-right corner of a cell.",
+     "say": "फ़िल हैंडल सेल के निचले दाएं कोने पर एक छोटा चौकोर बिंदु होता है।"
+    },
+    {
+     "show": "Dragging it copies formulas or extends patterns like Mon, Tue.",
+     "say": "इसे खींचने से फ़ॉर्मूला कॉपी होता है या पैटर्न आगे बढ़ता है।"
+    },
+    {
+     "show": "Format Painter copies cell styling without copying data.",
+     "say": "फ़ॉर्मेट पेंटर बिना डेटा कॉपी किए सेल की स्टाइल कॉपी करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Handle at corner = Drag to fill",
+    "say": "ट्रिक: कोने पर बने हैंडल को पकड़ें और खींचकर भर दें।"
+   }
+  },
+  {
+   "q": "Which register holds the memory address of the next instruction to be executed? || कौन सा रजिस्टर निष्पादित होने वाले अगले निर्देश का मेमोरी पता रखता है?",
+   "options": [
+    "Accumulator || एक्यूमुलेटर",
+    "Program Counter (P",
+    "प्रोग्राम काउंटर C) Instruction Register (IR) || इंस्ट्रक्शन रजिस्टर",
+    "Memory Data Register (MDR) || मेमोरी डेटा रजिस्टर"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Program Counter tracks the address of the upcoming instruction.",
+     "say": "प्रोग्राम काउंटर आने वाले निर्देश के पते पर नज़र रखता है।"
+    },
+    {
+     "show": "Instruction Register holds the currently executing instruction.",
+     "say": "इंस्ट्रक्शन रजिस्टर वर्तमान में चल रहे निर्देश को रखता है।"
+    },
+    {
+     "show": "Accumulator stores intermediate arithmetic and logic results.",
+     "say": "एक्यूमुलेटर गणितीय गणनाओं के मध्यवर्ती परिणाम स्टोर करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Counter = Counts which instruction comes next",
+    "say": "ट्रिक: काउंटर गिनती रखता है कि अगला निर्देश कौन सा आएगा।"
+   }
+  },
+  {
+   "q": "What is the full form of ASCII? || ए एस सी आई आई का पूरा नाम क्या है?",
+   "options": [
+    "American Standard Code for Information Interchange || अमेरिकन स्टैंडर्ड कोड फ़ॉर इन्फ़ॉर्मेशन इंटरचेंज",
+    "Asian Standard Code for Internet Information || एशियन स्टैंडर्ड कोड फ़ॉर इंटरनेट इन्फ़ॉर्मेशन",
+    "Advanced System Code for Information Input || एडवांस्ड सिस्टम कोड फ़ॉर इन्फ़ॉर्मेशन इनपुट",
+    "American System Control for Internal Interchange || अमेरिकन सिस्टम कंट्रोल फ़ॉर इंटरनल इंटरचेंज"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "ASCII assigns numeric codes to letters, digits, and symbols.",
+     "say": "ए एस सी आई आई अक्षरों, अंकों और चिह्नों को संख्यात्मक कोड देता है।"
+    },
+    {
+     "show": "Standard ASCII uses 7 bits to represent 128 characters.",
+     "say": "मानक ए एस सी आई आई एक सौ अट्ठाईस अक्षरों के लिए सात बिट्स का उपयोग करता है।"
+    },
+    {
+     "show": "ASCII value of capital 'A' is 65 and small 'a' is 97.",
+     "say": "बड़े ए का मान पैंसठ और छोटे ए का मान सत्तानवे होता है।"
+    }
+   ],
+   "trick": {
+    "show": "A-S-C-I-I = American Standard Code",
+    "say": "ट्रिक: ए एस सी आई आई यानी अमेरिकन स्टैंडर्ड कोड।"
+   }
+  }
+ ]
+}

@@ -1,0 +1,103 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 3 · भाग 3",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "10 सेकंड में बताइए! आख़िर तक देखिए।",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 4,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "key_slot": 4,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "10 सेकंड में बताइए!",
+  "intro_small": "जवाब सोचिए · फिर मिलाइए",
+  "promo": true,
+  "reel_of": "3/5",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "Which shortcut key is used to undo the last action? || अंतिम क्रिया को पूर्ववत करने यानी अनडू करने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + Y || कंट्रोल प्लस वाई",
+    "Ctrl + Z || कंट्रोल प्लस ज़ेड",
+    "Ctrl + U || कंट्रोल प्लस यू",
+    "Ctrl + X || कंट्रोल प्लस एक्स"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + Z reverses the most recent edit or command.",
+     "say": "कंट्रोल प्लस ज़ेड हाल ही में किए गए बदलाव को वापस ले लेता है।"
+    },
+    {
+     "show": "Ctrl + Y is used to redo an undone action.",
+     "say": "कंट्रोल प्लस वाई अनडू किए गए काम को फिर से करने के लिए है।"
+    },
+    {
+     "show": "Ctrl + X cuts the selected item to clipboard.",
+     "say": "कंट्रोल प्लस एक्स चुने हुए आइटम को कट करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Z is the last letter, goes back one step",
+    "say": "ट्रिक: ज़ेड आखिरी अक्षर है, यह एक कदम पीछे ले जाता है।"
+   }
+  }
+ ]
+}

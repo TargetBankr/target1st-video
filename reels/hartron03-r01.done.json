@@ -1,0 +1,356 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 3 · भाग 1",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "10 में से कितने सही कर पाएँगे? आख़िर तक देखिए और अपना स्कोर कमेंट में बताइए।",
+  "outro": "रोज़ ऐसे प्रश्नों के लिए Target1st को फॉलो करें।",
+  "outro_show": "फॉलो करें",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 4,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "key_slot": 4,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "10 में से कितने सही कर पाएँगे?",
+  "intro_small": "जवाब सोचिए, फिर स्कोर कमेंट कीजिए",
+  "promo": true,
+  "reel_of": "1/5"
+ },
+ "questions": [
+  {
+   "q": "Which component is known as the brain of the computer? || इनमें से किस कंपोनेंट को कंप्यूटर का ब्रेन कहा जाता है?",
+   "options": [
+    "RAM || रैम",
+    "CPU || सी पी यू",
+    "Hard Disk || हार्ड डिस्क",
+    "Monitor || मॉनिटर"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "CPU processes all instructions and controls operations.",
+     "say": "सी पी यू सभी निर्देशों को प्रोसेस करता है और काम को नियंत्रित करता है।"
+    },
+    {
+     "show": "CPU stands for Central Processing Unit.",
+     "say": "सी पी यू का पूरा नाम सेंट्रल प्रोसेसिंग यूनिट है।"
+    },
+    {
+     "show": "ALU and CU are main parts of CPU.",
+     "say": "ए एल यू और सी यू इसके मुख्य भाग हैं।"
+    }
+   ],
+   "trick": {
+    "show": "C-P-U = Computer Power Unit (Brain)",
+    "say": "ट्रिक: सी पी यू यानी कंप्यूटर पावर यूनिट, यही इसका दिमाग है।"
+   }
+  },
+  {
+   "q": "Which memory is volatile in nature? || इनमें से कौन सी मेमोरी वोलेटाइल प्रकृति की होती है?",
+   "options": [
+    "ROM || रॉम",
+    "Hard Drive || हार्ड ड्राइव",
+    "RAM || रैम",
+    "Pen Drive || पेन ड्राइव"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "RAM loses all stored data when power is turned off.",
+     "say": "बिजली बंद होने पर रैम का सारा डेटा मिट जाता है।"
+    },
+    {
+     "show": "RAM stands for Random Access Memory.",
+     "say": "रैम का पूरा नाम रैंडम एक्सेस मेमोरी है।"
+    },
+    {
+     "show": "It is temporary primary memory.",
+     "say": "यह एक अस्थायी प्राइमरी मेमोरी है।"
+    }
+   ],
+   "trick": {
+    "show": "RAM = Run Away Memory (vanishes without power)",
+    "say": "ट्रिक: रैम मतलब रन अवे मेमोरी, लाइट जाते ही भाग जाती है।"
+   }
+  },
+  {
+   "q": "What is the full form of BIOS? || बी आई ओ एस का पूरा नाम क्या है?",
+   "options": [
+    "Basic Input Output System || बेसिक इनपुट आउटपुट सिस्टम",
+    "Binary Input Output Software || बाइनरी इनपुट आउटपुट सॉफ्टवेयर",
+    "Basic Internal Operating System || बेसिक इंटरनल ऑपरेटिंग सिस्टम",
+    "Built In Operating System || बिल्ट इन ऑपरेटिंग सिस्टम"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "BIOS initializes hardware during the booting process.",
+     "say": "बूटिंग के समय बी आई ओ एस हार्डवेयर को शुरू करता है।"
+    },
+    {
+     "show": "It is stored on a ROM chip on the motherboard.",
+     "say": "यह मदरबोर्ड की रॉम चिप में स्टोर रहता है।"
+    },
+    {
+     "show": "BIOS performs POST before loading the OS.",
+     "say": "ऑपरेटिंग सिस्टम लोड करने से पहले यह पोस्ट टेस्ट करता है।"
+    }
+   ],
+   "trick": {
+    "show": "B-I-O-S = Basic I/O System",
+    "say": "ट्रिक: बी आई ओ एस मतलब बेसिक इनपुट आउटपुट सिस्टम।"
+   }
+  },
+  {
+   "q": "Which of the following is an input device? || इनमें से कौन सा एक इनपुट डिवाइस है?",
+   "options": [
+    "Plotter || प्लॉटर",
+    "Speaker || स्पीकर",
+    "Barcode Reader || बारकोड रीडर",
+    "Projector || प्रोजेक्टर"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Barcode Reader scans lines and sends data to computer.",
+     "say": "बारकोड रीडर लाइनों को स्कैन करके डेटा कंप्यूटर में भेजता है।"
+    },
+    {
+     "show": "Plotter, Speaker, and Projector are output devices.",
+     "say": "प्लॉटर, स्पीकर और प्रोजेक्टर आउटपुट डिवाइस हैं।"
+    },
+    {
+     "show": "It uses laser light to read black and white bars.",
+     "say": "यह काली और सफेद पट्टियों को पढ़ने के लिए लेजर का उपयोग करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Reader = Reads data INTO computer (Input)",
+    "say": "ट्रिक: रीडर डेटा को अंदर पढ़ता है, इसलिए यह इनपुट डिवाइस है।"
+   }
+  },
+  {
+   "q": "One kilobyte is equal to how many bytes? || एक किलोबाइट कितने बाइट्स के बराबर होता है?",
+   "options": [
+    "1000 bytes || एक हज़ार बाइट्स",
+    "1024 bytes || एक हज़ार चौबीस बाइट्स",
+    "512 bytes || पांच सौ बारह बाइट्स",
+    "2048 bytes || दो हज़ार अड़तालीस बाइट्स"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "In binary system, 1 KB equals 2 to the power 10 bytes.",
+     "say": "बाइनरी सिस्टम में एक के बी दो की घात दस बाइट्स के बराबर है।"
+    },
+    {
+     "show": "1 Byte equals 8 bits.",
+     "say": "एक बाइट आठ बिट्स के बराबर होता है।"
+    },
+    {
+     "show": "1024 KB makes 1 Megabyte (MB).",
+     "say": "एक हज़ार चौबीस के बी मिलकर एक मेगाबाइट बनाते हैं।"
+    }
+   ],
+   "trick": {
+    "show": "Computer counts in 1024, not 1000",
+    "say": "ट्रिक: कंप्यूटर हज़ार नहीं बल्कि एक हज़ार चौबीस में गिनती करता है।"
+   }
+  },
+  {
+   "q": "Which key combination is used to permanently delete a file in Windows? || विंडोज़ में किसी फ़ाइल को स्थायी रूप से डिलीट करने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + Delete || कंट्रोल प्लस डिलीट",
+    "Alt + Delete || ऑल्ट प्लस डिलीट",
+    "Shift + Delete || शिफ्ट प्लस डिलीट",
+    "Tab + Delete || टैब प्लस डिलीट"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "Shift + Delete bypasses the Recycle Bin completely.",
+     "say": "शिफ्ट प्लस डिलीट फ़ाइल को रीसायकल बिन में भेजे बिना हटा देता है।"
+    },
+    {
+     "show": "Normal Delete sends files to Recycle Bin.",
+     "say": "सामान्य डिलीट करने पर फ़ाइल रीसायकल बिन में जाती है।"
+    },
+    {
+     "show": "Deleted files from pen drives also skip Recycle Bin.",
+     "say": "पेन ड्राइव से डिलीट की गई फ़ाइलें भी रीसायकल बिन में नहीं जातीं।"
+    }
+   ],
+   "trick": {
+    "show": "Shift = Shift out of computer forever",
+    "say": "ट्रिक: शिफ्ट दबाने से फ़ाइल हमेशा के लिए कंप्यूटर से बाहर शिफ्ट हो जाती है।"
+   }
+  },
+  {
+   "q": "What is the shortcut key to select the entire document in MS Word? || एम एस वर्ड में पूरे डॉक्यूमेंट को एक साथ सेलेक्ट करने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + S || कंट्रोल प्लस एस",
+    "Ctrl + A || कंट्रोल प्लस ए",
+    "Ctrl + E || कंट्रोल प्लस ई",
+    "Ctrl + W || कंट्रोल प्लस डब्लू"
+   ],
+   "answer": "B",
+   "points": [
+    {
+     "show": "Ctrl + A selects all text and objects in the file.",
+     "say": "कंट्रोल प्लस ए फ़ाइल के सभी टेक्स्ट और ऑब्जेक्ट्स को चुन लेता है।"
+    },
+    {
+     "show": "Ctrl + S is used to save the document.",
+     "say": "कंट्रोल प्लस एस डॉक्यूमेंट को सेव करने के काम आता है।"
+    },
+    {
+     "show": "Ctrl + E centers the selected paragraph.",
+     "say": "कंट्रोल प्लस ई पैराग्राफ को सेंटर में अलाइन करता है।"
+    }
+   ],
+   "trick": {
+    "show": "A for All = Ctrl + A",
+    "say": "ट्रिक: ए से ऑल होता है, इसलिए कंट्रोल प्लस ए से सब कुछ सेलेक्ट होता है।"
+   }
+  },
+  {
+   "q": "Which generation of computers used vacuum tubes? || कंप्यूटर की किस पीढ़ी में वैक्यूम ट्यूब का उपयोग किया गया था?",
+   "options": [
+    "First Generation || पहली पीढ़ी",
+    "Second Generation || दूसरी पीढ़ी",
+    "Third Generation || तीसरी पीढ़ी",
+    "Fourth Generation || चौथी पीढ़ी"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "First generation (1940-1956) used vacuum tubes for circuitry.",
+     "say": "पहली पीढ़ी के कंप्यूटरों में सर्किट के लिए वैक्यूम ट्यूब का उपयोग हुआ।"
+    },
+    {
+     "show": "Second generation used transistors.",
+     "say": "दूसरी पीढ़ी में ट्रांजिस्टर का इस्तेमाल किया गया।"
+    },
+    {
+     "show": "Third generation introduced Integrated Circuits (IC).",
+     "say": "तीसरी पीढ़ी में इंटीग्रेटेड सर्किट यानी आई सी की शुरुआत हुई।"
+    }
+   ],
+   "trick": {
+    "show": "1st = Vacuum, 2nd = Transistor, 3rd = IC",
+    "say": "ट्रिक: पहली में वैक्यूम, दूसरी में ट्रांजिस्टर और तीसरी में आई सी।"
+   }
+  },
+  {
+   "q": "In MS Excel, every formula must begin with which symbol? || एम एस एक्सेल में हर फ़ॉर्मूला किस चिह्न से शुरू होना ज़रूरी है?",
+   "options": [
+    "Plus (+) || प्लस",
+    "Hash (#) || हैश",
+    "Equal to (=) || इक्वल टू",
+    "Dollar ($) || डॉलर"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "An equal sign tells Excel that the text is a formula.",
+     "say": "इक्वल साइन एक्सेल को बताता है कि लिखा गया टेक्स्ट एक फ़ॉर्मूला है।"
+    },
+    {
+     "show": "Without '=', Excel treats input as plain text.",
+     "say": "इक्वल के बिना एक्सेल इसे साधारण टेक्स्ट मान लेता है।"
+    },
+    {
+     "show": "Example: =SUM(A1:A5) adds values from A1 to A5.",
+     "say": "उदाहरण के लिए इक्वल सम ए वन से ए फाइव तक जोड़ता है।"
+    }
+   ],
+   "trick": {
+    "show": "Formula gives an answer, so start with '='",
+    "say": "ट्रिक: फ़ॉर्मूला से जवाब निकलता है, इसलिए बराबर का निशान पहले लगाएं।"
+   }
+  },
+  {
+   "q": "Which protocol is used to send emails over the Internet? || इंटरनेट पर ईमेल भेजने के लिए किस प्रोटोकॉल का उपयोग होता है?",
+   "options": [
+    "HTTP || एच टी टी पी",
+    "FTP || एफ टी पी",
+    "SMTP || एस एम टी पी",
+    "POP3 || पी ओ पी थ्री"
+   ],
+   "answer": "C",
+   "points": [
+    {
+     "show": "SMTP stands for Simple Mail Transfer Protocol.",
+     "say": "एस एम टी पी का पूरा नाम सिंपल मेल ट्रांसफर प्रोटोकॉल है।"
+    },
+    {
+     "show": "POP3 and IMAP are used to receive emails.",
+     "say": "ईमेल प्राप्त करने के लिए पी ओ पी थ्री और आई मैप का उपयोग होता है।"
+    },
+    {
+     "show": "FTP transfers files between client and server.",
+     "say": "एफ टी पी क्लाइंट और सर्वर के बीच फ़ाइल ट्रांसफर करता है।"
+    }
+   ],
+   "trick": {
+    "show": "SMTP = Send Mail To People",
+    "say": "ट्रिक: एस एम टी पी मतलब सेंड मेल टू पीपल, यानी मेल भेजने के लिए।"
+   }
+  }
+ ]
+}

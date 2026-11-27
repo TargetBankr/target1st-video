@@ -1,0 +1,103 @@
+{
+ "meta": {
+  "title": "HARTRON DATA ENTRY OPERATOR 3 · भाग 5",
+  "subtitle": "Windows • Networking • Internet • HTML • MS Office",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+0%",
+  "countdown": 3,
+  "intro": "इस प्रश्न का जवाब आता है? आख़िर तक देखिए।",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "quiz",
+  "tts": "gemini",
+  "checkpoint_every": 10,
+  "checkpoint_secs": 4,
+  "qr": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी",
+   "CAG": "कैग",
+   "SSC": "एस एस सी",
+   "GS": "जी एस",
+   "CGL": "सी जी एल",
+   "CHSL": "सी एच एस एल",
+   "MTS": "एम टी एस",
+   "GD": "जी डी"
+  },
+  "key_slot": 4,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "speech_prep": true,
+  "gemini_voice": "Kore",
+  "gemini_speed": 1.15,
+  "gemini_models": [
+   "gemini-3.1-flash-tts-preview",
+   "gemini-3.8-flash-tts",
+   "gemini-3.8-flash-lite-tts"
+  ],
+  "gemini_batch": 2,
+  "promo_items": [
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "EBOOK (ALL SUBJECTS)"
+   },
+   {
+    "url": "https://prep.target1st.in/app/hartron-data-entry-operator",
+    "label": "MOCK PAPER"
+   }
+  ],
+  "promo_title": "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए",
+  "aspect": "reel",
+  "max_points": 2,
+  "intro_show": "इस प्रश्न का जवाब आता है?",
+  "intro_small": "जवाब सोचिए, फिर मिलाइए",
+  "promo": true,
+  "reel_of": "5/5",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "Which shortcut key opens the Task Manager directly in Windows? || विंडोज़ में सीधे टास्क मैनेजर खोलने की शॉर्टकट की क्या है?",
+   "options": [
+    "Ctrl + Shift + Esc || कंट्रोल प्लस शिफ्ट प्लस एस्केप",
+    "Alt + Tab || ऑल्ट प्लस टैब",
+    "Win + D || विंडोज़ की प्लस डी",
+    "Ctrl + Alt + Z || कंट्रोल प्लस ऑल्ट प्लस ज़ेड"
+   ],
+   "answer": "A",
+   "points": [
+    {
+     "show": "Ctrl + Shift + Esc launches Task Manager immediately.",
+     "say": "कंट्रोल प्लस शिफ्ट प्लस एस्केप तुरंत टास्क मैनेजर खोल देता है।"
+    },
+    {
+     "show": "Win + D minimizes all open windows to show the Desktop.",
+     "say": "विंडोज़ प्लस डी सभी खुली विंडो को छोटा करके डेस्कटॉप दिखाता है।"
+    },
+    {
+     "show": "Alt + Tab switches between currently open applications.",
+     "say": "ऑल्ट प्लस टैब खुले हुए प्रोग्रामों के बीच स्विच करता है।"
+    }
+   ],
+   "trick": {
+    "show": "Esc = Escape from a frozen app using Task Manager",
+    "say": "ट्रिक: हैंग हुए ऐप से बचने के लिए एस्केप वाला शॉर्टकट दबाएं।"
+   }
+  }
+ ]
+}
