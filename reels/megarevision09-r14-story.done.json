@@ -1,0 +1,57 @@
+{
+ "meta": {
+  "title": "हरियाणा GROUP D मेगा रिवीजन सीरीज़ 9 (100 प्रश्न) · भाग 14",
+  "subtitle": "",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+25%",
+  "countdown": 1,
+  "intro": "पहले जवाब सोचिए! आख़िर तक देखिए।",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "revision",
+  "tts": "sarvam",
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी"
+  },
+  "key_slot": 2,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "sarvam_model": "bulbul:v4-flash",
+  "sarvam_speaker": "aayan_hi_conversational",
+  "sarvam_pace": 1.1,
+  "lean_speech": true,
+  "max_points": 2,
+  "long_fx": true,
+  "checkpoint_every": 10,
+  "checkpoint_secs": 9,
+  "aspect": "reel",
+  "intro_show": "पहले जवाब सोचिए!",
+  "intro_small": "परीक्षा जैसा प्रश्न",
+  "promo": true,
+  "reel_of": "14/20",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "भारत में बहने वाली ब्रह्मपुत्र को तिब्बत में किस नाम से जाना जाता है?",
+   "options": [
+    "त्सांगपो",
+    "जमुना",
+    "दिहांग",
+    "सियांग"
+   ],
+   "answer": "A",
+   "points": [
+    "अरुणाचल में इसे दिहांग या सियांग कहते हैं",
+    "असम में यह ब्रह्मपुत्र कहलाती है"
+   ]
+  }
+ ]
+}

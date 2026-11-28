@@ -1,0 +1,57 @@
+{
+ "meta": {
+  "title": "हरियाणा GROUP D मेगा रिवीजन सीरीज़ 9 (100 प्रश्न) · भाग 12",
+  "subtitle": "",
+  "channel": "Target1st",
+  "voice": "hi-IN-MadhurNeural",
+  "rate": "+25%",
+  "countdown": 1,
+  "intro": "क्या आपको सही जवाब पता है? आख़िर तक देखिए।",
+  "theme": "royal",
+  "layout": "grid",
+  "format": "revision",
+  "tts": "sarvam",
+  "pronounce": {
+   "RBI": "आर बी आई",
+   "SBI": "एस बी आई",
+   "UPSC": "यू पी एस सी",
+   "GDP": "जी डी पी"
+  },
+  "key_slot": 2,
+  "filler_lines": [],
+  "filler_every": [
+   7,
+   8
+  ],
+  "sarvam_model": "bulbul:v4-flash",
+  "sarvam_speaker": "aayan_hi_conversational",
+  "sarvam_pace": 1.1,
+  "lean_speech": true,
+  "max_points": 2,
+  "long_fx": true,
+  "checkpoint_every": 10,
+  "checkpoint_secs": 9,
+  "aspect": "reel",
+  "intro_show": "क्या आपको सही जवाब पता है?",
+  "intro_small": "अपनी तैयारी जाँचिए",
+  "promo": true,
+  "reel_of": "12/20",
+  "story": true
+ },
+ "questions": [
+  {
+   "q": "भारत का राष्ट्रपति बनने के लिए न्यूनतम आयु कितनी होनी चाहिए?",
+   "options": [
+    "30 वर्ष",
+    "40 वर्ष",
+    "35 वर्ष",
+    "25 वर्ष"
+   ],
+   "answer": "C",
+   "points": [
+    "यह प्रावधान अनुच्छेद 58 में है",
+    "उपराष्ट्रपति के लिए भी न्यूनतम आयु 35 वर्ष है"
+   ]
+  }
+ ]
+}
