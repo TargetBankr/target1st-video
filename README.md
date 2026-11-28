@@ -16,6 +16,8 @@ Uploading a `.done.json` file starts **2 · Build video + reels + stories** by i
 1. The YouTube video is built and put in **Releases**. Download the `.mp4` and the `-description.txt` file, then upload them to YouTube yourself.
 2. If **Auto Instagram** is set to on in the PDF tool (meta `auto_reels: true`), the reels and stories are made from the same questions and built straight after. The voice is reused from the cache.
 
+The reel/story promo (QR slide, voice line, caption line, hashtags) follows the video's exam: HARTRON, SSC, current affairs or Haryana Group D, read from the title (or set meta `exam`, e.g. `"exam": "HARTRON DEO"`). The QR codes come from the video's own QR links; the built-in Group D QR pictures are only used on Group D videos. No QR link for another exam = the promo is skipped (the log says so).
+
 Old JSONs that don't have the switch only make the YouTube video. If you want reels from an old JSON, use Actions > **Extra · Make reels from an old JSON**.
 
 ## 3 · Post to Instagram

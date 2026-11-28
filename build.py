@@ -290,8 +290,50 @@ PROMO_ITEMS = [{"img": "assets/qr-notes.png", "label": "नोट्स + मॉ
                {"img": "assets/qr-mocks.png", "label": "ऑनलाइन मॉक टेस्ट"}]
 
 
+# Which exam a video is for, so the reel/story promo, caption and hashtags never say "Group D" on a HARTRON or SSC video.
+# meta "exam" (e.g. "HARTRON DEO", "SSC", "Group D") wins; otherwise it is read from the title/subtitle.
+# Order matters: an SSC subtitle says "GD" (SSC GD), which is not Haryana Group D.
+EXAMS = [
+    ("hartron", ("hartron",), "HARTRON",
+     ["#HARTRON", "#HARTRONDEO", "#HartronExam", "#ComputerQuiz", "#ComputerGK", "#HaryanaJobs", "#SarkariNaukri", "#Target1st"]),
+    ("ssc", ("ssc",), "SSC",
+     ["#SSC", "#SSCCGL", "#SSCCHSL", "#SSCMTS", "#SSCGD", "#GKQuiz", "#SarkariNaukri", "#Target1st"]),
+    ("ca", ("करंट अफेयर्स", "current affairs"), "करंट अफेयर्स",
+     ["#CurrentAffairs", "#करंटअफेयर्स", "#DailyCurrentAffairs", "#GKQuiz", "#SarkariNaukri", "#Target1st"]),
+    ("groupd", ("group d", "groupd", "ग्रुप d", "ग्रुप डी", "hssc", "cet", "हरियाणा", "haryana"), "हरियाणा ग्रुप D",
+     ["#HaryanaGroupD", "#HSSCGroupD", "#HaryanaGK", "#HSSC", "#HaryanaExam", "#GKQuiz", "#SarkariNaukri", "#Target1st"]),
+]
+GENERIC_TAGS = ["#GKQuiz", "#GKinHindi", "#CompetitiveExams", "#SarkariNaukri", "#Target1st"]
+
+
+def exam_info(meta):
+    """(kind, display name, hashtags). kind is hartron / ssc / ca / groupd, or "" when the exam is not known
+    (then every promo line is worded for any exam)."""
+    named = str(meta.get("exam", "")).strip()
+    text = (named or f'{meta.get("title", "")} {meta.get("subtitle", "")}').lower()
+    for kind, keys, name, tags in EXAMS:
+        # whole words only: "HSSC" must not count as "SSC", "cet" not inside another word
+        if any(re.search(r"(?<![a-z0-9])" + re.escape(k) + r"(?![a-z0-9])", text) for k in keys):
+            return kind, (named or name), tags
+    return "", named, GENERIC_TAGS
+
+
 def promo_items(meta):
-    return (meta.get("promo_items") or PROMO_ITEMS)[:2]
+    """QR cards of the reel/story promo: meta promo_items, else the video's own qr links, else the fixed
+    assets/qr-*.png pictures - but those are the Haryana Group D notes and mocks, so only for Group D videos."""
+    if meta.get("promo_items"):
+        return meta["promo_items"][:2]
+    own = [{"url": it["url"], "label": it["label"] or "स्कैन करें"} for it in qr_list(meta)]
+    if own:
+        return own
+    return PROMO_ITEMS[:2] if exam_info(meta)[0] == "groupd" else []
+
+
+def promo_title(meta):
+    if meta.get("promo_title"):
+        return meta["promo_title"]
+    name = exam_info(meta)[1]
+    return f"{name} के नोट्स और मॉक टेस्ट" if name else "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए"
 
 
 def qr_list(meta):
@@ -423,7 +465,7 @@ def page_html(meta, qs, st, theme, layout, fmt, aspect="wide", fx=False):
                 return f'<div class="qrc" style="visibility:hidden"><img src="{item_src(items[k])}"><div class="lab">.</div></div>'
             return (f'<div class="qrc" style="transform:scale({POP[min(prog, len(POP)) - 1]:.3f});opacity:{min(1.0, prog / 3):.2f}">'
                     f'<img src="{item_src(items[k])}"><div class="lab">{esc(items[k].get("label", ""))}</div></div>')
-        body = (f'<div class="promo-t">{esc(meta.get("promo_title", "हरियाणा ग्रुप D के नोट्स और मॉक टेस्ट"))}'
+        body = (f'<div class="promo-t">{esc(promo_title(meta))}'
                 f'<small>{esc(meta.get("promo_sub", "लिंक बायो और हाइलाइट्स में"))}</small></div>'
                 f'<div class="qrs">{card(0, st.get("a", 0))}{card(1, st.get("b", 0))}</div>')
     elif mode == "qrcta":
@@ -715,12 +757,19 @@ def make_steps(data, limit, fmt, aspect="wide", long_fx=False):
         if i in fillers:
             # spoken over the slide that is already on screen; the image is reused, so no new slide is rendered
             steps.append({"state": dict(steps[-1]["state"]), "say": fillers[i], "filler": True})
+    if meta.get("promo") and aspect == "reel" and not promo_items(meta):
+        # never show the Haryana Group D QR pictures on another exam's reel
+        print(f"NOTE: promo skipped - no QR link for this exam ({exam_info(meta)[1] or 'unknown exam'}). "
+              "Add the links in the PDF tool (meta qr) or set meta promo_items.")
+        meta["promo"] = False
     if meta.get("promo"):
         if aspect != "reel":
             print("NOTE: meta promo is only for reels (aspect reel), skipped")
         else:
             n = len(POP)
-            say1 = meta.get("promo_say1") or "ग्रुप डी की तैयारी के लिए पूरे नोट्स और मॉक टेस्ट चाहिए?"
+            ename = exam_info(meta)[1]
+            say1 = meta.get("promo_say1") or (f"{ename} की तैयारी के लिए पूरे नोट्स और मॉक टेस्ट चाहिए?" if ename
+                                              else "पूरी तैयारी के लिए नोट्स और मॉक टेस्ट चाहिए?")
             say2 = meta.get("promo_say2") or "दोनों के लिंक हमारे बायो और हाइलाइट्स में हैं। अभी देखिए।"
             hold = float(meta.get("promo_hold", 2.0))   # extra seconds the QR codes stay after the voice (5-7 s on screen in total)
             steps.append({"state": {"mode": "promo", "a": 0, "b": 0}, "say": say1, "chapter": "Notes and mocks"})
@@ -1772,7 +1821,6 @@ REEL_CTAS = [
     "💬 कमेंट में अपना जवाब बताइए, फिर वीडियो में मिलाइए 👆",
     "💬 पहले जवाब सोचिए, फिर कमेंट कीजिए। उत्तर वीडियो में है 👆",
 ]
-REEL_TAGS = ["#HaryanaGroupD", "#HSSCGroupD", "#HaryanaGK", "#HSSC", "#HaryanaExam", "#GKQuiz", "#SarkariNaukri", "#Target1st"]
 
 
 def reel_caption(meta, qs):
@@ -1783,14 +1831,16 @@ def reel_caption(meta, qs):
     seed = int(hashlib.md5(str(meta.get("title", "")).encode("utf-8")).hexdigest(), 16)
     hooks = meta.get("caption_hooks") or REEL_HOOKS
     ctas = meta.get("caption_ctas") or REEL_CTAS
-    tags = meta.get("caption_hashtags") or REEL_TAGS
+    _kind, ename, etags = exam_info(meta)
+    tags = meta.get("caption_hashtags") or etags
     q = qs[0]
     qtext = q["q"] if len(q["q"]) <= 170 else q["q"][:167].rstrip() + "..."
     lines = [hooks[seed % len(hooks)], "", f"{meta['title']} | {len(qs)} प्रश्न", "",
              f"Q. {qtext}"]
     lines += [f"{l}) {t}" for l, t in zip("ABCD", q["options"])]
     lines += ["", ctas[(seed // 7) % len(ctas)], "",
-              "📚 ग्रुप D के नोट्स और मॉक टेस्ट: लिंक बायो और हाइलाइट्स में।" if meta.get("promo") else "",
+              (f"📚 {ename + ' के ' if ename else ''}नोट्स और मॉक टेस्ट: लिंक बायो और हाइलाइट्स में।"
+               if meta.get("promo") else ""),
               f"📌 रोज़ ऐसे प्रश्नों के लिए {meta.get('channel', 'Target1st')} को फॉलो करें।",
               "📲 Telegram: @Target1stsupport"]
     if meta.get("caption_extra"):

@@ -100,7 +100,7 @@ def main():
                     items.append({"url": url, "label": str(it.get("label", "")).strip() or "स्कैन करें"})
             if items:
                 meta["promo_items"] = items[:2]
-                # and a heading that fits any exam (the built-in one says Haryana Group D)
+                # and a heading that fits any exam (build.py also words the promo voice, caption and hashtags by exam)
                 meta.setdefault("promo_title", meta.get("qr_title") or "नोट्स और मॉक टेस्ट के लिए स्कैन कीजिए")
         title =str(meta.get("title", "")).strip()
         hook, small = HOOKS[(k - 1) % len(HOOKS)]
