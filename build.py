@@ -47,6 +47,8 @@ SEVERAL API KEYS (more videos from the daily limits / credits of each key)
     (midnight US Pacific, about 1:30 pm IST), so later videos skip it at once. meta "quota_memory": false = off.
     meta "key_auto_switch": false = stay on one key. Keys from the SAME Google project share one daily limit, so
     switching between them gains nothing: use keys from different projects.
+    SARVAM KEY SWITCH: when a Sarvam key runs out of credits (HTTP 402) or is rejected, the next SARVAM_API_KEY_n is used
+    the same way (key_slot, +1 ... 5, then lower slots). meta "key_auto_switch": false turns both switches off.
     Set meta "key_slot": 2 to use the second key of the same engine: GEMINI_API_KEY_2 or SARVAM_API_KEY_2
     (slot 1 or nothing = GEMINI_API_KEY / SARVAM_API_KEY; slots 2 to 5 are wired in video.yml). Keys made in the
     SAME Google project share one Gemini daily limit; use keys from different projects for more quota.
@@ -1398,6 +1400,31 @@ async def tts_all(steps, meta, work, fake, provider):
     if provider == "sarvam" and not fake and not s_key:
         sys.exit(f"{s_env} is not set. Add it as a repository secret (name exactly {s_env}) and pass it in video.yml (env).")
     s_sem = asyncio.Semaphore(2)
+    # AUTO KEY SWITCH (Sarvam voice), same idea as Gemini: when the current key's credits are used up (HTTP 402
+    # insufficient_quota_error), the key is wrong (403), or its seat budget is spent (429 seat_budget_exhausted_error),
+    # the next SARVAM_API_KEY slot is used: key_slot first, then upwards 2-3-4-5, then the lower slots. Only keys whose
+    # secret is set are used. Finished lines stay cached, so nothing is voiced (or paid for) twice.
+    # meta "key_auto_switch": false = never switch (stop instead).
+    sst = {"slot": slot, "key": s_key, "tried": [slot]}
+    s_auto = bool(meta.get("key_auto_switch", True)) and provider == "sarvam" and not fake
+
+    def s_switch(failed_slot, why):
+        """Make the next unused Sarvam key active. True if there is one (or another call already switched)."""
+        if sst["slot"] != failed_slot:
+            return True
+        if not s_auto:
+            return False
+        for n in k_order:
+            if n in sst["tried"]:
+                continue
+            v = os.environ.get("SARVAM_API_KEY" + (f"_{n}" if n > 1 else ""), "")
+            if v:
+                sst["tried"].append(n)
+                sst["slot"], sst["key"] = n, v
+                print(f"  Sarvam key slot {failed_slot}: {why} -> switching to key slot {n} "
+                      f"(SARVAM_API_KEY{'_' + str(n) if n > 1 else ''})", flush=True)
+                return True
+        return False
 
     if provider in ("sarvam", "edge") and meta.get("speech_prep") and not fake:
         # the AI fixer is a Gemini TEXT model, so it needs a Gemini key even when the voice is Sarvam / Edge
@@ -1417,21 +1444,34 @@ async def tts_all(steps, meta, work, fake, provider):
     async def sarvam_one(s, path):
         async with s_sem:
             last = None
-            for attempt in range(5):
+            attempt = 0
+            while attempt < 5:
+                cur = sst["slot"]
                 try:
-                    await asyncio.to_thread(sarvam_tts_once, s["say"], s_model, s_speaker, s_pace, path, s_key)
+                    await asyncio.to_thread(sarvam_tts_once, s["say"], s_model, s_speaker, s_pace, path, sst["key"])
                     await asyncio.sleep(s_delay)
                     return
                 except urllib.error.HTTPError as e:
                     body = e.read()[:300]
-                    last = f"HTTP {e.code}: {body!r}"
-                    if e.code in (400, 401, 403, 404, 422):  # bad key / speaker / model / text: retrying is pointless
+                    last = f"HTTP {e.code} (key slot {cur}): {body!r}"
+                    txt = body.decode("utf-8", "replace").lower()
+                    why = ("credits used up" if e.code == 402 or "insufficient_quota" in txt
+                           else "key rejected" if e.code in (401, 403) and "tier_limit" not in txt
+                           else "seat budget used up" if "seat_budget" in txt else "")
+                    if why:
+                        if s_switch(cur, why):
+                            continue  # same line again on the next key; does not count as a retry
+                        last += (f"\nEvery Sarvam key tried is out (slots {', '.join(map(str, sst['tried']))}). "
+                                 "Top up credits or add another key as SARVAM_API_KEY_2 ... _5.")
+                        break
+                    if e.code in (400, 404, 413, 422) or e.code in (401, 403):  # bad speaker / model / text: retrying is pointless
                         break
                     wait = 10 * (attempt + 1)  # 429 or 5xx
                 except Exception as e:
                     last = e
                     wait = 3 * (attempt + 1)
-                print(f"  Sarvam retry {attempt + 1}/5 in {wait}s ({last})", flush=True)
+                attempt += 1
+                print(f"  Sarvam retry {attempt}/5 in {wait}s ({last})", flush=True)
                 await asyncio.sleep(wait)
             sys.exit(f"Sarvam voice failed for: {s['say'][:60]}\n{last}\n"
                      "Check the key, credits, and that sarvam_speaker matches sarvam_model (lowercase). "

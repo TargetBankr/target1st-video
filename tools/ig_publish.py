@@ -16,7 +16,7 @@ Stories: a release whose tag contains "-story" (made by tools/make_reels.py --st
     python tools/ig_publish.py                         # (--kind reel is the default) oldest reel
 
 Which release is next: releases that have a "<name>-caption.txt" asset (only aspect=reel builds make one) and are not
-listed in ig/posted.json, oldest first. After a successful post the release tag is added to ig/posted.json.
+listed in ig/posted.json, oldest first (ALL releases are read, not just the newest 100). After a successful post the release tag is added to ig/posted.json.
 """
 import argparse
 import json
@@ -106,24 +106,40 @@ def is_story(tag):
     return "-story" in tag
 
 
+def natural(s):
+    """'r10' sorts after 'r9' (plain text sorting would put r10 before r2)."""
+    return [int(x) if x.isdigit() else x for x in re.split(r"(\d+)", s)]
+
+
+def all_releases():
+    """EVERY release, oldest first, with its asset names.
+    (The old code used 'gh release list --limit 100', which returns only the NEWEST 100: once the repo had more than 100
+    releases the oldest unposted reels fell out of view and newer ones were posted first.)"""
+    repo = os.environ.get("GITHUB_REPOSITORY") or "{owner}/{repo}"
+    out = sh("gh", "api", "--paginate", f"repos/{repo}/releases?per_page=100",
+             "--jq", ".[] | select(.draft | not) | {t: .tag_name, c: .created_at, a: [.assets[].name]}")
+    rel = [json.loads(line) for line in out.splitlines() if line.strip()]
+    # same build = same run number: keep r01, r02, r03... in order even when GitHub stamps them in the same second
+    rel.sort(key=lambda r: (r["c"], natural(r["t"])))
+    return rel
+
+
 def pick_release(tag, kind="reel"):
     """Return (tag, video_asset, caption_asset). kind = reel | story decides which releases are considered (unless a tag is given)."""
     if tag:
-        tags = [tag]
+        try:
+            assets = [a["name"] for a in json.loads(sh("gh", "release", "view", tag, "--json", "assets"))["assets"]]
+        except subprocess.CalledProcessError:
+            die(f"release {tag} not found")
+        rels = [{"t": tag, "a": assets}]
     else:
-        rel = json.loads(sh("gh", "release", "list", "--limit", "100", "--json", "tagName,createdAt"))
-        tags = [r["tagName"] for r in sorted(rel, key=lambda r: r["createdAt"])]
+        rels = all_releases()
     posted = set(load_posted())
-    for t in tags:
+    for r in rels:
+        t, assets = r["t"], r["a"]
         if t in posted and not tag:
             continue
         if not tag and is_story(t) != (kind == "story"):
-            continue
-        try:
-            assets = [a["name"] for a in json.loads(sh("gh", "release", "view", t, "--json", "assets"))["assets"]]
-        except subprocess.CalledProcessError:
-            if tag:
-                die(f"release {t} not found")
             continue
         cap = next((a for a in assets if a.endswith("-caption.txt")), None)
         vid = next((a for a in assets if a.endswith(".mp4")), None)

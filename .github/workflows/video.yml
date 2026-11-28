@@ -279,6 +279,7 @@ jobs:
           FORMAT: ${{ inputs.format }}
           TTS: ${{ inputs.tts }}
           AUTO_POST_REELS: ${{ vars.AUTO_POST_REELS }}
+          SCHEDULED_POSTING: ${{ vars.SCHEDULED_POSTING }}
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SARVAM_API_KEY: ${{ secrets.SARVAM_API_KEY }}
           GEMINI_API_KEY_2: ${{ secrets.GEMINI_API_KEY_2 }}
@@ -362,9 +363,16 @@ jobs:
               --title "$name (run $RUN_NO)" \
               --notes "Download the .mp4 and upload it to YouTube. The description file has title and chapters. A -caption.txt file means this is an Instagram reel (9:16)."
             if [ -f output/caption.txt ] && [ "$AUTO_POST_REELS" = "true" ]; then
-              echo "AUTO_POST_REELS is on: posting video-$RUN_NO-$name to Instagram"
-              gh workflow run post-reel.yml --ref "$GITHUB_REF_NAME" -f "tag=video-$RUN_NO-$name" -f "dry_run=false" < /dev/null \
-                || echo "::warning::Could not start the Instagram post for $name. Run '3 · Post to Instagram' by hand."
+              if [ "$SCHEDULED_POSTING" = "true" ]; then
+                # the hourly drip in "3 · Post to Instagram" posts the OLDEST unposted reel at each slot.
+                # Posting this new reel right now would jump the queue (newest first) and use up the slot.
+                echo "Reel video-$RUN_NO-$name joins the Instagram queue (posted oldest first at the next free slot)."
+              else
+                # no drip: post the oldest unposted reel now (empty tag), never this exact new one ahead of older ones
+                echo "AUTO_POST_REELS is on: posting the oldest unposted reel to Instagram"
+                gh workflow run post-reel.yml --ref "$GITHUB_REF_NAME" -f "tag=" -f "kind=reel" -f "dry_run=false" < /dev/null \
+                  || echo "::warning::Could not start the Instagram post. Run '3 · Post to Instagram' by hand."
+              fi
             fi
             # the on/off switch from the PDF tool: make reels (+ stories) from this YouTube video
             read -r AUTO_R AUTO_S REEL_N < <(python3 - "$f" <<'PY2'
